@@ -24,7 +24,7 @@ import { ContainerpageComponent } from './components/containerpage/containerpage
     IonicModule,
     RouterModule.forChild(
       [{path:'',
-      component:HomepageComponent,
+      component:ContainerpageComponent,
       children:[
         {
           path:"homepage",
@@ -33,7 +33,10 @@ import { ContainerpageComponent } from './components/containerpage/containerpage
           path:"loginpage",
           component:LoginpageComponent
         },{
-          redirectTo:"/homepage",
+          path:"mainpage",
+          component:ContainerpageComponent
+        },{
+          redirectTo:"/mainpage",
           path:"",
           pathMatch:"full",
         }
