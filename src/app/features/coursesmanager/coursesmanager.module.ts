@@ -7,6 +7,7 @@ import { LoginpageComponent } from './components/loginpage/loginpage.component';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ContainerpageComponent } from './components/containerpage/containerpage.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     HeaderComponent,
     FooterComponent,
     LoginpageComponent,
-    NavbarComponent
+    NavbarComponent,
+    ContainerpageComponent
   ],
   imports: [
     CommonModule,

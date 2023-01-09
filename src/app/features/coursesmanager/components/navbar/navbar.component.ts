@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
 })
 export class NavbarComponent {
   navigationItems = ["About us","Gallery","News","Partners","Schedule","Contacts","Donate"]
-  
 
+  selectMenu(i:number){
+    
+  }
 }
