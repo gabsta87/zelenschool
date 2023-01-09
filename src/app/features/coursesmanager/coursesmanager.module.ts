@@ -6,6 +6,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { LoginpageComponent } from './components/loginpage/loginpage.component';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { IonicModule } from '@ionic/angular';
     HomepageComponent,
     HeaderComponent,
     FooterComponent,
-    LoginpageComponent
+    LoginpageComponent,
+    NavbarComponent
   ],
   imports: [
     CommonModule,

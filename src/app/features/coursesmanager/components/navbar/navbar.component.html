@@ -1,0 +1,11 @@
+<div class="myNavBar">
+    <ion-list class="ion-no-padding">
+        <ion-item button="true" id="menu_button_{{i}}" *ngFor="let item of navigationItems;
+                            let i = index;
+                            " (click)="selectMenu(i)">
+            <!-- <ion-label class="ion-text-center ion-text-wrap ion-padding-horizontal ion-text-uppercase" (click)="selectMenu(product.title)">{{product.title}}</ion-label> -->
+            <ion-label class="ion-text-center ion-text-wrap ion-padding-horizontal ion-text-uppercase"
+                    >{{item}}</ion-label>
+        </ion-item>
+    </ion-list>
+</div>
