@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ContainerpageComponent } from './components/containerpage/containerpage.component';
+import { GallerypageComponent } from './components/gallerypage/gallerypage.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { ContainerpageComponent } from './components/containerpage/containerpage
     FooterComponent,
     LoginpageComponent,
     NavbarComponent,
-    ContainerpageComponent
+    ContainerpageComponent,
+    GallerypageComponent
   ],
   imports: [
     CommonModule,
