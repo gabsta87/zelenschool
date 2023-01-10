@@ -9,7 +9,13 @@ import { IonicModule } from '@ionic/angular';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ContainerpageComponent } from './components/containerpage/containerpage.component';
 import { GallerypageComponent } from './components/gallerypage/gallerypage.component';
-
+import { SwiperModule } from 'swiper/angular';
+import { NewspageComponent } from './components/newspage/newspage.component';
+import { PartnerspageComponent } from './components/partnerspage/partnerspage.component';
+import { AboutpageComponent } from './components/aboutpage/aboutpage.component';
+import { SchedulepageComponent } from './components/schedulepage/schedulepage.component';
+import { ContactpageComponent } from './components/contactpage/contactpage.component';
+import { DonatepageComponent } from './components/donatepage/donatepage.component';
 
 @NgModule({
   declarations: [
@@ -19,9 +25,16 @@ import { GallerypageComponent } from './components/gallerypage/gallerypage.compo
     LoginpageComponent,
     NavbarComponent,
     ContainerpageComponent,
-    GallerypageComponent
+    GallerypageComponent,
+    NewspageComponent,
+    PartnerspageComponent,
+    AboutpageComponent,
+    SchedulepageComponent,
+    ContactpageComponent,
+    DonatepageComponent
   ],
   imports: [
+    SwiperModule,
     CommonModule,
     IonicModule,
     RouterModule.forChild(
@@ -32,13 +45,16 @@ import { GallerypageComponent } from './components/gallerypage/gallerypage.compo
           path:"homepage",
           component:HomepageComponent
         },{
-          path:"loginpage",
+          path:"login",
           component:LoginpageComponent
         },{
-          path:"mainpage",
+          path:"main",
           component:ContainerpageComponent
         },{
-          redirectTo:"/mainpage",
+          path:"gallery",
+          component:GallerypageComponent
+        },{
+          redirectTo:"/main",
           path:"",
           pathMatch:"full",
         }
