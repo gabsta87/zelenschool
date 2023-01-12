@@ -26,18 +26,18 @@ export class GallerypageComponent {
 
   onSwiper($event:any){
     console.log("slide changed : ",$event);
-    
   }
 
   onSlideChange(){
     console.log("slide changing ");
-    
   }
 
   slideNext(){
+    console.log("next slide");
     this.swiper?.swiperRef.slideNext(100);
   }
   slidePrev(){
+    console.log("previous slide");
     this.swiper?.swiperRef.slidePrev(100);
   }
 

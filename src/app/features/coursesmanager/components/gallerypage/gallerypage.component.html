@@ -1,8 +1,8 @@
-<p>gallerypage works!</p>
 <swiper
-[config]="config"
-(swiper)="onSwiper($event)"
-(slideChange)="onSlideChange()"
+    (click)="slideNext()"
+    [config]="config"
+    (swiper)="onSwiper($event)"
+    (slideChange)="onSlideChange()"
 >
 <ng-template swiperSlide>Slide 1</ng-template>
 <ng-template swiperSlide>Slide 2</ng-template>
