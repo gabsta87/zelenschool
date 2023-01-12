@@ -1,4 +1,4 @@
-<div class="myNavBar">
+<!-- <div class="myNavBar"> -->
     <!-- <ion-grid class="ion-no-padding">
         <ion-row>
             <ion-col button="true" id="menu_button_{{i}}" *ngFor="let item of navigationItems;
@@ -12,13 +12,12 @@
         </ion-row>
     </ion-grid> -->
 
-
     <ion-tabs>
-        <ion-tab-bar slot="top" *ngFor="let item of navigationItems;
-        let i = index;">
-            <ion-tab-button tab="_{{i}}">
+        <ion-tab-bar slot="top">
+            <ion-tab-button *ngFor="let item of navigationItems;
+            let i = index;" tab="_{{i}}">
                 <ion-label>{{item.title}}</ion-label>
             </ion-tab-button>
         </ion-tab-bar>
     </ion-tabs>
-</div>
+<!-- </div> -->
