@@ -7,14 +7,14 @@ import { Component } from '@angular/core';
 })
 export class NavbarComponent {
   navigationItems = [
-    {title:"About us",page:"mainPage"},
-    {title:"Gallery",page:"mainPage"},
-    {title:"News",page:"mainPage"},
-    {title:"Partners",page:"mainPage"},
-    {title:"Schedule",page:"mainPage"},
-    {title:"Contacts",page:"mainPage"},
-    {title:"Donate",page:"mainPage"},
-    {title:"Login",page:"loginPage"},
+    {title:"About us",page:"about"},
+    {title:"Gallery",page:"gallery"},
+    {title:"News",page:"news"},
+    {title:"Partners",page:"partners"},
+    {title:"Schedule",page:"schedule"},
+    {title:"Contacts",page:"contacts"},
+    {title:"Donate",page:"donate"},
+    {title:"Login",page:"login"},
   ]
 
   selectMenu(i:number){
