@@ -7,7 +7,6 @@ import { LoginpageComponent } from './components/loginpage/loginpage.component';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { ContainerpageComponent } from './components/containerpage/containerpage.component';
 import { GallerypageComponent } from './components/gallerypage/gallerypage.component';
 import { SwiperModule } from 'swiper/angular';
 import { NewspageComponent } from './components/newspage/newspage.component';
@@ -24,7 +23,6 @@ import { DonatepageComponent } from './components/donatepage/donatepage.componen
     FooterComponent,
     LoginpageComponent,
     NavbarComponent,
-    ContainerpageComponent,
     GallerypageComponent,
     NewspageComponent,
     PartnerspageComponent,
@@ -56,9 +54,6 @@ import { DonatepageComponent } from './components/donatepage/donatepage.componen
         },{
           path:"schedule",
           component:SchedulepageComponent
-        },{
-          path:"main",
-          component:ContainerpageComponent
         },{
           path:"gallery",
           component:GallerypageComponent

@@ -1,13 +1,8 @@
-.myNavBar{
-    position: sticky;
-    top:0;
-}
-app-navigation-bar{
-    position: relative;
+ion-tab-button{
+    --color:rgb(98, 95, 241);
+    --color-selected:var(--ion-color-tertiary);
 }
 
-ion-button{
-    width:100%;
-    --background-hover: #5e5e5e;
-
+ion-tab-bar{
+    --background:var(--ion-color-primary);
 }
