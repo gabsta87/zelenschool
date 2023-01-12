@@ -39,7 +39,7 @@ import { DonatepageComponent } from './components/donatepage/donatepage.componen
     IonicModule,
     RouterModule.forChild(
       [{path:'',
-      component:ContainerpageComponent,
+      component:HeaderComponent,
       children:[
         {
           path:"homepage",
@@ -48,13 +48,22 @@ import { DonatepageComponent } from './components/donatepage/donatepage.componen
           path:"login",
           component:LoginpageComponent
         },{
+          path:"news",
+          component:NewspageComponent
+        },{
+          path:"about",
+          component:AboutpageComponent
+        },{
+          path:"schedule",
+          component:SchedulepageComponent
+        },{
           path:"main",
           component:ContainerpageComponent
         },{
           path:"gallery",
           component:GallerypageComponent
         },{
-          redirectTo:"/main",
+          redirectTo:"/homepage",
           path:"",
           pathMatch:"full",
         }

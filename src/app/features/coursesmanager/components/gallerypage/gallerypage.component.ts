@@ -14,7 +14,7 @@ SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 })
 export class GallerypageComponent {
 
-  @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
+  // @ViewChild('swiper', { static: false }) swiper!: SwiperComponent;
 
   config: SwiperOptions = {
     slidesPerView: 3,
@@ -34,11 +34,13 @@ export class GallerypageComponent {
 
   slideNext(){
     console.log("next slide");
-    this.swiper?.swiperRef.slideNext(100);
+    // console.log("swiper : ", this.swiper);
+
+    // this.swiper?.swiperRef.slideNext(100);
   }
   slidePrev(){
     console.log("previous slide");
-    this.swiper?.swiperRef.slidePrev(100);
+    // this.swiper?.swiperRef.slidePrev(100);
   }
 
 }
