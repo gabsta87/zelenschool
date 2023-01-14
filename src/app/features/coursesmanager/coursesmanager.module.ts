@@ -19,6 +19,8 @@ import { EditnewsComponent } from './components/editnews/editnews.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FlatpickrModule } from 'angularx-flatpickr';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import { FlatpickrModule } from 'angularx-flatpickr';
   imports: [
     SwiperModule,
     CommonModule,
+    FormsModule,
     IonicModule,
     FlatpickrModule.forRoot(),
     CalendarModule.forRoot({
