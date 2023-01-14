@@ -14,7 +14,7 @@ import {
   addHours,
 } from 'date-fns';
 import { Subject } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   CalendarEvent,
   CalendarEventAction,
@@ -121,7 +121,7 @@ export class SchedulepageComponent {
 
   activeDayIsOpen: boolean = true;
 
-  constructor(private modal: NgbModal) {}
+  // constructor(private modal: NgbModal) {}
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -157,7 +157,7 @@ export class SchedulepageComponent {
 
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
+    // this.modal.open(this.modalContent, { size: 'lg' });
   }
 
   addEvent(): void {
