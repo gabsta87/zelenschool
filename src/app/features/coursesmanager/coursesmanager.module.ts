@@ -15,6 +15,7 @@ import { AboutpageComponent } from './components/aboutpage/aboutpage.component';
 import { SchedulepageComponent } from './components/schedulepage/schedulepage.component';
 import { ContactpageComponent } from './components/contactpage/contactpage.component';
 import { DonatepageComponent } from './components/donatepage/donatepage.component';
+import { EditnewsComponent } from './components/editnews/editnews.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { DonatepageComponent } from './components/donatepage/donatepage.componen
     AboutpageComponent,
     SchedulepageComponent,
     ContactpageComponent,
-    DonatepageComponent
+    DonatepageComponent,
+    EditnewsComponent
   ],
   imports: [
     SwiperModule,
