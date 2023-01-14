@@ -1,4 +1,4 @@
-<div class="row text-center">
+<!-- <div class="row text-center">
 <div class="col-md-4">
     <div class="btn-group">
     <div
@@ -56,43 +56,121 @@
     </div>
     </div>
 </div>
-</div>
-<br />
+</div> -->
+
+<ion-grid class="ion-no-margin">
+    <ion-row class="ion-text-center">
+        <ion-col>
+            <ion-buttons class="ion-justify-content-center">
+                <ion-button fill="solid" (click)="closeOpenMonthViewDay()">Previous </ion-button>
+                <ion-button fill="solid">Today </ion-button>
+                <ion-button fill="solid" (click)="closeOpenMonthViewDay()">Next </ion-button>
+            </ion-buttons>
+        </ion-col>
+        <ion-col>
+            <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+        </ion-col>
+        <ion-col>
+            <ion-buttons class="ion-justify-content-center">
+                <ion-button fill="solid" (click)="setView(CalendarView.Month)">Month</ion-button>
+                <ion-button fill="solid" (click)="setView(CalendarView.Week)">Week</ion-button>
+                <ion-button fill="solid" (click)="setView(CalendarView.Day)">Day</ion-button>
+            </ion-buttons>
+        </ion-col>
+    </ion-row>
+</ion-grid>
+
+<!-- Start Calendar -->
+
 <div [ngSwitch]="view">
-<mwl-calendar-month-view
-    *ngSwitchCase="CalendarView.Month"
-    [viewDate]="viewDate"
-    [events]="events"
-    [refresh]="refresh"
-    [activeDayIsOpen]="activeDayIsOpen"
-    (dayClicked)="dayClicked($event.day)"
-    (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)"
->
-</mwl-calendar-month-view>
-<mwl-calendar-week-view
-    *ngSwitchCase="CalendarView.Week"
-    [viewDate]="viewDate"
-    [events]="events"
-    [refresh]="refresh"
-    (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)"
->
-</mwl-calendar-week-view>
-<mwl-calendar-day-view
-    *ngSwitchCase="CalendarView.Day"
-    [viewDate]="viewDate"
-    [events]="events"
-    [refresh]="refresh"
-    (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)"
->
-</mwl-calendar-day-view>
+    <mwl-calendar-month-view
+        *ngSwitchCase="CalendarView.Month"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        [activeDayIsOpen]="activeDayIsOpen"
+        (dayClicked)="dayClicked($event.day)"
+        (eventClicked)="handleEvent('Clicked', $event.event)"
+        (eventTimesChanged)="eventTimesChanged($event)"
+    >
+    </mwl-calendar-month-view>
+    <mwl-calendar-week-view
+        *ngSwitchCase="CalendarView.Week"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        (eventClicked)="handleEvent('Clicked', $event.event)"
+        (eventTimesChanged)="eventTimesChanged($event)"
+    >
+    </mwl-calendar-week-view>
+    <mwl-calendar-day-view
+        *ngSwitchCase="CalendarView.Day"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        (eventClicked)="handleEvent('Clicked', $event.event)"
+        (eventTimesChanged)="eventTimesChanged($event)"
+    >
+    </mwl-calendar-day-view>
 </div>
 
-<br /><br /><br />
+<!-- Event commands -->
 
-<h3>
+
+<ion-grid class="ion-no-margin">
+    <ion-row class="ion-text-center">
+        <ion-col>
+            <h3>
+                Edit events
+            </h3>
+        </ion-col>
+        <ion-col>
+            <ion-buttons class="ion-justify-content-center">
+                <ion-button fill="solid" >Add new</ion-button>
+            </ion-buttons>
+        </ion-col>
+    </ion-row>
+</ion-grid>
+
+<div class="events_grid">
+<ion-grid>
+    <ion-row>
+        <ion-col>
+            Title
+        </ion-col>
+        <ion-col>
+            Time
+        </ion-col>
+        <ion-col>
+            Teacher	
+        </ion-col>
+        <ion-col>
+            Classroom	
+        </ion-col>
+        <ion-col>
+            Attendants
+        </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let event of events; index as i">
+        <ion-col>
+            {{event.title}}
+        </ion-col>
+        <ion-col>
+            {{event.start}}
+        </ion-col>
+        <ion-col>
+            Me
+        </ion-col>
+        <ion-col>
+            1
+        </ion-col>
+        <ion-col>
+            Nobody
+        </ion-col>
+    </ion-row>
+</ion-grid>
+</div>
+<!-- <h3>
   Edit events
   <button class="btn btn-primary float-end" (click)="addEvent()">
     Add new
@@ -185,4 +263,4 @@
       OK
     </button>
   </div>
-</ng-template>
+</ng-template> -->
