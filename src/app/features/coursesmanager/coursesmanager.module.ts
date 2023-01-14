@@ -16,6 +16,8 @@ import { SchedulepageComponent } from './components/schedulepage/schedulepage.co
 import { ContactpageComponent } from './components/contactpage/contactpage.component';
 import { DonatepageComponent } from './components/donatepage/donatepage.component';
 import { EditnewsComponent } from './components/editnews/editnews.component';
+import { DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 @NgModule({
   declarations: [
