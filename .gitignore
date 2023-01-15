@@ -44,3 +44,4 @@ Thumbs.db
 /.blackbox/pubring.kbx~
 /.blackbox/secring.gpg
 /src/environments/environment.prod.ts
+/src/environments/environment.ts
