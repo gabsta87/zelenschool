@@ -45,3 +45,7 @@ Thumbs.db
 /.blackbox/secring.gpg
 /src/environments/environment.prod.ts
 /src/environments/environment.ts
+
+# environment variables
+/environments/environment.ts
+/environments/environment.prod.ts
