@@ -20,6 +20,7 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { FormsModule } from '@angular/forms';
+import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 
 
 @NgModule({
@@ -77,6 +78,12 @@ import { FormsModule } from '@angular/forms';
         }
       ]}]  
     )
+  ],
+  providers:[
+    {
+      provide:"MyDatabaseService",
+      useClass:AngularfireService
+    }
   ]
 })
 export class CoursesmanagerModule { }

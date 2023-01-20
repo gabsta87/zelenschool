@@ -1,27 +1,18 @@
-import { Component,
-  ChangeDetectionStrategy,
-  ViewChild,
-  TemplateRef,
-} from '@angular/core';
-import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours,
-} from 'date-fns';
+import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, Output, EventEmitter, } from '@angular/core';
+import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, } from 'date-fns';
+import { WeekDay, MonthView, MonthViewDay, ViewPeriod, } from 'calendar-utils';
 import { Subject } from 'rxjs';
-// import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent,
-  CalendarView,
-} from 'angular-calendar';
+import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
+import { AngularfireService } from 'src/app/shared/service/angularfire.service';
+
+
+export interface CalendarMonthViewEventTimesChangedEvent<
+  EventMetaType = any,
+  DayMetaType = any
+> extends CalendarEventTimesChangedEvent<EventMetaType> {
+  day: MonthViewDay<DayMetaType>;
+}
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -53,17 +44,24 @@ export class SchedulepageComponent {
 
   viewDate: Date = new Date();
 
+  clickedDate!: Date;
+
   modalData!: {
     action: string;
     event: CalendarEvent;
   };
+
+  constructor(
+    private readonly _dbAccess : AngularfireService,
+    ) {
+  }
 
   actions: CalendarEventAction[] = [
     {
       label: '<i class="fas fa-fw fa-pencil-alt"></i>',
       a11yLabel: 'Edit',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
+        this.handleCalendarEntry('Edited', event);
       },
     },
     {
@@ -71,7 +69,7 @@ export class SchedulepageComponent {
       a11yLabel: 'Delete',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
+        this.handleCalendarEntry('Deleted', event);
       },
     },
   ];
@@ -123,20 +121,6 @@ export class SchedulepageComponent {
 
   // constructor(private modal: NgbModal) {}
 
-  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.viewDate)) {
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
-        this.activeDayIsOpen = false;
-      } else {
-        this.activeDayIsOpen = true;
-      }
-      this.viewDate = date;
-    }
-  }
-
   eventTimesChanged({
     event,
     newStart,
@@ -152,12 +136,12 @@ export class SchedulepageComponent {
       }
       return iEvent;
     });
-    this.handleEvent('Dropped or resized', event);
+    this.handleCalendarEntry('Dropped or resized', event);
   }
 
-  handleEvent(action: string, event: CalendarEvent): void {
+  handleCalendarEntry(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
-    console.log("event raised",event);
+    console.log("Calendar entry selected",event);
     
     // this.modal.open(this.modalContent, { size: 'lg' });
   }
@@ -190,4 +174,11 @@ export class SchedulepageComponent {
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
+
+  myclick($event:any){
+    this.clickedDate = $event.day.date;
+    console.log("clicked date : ",this.clickedDate);
+    this._dbAccess.createCalendarEntry(this.clickedDate);
+  }
+
 }
