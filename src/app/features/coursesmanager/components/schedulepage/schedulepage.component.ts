@@ -1,10 +1,12 @@
 import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, Output, EventEmitter, } from '@angular/core';
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, } from 'date-fns';
 import { WeekDay, MonthView, MonthViewDay, ViewPeriod, } from 'calendar-utils';
-import { Subject } from 'rxjs';
+import { Observable, Subject, switchMap } from 'rxjs';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
+
+import { DocumentData } from '@angular/fire/firestore';
 
 
 export interface CalendarMonthViewEventTimesChangedEvent<
@@ -39,21 +41,24 @@ export class SchedulepageComponent {
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
 
   view: CalendarView = CalendarView.Month;
-
   CalendarView = CalendarView;
-
   viewDate: Date = new Date();
-
-  clickedDate!: Date;
-
   modalData!: {
     action: string;
     event: CalendarEvent;
   };
+  
+  clickedDate!: Date;
+  eventsObs!:Observable<DocumentData[]>;
+  eventsList:any;
 
   constructor(
     private readonly _dbAccess : AngularfireService,
-    ) {
+    ) {  }
+
+  async ionViewWillEnter(){
+   this.eventsObs = this._dbAccess.getCalendarEntries();
+   console.log("fetched events : ",this.eventsObs);
   }
 
   actions: CalendarEventAction[] = [
@@ -76,46 +81,47 @@ export class SchedulepageComponent {
 
   refresh = new Subject<void>();
 
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: { ...colors['red'] },
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: { ...colors['yellow'] },
-      actions: this.actions,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: { ...colors['blue'] },
-      allDay: true,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: { ...colors['yellow'] },
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-  ];
+  events: CalendarEvent[] = [];
+  // events: CalendarEvent[] = [
+  //   {
+  //     start: subDays(startOfDay(new Date()), 1),
+  //     end: addDays(new Date(), 1),
+  //     title: 'A 3 day event',
+  //     color: { ...colors['red'] },
+  //     actions: this.actions,
+  //     allDay: true,
+  //     resizable: {
+  //       beforeStart: true,
+  //       afterEnd: true,
+  //     },
+  //     draggable: true,
+  //   },
+  //   {
+  //     start: startOfDay(new Date()),
+  //     title: 'An event with no end date',
+  //     color: { ...colors['yellow'] },
+  //     actions: this.actions,
+  //   },
+  //   {
+  //     start: subDays(endOfMonth(new Date()), 3),
+  //     end: addDays(endOfMonth(new Date()), 3),
+  //     title: 'A long event that spans 2 months',
+  //     color: { ...colors['blue'] },
+  //     allDay: true,
+  //   },
+  //   {
+  //     start: addHours(startOfDay(new Date()), 2),
+  //     end: addHours(new Date(), 2),
+  //     title: 'A draggable and resizable event',
+  //     color: { ...colors['yellow'] },
+  //     actions: this.actions,
+  //     resizable: {
+  //       beforeStart: true,
+  //       afterEnd: true,
+  //     },
+  //     draggable: true,
+  //   },
+  // ];
 
   activeDayIsOpen: boolean = true;
 

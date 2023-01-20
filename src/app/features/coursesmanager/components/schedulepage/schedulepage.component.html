@@ -72,7 +72,7 @@
     </ion-row>
 </ion-grid>
 
-<div class="events_grid">
+<div class="events_grid" *ngIf="eventsObs | async as eventsList">
 <ion-grid>
     <ion-row>
         <ion-col>
@@ -91,12 +91,12 @@
             Attendants
         </ion-col>
     </ion-row>
-    <ion-row *ngFor="let event of events; index as i">
+    <ion-row *ngFor="let event of eventsList; index as i">
         <ion-col>
-            {{event.title}}
+            {{event['title']}}
         </ion-col>
         <ion-col>
-            {{event.start}}
+            {{event['eventDate']}}
         </ion-col>
         <ion-col>
             Me
