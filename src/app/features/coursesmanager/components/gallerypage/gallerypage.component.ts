@@ -1,46 +1,34 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 
 // import Swiper core and required modules
-import SwiperCore, { SwiperOptions, Pagination, Swiper, Navigation } from 'swiper';
+import SwiperCore, { SwiperOptions, Pagination, Navigation } from 'swiper';
 import { SwiperComponent } from 'swiper/angular';
 
 // install Swiper modules
-SwiperCore.use([Pagination]);
-
-// const swiper2 = new Swiper('.swiper', {
-//   // Optional parameters
-//   loop: true,
-
-//   // If we need pagination
-//   pagination: {
-//     el: '.swiper-pagination',
-//   },
-
-//   // Navigation arrows
-//   navigation: {
-//     nextEl: '.swiper-button-next',
-//     prevEl: '.swiper-button-prev',
-//   },
-// });
+SwiperCore.use([Pagination,Navigation]);
 
 @Component({
   selector: 'app-gallerypage',
   templateUrl: './gallerypage.component.html',
-  styleUrls: ['./gallerypage.component.scss']
+  styleUrls: ['./gallerypage.component.scss'],
+  encapsulation: ViewEncapsulation.None 
 })
 export class GallerypageComponent {
 
   @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
 
+  ngAfterContentChecked(){
+    if(this.swiper){
+      this.swiper.updateSwiper({});
+    }
+  }
+
   config: SwiperOptions = {
-    // loop:true,
+    slidesPerView:1.25,
+    loop:true,
     navigation:true,
     pagination:true,
   };
-
-  onSwiper($event:any){
-    console.log("onSwiper raised : ",$event);
-  }
 
   slideNext(){
     this.swiper?.swiperRef.slideNext(100);
