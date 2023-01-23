@@ -1,12 +1,30 @@
-<p>Gallery Works!</p>
+<ion-content>
+<div class="gallery-container">
+    
+    <div class="swiper-container">
+    <swiper
+        #swiper
+        [config]="config"
+        >
+        <ng-template swiperSlide>
+            <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
+        </ng-template>
+        <ng-template swiperSlide>
+            <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+        </ng-template>
+        <ng-template swiperSlide>
+            <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
+        </ng-template>
+        <ng-template swiperSlide>
+            <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
+        </ng-template>
 
-<swiper
-    (click)="slideNext()"
-    [config]="config"
-    (swiper)="onSwiper($event)"
-    (slideChange)="onSlideChange()"
->
-<ng-template swiperSlide>Slide 1</ng-template>
-<ng-template swiperSlide>Slide 2</ng-template>
-<ng-template swiperSlide>Slide 3</ng-template>
-</swiper>
+    </swiper>
+    </div>
+
+    <ion-button (click)="slidePrev()">Prev slide</ion-button>
+    <ion-button (click)="slideNext()">Next slide</ion-button>
+
+</div>
+
+</ion-content>

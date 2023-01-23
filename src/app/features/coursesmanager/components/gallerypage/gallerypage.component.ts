@@ -1,11 +1,27 @@
 import { Component, ViewChild } from '@angular/core';
 
 // import Swiper core and required modules
-import SwiperCore, { SwiperOptions,Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import SwiperCore, { SwiperOptions, Pagination, Swiper, Navigation } from 'swiper';
 import { SwiperComponent } from 'swiper/angular';
 
 // install Swiper modules
-SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+SwiperCore.use([Pagination]);
+
+// const swiper2 = new Swiper('.swiper', {
+//   // Optional parameters
+//   loop: true,
+
+//   // If we need pagination
+//   pagination: {
+//     el: '.swiper-pagination',
+//   },
+
+//   // Navigation arrows
+//   navigation: {
+//     nextEl: '.swiper-button-next',
+//     prevEl: '.swiper-button-prev',
+//   },
+// });
 
 @Component({
   selector: 'app-gallerypage',
@@ -14,33 +30,23 @@ SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 })
 export class GallerypageComponent {
 
-  // @ViewChild('swiper', { static: false }) swiper!: SwiperComponent;
+  @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
 
   config: SwiperOptions = {
-    slidesPerView: 3,
-    spaceBetween: 50,
-    navigation: true,
-    pagination: { clickable: true },
-    scrollbar: { draggable: true },
+    // loop:true,
+    navigation:true,
+    pagination:true,
   };
 
   onSwiper($event:any){
-    console.log("slide changed : ",$event);
-  }
-
-  onSlideChange(){
-    console.log("slide changing ");
+    console.log("onSwiper raised : ",$event);
   }
 
   slideNext(){
-    console.log("next slide");
-    // console.log("swiper : ", this.swiper);
-
-    // this.swiper?.swiperRef.slideNext(100);
+    this.swiper?.swiperRef.slideNext(100);
   }
   slidePrev(){
-    console.log("previous slide");
-    // this.swiper?.swiperRef.slidePrev(100);
+    this.swiper?.swiperRef.slidePrev(100);
   }
 
 }
