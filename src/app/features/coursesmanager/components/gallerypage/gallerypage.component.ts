@@ -24,7 +24,7 @@ export class GallerypageComponent {
   }
 
   config: SwiperOptions = {
-    slidesPerView:1.25,
+    slidesPerView:1,
     loop:true,
     navigation:true,
     pagination:true,
