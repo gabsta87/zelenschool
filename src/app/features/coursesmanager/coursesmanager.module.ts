@@ -78,6 +78,9 @@ import { AngularfireService } from 'src/app/shared/service/angularfire.service';
           path:"partners",
           component:PartnerspageComponent
         },{
+          path:"donate",
+          component:DonatepageComponent
+        },{
           redirectTo:"/homepage",
           path:"",
           pathMatch:"full",

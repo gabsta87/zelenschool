@@ -16,8 +16,4 @@ export class NavbarComponent {
     {title:"Donate",page:"donate"},
     {title:"Login",page:"login"},
   ]
-
-  selectMenu(i:number){
-    
-  }
 }
