@@ -12,7 +12,7 @@ export class NavbarComponent {
     {title:"News",page:"news"},
     {title:"Partners",page:"partners"},
     {title:"Schedule",page:"schedule"},
-    {title:"Contacts",page:"contacts"},
+    {title:"Contact",page:"contact"},
     {title:"Donate",page:"donate"},
     {title:"Login",page:"login"},
   ]

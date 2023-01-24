@@ -72,6 +72,9 @@ import { AngularfireService } from 'src/app/shared/service/angularfire.service';
           path:"gallery",
           component:GallerypageComponent
         },{
+          path:"contact",
+          component:ContactpageComponent
+        },{
           redirectTo:"/homepage",
           path:"",
           pathMatch:"full",
