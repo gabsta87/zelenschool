@@ -2,37 +2,23 @@
     <div class="articlesListContainer">
     <ion-list lines="none" class="articlesList">
         <ion-list-header>
-            <ion-label>News</ion-label>
-          </ion-list-header>
+          <ion-label>News</ion-label>
+        </ion-list-header>
 
-          <ion-item>
-            <ion-card>
-                <ion-card-header>
-                  <ion-card-title>Article 1</ion-card-title>
-                  <ion-card-subtitle>Author</ion-card-subtitle>
-                  <ion-card-subtitle>Date</ion-card-subtitle>
-                </ion-card-header>
-              
-                <ion-card-content>
-                  Here's a small text description for the card content. Nothing more, nothing less.
-                </ion-card-content>
-              </ion-card>
-          </ion-item>
-
-          <ion-item>
-            <ion-card>
-                <ion-card-header>
-                  <ion-card-title>Article 2</ion-card-title>
-                  <ion-card-subtitle>Author</ion-card-subtitle>
-                  <ion-card-subtitle>Date</ion-card-subtitle>
-                </ion-card-header>
-              
-                <ion-card-content>
-                  Here's a small text description for the card content. Nothing more, nothing less.
-                </ion-card-content>
-              </ion-card>
-          </ion-item>
-
+        <ion-item *ngFor="let article of articles">
+        <ion-card>
+            <ion-card-header>
+              <ion-card-title>{{article.title}}</ion-card-title>
+              <!-- <ion-card-title>Titre</ion-card-title> -->
+              <ion-card-subtitle>{{article.author}}</ion-card-subtitle>
+              <ion-card-subtitle>{{article.time}}</ion-card-subtitle>
+            </ion-card-header>
+          
+            <ion-card-content>
+              {{article.content}}
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
 
     </ion-list>
     </div>

@@ -36,6 +36,10 @@ export class AngularfireService{
   getCalendarEntries(){
     return this.getElements("calendarEntries");
   }
+
+  getArticles(){
+    return firstValueFrom(this.getElements("articles"));
+  }
 }
 
   // addOrder(newValue:number){
