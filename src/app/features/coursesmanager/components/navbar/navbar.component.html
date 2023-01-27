@@ -4,5 +4,8 @@
         let i = index;" tab="{{item.page}}">
             <ion-label>{{item.title}}</ion-label>
         </ion-tab-button>
+        <ion-tab-button *ngIf="isAdmin()" tab="admin">
+            <ion-label> Administration </ion-label>
+        </ion-tab-button>
     </ion-tab-bar>
 </ion-tabs>

@@ -16,4 +16,8 @@ export class NavbarComponent {
     {title:"Donate",page:"donate"},
     {title:"Login",page:"login"},
   ]
+
+  isAdmin(){
+    return true;
+  }
 }

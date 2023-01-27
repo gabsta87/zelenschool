@@ -21,6 +21,7 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 import { FormsModule } from '@angular/forms';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { ProjectspageComponent } from './components/projectspage/projectspage.component';
+import { AdminpageComponent } from './components/adminpage/adminpage.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { ProjectspageComponent } from './components/projectspage/projectspage.co
     ContactpageComponent,
     DonatepageComponent,
     EditnewsComponent,
-    ProjectspageComponent
+    ProjectspageComponent,
+    AdminpageComponent
   ],
   imports: [
     SwiperModule,
