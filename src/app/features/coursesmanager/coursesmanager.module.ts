@@ -23,6 +23,7 @@ import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { ProjectspageComponent } from './components/projectspage/projectspage.component';
 import { AdminpageComponent } from './components/adminpage/adminpage.component';
 import { AdminpageGuard } from './guards/adminpage.guard';
+import { AdminpageresolveResolver } from './resolvers/adminpageresolve.resolver';
 
 
 @NgModule({
@@ -87,6 +88,9 @@ import { AdminpageGuard } from './guards/adminpage.guard';
           path:"admin",
           component:AdminpageComponent,
           canActivate:[AdminpageGuard],
+          resolve:{
+            adminData:AdminpageresolveResolver
+          }  
         },{
           redirectTo:"/homepage",
           path:"",

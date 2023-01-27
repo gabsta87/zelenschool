@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
-import {
-  Router, Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
-} from '@angular/router';
-import { Auth } from 'firebase/auth';
-import { firstValueFrom, Observable, of } from 'rxjs';
+import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 
 interface AdminData{
   articles:any[],
+  // courses:{author:string,attendantsId:string[],eventDate:string,maxParticipants:number,roomId:number}[],
   courses:any[],
   users:any[],
 }
@@ -19,12 +15,11 @@ interface AdminData{
 })
 export class AdminpageresolveResolver implements Resolve<AdminData> {
 
-  constructor(private readonly _auth:Auth,private readonly _dbAccess: AngularfireService){}
+  constructor(private readonly _dbAccess: AngularfireService){}
   
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<AdminData> {
 
     let result = {} as AdminData;
-
 
     result.courses = await firstValueFrom(this._dbAccess.getCalendarEntries());
     result.users = await firstValueFrom(this._dbAccess.getUsers());
