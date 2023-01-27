@@ -9,7 +9,6 @@ import { IonicModule } from '@ionic/angular';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { GallerypageComponent } from './components/gallerypage/gallerypage.component';
 import { SwiperModule } from 'swiper/angular';
-import { NewspageComponent } from './components/newspage/newspage.component';
 import { PartnerspageComponent } from './components/partnerspage/partnerspage.component';
 import { AboutpageComponent } from './components/aboutpage/aboutpage.component';
 import { SchedulepageComponent } from './components/schedulepage/schedulepage.component';
@@ -21,6 +20,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { FormsModule } from '@angular/forms';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
+import { ProjectspageComponent } from './components/projectspage/projectspage.component';
 
 
 @NgModule({
@@ -31,13 +31,13 @@ import { AngularfireService } from 'src/app/shared/service/angularfire.service';
     LoginpageComponent,
     NavbarComponent,
     GallerypageComponent,
-    NewspageComponent,
     PartnerspageComponent,
     AboutpageComponent,
     SchedulepageComponent,
     ContactpageComponent,
     DonatepageComponent,
-    EditnewsComponent
+    EditnewsComponent,
+    ProjectspageComponent
   ],
   imports: [
     SwiperModule,
@@ -60,9 +60,6 @@ import { AngularfireService } from 'src/app/shared/service/angularfire.service';
           path:"login",
           component:LoginpageComponent
         },{
-          path:"news",
-          component:NewspageComponent
-        },{
           path:"about",
           component:AboutpageComponent
         },{
@@ -80,6 +77,9 @@ import { AngularfireService } from 'src/app/shared/service/angularfire.service';
         },{
           path:"donate",
           component:DonatepageComponent
+        },{
+          path:"projects",
+          component:ProjectspageComponent
         },{
           redirectTo:"/homepage",
           path:"",
