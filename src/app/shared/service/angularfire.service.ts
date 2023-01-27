@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Auth, User } from '@angular/fire/auth';
-import { collection, QueryConstraint, Firestore, where, addDoc, collectionData, orderBy, setDoc, doc, deleteDoc, updateDoc, arrayUnion, arrayRemove, getDoc } from '@angular/fire/firestore';
-import { query, GeoPoint } from '@firebase/firestore';
-import { firstValueFrom, map, min } from 'rxjs';
+import { collection, QueryConstraint, Firestore, where, addDoc, collectionData, doc, setDoc} from '@angular/fire/firestore';
+import { query } from '@firebase/firestore';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn:'root'
@@ -41,8 +41,30 @@ export class AngularfireService{
     return this.getElements("users");
   }
 
+  async getUser(userId:string){
+    let temp = await firstValueFrom(this.getUsers());
+    return temp.find(e => e['id'] === userId);
+  }
+
+  setUser(newName:string) {
+    const docRef = doc(this._dbaccess,'users/'+this._auth.currentUser?.uid);
+    return setDoc(docRef,{name:newName});
+  }
+
   getArticles(){
     return firstValueFrom(this.getElements("articles"));
+  }
+
+  async createUser(newUser:User,userName?:string){
+    let userId = newUser.uid;
+    let userStored = await this.getUser(userId);
+
+    if(userStored){
+      return
+    }
+
+    const docRef = doc(this._dbaccess,'users/'+userId);
+    return setDoc(docRef,{name: userName ? userName : newUser.displayName});
   }
 }
 
