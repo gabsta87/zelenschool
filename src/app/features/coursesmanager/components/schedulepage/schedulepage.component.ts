@@ -56,11 +56,6 @@ export class SchedulepageComponent {
     private readonly _dbAccess : AngularfireService,
     ) {  }
 
-  async ionViewWillEnter(){
-   this.eventsObs = this._dbAccess.getCalendarEntries();
-   console.log("fetched events : ",this.eventsObs);
-  }
-
   actions: CalendarEventAction[] = [
     {
       label: '<i class="fas fa-fw fa-pencil-alt"></i>',
