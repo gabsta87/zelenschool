@@ -14,10 +14,15 @@ export class AdminpageComponent {
   ) {}
 
   adminData!:any;
+  usersList!:any;
+  coursesList!:any;
 
   ionViewWillEnter():void{
     this.adminData = this._route.snapshot.data['adminData'];
     console.log("admin data : ",this.adminData);
+    this.usersList = this.adminData.users;
+    this.coursesList = this.adminData.courses;
+    // console.log("users list : ",this.usersList);
     
   }
 }
