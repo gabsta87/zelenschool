@@ -37,6 +37,10 @@ export class AngularfireService{
     return this.getElements("calendarEntries");
   }
 
+  getUsers(){
+    return this.getElements("users");
+  }
+
   getArticles(){
     return firstValueFrom(this.getElements("articles"));
   }

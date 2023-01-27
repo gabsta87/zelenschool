@@ -83,6 +83,9 @@ import { AdminpageComponent } from './components/adminpage/adminpage.component';
           path:"projects",
           component:ProjectspageComponent
         },{
+          path:"admin",
+          component:AdminpageComponent
+        },{
           redirectTo:"/homepage",
           path:"",
           pathMatch:"full",
