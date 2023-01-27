@@ -22,6 +22,7 @@ import { FormsModule } from '@angular/forms';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { ProjectspageComponent } from './components/projectspage/projectspage.component';
 import { AdminpageComponent } from './components/adminpage/adminpage.component';
+import { AdminpageGuard } from './guards/adminpage.guard';
 
 
 @NgModule({
@@ -84,7 +85,8 @@ import { AdminpageComponent } from './components/adminpage/adminpage.component';
           component:ProjectspageComponent
         },{
           path:"admin",
-          component:AdminpageComponent
+          component:AdminpageComponent,
+          canActivate:[AdminpageGuard],
         },{
           redirectTo:"/homepage",
           path:"",
