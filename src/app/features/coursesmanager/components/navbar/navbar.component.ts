@@ -10,8 +10,7 @@ import { UsermanagementService } from 'src/app/shared/service/usermanagement.ser
 export class NavbarComponent {
   constructor(private readonly _userS:UsermanagementService){}
 
-  // isAdmin = this._userS.isAdmin();
-  isAdmin = new BehaviorSubject(this._userS.isLoggedAsAdmin);
+  isAdmin = this._userS.isLoggedAsAdmin;
 
   isLogged = this._userS.isLogged;
 
