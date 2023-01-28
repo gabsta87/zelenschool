@@ -24,6 +24,9 @@ import { ProjectspageComponent } from './components/projectspage/projectspage.co
 import { AdminpageComponent } from './components/adminpage/adminpage.component';
 import { AdminpageGuard } from './guards/adminpage.guard';
 import { AdminpageresolveResolver } from './resolvers/adminpageresolve.resolver';
+import { AccountpageComponent } from './components/accountpage/accountpage.component';
+import { UserpageResolver } from './resolvers/userpage.resolver';
+import { UserLoggedGuard } from './guards/user-logged.guard';
 
 
 @NgModule({
@@ -41,7 +44,8 @@ import { AdminpageresolveResolver } from './resolvers/adminpageresolve.resolver'
     DonatepageComponent,
     EditnewsComponent,
     ProjectspageComponent,
-    AdminpageComponent
+    AdminpageComponent,
+    AccountpageComponent
   ],
   imports: [
     SwiperModule,
@@ -84,6 +88,13 @@ import { AdminpageresolveResolver } from './resolvers/adminpageresolve.resolver'
         },{
           path:"projects",
           component:ProjectspageComponent
+        },{
+          path:"account",
+          component:AccountpageComponent,
+          canActivate:[UserLoggedGuard],
+          resolve:{
+            userData:UserpageResolver
+          }
         },{
           path:"admin",
           component:AdminpageComponent,

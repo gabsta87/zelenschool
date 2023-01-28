@@ -9,7 +9,7 @@ export class AdminpageGuard implements CanActivate {
   constructor(private readonly userServ:UsermanagementService){}
   async canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Promise<any> {
+    state: RouterStateSnapshot): Promise<boolean> {
       return this.userServ.isAdmin()
   }
   
