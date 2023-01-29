@@ -1,26 +1,21 @@
 import { Injectable } from '@angular/core';
-import {
-  Router, Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
-} from '@angular/router';
+import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { DocumentData } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CalendareventsresolveResolver implements Resolve<boolean> {
+export class CalendareventsresolveResolver implements Resolve<Observable<DocumentData[]>> {
 
-  constructor(_dbAccess:AngularfireService){
+  constructor(private readonly _db:AngularfireService){}
+  
+  eventsObs!:Observable<DocumentData[]>;
 
-  }
-
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-
-
-   this.eventsObs = this._dbAccess.getCalendarEntries();
-   console.log("fetched events : ",this.eventsObs);
-    return of(true);
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<DocumentData[]> {
+    this.eventsObs = this._db.getCalendarEntries();
+    console.log("fetched events : ",this.eventsObs);
+    return this.eventsObs;
   }
 }
