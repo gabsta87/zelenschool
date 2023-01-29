@@ -74,7 +74,14 @@
     </ion-row>
 </ion-grid>
 
-<div class="events_grid" *ngIf="eventsObs | async as eventsList">
+<p>schedule data : </p>
+{{scheduleData|json}}
+<div class="events_grid" *ngIf="scheduleData | async as eventsList">
+<!-- <div class="events_grid" *ngIf="eventsObs | async as eventsList"> -->
+    <ion-text>
+        <p>eventslist : </p>
+        {{eventsList|json}}
+    </ion-text>
 <ion-grid>
     <ion-row>
         <ion-col>
@@ -96,7 +103,7 @@
     <ion-row *ngFor="let event of eventsList; index as i">
         <ion-col>
             <!-- {{event['title']}} -->
-            {{event|json}}
+            <!-- {{event|json}} -->
         </ion-col>
         <ion-col>
             {{event['eventDate']}}

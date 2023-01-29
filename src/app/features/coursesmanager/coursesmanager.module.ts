@@ -27,6 +27,7 @@ import { AdminpageresolveResolver } from './resolvers/adminpageresolve.resolver'
 import { AccountpageComponent } from './components/accountpage/accountpage.component';
 import { UserpageResolver } from './resolvers/userpage.resolver';
 import { UserLoggedGuard } from './guards/user-logged.guard';
+import { CalendareventsresolveResolver } from './resolvers/calendareventsresolve.resolver';
 
 
 @NgModule({
@@ -72,7 +73,10 @@ import { UserLoggedGuard } from './guards/user-logged.guard';
           component:AboutpageComponent
         },{
           path:"schedule",
-          component:SchedulepageComponent
+          component:SchedulepageComponent,
+          resolve:{
+            scheduleData:CalendareventsresolveResolver
+          }
         },{
           path:"gallery",
           component:GallerypageComponent

@@ -7,6 +7,7 @@ import { EventColor } from 'calendar-utils';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 
 import { DocumentData } from '@angular/fire/firestore';
+import { ActivatedRoute } from '@angular/router';
 
 
 export interface CalendarMonthViewEventTimesChangedEvent<
@@ -38,23 +39,28 @@ const colors: Record<string, EventColor> = {
   styleUrls: ['./schedulepage.component.scss']
 })
 export class SchedulepageComponent {
-  @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
-
+  
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
   viewDate: Date = new Date();
-  modalData!: {
-    action: string;
-    event: CalendarEvent;
-  };
+
+  scheduleData!:Observable<DocumentData[]>;
+  // scheduleData:any;
   
   clickedDate!: Date;
   eventsObs!:Observable<DocumentData[]>;
   eventsList:any;
 
   constructor(
-    private readonly _dbAccess : AngularfireService,
+    private readonly _dbAccess : AngularfireService,    
+    private readonly _route: ActivatedRoute
     ) {  }
+
+  ionViewWillEnter(){
+    this.scheduleData = this._route.snapshot.data['scheduleData'];
+    console.log("scheduleData : ",this.scheduleData);
+    
+  }
 
   actions: CalendarEventAction[] = [
     {
@@ -127,6 +133,8 @@ export class SchedulepageComponent {
     newStart,
     newEnd,
   }: CalendarEventTimesChangedEvent): void {
+    console.log("Event time changed event");
+    
     this.events = this.events.map((iEvent) => {
       if (iEvent === event) {
         return {
@@ -141,31 +149,9 @@ export class SchedulepageComponent {
   }
 
   handleCalendarEntry(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
     console.log("Calendar entry selected",event);
     
     // this.modal.open(this.modalContent, { size: 'lg' });
-  }
-
-  addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors['red'],
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
-  }
-
-  deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
   }
 
   setView(view: CalendarView) {
@@ -179,7 +165,7 @@ export class SchedulepageComponent {
   myclick($event:any){
     this.clickedDate = $event.day.date;
     console.log("clicked date : ",this.clickedDate);
-    this._dbAccess.createCalendarEntry(this.clickedDate);
+    // this._dbAccess.createCalendarEntry(this.clickedDate);
   }
 
 }
