@@ -49,7 +49,6 @@ export class SchedulepageComponent {
   
   clickedDate!: Date;
   eventsObs!:Observable<DocumentData[]>;
-  eventsList:any;
 
   constructor(
     private readonly _dbAccess : AngularfireService,    
