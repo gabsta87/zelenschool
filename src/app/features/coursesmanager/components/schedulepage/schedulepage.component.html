@@ -74,14 +74,7 @@
     </ion-row>
 </ion-grid>
 
-<p>schedule data : </p>
-{{scheduleData|json}}
-<div class="events_grid" *ngIf="scheduleData | async as eventsList">
-<!-- <div class="events_grid" *ngIf="eventsObs | async as eventsList"> -->
-    <ion-text>
-        <p>eventslist : </p>
-        {{eventsList|json}}
-    </ion-text>
+<div class="events_grid" *ngIf="extractedData | async as eventsList">
 <ion-grid>
     <ion-row>
         <ion-col>
@@ -102,20 +95,24 @@
     </ion-row>
     <ion-row *ngFor="let event of eventsList; index as i">
         <ion-col>
-            <!-- {{event['title']}} -->
-            <!-- {{event|json}} -->
+            {{event['title']}}
         </ion-col>
         <ion-col>
-            {{event['eventDate']}}
+            {{event['eventDate']| date: "hh:mm d MMM, yy"}}
+            <!-- {{event['eventDate']| date}} -->
         </ion-col>
         <ion-col>
-            Me
+            {{event['author'].f_name}} {{event['author'].l_name}}
+        </ion-col>
+        <ion-col>            
+            {{event['room_id']}}
         </ion-col>
         <ion-col>
-            1
-        </ion-col>
-        <ion-col>
-            Nobody
+            <ion-list *ngIf="event['attendantsId']" lines="none">
+                <ion-item *ngFor="let att of event['attendantsId']">
+                    {{att.f_name}} {{att.l_name}}
+                </ion-item>
+            </ion-list>
         </ion-col>
     </ion-row>
 </ion-grid>

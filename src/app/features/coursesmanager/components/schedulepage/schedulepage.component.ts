@@ -1,10 +1,11 @@
 import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, Output, EventEmitter, } from '@angular/core';
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, } from 'date-fns';
 import { WeekDay, MonthView, MonthViewDay, ViewPeriod, } from 'calendar-utils';
-import { Observable, Subject, switchMap } from 'rxjs';
+import { elementAt, firstValueFrom, map, Observable, Subject, switchMap } from 'rxjs';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
+import * as dayjs from 'dayjs';
 
 import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
@@ -43,23 +44,36 @@ export class SchedulepageComponent {
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
   viewDate: Date = new Date();
-
-  scheduleData!:Observable<DocumentData[]>;
-  // scheduleData:any;
-  
   clickedDate!: Date;
-  eventsObs!:Observable<DocumentData[]>;
+
+  scheduleData = this._db.getCalendarEntries();
+  extractedData  = this.scheduleData.pipe(switchMap(async (e:any) => {
+    e.forEach(async (elem:any)=>
+      {
+        elem.author = await this._db.getUser(elem.author);
+        
+        elem.eventDate = dayjs.unix(elem.eventDate.seconds);
+
+        if(elem.attendantsId){
+          elem.attendantsId.forEach(async (attendant:any,index:number) => {
+            elem.attendantsId[index] = await this._db.getUser(attendant);
+            console.log("elem : ",elem);
+          })
+        }
+
+       console.log("elem : ",elem);
+       return elem;
+      }
+    )
+    return e;
+  }));
+
+  newElem : any;
 
   constructor(
-    private readonly _dbAccess : AngularfireService,    
+    private readonly _db : AngularfireService,    
     private readonly _route: ActivatedRoute
     ) {  }
-
-  ionViewWillEnter(){
-    this.scheduleData = this._route.snapshot.data['scheduleData'];
-    console.log("scheduleData : ",this.scheduleData);
-    
-  }
 
   actions: CalendarEventAction[] = [
     {
@@ -164,6 +178,7 @@ export class SchedulepageComponent {
   myclick($event:any){
     this.clickedDate = $event.day.date;
     console.log("clicked date : ",this.clickedDate);
+    
     // this._dbAccess.createCalendarEntry(this.clickedDate);
   }
 

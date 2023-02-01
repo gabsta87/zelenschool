@@ -15,7 +15,6 @@ export class CalendareventsresolveResolver implements Resolve<Observable<Documen
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<DocumentData[]> {
     this.eventsObs = this._db.getCalendarEntries();
-    console.log("fetched events : ",this.eventsObs);
     return this.eventsObs;
   }
 }

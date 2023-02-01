@@ -41,8 +41,11 @@ export class AngularfireService{
     return this.getElements("users");
   }
 
-  async getUser(userId:string){
+  async getUser(userId:string):Promise<any>{
     let temp = await firstValueFrom(this.getUsers());
+    console.log("users list  : ",temp);
+    console.log("looking for ",userId);
+    
     return temp.find(e => e['id'] === userId);
   }
 
