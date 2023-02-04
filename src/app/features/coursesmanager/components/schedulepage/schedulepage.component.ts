@@ -85,8 +85,6 @@ export class SchedulepageComponent {
     setTimeout(() => {
       this.refresh.next();
     }, 100);
-    
-    // this.extractedData = await firstValueFrom(this._route.snapshot.data["scheduleData"]);
   }
   
   // events: CalendarEvent[] = [
