@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Auth, User } from '@angular/fire/auth';
 import { collection, QueryConstraint, Firestore, where, addDoc, collectionData, doc, setDoc} from '@angular/fire/firestore';
+import { Title } from '@angular/platform-browser';
 import { query } from '@firebase/firestore';
 import { firstValueFrom } from 'rxjs';
 
@@ -21,7 +22,7 @@ export class AngularfireService{
     return observableStream;
   }
 
-  createCalendarEntry(newEntry: Date) {
+  createCalendarEntry(newEntry: {title:string,time:string,author_id:string,room:number}) {
     let attendantId = "_";
     if(!this._auth.currentUser?.uid){
       attendantId="_"
@@ -30,7 +31,7 @@ export class AngularfireService{
     }
     // if(!this._auth.currentUser?.uid)
     //   return
-    return addDoc(collection(this._dbaccess,"calendarEntries"),{eventDate:newEntry,attendantsId:[attendantId]});
+    return addDoc(collection(this._dbaccess,"calendarEntries"),{eventDate:newEntry.time,attendantsId:[],title:newEntry.title,author:newEntry.author_id,room_id:newEntry.room});
   }
 
   getCalendarEntries(){

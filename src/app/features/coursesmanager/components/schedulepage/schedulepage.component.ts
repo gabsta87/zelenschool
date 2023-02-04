@@ -47,7 +47,7 @@ export class SchedulepageComponent {
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
   viewDate: Date = new Date();
-  clickedDate!: Date;
+  clickedDate: dayjs.Dayjs = dayjs(this.viewDate);
 
   newEvent:{title:string,time:string,author_id:string,room:number} = {title:"",time:"",author_id:"",room:-1};
 
@@ -85,7 +85,7 @@ export class SchedulepageComponent {
     this.extractedData = await this._route.snapshot.data["scheduleData"];
 
     this.extractedData.forEach((e:DocumentData) => {
-      this.events.push({title : e['title'],start : dayjs(e['eventDate']).toDate() })
+      this.events.push({title : e['title'],start : dayjs(e['eventDate']).toDate(), actions : this.actions, allDay:false })
     })
 
     setTimeout(() => {
@@ -173,7 +173,7 @@ export class SchedulepageComponent {
   }
 
   myclick($event:any){
-    this.clickedDate = $event.day.date;
+    this.clickedDate = dayjs($event.day.date);
     console.log("clicked date : ",this.clickedDate);
     let newDay = dayjs(this.clickedDate);
     console.log("new day : ", newDay.toJSON());
@@ -190,6 +190,9 @@ export class SchedulepageComponent {
   confirm() {
     this.modal.dismiss(this.newEvent, 'confirm');
     console.log("new event : ",this.newEvent);
+
+    this._db.createCalendarEntry(this.newEvent);
+    this.refresh.next();
   }
   message !: string;
   onWillDismiss(event: Event) {
