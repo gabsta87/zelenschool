@@ -51,8 +51,8 @@ export class SchedulepageComponent {
 
   newEvent:{title:string,time:string,author_id:string,room:number} = {title:"",time:"",author_id:"",room:-1};
 
-  extractedData:Observable<any> = this._route.snapshot.data["scheduleData"];
-  // extractedData!:any;
+  // extractedData:Observable<any> = this._route.snapshot.data["scheduleData"];
+  extractedData!:DocumentData[];
 
   constructor(
     private readonly _db : AngularfireService,    
@@ -81,24 +81,16 @@ export class SchedulepageComponent {
 
   events: CalendarEvent[] = [];
   
-  ionViewWillEnter(){
-    this.extractedData.pipe(map((e:any) => {
-      console.log("first e : ",e);
-      let temp:{start:string,title:string}[] = [];
-      
-      e.forEach((element:any) => {
-        console.log("e : ",element);
-        temp.push( {start:element.eventDate,title:element.title});
-      });
-      return temp;
-    })).subscribe((data:any)=>{
-      this.events.push(data);
-    });
+  async ionViewWillEnter(){
+    this.extractedData = await this._route.snapshot.data["scheduleData"];
+
+    this.extractedData.forEach((e:DocumentData) => {
+      this.events.push({title : e['title'],start : dayjs(e['eventDate']).toDate() })
+    })
 
     setTimeout(() => {
       this.refresh.next();
     }, 100);
-    
   }
   
   // events: CalendarEvent[] = [
