@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, Output, EventEmitter, } from '@angular/core';
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, } from 'date-fns';
 import { WeekDay, MonthView, MonthViewDay, ViewPeriod, } from 'calendar-utils';
-import { BehaviorSubject, elementAt, firstValueFrom, map, Observable, Subject, switchMap } from 'rxjs';
+import { elementAt, firstValueFrom, map, Observable, Subject, switchMap } from 'rxjs';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
@@ -51,7 +51,8 @@ export class SchedulepageComponent {
 
   newEvent:{title:string,time:string,author_id:string,room:number} = {title:"",time:"",author_id:"",room:-1};
 
-  extractedData:any;
+  extractedData:Observable<any> = this._route.snapshot.data["scheduleData"];
+  // extractedData!:any;
 
   constructor(
     private readonly _db : AngularfireService,    
@@ -80,11 +81,24 @@ export class SchedulepageComponent {
 
   events: CalendarEvent[] = [];
   
-  async ionViewWillEnter(){
-    this.extractedData = await this._route.snapshot.data["scheduleData"];
+  ionViewWillEnter(){
+    this.extractedData.pipe(map((e:any) => {
+      console.log("first e : ",e);
+      let temp:{start:string,title:string}[] = [];
+      
+      e.forEach((element:any) => {
+        console.log("e : ",element);
+        temp.push( {start:element.eventDate,title:element.title});
+      });
+      return temp;
+    })).subscribe((data:any)=>{
+      this.events.push(data);
+    });
+
     setTimeout(() => {
       this.refresh.next();
     }, 100);
+    
   }
   
   // events: CalendarEvent[] = [

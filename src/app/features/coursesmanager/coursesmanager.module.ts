@@ -76,7 +76,7 @@ import { CalendarfixedeventsResolver } from './resolvers/calendarfixedevents.res
           path:"schedule",
           component:SchedulepageComponent,
           resolve:{
-            scheduleData:CalendarfixedeventsResolver
+            scheduleData:CalendareventsresolveResolver
           }
         },{
           path:"gallery",
