@@ -8,14 +8,14 @@ import * as dayjs from 'dayjs';
 @Injectable({
   providedIn: 'root'
 })
-export class CalendareventsresolveResolver implements Resolve<Observable<Observable<DocumentData[]>>> {
-
+export class CalendarfixedeventsResolver implements Resolve<DocumentData[]> {
+  
   constructor(private readonly _db:AngularfireService){}
   
   eventsObs!:Observable<DocumentData[]>;
-  extractedData!:Observable<DocumentData[]>;
+  extractedData!:any;
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Observable<DocumentData[]>> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): DocumentData[]{
     this.eventsObs = this._db.getCalendarEntries();
     this.extractedData  = this.eventsObs.pipe(switchMap(async (e:any) => {
       e.forEach(async (elem:any)=>
@@ -34,6 +34,7 @@ export class CalendareventsresolveResolver implements Resolve<Observable<Observa
       )
       return e;
       }));
-    return of(this.extractedData);
+      
+    return this.extractedData;
   }
 }

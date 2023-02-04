@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, Output, EventEmitter, } from '@angular/core';
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, } from 'date-fns';
 import { WeekDay, MonthView, MonthViewDay, ViewPeriod, } from 'calendar-utils';
-import { elementAt, firstValueFrom, map, Observable, Subject, switchMap } from 'rxjs';
+import { BehaviorSubject, elementAt, firstValueFrom, map, Observable, Subject, switchMap } from 'rxjs';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
@@ -9,6 +9,8 @@ import * as dayjs from 'dayjs';
 
 import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
+import { IonModal } from '@ionic/angular';
+import { OverlayEventDetail } from '@ionic/core';
 
 
 export interface CalendarMonthViewEventTimesChangedEvent<
@@ -40,35 +42,16 @@ const colors: Record<string, EventColor> = {
   styleUrls: ['./schedulepage.component.scss']
 })
 export class SchedulepageComponent {
+  @ViewChild(IonModal) modal!: IonModal;
   
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
   viewDate: Date = new Date();
   clickedDate!: Date;
 
-  scheduleData = this._db.getCalendarEntries();
-  extractedData  = this.scheduleData.pipe(switchMap(async (e:any) => {
-    e.forEach(async (elem:any)=>
-      {
-        elem.author = await this._db.getUser(elem.author);
-        
-        elem.eventDate = dayjs.unix(elem.eventDate.seconds);
+  newEvent:{title:string,time:string,author_id:string,room:number} = {title:"",time:"",author_id:"",room:-1};
 
-        if(elem.attendantsId){
-          elem.attendantsId.forEach(async (attendant:any,index:number) => {
-            elem.attendantsId[index] = await this._db.getUser(attendant);
-            console.log("elem : ",elem);
-          })
-        }
-
-       console.log("elem : ",elem);
-       return elem;
-      }
-    )
-    return e;
-  }));
-
-  newElem : any;
+  extractedData:any;
 
   constructor(
     private readonly _db : AngularfireService,    
@@ -96,6 +79,16 @@ export class SchedulepageComponent {
   refresh = new Subject<void>();
 
   events: CalendarEvent[] = [];
+  
+  async ionViewWillEnter(){
+    this.extractedData = await this._route.snapshot.data["scheduleData"];
+    setTimeout(() => {
+      this.refresh.next();
+    }, 100);
+    
+    // this.extractedData = await firstValueFrom(this._route.snapshot.data["scheduleData"]);
+  }
+  
   // events: CalendarEvent[] = [
   //   {
   //     start: subDays(startOfDay(new Date()), 1),
@@ -178,8 +171,34 @@ export class SchedulepageComponent {
   myclick($event:any){
     this.clickedDate = $event.day.date;
     console.log("clicked date : ",this.clickedDate);
+    let newDay = dayjs(this.clickedDate);
+    console.log("new day : ", newDay.toJSON());
+    this.newEvent.time = dayjs(this.clickedDate).toISOString();
     
     // this._dbAccess.createCalendarEntry(this.clickedDate);
+  }
+
+  
+  cancel() {
+    this.modal.dismiss(null, 'cancel');
+  }
+
+  confirm() {
+    this.modal.dismiss(this.newEvent, 'confirm');
+    console.log("new event : ",this.newEvent);
+  }
+  message !: string;
+  onWillDismiss(event: Event) {
+    const ev = event as CustomEvent<OverlayEventDetail<string>>;
+    if (ev.detail.role === 'confirm') {
+      this.message = `Hello, ${ev.detail.data}!`;
+    }
+  }
+
+  updateTime($event:any){
+    console.log("target value ",$event.target.value);
+
+    this.newEvent.time = dayjs($event.target.value).toString();
   }
 
 }
