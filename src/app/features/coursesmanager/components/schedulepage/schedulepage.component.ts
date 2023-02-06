@@ -18,6 +18,7 @@ import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core';
+import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 
 
 export interface CalendarMonthViewEventTimesChangedEvent<
@@ -56,14 +57,15 @@ export class SchedulepageComponent {
   viewDate: Date = new Date();
   clickedDate: dayjs.Dayjs = dayjs(this.viewDate);
 
-  newEvent:{title:string,time:string,author_id:string,room:number} = {title:"",time:"",author_id:"",room:-1};
+  newEvent:{title:string,time:string,room:number,max_participants:number} = {title:"",time:"",room:-1,max_participants:0};
 
   // extractedData:Observable<any> = this._route.snapshot.data["scheduleData"];
   extractedData!:DocumentData[];
 
   constructor(
     private readonly _db : AngularfireService,    
-    private readonly _route: ActivatedRoute
+    private readonly _route: ActivatedRoute,
+    private readonly _user: UsermanagementService
     ) {
       // dayjs.tz.setDefault('');
     }
@@ -99,7 +101,7 @@ export class SchedulepageComponent {
 
     setTimeout(() => {
       this.refresh.next();
-    }, 100);
+    }, 200);
   }
   
   // events: CalendarEvent[] = [
@@ -183,15 +185,8 @@ export class SchedulepageComponent {
 
   myclick($event:any){
     this.clickedDate = dayjs($event.day.date).add(13,'hour');
-    // this.clickedDate = dayjs($event.day.date);
-    console.log("clicked date : ",this.clickedDate);
-
-    this.newEvent.time = this.clickedDate.toString();
-    console.log("new event time : ",this.newEvent.time);
-    
-    // this._dbAccess.createCalendarEntry(this.clickedDate);
+    this.newEvent.time = this.clickedDate.toISOString();
   }
-
   
   cancel() {
     this.modal.dismiss(null, 'cancel');
@@ -200,11 +195,19 @@ export class SchedulepageComponent {
   confirm() {
     this.modal.dismiss(this.newEvent, 'confirm');
     console.log("new event : ",this.newEvent);
-
+    
+    if(!this._user.isTeacher() || !this._user.isAdmin()){
+      console.log("User doesn't have the rights to create an event");
+      return
+    }
+    
     this._db.createCalendarEntry(this.newEvent);
+
     this.refresh.next();
   }
+
   message !: string;
+  
   onWillDismiss(event: Event) {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     if (ev.detail.role === 'confirm') {
@@ -216,6 +219,12 @@ export class SchedulepageComponent {
     console.log("target value ",$event.target.value);
 
     this.newEvent.time = dayjs($event.target.value).toString();
+    // this.newEvent.time = $event.target.value;
+  }
+
+  creatingEvent($event:any){
+    console.log("clicked date : ",this.clickedDate);
+    console.log("new event time : ",this.newEvent.time);
   }
 
 }

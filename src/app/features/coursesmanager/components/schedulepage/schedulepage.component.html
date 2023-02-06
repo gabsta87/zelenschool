@@ -39,7 +39,7 @@
 
             <ion-item>
                 <ion-label>Max participants</ion-label>
-                <ion-input type="number" placeholder="00"></ion-input>
+                <ion-input type="number" placeholder="00" [(ngModel)]="newEvent.max_participants"></ion-input>
             </ion-item>
 
             
@@ -115,11 +115,11 @@
             </h3>
         </ion-col>
         <ion-col>
-            <ion-text>{{clickedDate}}</ion-text>
+            <ion-text>{{clickedDate|json}}</ion-text>
         </ion-col>
         <ion-col>
             <ion-buttons class="ion-justify-content-center">
-                <ion-button id="open-modal" fill="solid" >Add new</ion-button>
+                <ion-button id="open-modal" fill="solid" (click)="creatingEvent($event)">Add new</ion-button>
             </ion-buttons>
         </ion-col>
     </ion-row>
@@ -146,7 +146,8 @@
     </ion-row>
     <ion-row *ngFor="let event of eventsList; index as i">
         <ion-col>
-            {{event['title']}}
+            {{event['title']}} (max:{{event['max_participants']}})
+            <!-- {{event['title']}} -->
         </ion-col>
         <ion-col>
             {{event['eventDate']| date: "HH:mm d MMM, yy"}}

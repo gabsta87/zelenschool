@@ -9,9 +9,8 @@ import { AngularfireService } from './angularfire.service';
 export class UsermanagementService {
 
   constructor(private readonly _db:AngularfireService, private readonly _auth:Auth) {
+    
     _auth.onAuthStateChanged(user=>{
-      console.log("user : ",user);
-      
       if(user){
         this.isLogged.next(true);
           this.checkStatus("admin").then(newVal=>{
@@ -24,19 +23,28 @@ export class UsermanagementService {
   }
 
   isLoggedAsAdmin = new BehaviorSubject(false);
-  // isLoggedAsAdmin = new BehaviorSubject<boolean|undefined>(false);
   isLogged = new BehaviorSubject(false)
+
+  userData:any = undefined;
 
   private async checkStatus(requestedStatus:string):Promise<boolean>{
     let userId = this._auth?.currentUser?.uid;
 
       if(userId){
-        let userData = await this._db.getUser(userId);
-        if(userData && userData['status'] == requestedStatus){
+        
+        // ALERT: no dynamic status changing. Need to login to update status
+        if(this.userData == undefined)
+          this.userData = await this._db.getUser(userId);
+        
+        if(this.userData && this.userData['status'] == requestedStatus){
           return true;
         }
       }
       return false
+  }
+
+  getId(){
+    return this._auth.currentUser?.uid;
   }
 
   async isAdmin(){

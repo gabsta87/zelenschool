@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth, User } from '@angular/fire/auth';
 import { collection, QueryConstraint, Firestore, where, addDoc, collectionData, doc, setDoc} from '@angular/fire/firestore';
-import { Title } from '@angular/platform-browser';
 import { query } from '@firebase/firestore';
 import { firstValueFrom } from 'rxjs';
 
@@ -11,7 +10,8 @@ import { firstValueFrom } from 'rxjs';
 export class AngularfireService{
   constructor(
     private readonly _dbaccess:Firestore,
-    private readonly _auth:Auth) { }
+    private readonly _auth:Auth,
+  ) { }
 
   private getElements(name:string,...constraint:QueryConstraint[]){
     const myCollection = collection(this._dbaccess,name);
@@ -22,16 +22,20 @@ export class AngularfireService{
     return observableStream;
   }
 
-  createCalendarEntry(newEntry: {title:string,time:string,author_id:string,room:number}) {
-    let attendantId = "_";
+  createCalendarEntry(newEntry: {title:string,time:string,room:number,max_participants:number}) {
     if(!this._auth.currentUser?.uid){
-      attendantId="_"
-    }else{
-      attendantId = this._auth.currentUser.uid
+      console.log("User not logged, no event created");
+      return
     }
-    // if(!this._auth.currentUser?.uid)
-    //   return
-    return addDoc(collection(this._dbaccess,"calendarEntries"),{eventDate:newEntry.time,attendantsId:[],title:newEntry.title,author:newEntry.author_id,room_id:newEntry.room});
+
+    return addDoc(collection(this._dbaccess,"calendarEntries"),{
+      eventDate:newEntry.time,
+      attendantsId:[],
+      title:newEntry.title,
+      author:this._auth.currentUser.uid,
+      room_id:newEntry.room,
+      max_participants:newEntry.max_participants
+    });
   }
 
   getCalendarEntries(){
