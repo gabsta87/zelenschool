@@ -6,6 +6,13 @@ import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, Cal
 import { EventColor } from 'calendar-utils';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import * as dayjs from 'dayjs';
+// import utc from 'dayjs/plugin/utc';
+// import timezone from 'dayjs/plugin/timezone';
+
+// dayjs.extend(utc);
+// dayjs.extend(timezone); 
+
+// const mytime = dayjs().tz("Europe/Berlin");
 
 import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
@@ -57,7 +64,9 @@ export class SchedulepageComponent {
   constructor(
     private readonly _db : AngularfireService,    
     private readonly _route: ActivatedRoute
-    ) {  }
+    ) {
+      // dayjs.tz.setDefault('');
+    }
 
   actions: CalendarEventAction[] = [
     {
@@ -173,11 +182,12 @@ export class SchedulepageComponent {
   }
 
   myclick($event:any){
-    this.clickedDate = dayjs($event.day.date);
+    this.clickedDate = dayjs($event.day.date).add(13,'hour');
+    // this.clickedDate = dayjs($event.day.date);
     console.log("clicked date : ",this.clickedDate);
-    let newDay = dayjs(this.clickedDate);
-    console.log("new day : ", newDay.toJSON());
-    this.newEvent.time = dayjs(this.clickedDate).toISOString();
+
+    this.newEvent.time = this.clickedDate.toString();
+    console.log("new event time : ",this.newEvent.time);
     
     // this._dbAccess.createCalendarEntry(this.clickedDate);
   }
