@@ -218,7 +218,7 @@ export class SchedulepageComponent {
   updateTime($event:any){
     console.log("target value ",$event.target.value);
 
-    this.newEvent.time = dayjs($event.target.value).toString();
+    this.newEvent.time = dayjs($event.target.value).toISOString();
     // this.newEvent.time = $event.target.value;
   }
 
