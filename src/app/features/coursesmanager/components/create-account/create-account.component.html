@@ -1,0 +1,48 @@
+<ion-content>
+    <div class="createItems">
+        <!-- <form (ngSubmit)="register()" [formGroup]="profileForm"> -->
+        <form (ngSubmit)="register()">
+            <ion-list lines="none">
+                <ion-item>
+                    <ion-label>Email :</ion-label>
+                    <!-- <ion-input [(ngModel)]="user.email" name="email" placeholder="name@domain.com" pattern="[\w-\.]+\@([\w-]+\.)+[\w-]{2,4}" type="email"></ion-input> -->
+                    <ion-input [(ngModel)]="user.email" name="email" placeholder="name@domain.com" pattern=".+@.+\.\w{2,4}" type="email"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Password :</ion-label>
+                    <ion-input [(ngModel)]="user.password" name="pw" type="password"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Password confirm :</ion-label>
+                    <ion-input [(ngModel)]="user.password2" name="pw2" type="password"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label>First name :</ion-label>
+                    <ion-input [(ngModel)]="user.f_name" name="f_name"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Last name :</ion-label>
+                    <ion-input [(ngModel)]="user.l_name" name="l_name"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Birthdate :</ion-label>
+                    <ion-input [(ngModel)]="user.b_day" name="b_day" placeholder="dd/mm/yyyy" pattern="(\d{1,2}[\.\/]){2}(\d{2}|\d{4})"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label>S Permit number :</ion-label>
+                    <ion-input [(ngModel)]="user.s_permit" name="permitId" placeholder="XX0000000" pattern="[A-Za-z]{2}\d{7}"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Phone :</ion-label>
+                    <ion-input [(ngModel)]="user.phone" name="phone" placeholder="+88 88 888 88 88" pattern="\+?([\d]{2,3} ?)+"></ion-input>
+                </ion-item>
+                <div class="createItems">
+                    <ion-item>
+                        <!-- <ion-button [disabled]="!profileForm.valid" type="submit">Confirm</ion-button> -->
+                        <ion-button type="submit">Confirm</ion-button>
+                    </ion-item>
+                </div>
+            </ion-list>
+        </form>
+    </div>
+</ion-content>

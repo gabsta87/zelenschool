@@ -32,3 +32,4 @@ SwiperJS
 angular-calendar
 dayjs
 firebase
+bcryptjs

@@ -29,6 +29,7 @@ import { UserpageResolver } from './resolvers/userpage.resolver';
 import { UserLoggedGuard } from './guards/user-logged.guard';
 import { CalendareventsresolveResolver } from './resolvers/calendareventsresolve.resolver';
 import { CalendarfixedeventsResolver } from './resolvers/calendarfixedevents.resolver';
+import { CreateAccountComponent } from './components/create-account/create-account.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { CalendarfixedeventsResolver } from './resolvers/calendarfixedevents.res
     EditnewsComponent,
     ProjectspageComponent,
     AdminpageComponent,
-    AccountpageComponent
+    AccountpageComponent,
+    CreateAccountComponent
   ],
   imports: [
     SwiperModule,
@@ -93,6 +95,9 @@ import { CalendarfixedeventsResolver } from './resolvers/calendarfixedevents.res
         },{
           path:"projects",
           component:ProjectspageComponent
+        },{
+          path:"create",
+          component:CreateAccountComponent
         },{
           path:"account",
           component:AccountpageComponent,
