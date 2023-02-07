@@ -56,6 +56,8 @@ export class SchedulepageComponent {
   CalendarView = CalendarView;
   viewDate: Date = new Date();
   clickedDate: dayjs.Dayjs = dayjs(this.viewDate);
+  isTeacher:Boolean = false;
+  isAdmin:Boolean = false;
 
   newEvent:{title:string,time:string,room:number,max_participants:number} = {title:"",time:"",room:-1,max_participants:0};
 
@@ -94,6 +96,8 @@ export class SchedulepageComponent {
   
   async ionViewWillEnter(){
     this.extractedData = await this._route.snapshot.data["scheduleData"];
+    this.isTeacher = await this._user.isTeacher();
+    this.isAdmin = await this._user.isAdmin();
 
     this.extractedData.forEach((e:DocumentData) => {
       this.events.push({title : e['title'],start : dayjs(e['eventDate']).toDate(), actions : this.actions, allDay:false })

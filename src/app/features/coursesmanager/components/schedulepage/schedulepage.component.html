@@ -117,7 +117,7 @@
         <ion-col>
             <ion-text>{{clickedDate|json}}</ion-text>
         </ion-col>
-        <ion-col>
+        <ion-col *ngIf="isTeacher || isAdmin">
             <ion-buttons class="ion-justify-content-center">
                 <ion-button id="open-modal" fill="solid" (click)="creatingEvent($event)">Add new</ion-button>
             </ion-buttons>
@@ -146,8 +146,7 @@
     </ion-row>
     <ion-row *ngFor="let event of eventsList; index as i">
         <ion-col>
-            {{event['title']}} (max:{{event['max_participants']}})
-            <!-- {{event['title']}} -->
+            {{event['title']}}
         </ion-col>
         <ion-col>
             {{event['eventDate']| date: "HH:mm d MMM, yy"}}
@@ -159,8 +158,13 @@
             {{event['room_id']}}
         </ion-col>
         <ion-col>
-            <ion-list *ngIf="event['attendantsId']" lines="none">
-                <ion-item *ngFor="let att of event['attendantsId']">
+            <ion-list *ngIf="event['attendantsId']" lines="none" class="ion-no-padding">
+                <ion-item class="ion-no-padding">
+                    <ion-text style="display: flex; align-items: center;">
+                        ({{event['attendantsId'].length}}/{{event['max_participants']}})
+                    </ion-text>
+                </ion-item>
+                <ion-item *ngFor="let att of event['attendantsId']" class="ion-no-padding">
                     {{att.f_name}} {{att.l_name}}
                 </ion-item>
             </ion-list>
