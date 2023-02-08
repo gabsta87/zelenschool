@@ -18,7 +18,7 @@ import { EditnewsComponent } from './components/editnews/editnews.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FlatpickrModule } from 'angularx-flatpickr';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { ProjectspageComponent } from './components/projectspage/projectspage.component';
 import { AdminpageComponent } from './components/adminpage/adminpage.component';
@@ -55,6 +55,7 @@ import { CreateAccountComponent } from './components/create-account/create-accou
     SwiperModule,
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicModule,
     FlatpickrModule.forRoot(),
     CalendarModule.forRoot({
