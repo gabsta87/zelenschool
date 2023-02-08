@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-adminpage',
@@ -15,6 +16,8 @@ export class AdminpageComponent {
 
   adminData!:any;
   usersList!:any;
+  usersListObs!:Observable<any[]>;
+  coursesObs!:Observable<any[]>;
   coursesList!:any;
 
   ionViewWillEnter():void{
@@ -23,6 +26,7 @@ export class AdminpageComponent {
     this.usersList = this.adminData.users;
     this.coursesList = this.adminData.courses;
     // console.log("users list : ",this.usersList);
-    
+    this.usersListObs = this.adminData.usersObs;
+    this.coursesObs = this.adminData.coursesObs;
   }
 }

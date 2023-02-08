@@ -51,9 +51,10 @@ export class AngularfireService{
     return temp.find(e => e['id'] === userId);
   }
 
-  setUser(newName:string) {
+  setUser(f_name?:string,l_name?:string,birthday?:string,email?:string,phone?:string,s_permit_id?:string,address?:string) {
     const docRef = doc(this._dbaccess,'users/'+this._auth.currentUser?.uid);
-    return setDoc(docRef,{name:newName});
+    return setDoc(docRef,{f_name:f_name});
+    // return setDoc(docRef,{f_name:f_name,l_name?:string,birthday?:string,email?:string,phone?:string,s_permit_id?:string,address?:string});
   }
 
   getArticles(){

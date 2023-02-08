@@ -44,6 +44,8 @@ export class LoginpageComponent {
         // Signed in 
         const user = userCredential.user;
         this._dbAccess.createUser(user);
+        console.log(user);
+        
         // ...
         this._router.navigate(['/account/']);
         return userCredential;

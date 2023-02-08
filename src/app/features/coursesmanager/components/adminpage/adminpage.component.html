@@ -3,16 +3,15 @@
         <ion-list-header>
             <ion-label>Users</ion-label>
         </ion-list-header>
-        <ion-item *ngFor="let user of usersList;">
-            <ion-label>{{user|json}}</ion-label>
+        <ion-item *ngFor="let usr of usersListObs|async;">
+            <ion-label>{{usr|json}}</ion-label>
         </ion-item>
     </ion-list>
-    
     <ion-list>
         <ion-list-header>
             <ion-label>Courses</ion-label>
         </ion-list-header>
-        <ion-item *ngFor="let course of coursesList;">
+        <ion-item *ngFor="let course of coursesObs|async;">
             <ion-label>{{course|json}}</ion-label>
         </ion-item>
     </ion-list>

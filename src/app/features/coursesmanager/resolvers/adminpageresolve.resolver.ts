@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 
 interface AdminData{
   articles:any[],
-  // courses:{author:string,attendantsId:string[],eventDate:string,maxParticipants:number,roomId:number}[],
   courses:any[],
   users:any[],
+  usersObs:Observable<any[]>,
+  coursesObs:Observable<any[]>,
 }
 
 @Injectable({
@@ -23,6 +24,8 @@ export class AdminpageresolveResolver implements Resolve<AdminData> {
 
     result.courses = await firstValueFrom(this._dbAccess.getCalendarEntries());
     result.users = await firstValueFrom(this._dbAccess.getUsers());
+    result.usersObs = this._dbAccess.getUsers();
+    result.coursesObs = this._dbAccess.getCalendarEntries();
     
     return result;
   }
