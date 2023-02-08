@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { AbstractControl, Form, FormControl,FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
-import { createUserWithEmailAndPassword, getAuth, user, User } from '@angular/fire/auth';
+import { createUserWithEmailAndPassword, getAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-account',
@@ -15,6 +16,7 @@ export class CreateAccountComponent {
     email:FormControl<string|null>,
     permitId:FormControl<string|null>,
     b_day:FormControl<string|null>,
+    address:FormControl<string|null>,
     lastName:FormControl<string|null>,
     firstName:FormControl<string|null>,
     phone:FormControl<string|null>,
@@ -25,21 +27,25 @@ export class CreateAccountComponent {
   isTeacher = new BehaviorSubject(false);
   errorMessage = "";
 
-  constructor(private readonly _db:AngularfireService){
+    constructor(private readonly _db:AngularfireService,private readonly _router: Router){
 
     this.profileForm = new FormGroup({
       email: new FormControl('',Validators.compose([
-        Validators.email,
+        emailValidator(),
         Validators.required
       ])),
 
       permitId: new FormControl('',Validators.compose([
         permitValidator(this.isTeacher.value),
+        Validators.required
       ])),
 
       b_day: new FormControl('',Validators.compose([
         bdValidator(this.isTeacher.value),
+        Validators.required
       ])),
+
+      address: new FormControl('',Validators.required),
       
       lastName: new FormControl('',Validators.required),
       firstName: new FormControl('',Validators.required),
@@ -57,7 +63,6 @@ export class CreateAccountComponent {
       teacher:new FormControl<boolean>(false)
     });
   }
-
 
   phoneValidator(c:AbstractControl):{[key:string]:boolean}|null {
     let tempVal:string = c.value;
@@ -105,6 +110,21 @@ export class CreateAccountComponent {
         console.log("current user : ",auth.currentUser);
         console.log("credential : ", user);
         
+        this._db.createUser(user);
+        console.log(user);
+
+        this._db.setUser({
+          f_name : this.profileForm.get('firstName')?.value,
+          l_name : this.profileForm.get('lastName')?.value,
+          email : this.profileForm.get('email')?.value,
+          s_permit_id : this.profileForm.get('permitId')?.value,
+          birthday : this.profileForm.get('b_day')?.value,
+          phone : this.profileForm.get('phone')?.value,
+          address : this.profileForm.get('address')?.value,
+        });
+        
+        // ...
+        this._router.navigate(['/account/']);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -132,6 +152,18 @@ function permitValidator(isTeacher: boolean): ValidatorFn {
 
     if (!expression.test(control.value))
       return { 'invalidPermitFormat': true };
+    
+    return null;
+  };
+}
+
+function emailValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+
+    let expression = RegExp("^[\\w\\.\\-]+@[\\w\\.\\-]+\\.\\w{2,4}$");
+
+    if (!expression.test(control.value))
+      return { 'invalidemail': true };
     
     return null;
   };

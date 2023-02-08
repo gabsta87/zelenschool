@@ -27,7 +27,6 @@ import { AdminpageresolveResolver } from './resolvers/adminpageresolve.resolver'
 import { AccountpageComponent } from './components/accountpage/accountpage.component';
 import { UserpageResolver } from './resolvers/userpage.resolver';
 import { UserLoggedGuard } from './guards/user-logged.guard';
-import { CalendareventsresolveResolver } from './resolvers/calendareventsresolve.resolver';
 import { CalendarfixedeventsResolver } from './resolvers/calendarfixedevents.resolver';
 import { CreateAccountComponent } from './components/create-account/create-account.component';
 

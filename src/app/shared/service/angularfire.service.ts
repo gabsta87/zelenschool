@@ -51,17 +51,16 @@ export class AngularfireService{
     return temp.find(e => e['id'] === userId);
   }
 
-  setUser(f_name?:string,l_name?:string,birthday?:string,email?:string,phone?:string,s_permit_id?:string,address?:string) {
+  setUser(param:UserInfos) {
     const docRef = doc(this._dbaccess,'users/'+this._auth.currentUser?.uid);
-    return setDoc(docRef,{f_name:f_name});
-    // return setDoc(docRef,{f_name:f_name,l_name?:string,birthday?:string,email?:string,phone?:string,s_permit_id?:string,address?:string});
+    return setDoc(docRef,{f_name:param.f_name,l_name:param.l_name,birthday:param.birthday,email:param.email,phone:param.phone,s_permit_id:param.s_permit_id,address:param.address});
   }
 
   getArticles(){
     return firstValueFrom(this.getElements("articles"));
   }
 
-  async createUser(newUser:User,userName?:string){
+  async createUser(newUser:User){
     let userId = newUser.uid;
     let userStored = await this.getUser(userId);
 
@@ -69,9 +68,18 @@ export class AngularfireService{
       return
     }
 
-    const docRef = doc(this._dbaccess,'users/'+userId);
-    return setDoc(docRef,{name: userName ? userName : newUser.displayName});
+    return doc(this._dbaccess,'users/'+userId);
   }
+}
+
+export interface UserInfos {
+  f_name?:string|undefined|null,
+  l_name?:string|undefined|null,
+  birthday?:string|undefined|null,
+  email?:string|undefined|null,
+  phone?:string|undefined|null,
+  s_permit_id?:string|undefined|null,
+  address?:string|undefined|null
 }
 
   // addOrder(newValue:number){

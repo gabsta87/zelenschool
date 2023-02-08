@@ -30,7 +30,8 @@ export class LoginpageComponent {
 
   async loginAnonymously(){
     const credential = await signInAnonymously(this._auth);
-    this._dbAccess.createUser(credential.user,"Anonymous");
+    this._dbAccess.createUser(credential.user);
+    this._dbAccess.setUser({f_name:"anonymous"});
     return credential;
   }
 
