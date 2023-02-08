@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AbstractControl, Form, FormControl,FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
-import { user, User } from '@angular/fire/auth';
+import { createUserWithEmailAndPassword, getAuth, user, User } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-create-account',
@@ -77,6 +77,8 @@ export class CreateAccountComponent {
     let second = c.get("password2")?.value;
 
     // TODO add password constraints
+    if(first.length < 6)
+      return {'passwordTooShort':true}
 
     if(first !== second)
       return {'passwordMismatch': true}
@@ -89,7 +91,35 @@ export class CreateAccountComponent {
   }
 
   register(){
+
+    const auth = getAuth();
+    let email = this.profileForm.get('email')?.value;
+    let password = this.profileForm.get('passData')?.get("password")?.value;
     
+    if(email!=null && password != null){
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        // ...
+        console.log("current user : ",auth.currentUser);
+        console.log("credential : ", user);
+        
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log("error : ",error);
+        
+        // ..
+      });
+    }
+    else{
+      console.log("Error: wrong email/password");
+      console.log("email : ",email);
+      console.log("password : ",password);
+      
+    }
   }
 }
 

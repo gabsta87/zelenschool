@@ -13,13 +13,13 @@
                 <div formGroupName="passData">
                 <ion-item>
                     <ion-label>Password :</ion-label>
-                    <ion-input formControlName="password" type="password"></ion-input>
+                    <ion-input formControlName="password" type="password" placeholder="At least 6 characters"></ion-input>
                 </ion-item>
                 <ion-item>
                     <ion-label>Password confirm :</ion-label>
                     <ion-input formControlName="password2" type="password"></ion-input>
                 </ion-item>
-                <label *ngIf="profileForm.get('passData')?.invalid" [ngClass] = "'error'"> Passwords are different </label>
+                <label *ngIf="profileForm.get('passData')?.invalid" [ngClass] = "'error'"> Password error</label>
                 </div>
 
                 <ion-item>

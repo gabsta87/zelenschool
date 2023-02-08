@@ -4,17 +4,17 @@
 
     <ion-item>
         <ion-label>Email</ion-label>
-        <ion-input></ion-input>
+        <ion-input [(ngModel)]="email"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label>Password</ion-label>
-        <ion-input></ion-input>
+        <ion-input type="password" [(ngModel)]="password"></ion-input>
     </ion-item>
 
     <ion-grid class="buttonsGrid">
         <ion-row>
             <ion-col>
-                <ion-button>Login</ion-button>
+                <ion-button (click)="loginWithEmail()">Login</ion-button>
             </ion-col>
             <ion-col>
                 <ion-button [routerLink]="['/create']">Create</ion-button>
