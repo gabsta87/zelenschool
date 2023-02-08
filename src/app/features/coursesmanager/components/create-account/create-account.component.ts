@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { AbstractControl, Form, FormControl,FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, Form, FormControl,FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
+import { AngularfireService } from 'src/app/shared/service/angularfire.service';
+import { user, User } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-create-account',
@@ -8,9 +11,22 @@ import { AbstractControl, Form, FormControl,FormGroup, Validators } from '@angul
 })
 export class CreateAccountComponent {
 
-  public profileForm!:FormGroup<{email:FormControl,permitId:FormControl,b_day:FormControl,lastName:FormControl,firstName:FormControl,phone:FormControl,passData:FormGroup}>;
+  profileForm!:FormGroup<{
+    email:FormControl<string|null>,
+    permitId:FormControl<string|null>,
+    b_day:FormControl<string|null>,
+    lastName:FormControl<string|null>,
+    firstName:FormControl<string|null>,
+    phone:FormControl<string|null>,
+    passData:FormGroup,
+    teacher:FormControl
+  }>;
 
-  constructor(){
+  isTeacher = new BehaviorSubject(false);
+  errorMessage = "";
+
+  constructor(private readonly _db:AngularfireService){
+
     this.profileForm = new FormGroup({
       email: new FormControl('',Validators.compose([
         Validators.email,
@@ -18,13 +34,11 @@ export class CreateAccountComponent {
       ])),
 
       permitId: new FormControl('',Validators.compose([
-        this.permitValidator,
-        Validators.required
+        permitValidator(this.isTeacher.value),
       ])),
 
       b_day: new FormControl('',Validators.compose([
-        this.bdValidator,
-        Validators.required
+        bdValidator(this.isTeacher.value),
       ])),
       
       lastName: new FormControl('',Validators.required),
@@ -38,9 +52,12 @@ export class CreateAccountComponent {
       passData: new FormGroup({
         password: new FormControl('',Validators.required),
         password2: new FormControl('')
-      },{validators:this.passwordValidator})
+      },{validators:this.passwordValidator}),
+
+      teacher:new FormControl<boolean>(false)
     });
   }
+
 
   phoneValidator(c:AbstractControl):{[key:string]:boolean}|null {
     let tempVal:string = c.value;
@@ -51,24 +68,6 @@ export class CreateAccountComponent {
     let expression = RegExp("^\\+?(\\d{2,3} ?)+$");
     if(!expression.test(c.value))
       return {'wrongformat':true}
-    
-    return null;
-  }
-  
-  bdValidator(c:AbstractControl):{[key:string]:boolean}|null {
-    let expression = RegExp("^(\\d{1,2}[\\.\\/]){2}(\\d{2}|\\d{4})$");
-
-    if (!expression.test(c.value))
-      return { 'invalidDate': true };
-
-    return null;
-  }
-
-  permitValidator(c:AbstractControl):{[key:string]:boolean}|null {
-    let expression = RegExp("^[A-Za-z]{2}\\d{7}$");
-
-    if (!expression.test(c.value))
-      return { 'invalidPermitFormat': true };
     
     return null;
   }
@@ -85,7 +84,39 @@ export class CreateAccountComponent {
     return null;
   }
 
-  register(){
-
+  updateStatus($event:any){
+    this.isTeacher.next($event.target.checked);
   }
+
+  register(){
+    
+  }
+}
+
+function permitValidator(isTeacher: boolean): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    if(isTeacher)
+      return null;
+
+    let expression = RegExp("^[A-Za-z]{2}\\d{7}$");
+
+    if (!expression.test(control.value))
+      return { 'invalidPermitFormat': true };
+    
+    return null;
+  };
+}
+
+function bdValidator(isTeacher: boolean): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    if(isTeacher)
+      return null;
+
+    let expression = RegExp("^(\\d{1,2}[\\.\\/]){2}(\\d{2}|\\d{4})$");
+
+    if (!expression.test(control.value))
+      return { 'invalidDate': true };
+
+    return null;
+  };
 }

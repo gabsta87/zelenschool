@@ -18,8 +18,8 @@
                 <ion-item>
                     <ion-label>Password confirm :</ion-label>
                     <ion-input formControlName="password2" type="password"></ion-input>
-                    <!-- <label *ngIf=" profileForm.get('passData').invalid" [ngClass] = "'error'"> Passwords are different </label>  -->
                 </ion-item>
+                <label *ngIf="profileForm.get('passData')?.invalid" [ngClass] = "'error'"> Passwords are different </label>
                 </div>
 
                 <ion-item>
@@ -32,16 +32,25 @@
                 </ion-item>
                 <ion-item>
                     <ion-label>Birthdate :</ion-label>
-                    <ion-input formControlName="b_day" placeholder="dd/mm/yyyy" ></ion-input>
+                    <ion-input formControlName="b_day" placeholder="dd/mm/yyyy" [disabled]="isTeacher.value"></ion-input>
                 </ion-item>
                 <ion-item>
                     <ion-label>S Permit number :</ion-label>
-                    <ion-input formControlName="permitId" placeholder="XX0000000"></ion-input>
+                    <ion-input formControlName="permitId" placeholder="XX0000000" [disabled]="isTeacher.value"></ion-input>
                 </ion-item>
                 <ion-item>
                     <ion-label>Phone :</ion-label>
                     <ion-input formControlName="phone" placeholder="+88 88 888 88 88"></ion-input>
                 </ion-item>
+                <ion-item>
+                    <ion-label id="hover-trigger">Register as teacher</ion-label>
+                    <ion-checkbox formControlName="teacher" slot="end" (ionChange)="updateStatus($event)"></ion-checkbox>
+                </ion-item>
+                <ion-popover trigger="hover-trigger" triggerAction="hover">
+                    <ng-template>
+                      <ion-content class="ion-padding">Your registration will request an admin confirmation</ion-content>
+                    </ng-template>
+                </ion-popover>
                 <div class="createItems">
                     <ion-item>
                         <ion-button [disabled]="!profileForm.valid" type="submit">Confirm</ion-button>
