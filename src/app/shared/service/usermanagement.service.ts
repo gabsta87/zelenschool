@@ -29,6 +29,12 @@ export class UsermanagementService {
   isLoggedAsTeacher = new BehaviorSubject(false);
   isLogged = new BehaviorSubject(false)
 
+  getStatus(){
+    if(this.userData && this.userData['status'])
+      return this.userData['status'];
+    return "visitor";
+  }
+
   userData:any = undefined;
 
   private async checkStatus(requestedStatus:string):Promise<boolean>{
@@ -86,6 +92,7 @@ export class UsermanagementService {
   }
 
   logout(){
+    this.userData = undefined;
     this._auth.signOut();
     this.isLoggedAsAdmin.next(false);
     this.isLoggedAsTeacher.next(false);

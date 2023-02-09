@@ -1,62 +1,65 @@
 <ion-content>
     <div class="accountItems">
-        <ion-grid>
-            <form [formGroup]="profileForm" (ngSubmit)="register()" >
-        <!-- <ion-grid *ngIf="userObs | async as user">
-            <ion-row>
-                <ion-text>{{user | json}}</ion-text>
-            </ion-row> -->
-            <ion-row>
-                <ion-col>
-                    <ion-item>
-                        <ion-label>Email :</ion-label>
-                        <ion-input formControlName="email" placeholder="name@domain.com" type="email"></ion-input>
-                    </ion-item>
-                </ion-col>
-                <ion-col>
-                    <ion-button (click)="updateEmail()">Update email</ion-button>
-                </ion-col>
-                <!-- </form> -->
-            </ion-row>
-            <ion-row>
-                <ion-col>
-                    <ion-item>
-                        <ion-label>First name :</ion-label>
-                        <ion-input formControlName="f_name"></ion-input>
-                    </ion-item>
-                </ion-col>
-                <ion-col>
-                    <ion-button (click)="updateFName()">Update name</ion-button>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col>
-                    <ion-item>
-                        <ion-label>Last name :</ion-label>
-                        <ion-input formControlName="l_name"></ion-input>
-                    </ion-item>
-                </ion-col>
-                <ion-col>
-                    <ion-button (click)="updateLName()">Update name</ion-button>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col>
-                    <ion-item>
-                        <ion-label>Phone number :</ion-label>
-                        <ion-input formControlName="phone"></ion-input>
-                    </ion-item>
-                </ion-col>
-                <ion-col>
-                    <ion-button (click)="updatePhone()">Update phone</ion-button>
-                </ion-col>
-            </ion-row>
+        <ion-list>
+            <form [formGroup]="profileForm" (ngSubmit)="update()" >
+        <!-- <ion-list *ngIf="userObs | async as user">
+                <ion-text>{{user | json}}</ion-text> -->
+                <ion-item>
+                    <ion-label>Email :</ion-label>
+                    <ion-input formControlName="email" placeholder="name@domain.com" type="email"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label>First name :</ion-label>
+                    <ion-input formControlName="f_name"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Last name :</ion-label>
+                    <ion-input formControlName="l_name"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Phone number :</ion-label>
+                    <ion-input formControlName="phone" placeholder="+41 88 888 88 88"></ion-input>
+                </ion-item>
 
+            <ng-template [ngIf]="profileStatus == 'student'">
+                <ion-item>
+                    <ion-label>Birthdate :</ion-label>
+                    <ion-input formControlName="birthday" placeholder="12.12.2000"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Address :</ion-label>
+                    <ion-input formControlName="address"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label>S Permit :</ion-label>
+                    <ion-input formControlName="s_permit_number" placeholder="XX8888888"></ion-input>
+                </ion-item>
+            </ng-template>
 
-            <ion-row>
+            <ng-template [ngIf]="profileStatus == 'teacher'">
+                <ion-item>
+                    <ion-label>Experience :</ion-label>
+                    <ion-input formControlName="experience"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Students age :</ion-label>
+                    <ion-input formControlName="students_age"></ion-input>
+                </ion-item>
+            </ng-template>
+
+            <!-- <ion-item>
+                <ion-button (click)="cancel()">Cancel</ion-button>
+            </ion-item> -->
+            <!-- <ion-item> -->
+                <div class="accountItems">
+                    <ion-button (click)="update()">Update</ion-button>
+                </div>
+            <!-- </ion-item> -->
+
+            <ion-item>
                 <ion-button (click)="logout()">Logout</ion-button>
-            </ion-row>
+            </ion-item>
         </form>
-        </ion-grid>
+        </ion-list>
     </div>
 </ion-content>
