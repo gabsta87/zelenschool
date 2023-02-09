@@ -16,7 +16,7 @@ import * as dayjs from 'dayjs';
 
 import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
-import { IonModal } from '@ionic/angular';
+import { IonModal, ModalController } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 
@@ -51,6 +51,7 @@ const colors: Record<string, EventColor> = {
 })
 export class SchedulepageComponent {
   @ViewChild(IonModal) modal!: IonModal;
+  @ViewChild(IonModal) studentModal!: IonModal;
   
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
@@ -173,9 +174,16 @@ export class SchedulepageComponent {
     this.handleCalendarEntry('Dropped or resized', event);
   }
 
-  handleCalendarEntry(action: string, event: CalendarEvent): void {
+  private modalCtrl!: ModalController;
+  
+  async handleCalendarEntry(action: string, event: CalendarEvent) {
     console.log("Calendar entry selected",event);
-    
+    console.log("trigger : ",this.studentModal.trigger);
+    console.log("modal : ",this.studentModal);
+    this.studentModal.trigger = "studentModal";
+    // this.studentModal
+    const modal = this.studentModal.present();
+    // modal.present();
     // this.modal.open(this.modalContent, { size: 'lg' });
   }
 

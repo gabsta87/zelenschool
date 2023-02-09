@@ -1,6 +1,6 @@
 <ion-content>
     <!-- This modal allows teachers to create a new course -->
-    <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+    <ion-modal trigger="create-modal" (willDismiss)="onWillDismiss($event)">
         <ng-template>
           <ion-header>
             <ion-toolbar>
@@ -44,6 +44,26 @@
 
             
           </ion-content>
+        </ng-template>
+      </ion-modal>
+
+      <ion-modal trigger="studentModal">
+        <ng-template>
+        <ion-header>
+            <ion-toolbar>
+            <ion-buttons slot="start">
+                <ion-button (click)="cancel()">Cancel</ion-button>
+            </ion-buttons>
+            <ion-title>Welcome</ion-title>
+            <ion-buttons slot="end">
+                <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+            </ion-buttons>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content>
+        <ion-button>Participate</ion-button>
+            
+        </ion-content>
         </ng-template>
       </ion-modal>
 
@@ -119,7 +139,7 @@
         </ion-col>
         <ion-col *ngIf="isTeacher || isAdmin">
             <ion-buttons class="ion-justify-content-center">
-                <ion-button id="open-modal" fill="solid" (click)="creatingEvent($event)">Add new</ion-button>
+                <ion-button id="create-modal" fill="solid" (click)="creatingEvent($event)">Add new</ion-button>
             </ion-buttons>
         </ion-col>
     </ion-row>
