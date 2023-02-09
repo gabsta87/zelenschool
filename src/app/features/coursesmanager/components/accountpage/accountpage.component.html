@@ -1,5 +1,27 @@
 <ion-content>
     <div class="accountItems">
+        <ion-grid>
+            <ion-row>
+                <!-- <form (ngSubmit)="updateEmail()" [formGroup]="emailGroup"> -->
+                <ion-col>
+                    <ion-item>
+                        <ion-label>Email :</ion-label>
+                        <!-- <ion-input formControlName="email" placeholder="name@domain.com" type="email"></ion-input> -->
+                        <ion-input ([ngModel])="email" placeholder="name@domain.com" type="email"></ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-button>Update</ion-button>
+                </ion-col>
+                <!-- </form> -->
+            </ion-row>
+
+
+        </ion-grid>
+
+
         <ion-button (click)="logout()">Logout</ion-button>
     </div>
+
+
 </ion-content>

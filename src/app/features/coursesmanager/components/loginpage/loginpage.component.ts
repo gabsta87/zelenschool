@@ -36,6 +36,9 @@ export class LoginpageComponent {
   }
 
   async loginWithEmail(){
+    if(this.email == "")
+      return;
+
     const auth = getAuth();
     console.log("email : ",this.email);
     console.log("password : ",this.password);

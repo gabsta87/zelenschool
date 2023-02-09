@@ -16,6 +16,9 @@ export class UsermanagementService {
           this.checkStatus("admin").then(newVal=>{
               this.isLoggedAsAdmin.next(newVal);
           })
+          this.checkStatus("teacher").then(newVal=>{
+              this.isLoggedAsTeacher.next(newVal);
+          })
       }else{
           this.isLoggedAsAdmin.next(false);
       }
@@ -23,6 +26,7 @@ export class UsermanagementService {
   }
 
   isLoggedAsAdmin = new BehaviorSubject(false);
+  isLoggedAsTeacher = new BehaviorSubject(false);
   isLogged = new BehaviorSubject(false)
 
   userData:any = undefined;
@@ -47,20 +51,28 @@ export class UsermanagementService {
     return this._auth.currentUser?.uid;
   }
 
-  async isAdmin(){
-    return this.checkStatus("admin")
+  getUserData(){
+    return this.userData;
   }
 
-  async isTeacher(){
-    return this.checkStatus("teacher")
+  isAdmin():boolean{
+    return this.isLoggedAsAdmin.value;
+    // return this.checkStatus("admin")
   }
 
-  async isStudent(){
-    return this.checkStatus("student")
+  isTeacher(){
+    return this.isLoggedAsTeacher.value;
+    // return this.checkStatus("teacher")
+  }
+
+  isStudent(){
+    return this.isLogged.value;
+    // return this.checkStatus("student")
   }
 
   logout(){
     this.isLoggedAsAdmin.next(false);
+    this.isLoggedAsTeacher.next(false);
     this.isLogged.next(false);
   }
 }

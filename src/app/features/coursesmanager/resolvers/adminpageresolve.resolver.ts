@@ -5,8 +5,6 @@ import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 
 interface AdminData{
   articles:any[],
-  courses:any[],
-  users:any[],
   usersObs:Observable<any[]>,
   coursesObs:Observable<any[]>,
 }
@@ -22,8 +20,6 @@ export class AdminpageresolveResolver implements Resolve<AdminData> {
 
     let result = {} as AdminData;
 
-    result.courses = await firstValueFrom(this._dbAccess.getCalendarEntries());
-    result.users = await firstValueFrom(this._dbAccess.getUsers());
     result.usersObs = this._dbAccess.getUsers();
     result.coursesObs = this._dbAccess.getCalendarEntries();
     
