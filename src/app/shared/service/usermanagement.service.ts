@@ -47,6 +47,19 @@ export class UsermanagementService {
       return false
   }
 
+  async updateUser(newValue:any){
+    this._db.updateUser(newValue);
+    await this.reload();
+  }
+  
+  private async reload(){
+    let userId = this._auth?.currentUser?.uid;
+
+    if(userId){
+      this.userData = await this._db.getUser(userId);
+    }
+  }
+
   getId(){
     return this._auth.currentUser?.uid;
   }
@@ -71,6 +84,7 @@ export class UsermanagementService {
   }
 
   logout(){
+    this._auth.signOut();
     this.isLoggedAsAdmin.next(false);
     this.isLoggedAsTeacher.next(false);
     this.isLogged.next(false);

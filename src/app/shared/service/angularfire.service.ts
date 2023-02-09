@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Auth, User } from '@angular/fire/auth';
 import { collection, QueryConstraint, Firestore, where, addDoc, collectionData, doc, setDoc} from '@angular/fire/firestore';
-import { query } from '@firebase/firestore';
+import { query, updateDoc } from '@firebase/firestore';
 import { firstValueFrom } from 'rxjs';
 
 @Injectable({
@@ -54,6 +54,11 @@ export class AngularfireService{
   setUser(param:UserInfos) {
     const docRef = doc(this._dbaccess,'users/'+this._auth.currentUser?.uid);
     return setDoc(docRef,{f_name:param.f_name,l_name:param.l_name,birthday:param.birthday,email:param.email,phone:param.phone,s_permit_id:param.s_permit_id,address:param.address});
+  }
+
+  updateUser(newValue:any){
+    const docRef = doc(this._dbaccess,'users/'+this._auth.currentUser?.uid);
+    return updateDoc(docRef,newValue);;
   }
 
   getArticles(){

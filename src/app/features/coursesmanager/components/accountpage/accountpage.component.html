@@ -7,11 +7,11 @@
                     <ion-item>
                         <ion-label>Email :</ion-label>
                         <!-- <ion-input formControlName="email" placeholder="name@domain.com" type="email"></ion-input> -->
-                        <ion-input ([ngModel])="email" placeholder="name@domain.com" type="email"></ion-input>
+                        <ion-input [(ngModel)]="email" placeholder="name@domain.com" type="email"></ion-input>
                     </ion-item>
                 </ion-col>
                 <ion-col>
-                    <ion-button>Update</ion-button>
+                    <ion-button (click)="updateEmail()">Update</ion-button>
                 </ion-col>
                 <!-- </form> -->
             </ion-row>
