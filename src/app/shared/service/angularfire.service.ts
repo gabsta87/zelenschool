@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Auth, User } from '@angular/fire/auth';
-import { collection, QueryConstraint, Firestore, where, addDoc, collectionData, doc, setDoc} from '@angular/fire/firestore';
+import { collection, QueryConstraint, Firestore, where, addDoc, collectionData, doc, setDoc, DocumentData} from '@angular/fire/firestore';
 import { query, updateDoc } from '@firebase/firestore';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn:'root'
@@ -49,6 +49,11 @@ export class AngularfireService{
   async getUser(userId:string):Promise<any>{
     let temp = await firstValueFrom(this.getUsers());
     return temp.find(e => e['id'] === userId);
+  }
+
+  getUserObs(userId:string):Observable<DocumentData | undefined>{
+    let tempObs = this.getUsers();
+    return tempObs.pipe(map(datas => datas.find(e => e['id'] === userId)));
   }
 
   setUser(param:UserInfos) {

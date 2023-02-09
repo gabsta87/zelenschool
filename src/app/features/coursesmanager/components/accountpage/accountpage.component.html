@@ -1,27 +1,62 @@
 <ion-content>
     <div class="accountItems">
         <ion-grid>
+            <form [formGroup]="profileForm" (ngSubmit)="register()" >
+        <!-- <ion-grid *ngIf="userObs | async as user">
             <ion-row>
-                <!-- <form (ngSubmit)="updateEmail()" [formGroup]="emailGroup"> -->
+                <ion-text>{{user | json}}</ion-text>
+            </ion-row> -->
+            <ion-row>
                 <ion-col>
                     <ion-item>
                         <ion-label>Email :</ion-label>
-                        <!-- <ion-input formControlName="email" placeholder="name@domain.com" type="email"></ion-input> -->
-                        <ion-input [(ngModel)]="email" placeholder="name@domain.com" type="email"></ion-input>
+                        <ion-input formControlName="email" placeholder="name@domain.com" type="email"></ion-input>
                     </ion-item>
                 </ion-col>
                 <ion-col>
-                    <ion-button (click)="updateEmail()">Update</ion-button>
+                    <ion-button (click)="updateEmail()">Update email</ion-button>
                 </ion-col>
                 <!-- </form> -->
             </ion-row>
+            <ion-row>
+                <ion-col>
+                    <ion-item>
+                        <ion-label>First name :</ion-label>
+                        <ion-input formControlName="f_name"></ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-button (click)="updateFName()">Update name</ion-button>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <ion-item>
+                        <ion-label>Last name :</ion-label>
+                        <ion-input formControlName="l_name"></ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-button (click)="updateLName()">Update name</ion-button>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <ion-item>
+                        <ion-label>Phone number :</ion-label>
+                        <ion-input formControlName="phone"></ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-button (click)="updatePhone()">Update phone</ion-button>
+                </ion-col>
+            </ion-row>
 
 
+            <ion-row>
+                <ion-button (click)="logout()">Logout</ion-button>
+            </ion-row>
+        </form>
         </ion-grid>
-
-
-        <ion-button (click)="logout()">Logout</ion-button>
     </div>
-
-
 </ion-content>

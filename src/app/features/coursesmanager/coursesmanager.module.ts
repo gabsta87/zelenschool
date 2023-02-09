@@ -113,8 +113,8 @@ import { CreateAccountComponent } from './components/create-account/create-accou
             adminData:AdminpageresolveResolver
           }  
         },{
-          redirectTo:"/homepage",
           path:"",
+          redirectTo:"/homepage",
           pathMatch:"full",
         }
       ]}]  

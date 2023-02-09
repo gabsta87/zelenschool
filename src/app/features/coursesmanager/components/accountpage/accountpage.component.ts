@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { DocumentData } from '@angular/fire/firestore';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AngularfireService } from 'src/app/shared/service/angularfire.service';
+import { first, firstValueFrom, map, Observable } from 'rxjs';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 
 @Component({
@@ -11,22 +11,38 @@ import { UsermanagementService } from 'src/app/shared/service/usermanagement.ser
   styleUrls: ['./accountpage.component.scss']
 })
 export class AccountpageComponent {
-  userData:DocumentData  = this._route.snapshot.data['userData'];
+  userData!:any;
+  userObs!:Observable<any>;
 
-  firstName:string = this.userData['f_name'];
-  lastName:string = this.userData['l_name'];
-  email:string = this.userData['email'];
-  address:string = this.userData['address'];
-  permitId:string = this.userData['s_permit_id'];
-  birthday:string = this.userData['birthday'];
-  phone:string = this.userData['phone'];
-  passData!:FormGroup;
+  profileForm!:FormGroup<any>;
+  profileStatus!:string;
+
+  // firstName:string = this.userData['f_name'];
+  // lastName:string = this.userData['l_name'];
+  // address:string = this.userData['address'];
+  // permitId:string = this.userData['s_permit_id'];
+  // birthday:string = this.userData['birthday'];
+  // phone:string = this.userData['phone'];
+  // passData!:FormGroup;
 
   constructor(
     private readonly _user:UsermanagementService,
     private readonly _router:Router,
-    private readonly _route:ActivatedRoute){  }
+    private readonly _route:ActivatedRoute
+    ){
+      
+      this.userData = this._route.snapshot.data['userData'];
+      let myValue = this.userData.user;
+      this.profileStatus = myValue.status;
 
+      this.profileForm = new FormGroup({
+        email : new FormControl(myValue.email),
+        f_name : new FormControl(myValue.f_name),
+        l_name : new FormControl(myValue.l_name),
+        phone : new FormControl(myValue.phone)
+        // birthday : new FormControl(myValue.birthday),
+      })
+    }
 
   async logout(){
     this._user.logout();
@@ -62,33 +78,37 @@ export class AccountpageComponent {
 
   updateEmail(){
     this._user.updateUser({
-      email:this.email
+      email : this.profileForm.get('email')?.value,
     });
   }
+
   updateFName(){
     this._user.updateUser({
-      f_name : this.firstName
+      f_name : this.profileForm.get('f_name')?.value,
     });
   }
   updateLName(){
     this._user.updateUser({
-      l_name : this.lastName
+      l_name : this.profileForm.get('l_name')?.value,
     });
   }
-  updateBirthday(){
-    this._user.updateUser({
-      birthday : this.birthday
-    });
-  }
-  updateAddress(){
-    this._user.updateUser({
-      address : this.address
-    });
-  }
+  // updateBirthday(){
+  //   this._user.updateUser({
+  //     birthday : this.birthday
+  //   });
+  // }
+  // updateAddress(){
+  //   this._user.updateUser({
+  //     address : this.address
+  //   });
+  // }
   updatePhone(){
     this._user.updateUser({
-      phone : this.phone
+      phone : this.profileForm.get('phone')?.value,
     });
+  }
+  register(){
+
   }
 
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, of } from 'rxjs';
 import { AngularfireService } from './angularfire.service';
 
 @Injectable({
@@ -49,22 +49,24 @@ export class UsermanagementService {
 
   async updateUser(newValue:any){
     this._db.updateUser(newValue);
-    await this.reload();
-  }
-  
-  private async reload(){
-    let userId = this._auth?.currentUser?.uid;
-
-    if(userId){
-      this.userData = await this._db.getUser(userId);
-    }
   }
 
   getId(){
     return this._auth.currentUser?.uid;
   }
 
+  getUserObs(){
+    if(this._auth.currentUser)
+      return this._db.getUserObs(this._auth.currentUser?.uid);
+    else
+      return undefined;
+  }
+
   getUserData(){
+    if(this._auth.currentUser)
+    console.log("observable value : ",firstValueFrom(this._db.getUserObs(this._auth.currentUser?.uid)));
+    console.log("fixed value : ",this.userData);
+    
     return this.userData;
   }
 
