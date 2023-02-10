@@ -20,8 +20,6 @@
                     <ion-label>Phone number :</ion-label>
                     <ion-input formControlName="phone" placeholder="+41 88 888 88 88"></ion-input>
                 </ion-item>
-
-            <ng-template [ngIf]="profileStatus == 'student'">
                 <ion-item>
                     <ion-label>Birthdate :</ion-label>
                     <ion-input formControlName="birthday" placeholder="12.12.2000"></ion-input>
@@ -34,18 +32,6 @@
                     <ion-label>S Permit :</ion-label>
                     <ion-input formControlName="s_permit_number" placeholder="XX8888888"></ion-input>
                 </ion-item>
-            </ng-template>
-
-            <ng-template [ngIf]="profileStatus == 'teacher'">
-                <ion-item>
-                    <ion-label>Experience :</ion-label>
-                    <ion-input formControlName="experience"></ion-input>
-                </ion-item>
-                <ion-item>
-                    <ion-label>Students age :</ion-label>
-                    <ion-input formControlName="students_age"></ion-input>
-                </ion-item>
-            </ng-template>
 
             <!-- <ion-item>
                 <ion-button (click)="cancel()">Cancel</ion-button>

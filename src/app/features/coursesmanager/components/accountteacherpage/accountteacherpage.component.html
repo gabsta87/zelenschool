@@ -1,1 +1,33 @@
-<p>accountteacherpage works!</p>
+<ion-content>
+    <ion-list>
+    <form [formGroup]="profileForm" (ngSubmit)="update()" >
+        <ion-item>
+            <ion-label>Email :</ion-label>
+            <ion-input formControlName="email" placeholder="name@domain.com" type="email"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>First name :</ion-label>
+            <ion-input formControlName="f_name"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Last name :</ion-label>
+            <ion-input formControlName="l_name"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Phone number :</ion-label>
+            <ion-input formControlName="phone" placeholder="+41 88 888 88 88"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Experience :</ion-label>
+            <ion-input formControlName="experience"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Students age :</ion-label>
+            <ion-input formControlName="students_age"></ion-input>
+        </ion-item>
+    </form>
+        <ion-item>
+            <ion-button (click)="logout()">Logout</ion-button>
+        </ion-item>
+    </ion-list>
+</ion-content>
