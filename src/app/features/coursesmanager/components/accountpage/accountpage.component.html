@@ -33,19 +33,15 @@
                     <ion-input formControlName="s_permit_number" placeholder="XX8888888"></ion-input>
                 </ion-item>
 
-                <ion-item>
-                    <ion-button (click)="cancel()">Cancel</ion-button>
-                </ion-item>
-            <!-- <ion-item> -->
                 <div class="accountItems">
+                    <ion-button (click)="cancel()">Reset</ion-button>
                     <ion-button (click)="update()">Update</ion-button>
                 </div>
-            <!-- </ion-item> -->
+                <div class = "accountItems">
+                    <ion-button (click)="logout()">Logout</ion-button>
+                </div>
 
-            <ion-item>
-                <ion-button (click)="logout()">Logout</ion-button>
-            </ion-item>
-        </form>
+            </form>
         </ion-list>
     </div>
 </ion-content>

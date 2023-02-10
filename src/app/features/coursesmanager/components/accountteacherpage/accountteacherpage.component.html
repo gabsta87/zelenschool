@@ -25,9 +25,15 @@
             <ion-label>Students age :</ion-label>
             <ion-input formControlName="students_age"></ion-input>
         </ion-item>
-    </form>
-        <ion-item>
+        
+        <div class="accountItems">
+            <ion-button (click)="cancel()">Reset</ion-button>
+            <ion-button (click)="update()">Update</ion-button>
+        </div>
+        <div class = "accountItems">
             <ion-button (click)="logout()">Logout</ion-button>
-        </ion-item>
+        </div>
+
+    </form>
     </ion-list>
 </ion-content>

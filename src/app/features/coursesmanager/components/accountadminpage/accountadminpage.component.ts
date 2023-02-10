@@ -56,7 +56,10 @@ export class AccountadminpageComponent {
   }
 
   cancel(){
-
+    this.profileForm.controls['email'].setValue(this.userData.user.email);
+    this.profileForm.controls['f_name'].setValue(this.userData.user.f_name);
+    this.profileForm.controls['l_name'].setValue(this.userData.user.l_name);
+    this.profileForm.controls['phone'].setValue(this.userData.user.phone);
   }
 
 

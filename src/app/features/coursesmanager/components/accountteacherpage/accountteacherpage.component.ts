@@ -61,7 +61,12 @@ export class AccountteacherpageComponent {
   }
 
   cancel(){
-
+    this.profileForm.controls['email'].setValue(this.userData.user.email);
+    this.profileForm.controls['f_name'].setValue(this.userData.user.f_name);
+    this.profileForm.controls['l_name'].setValue(this.userData.user.l_name);
+    this.profileForm.controls['phone'].setValue(this.userData.user.phone);
+    this.profileForm.controls['experience'].setValue(this.userData.user.experience);
+    this.profileForm.controls['students_age'].setValue(this.userData.user.students_age);
   }
 
 
