@@ -37,7 +37,7 @@ export class AccountpageComponent {
       l_name : new FormControl(myValue.l_name,Validators.required),
       phone : new FormControl(myValue.phone,phoneValidator()),
       address : new FormControl(myValue.address,Validators.required),
-      s_permit_id : new FormControl(myValue.s_permit_id,permitValidator()),
+      s_permit_number : new FormControl(myValue.s_permit_id,permitValidator()),
       birthday : new FormControl(myValue.birthday,bdValidator()),
     })
   }

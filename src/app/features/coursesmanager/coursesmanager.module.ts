@@ -116,6 +116,20 @@ import { AccountadminpageComponent } from './components/accountadminpage/account
             userData:UserpageResolver
           }
         },{
+          path:"accountAdmin",
+          component:AccountadminpageComponent,
+          canActivate:[UserLoggedGuard,AdminpageGuard],
+          resolve:{
+            userData:UserpageResolver
+          }
+        },{
+          path:"accountTeacher",
+          component:AccountteacherpageComponent,
+          canActivate:[UserLoggedGuard],
+          resolve:{
+            userData:UserpageResolver
+          }
+        },{
           path:"admin",
           component:AdminpageComponent,
           canActivate:[AdminpageGuard],

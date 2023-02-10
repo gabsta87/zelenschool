@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 
 @Component({
@@ -11,7 +10,7 @@ export class NavbarComponent {
   constructor(private readonly _userS:UsermanagementService){}
 
   isAdmin = this._userS.isLoggedAsAdmin;
-
+  isTeacher = this._userS.isLoggedAsTeacher;
   isLogged = this._userS.isLogged;
 
   navigationItems = [

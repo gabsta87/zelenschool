@@ -5,9 +5,27 @@
             <ion-label>{{item.title}}</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button *ngIf="isLogged|async; else loggedOut" tab="account">
-            <ion-label> Account </ion-label>
-        </ion-tab-button>
+        <div *ngIf="isLogged|async; else loggedOut">
+            <div *ngIf="isTeacher|async; else notTeacher">
+                <ion-tab-button tab="accountTeacher">
+                    <ion-label> Account </ion-label>
+                </ion-tab-button>
+            </div>
+            <ng-template #notTeacher>
+                <div *ngIf="isAdmin|async; else student">
+                    <ion-tab-button tab="accountAdmin">
+                        <ion-label> Account </ion-label>
+                    </ion-tab-button>
+                </div>
+                <ng-template #student>
+                    <div>
+                        <ion-tab-button tab="account">
+                            <ion-label> Account </ion-label>
+                        </ion-tab-button>
+                    </div>
+                </ng-template>
+            </ng-template>
+        </div>
 
         <ion-tab-button *ngIf="isAdmin|async" tab="admin">
             <ion-label> Administration </ion-label>
