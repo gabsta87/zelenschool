@@ -28,22 +28,13 @@ export class LoginpageComponent {
     return credential;
   }
 
-  async loginAnonymously(){
-    const credential = await signInAnonymously(this._auth);
-    this._dbAccess.createUser(credential.user);
-    this._dbAccess.setUser({f_name:"anonymous"});
-    return credential;
-  }
-
   async loginWithEmail(){
     if(this.email == "")
       return;
 
     const auth = getAuth();
-    console.log("email : ",this.email);
-    console.log("password : ",this.password);
     
-    signInWithEmailAndPassword(auth, this.email, this.password)
+    const credential = await signInWithEmailAndPassword(auth, this.email, this.password)
       .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
@@ -60,5 +51,8 @@ export class LoginpageComponent {
         console.log("error : ",error);
         
       });
+
+    this._router.navigate(['/account/']);
+    return credential;
   }
 }

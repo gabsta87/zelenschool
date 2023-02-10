@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { createUserWithEmailAndPassword, getAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { bdValidator, emailValidator, passwordValidator, permitValidator, phoneValidator } from 'src/app/shared/service/validators-lib.service';
 
 @Component({
   selector: 'app-create-account',
@@ -36,12 +37,12 @@ export class CreateAccountComponent {
       ])),
 
       permitId: new FormControl('',Validators.compose([
-        permitValidator(this.isTeacher.value),
+        permitValidator(),
         Validators.required
       ])),
 
       b_day: new FormControl('',Validators.compose([
-        bdValidator(this.isTeacher.value),
+        bdValidator(),
         Validators.required
       ])),
 
@@ -52,43 +53,16 @@ export class CreateAccountComponent {
       
       phone:new FormControl('',Validators.compose([
         Validators.required,
-        this.phoneValidator
+        phoneValidator()
       ])),
       
       passData: new FormGroup({
         password: new FormControl('',Validators.required),
         password2: new FormControl('')
-      },{validators:this.passwordValidator}),
+      },{validators:passwordValidator()}),
 
       teacher:new FormControl<boolean>(false)
     });
-  }
-
-  phoneValidator(c:AbstractControl):{[key:string]:boolean}|null {
-    let tempVal:string = c.value;
-
-    if(tempVal.replaceAll(new RegExp("\\D","g"),"").length < 10)
-      return {"tooshort":true}
-
-    let expression = RegExp("^\\+?(\\d{2,3} ?)+$");
-    if(!expression.test(c.value))
-      return {'wrongformat':true}
-    
-    return null;
-  }
-
-  passwordValidator(c:AbstractControl):{[key:string]:boolean}|null {
-    let first = c.get("password")?.value;
-    let second = c.get("password2")?.value;
-
-    // TODO add password constraints
-    if(first.length < 6)
-      return {'passwordTooShort':true}
-
-    if(first !== second)
-      return {'passwordMismatch': true}
-    
-    return null;
   }
 
   updateStatus($event:any){
@@ -141,44 +115,4 @@ export class CreateAccountComponent {
       
     }
   }
-}
-
-function permitValidator(isTeacher: boolean): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    if(isTeacher)
-      return null;
-
-    let expression = RegExp("^[A-Za-z]{2}\\d{7}$");
-
-    if (!expression.test(control.value))
-      return { 'invalidPermitFormat': true };
-    
-    return null;
-  };
-}
-
-function emailValidator(): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-
-    let expression = RegExp("^[\\w\\.\\-]+@[\\w\\.\\-]+\\.\\w{2,4}$");
-
-    if (!expression.test(control.value))
-      return { 'invalidemail': true };
-    
-    return null;
-  };
-}
-
-function bdValidator(isTeacher: boolean): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    if(isTeacher)
-      return null;
-
-    let expression = RegExp("^(\\d{1,2}[\\.\\/]){2}(\\d{2}|\\d{4})$");
-
-    if (!expression.test(control.value))
-      return { 'invalidDate': true };
-
-    return null;
-  };
 }

@@ -62,7 +62,13 @@ export class AccountpageComponent {
   }
 
   cancel(){
-
+    this.profileForm.controls['email'].setValue(this.userData.user.email);
+    this.profileForm.controls['f_name'].setValue(this.userData.user.f_name);
+    this.profileForm.controls['l_name'].setValue(this.userData.user.l_name);
+    this.profileForm.controls['phone'].setValue(this.userData.user.phone);
+    this.profileForm.controls['address'].setValue(this.userData.user.address);
+    this.profileForm.controls['s_permit_number'].setValue(this.userData.user.s_permit_id);
+    this.profileForm.controls['birthday'].setValue(this.userData.user.birthday);
   }
 
 }

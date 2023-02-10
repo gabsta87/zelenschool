@@ -13,21 +13,24 @@ export class UsermanagementService {
     _auth.onAuthStateChanged(user=>{
       if(user){
         this.isLogged.next(true);
-          this.checkStatus("admin").then(newVal=>{
-              this.isLoggedAsAdmin.next(newVal);
-          })
-          this.checkStatus("teacher").then(newVal=>{
-              this.isLoggedAsTeacher.next(newVal);
-          })
+        this.checkStatus("admin").then(newVal=>{
+            this.isLoggedAsAdmin.next(newVal);
+        })
+        this.checkStatus("teacher").then(newVal=>{
+          this.isLoggedAsTeacher.next(newVal);
+        })
       }else{
           this.isLoggedAsAdmin.next(false);
+          this.isLoggedAsTeacher.next(false);
+          this.isLogged.next(false);
       }
-  })
+    })
   }
-
+  
   isLoggedAsAdmin = new BehaviorSubject(false);
   isLoggedAsTeacher = new BehaviorSubject(false);
-  isLogged = new BehaviorSubject(false)
+  isLogged = new BehaviorSubject(false);
+  
 
   getStatus(){
     if(this.userData && this.userData['status'])
