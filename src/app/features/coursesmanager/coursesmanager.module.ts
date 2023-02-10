@@ -29,6 +29,11 @@ import { UserpageResolver } from './resolvers/userpage.resolver';
 import { UserLoggedGuard } from './guards/user-logged.guard';
 import { CalendarfixedeventsResolver } from './resolvers/calendarfixedevents.resolver';
 import { CreateAccountComponent } from './components/create-account/create-account.component';
+import { ScheduleteacherpageComponent } from './components/scheduleteacherpage/scheduleteacherpage.component';
+import { AccountteacherpageComponent } from './components/accountteacherpage/accountteacherpage.component';
+import { CreateAccountTeacherComponent } from './components/create-account-teacher/create-account-teacher.component';
+import { ScheduleadminpageComponent } from './components/scheduleadminpage/scheduleadminpage.component';
+import { AccountadminpageComponent } from './components/accountadminpage/accountadminpage.component';
 
 
 @NgModule({
@@ -48,7 +53,12 @@ import { CreateAccountComponent } from './components/create-account/create-accou
     ProjectspageComponent,
     AdminpageComponent,
     AccountpageComponent,
-    CreateAccountComponent
+    CreateAccountComponent,
+    ScheduleteacherpageComponent,
+    AccountteacherpageComponent,
+    CreateAccountTeacherComponent,
+    ScheduleadminpageComponent,
+    AccountadminpageComponent
   ],
   imports: [
     SwiperModule,
