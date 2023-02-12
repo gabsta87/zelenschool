@@ -5,6 +5,7 @@
             <ion-label>{{item.title}}</ion-label>
         </ion-tab-button>
 
+        <!-- TODO replace with ngswitch -->
         <ion-tab-button *ngIf="isTeacher|async" tab="accountTeacher">
             <ion-label> Account </ion-label>
         </ion-tab-button>

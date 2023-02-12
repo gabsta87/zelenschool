@@ -24,7 +24,7 @@ export class LoginpageComponent {
     const provider = new GoogleAuthProvider();
     const credential = await signInWithPopup(this._auth,provider);
     this._dbAccess.createUser(credential.user);
-    this._router.navigate(['/account/']);
+    this._router.navigate(['/about/']);
     return credential;
   }
 
@@ -39,10 +39,8 @@ export class LoginpageComponent {
         // Signed in 
         const user = userCredential.user;
         this._dbAccess.createUser(user);
-        console.log(user);
         
-        // ...
-        this._router.navigate(['/account/']);
+        this._router.navigate(['/about/']);
         return userCredential;
       })
       .catch((error) => {
@@ -51,8 +49,6 @@ export class LoginpageComponent {
         console.log("error : ",error);
         
       });
-
-    this._router.navigate(['/account/']);
     return credential;
   }
 }

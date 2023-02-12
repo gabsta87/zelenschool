@@ -1,96 +1,56 @@
-<ion-content>
-    <!-- This modal allows teachers to create a new course -->
-    <ion-modal trigger="create-modal" (willDismiss)="onWillDismiss($event)">
-        <ng-template>
-          <ion-header>
-            <ion-toolbar>
-              <ion-buttons slot="start">
-                <ion-button (click)="cancel()">Cancel</ion-button>
-              </ion-buttons>
-              <ion-title>Welcome</ion-title>
-              <ion-buttons slot="end">
-                <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
-              </ion-buttons>
-            </ion-toolbar>
-          </ion-header>
-
-          <ion-content class="ion-padding">
-            <ion-item>
-              <ion-label position="stacked">Enter title</ion-label>
-              <ion-input type="text" placeholder="Course title" [(ngModel)]="newEvent.title"></ion-input>
-            </ion-item>
-
-            <ion-item>
-                <ion-select interface="popover" placeholder="Select room" [(ngModel)]="newEvent.room">
-                    <ion-select-option value="0">0</ion-select-option>
-                    <ion-select-option value="1">1</ion-select-option>
-                    <ion-select-option value="2">2</ion-select-option>
-                </ion-select>
-            </ion-item>
-
-            <ion-item>
-                <ion-datetime-button datetime="datetime"></ion-datetime-button>
-                <ion-modal [keepContentsMounted]="true" (ionChange)="updateTime($event)">
-                  <ng-template>
-                    <ion-datetime id="datetime" value="{{newEvent.time}}"></ion-datetime>
-                  </ng-template>
-                </ion-modal>
-            </ion-item>
-
-            <ion-item>
-                <ion-label>Max participants</ion-label>
-                <ion-input type="number" placeholder="00" [(ngModel)]="newEvent.max_participants"></ion-input>
-            </ion-item>
-
-            
-          </ion-content>
-        </ng-template>
-      </ion-modal>
-
-      <ion-modal trigger="studentModal">
-        <ng-template>
-        <ion-header>
-            <ion-toolbar>
-            <ion-buttons slot="start">
-                <ion-button (click)="cancel()">Cancel</ion-button>
-            </ion-buttons>
-            <ion-title>Welcome</ion-title>
-            <ion-buttons slot="end">
-                <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
-            </ion-buttons>
-            </ion-toolbar>
-        </ion-header>
-        <ion-content>
-        <ion-button>Participate</ion-button>
-            
-        </ion-content>
-        </ng-template>
-      </ion-modal>
-
+<ion-content> 
 <div class="scheduleContainer">
-<ion-grid class="ion-no-margin">
-    <ion-row class="ion-text-center">
-        <ion-col>
-            <ion-buttons class="ion-justify-content-center">
-                <ion-button fill="solid" (click)="closeOpenMonthViewDay()">Previous </ion-button>
-                <ion-button fill="solid">Today </ion-button>
-                <ion-button fill="solid" (click)="closeOpenMonthViewDay()">Next </ion-button>
-            </ion-buttons>
-        </ion-col>
-        <ion-col>
-            <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
-        </ion-col>
-        <ion-col>
-            <ion-buttons class="ion-justify-content-center">
-                <ion-button fill="solid" (click)="setView(CalendarView.Month)">Month</ion-button>
-                <ion-button fill="solid" (click)="setView(CalendarView.Week)">Week</ion-button>
-                <ion-button fill="solid" (click)="setView(CalendarView.Day)">Day</ion-button>
-            </ion-buttons>
-        </ion-col>
-    </ion-row>
-</ion-grid>
+
+    <ion-grid class="ion-no-margin">
+        <ion-row class="ion-text-center">
+            <ion-col>
+                <ion-buttons class="ion-justify-content-center">
+                <ion-button
+                    fill="solid"
+                    class="btn btn-primary"
+                    mwlCalendarPreviousView
+                    [view]="view"
+                    [(viewDate)]="viewDate"
+                    (viewDateChange)="closeOpenMonthViewDay()"
+                >
+                    Previous
+                </ion-button>
+                <ion-button
+                    fill="solid"
+                    class="btn btn-outline-secondary"
+                    mwlCalendarToday
+                    [(viewDate)]="viewDate"
+                >
+                    Today
+                </ion-button>
+                <ion-button
+                    fill="solid"
+                    class="btn btn-primary"
+                    mwlCalendarNextView
+                    [view]="view"
+                    [(viewDate)]="viewDate"
+                    (viewDateChange)="closeOpenMonthViewDay()"
+                >
+                    Next
+                </ion-button>
+                </ion-buttons>
+            </ion-col>
+            <ion-col>
+                <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+            </ion-col>
+            <ion-col>
+                <ion-buttons class="ion-justify-content-center">
+                    <ion-button fill="solid" (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">Month</ion-button>
+                    <ion-button fill="solid" (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">Week</ion-button>
+                    <ion-button fill="solid" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">Day</ion-button>
+                </ion-buttons>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 
 <!-- Start Calendar -->
+<!-- (dayClicked)="myclick($event)" -->
+
 
 <div [ngSwitch]="view">
     <mwl-calendar-month-view
@@ -101,7 +61,7 @@
         [activeDayIsOpen]="activeDayIsOpen"
         (eventClicked)="handleCalendarEntry('Clicked', $event.event)"
         (eventTimesChanged)="eventTimesChanged($event)"
-        (dayClicked)="myclick($event)"
+        (dayClicked)="dayClicked($event.day)"
     >
     </mwl-calendar-month-view>
     <mwl-calendar-week-view
@@ -137,9 +97,9 @@
         <ion-col>
             <ion-text>{{clickedDate|json}}</ion-text>
         </ion-col>
-        <ion-col *ngIf="isTeacher || isAdmin">
+        <ion-col *ngIf="(isTeacher|async) || (isAdmin|async)">
             <ion-buttons class="ion-justify-content-center">
-                <ion-button id="create-modal" fill="solid" (click)="creatingEvent($event)">Add new</ion-button>
+                <ion-button id="open-modal" fill="solid" (click)="creatingEvent($event)">Add new</ion-button>
             </ion-buttons>
         </ion-col>
     </ion-row>
@@ -194,3 +154,4 @@
 </div>
 </div>
 </ion-content>
+

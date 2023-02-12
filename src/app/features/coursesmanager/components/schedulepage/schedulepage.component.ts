@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, Output, EventEmitter, } from '@angular/core';
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, } from 'date-fns';
 import { WeekDay, MonthView, MonthViewDay, ViewPeriod, } from 'calendar-utils';
-import { elementAt, firstValueFrom, map, Observable, Subject, switchMap } from 'rxjs';
+import { BehaviorSubject, elementAt, firstValueFrom, map, Observable, Subject, switchMap } from 'rxjs';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
@@ -19,6 +19,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IonModal, ModalController } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
+import { StudentModalComponent } from '../student-modal/student-modal.component';
 
 
 export interface CalendarMonthViewEventTimesChangedEvent<
@@ -57,8 +58,8 @@ export class SchedulepageComponent {
   CalendarView = CalendarView;
   viewDate: Date = new Date();
   clickedDate: dayjs.Dayjs = dayjs(this.viewDate);
-  isTeacher:Boolean = false;
-  isAdmin:Boolean = false;
+  isTeacher:BehaviorSubject<boolean> = this._user.isLoggedAsTeacher;
+  isAdmin:BehaviorSubject<boolean> = this._user.isLoggedAsAdmin;
 
   newEvent:{title:string,time:string,room:number,max_participants:number} = {title:"",time:"",room:-1,max_participants:0};
 
@@ -68,9 +69,21 @@ export class SchedulepageComponent {
   constructor(
     private readonly _db : AngularfireService,    
     private readonly _route: ActivatedRoute,
-    private readonly _user: UsermanagementService
+    private readonly _user: UsermanagementService,
+    private readonly modalController: ModalController
     ) {
-      // dayjs.tz.setDefault('');
+      this.extractedData = this._route.snapshot.data["scheduleData"];
+      console.log("actions : ",this.actions);
+      
+      this.extractedData.forEach((e:DocumentData) => {
+        let elem = this.events as any;
+        elem.push({
+          title : e['title'],
+          author: e['author'],
+          start : dayjs(e['eventDate']).toDate(), 
+          actions : this.actions, 
+          allDay:false })
+      });
     }
 
   actions: CalendarEventAction[] = [
@@ -96,14 +109,6 @@ export class SchedulepageComponent {
   events: CalendarEvent[] = [];
   
   async ionViewWillEnter(){
-    this.extractedData = await this._route.snapshot.data["scheduleData"];
-    this.isTeacher = await this._user.isTeacher();
-    this.isAdmin = await this._user.isAdmin();
-
-    this.extractedData.forEach((e:DocumentData) => {
-      this.events.push({title : e['title'],start : dayjs(e['eventDate']).toDate(), actions : this.actions, allDay:false })
-    })
-
     setTimeout(() => {
       this.refresh.next();
     }, 200);
@@ -123,44 +128,11 @@ export class SchedulepageComponent {
   //     },
   //     draggable: true,
   //   },
-  //   {
-  //     start: startOfDay(new Date()),
-  //     title: 'An event with no end date',
-  //     color: { ...colors['yellow'] },
-  //     actions: this.actions,
-  //   },
-  //   {
-  //     start: subDays(endOfMonth(new Date()), 3),
-  //     end: addDays(endOfMonth(new Date()), 3),
-  //     title: 'A long event that spans 2 months',
-  //     color: { ...colors['blue'] },
-  //     allDay: true,
-  //   },
-  //   {
-  //     start: addHours(startOfDay(new Date()), 2),
-  //     end: addHours(new Date(), 2),
-  //     title: 'A draggable and resizable event',
-  //     color: { ...colors['yellow'] },
-  //     actions: this.actions,
-  //     resizable: {
-  //       beforeStart: true,
-  //       afterEnd: true,
-  //     },
-  //     draggable: true,
-  //   },
   // ];
 
-  activeDayIsOpen: boolean = true;
+  activeDayIsOpen: boolean = false;
 
-  // constructor(private modal: NgbModal) {}
-
-  eventTimesChanged({
-    event,
-    newStart,
-    newEnd,
-  }: CalendarEventTimesChangedEvent): void {
-    console.log("Event time changed event");
-    
+  eventTimesChanged({ event, newStart, newEnd, }: CalendarEventTimesChangedEvent): void {
     this.events = this.events.map((iEvent) => {
       if (iEvent === event) {
         return {
@@ -174,17 +146,20 @@ export class SchedulepageComponent {
     this.handleCalendarEntry('Dropped or resized', event);
   }
 
-  private modalCtrl!: ModalController;
-  
   async handleCalendarEntry(action: string, event: CalendarEvent) {
     console.log("Calendar entry selected",event);
-    console.log("trigger : ",this.studentModal.trigger);
+    // console.log("trigger : ",this.studentModal.trigger);
     console.log("modal : ",this.studentModal);
-    this.studentModal.trigger = "studentModal";
-    // this.studentModal
-    const modal = this.studentModal.present();
-    // modal.present();
-    // this.modal.open(this.modalContent, { size: 'lg' });
+    // this.modal.
+    // this.modal.present();
+
+    const modal = await this.modalController.create({
+      component: StudentModalComponent,
+      componentProps: {
+        author: (event as any).author
+      },
+    });
+    modal.present();
   }
 
   setView(view: CalendarView) {
@@ -195,9 +170,22 @@ export class SchedulepageComponent {
     this.activeDayIsOpen = false;
   }
 
-  myclick($event:any){
-    this.clickedDate = dayjs($event.day.date).add(13,'hour');
+  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+
+    this.clickedDate = dayjs(date).add(13,'hour');
     this.newEvent.time = this.clickedDate.toISOString();
+
+    if (isSameMonth(date, this.viewDate)) {
+      if (
+        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+        events.length === 0
+      ) {
+        this.activeDayIsOpen = false;
+      } else {
+        this.activeDayIsOpen = true;
+      }
+      this.viewDate = date;
+    }
   }
   
   cancel() {
@@ -228,8 +216,6 @@ export class SchedulepageComponent {
   }
 
   updateTime($event:any){
-    console.log("target value ",$event.target.value);
-
     this.newEvent.time = dayjs($event.target.value).toISOString();
     // this.newEvent.time = $event.target.value;
   }

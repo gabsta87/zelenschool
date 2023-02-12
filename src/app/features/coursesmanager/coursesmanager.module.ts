@@ -34,6 +34,8 @@ import { AccountteacherpageComponent } from './components/accountteacherpage/acc
 import { CreateAccountTeacherComponent } from './components/create-account-teacher/create-account-teacher.component';
 import { ScheduleadminpageComponent } from './components/scheduleadminpage/scheduleadminpage.component';
 import { AccountadminpageComponent } from './components/accountadminpage/accountadminpage.component';
+import { StudentModalComponent } from './components/student-modal/student-modal.component';
+import { TeacherModalComponent } from './components/teacher-modal/teacher-modal.component';
 
 
 @NgModule({
@@ -58,7 +60,9 @@ import { AccountadminpageComponent } from './components/accountadminpage/account
     AccountteacherpageComponent,
     CreateAccountTeacherComponent,
     ScheduleadminpageComponent,
-    AccountadminpageComponent
+    AccountadminpageComponent,
+    StudentModalComponent,
+    TeacherModalComponent
   ],
   imports: [
     SwiperModule,
