@@ -18,9 +18,10 @@ export class CalendarfixedeventsResolver implements Resolve<DocumentData[]> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): DocumentData[]{
     this.eventsObs = this._db.getCalendarEntries();
     this.extractedData  = this.eventsObs.pipe(switchMap(async (e:any) => {
+      
       e.forEach(async (elem:any)=>
         {
-          elem.author = await this._db.getUser(elem.author);
+          elem.author_full = await this._db.getUser(elem.author);
           
           elem.eventDate = dayjs(elem.eventDate);
 
