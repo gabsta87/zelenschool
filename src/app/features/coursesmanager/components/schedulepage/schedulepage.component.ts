@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IonModal, ModalController } from '@ionic/angular';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 import { StudentModalComponent } from '../student-modal/student-modal.component';
+import { TeacherModalComponent } from '../teacher-modal/teacher-modal.component';
 
 
 export interface CalendarMonthViewEventTimesChangedEvent<
@@ -63,6 +64,8 @@ export class SchedulepageComponent {
       this.extractedData = this._route.snapshot.data["scheduleData"];
       
       let elem = this.events as any;
+      console.log("extracted data before init : ",this.extractedData);
+      
       
       this.extractedData.forEach((e:DocumentData) => {
         elem.push({
@@ -75,7 +78,7 @@ export class SchedulepageComponent {
           actions : this.actions, 
           allDay:false })
       });
-      console.log("extracted data : ",this.extractedData);
+      console.log("extracted data after init: ",this.extractedData);
       console.log("events after : ",this.events);
       
     }
@@ -150,13 +153,17 @@ export class SchedulepageComponent {
     
     console.log("event while creating modal : ",event);
     const modal = await this.modalController.create({
-      component: StudentModalComponent,
+      component: this.isTeacher.value ? TeacherModalComponent: StudentModalComponent,
       componentProps: {
         author: (event as any).author_full,
         id: (event as any).id,
         title: (event as any).title,
       },
     });
+    console.log("is teacher : ",this.isTeacher.value);
+    
+    console.log("component : ",modal.component);
+    
     modal.present();
   }
 
