@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Auth, User } from '@angular/fire/auth';
-import { collection, QueryConstraint, Firestore, where, addDoc, collectionData, doc, setDoc, DocumentData} from '@angular/fire/firestore';
+import { collection, QueryConstraint, Firestore, addDoc, collectionData, doc, setDoc, DocumentData} from '@angular/fire/firestore';
 import { query, updateDoc } from '@firebase/firestore';
 import { firstValueFrom, map, Observable } from 'rxjs';
+import { getDatabase, push,ref, set } from "firebase/database";
 
 @Injectable({
   providedIn:'root'
@@ -38,6 +39,14 @@ export class AngularfireService{
     });
   }
 
+  subscribeToCalendarEntry(eventId:string){
+    const docRef = ref(getDatabase(),'calendarEntries/'+eventId+"/attendantsId/");
+    if(!this._auth.currentUser)
+      return;
+    const pushRef = push(docRef);
+    return set(pushRef,this._auth.currentUser?.uid);
+  }
+
   getCalendarEntries(){
     return this.getElements("calendarEntries");
   }
@@ -63,7 +72,7 @@ export class AngularfireService{
 
   updateUser(newValue:any){
     const docRef = doc(this._dbaccess,'users/'+this._auth.currentUser?.uid);
-    return updateDoc(docRef,newValue);;
+    return updateDoc(docRef,newValue);
   }
 
   getArticles(){
