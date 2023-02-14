@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Auth, User } from '@angular/fire/auth';
-import { collection, QueryConstraint, Firestore, addDoc, collectionData, doc, setDoc, DocumentData} from '@angular/fire/firestore';
+import { collection, QueryConstraint, Firestore, addDoc, collectionData, doc, setDoc, DocumentData, where, arrayUnion, arrayRemove} from '@angular/fire/firestore';
 import { query, updateDoc } from '@firebase/firestore';
-import { firstValueFrom, map, Observable } from 'rxjs';
-import { getDatabase, push,ref, set } from "firebase/database";
+import { find, firstValueFrom, map, Observable } from 'rxjs';
+import { getDatabase } from "firebase/database";
 
 @Injectable({
   providedIn:'root'
@@ -39,23 +39,32 @@ export class AngularfireService{
     });
   }
 
-  subscribeToCalendarEntry(eventId:string){
-    const docRef = ref(getDatabase(),'calendarEntries/'+eventId+"/attendantsId/");
+  async toggleSubscribtionToCalendarEntry(eventId:string,subscribe:boolean){
+    const docRef = doc(this._dbaccess,'calendarEntries/'+eventId);
+    
     if(!this._auth.currentUser)
       return;
-    const pushRef = push(docRef);
-    return set(pushRef,this._auth.currentUser?.uid);
+
+    await updateDoc(docRef, {
+      attendantsId: subscribe ? arrayUnion(this._auth.currentUser?.uid) : arrayRemove(this._auth.currentUser?.uid)
+    });
   }
 
   getCalendarEntries(){
     return this.getElements("calendarEntries");
   }
 
+
+  getCalendarEntry(idToFind: string){
+    let temp = this.getCalendarEntries();
+    return temp.pipe(map(datas => datas.find(e => e['id'] === idToFind)));
+  }
+
   getUsers(){
     return this.getElements("users");
   }
 
-  async getUser(userId:string):Promise<any>{
+  async getUser(userId:string):Promise<UserInfos|undefined>{
     let temp = await firstValueFrom(this.getUsers());
     return temp.find(e => e['id'] === userId);
   }

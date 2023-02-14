@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import * as dayjs from 'dayjs';
+import { DocumentData } from 'firebase/firestore';
+import { firstValueFrom, Observable } from 'rxjs';
+import { AngularfireService, UserInfos } from 'src/app/shared/service/angularfire.service';
+import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 
 
 @Component({
@@ -8,26 +13,37 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./student-modal.component.scss']
 })
 export class StudentModalComponent {
-  author!:{};
+  meta!:any;
   title!:string;
-  room!:number;
-  time!:string;
-  isAttending!:boolean;
-  banEndDate!:boolean;
+  dataObs!:Observable<DocumentData|undefined>;
+  creator!:UserInfos|undefined;
+  date!:string;
 
-  constructor(private modalCtrl: ModalController) {
-    console.log("author : ",this.author);
+  isAttending!:boolean;
+
+  constructor(private modalCtrl: ModalController,private readonly _db: AngularfireService,private readonly _user:UsermanagementService) {
+  }
+  
+  async ionViewWillEnter(){
+    console.log("author id : ",this.meta.authorId);
+    
+    this.dataObs = this._db.getCalendarEntry(this.meta.id);
+
+    let actualValue = await firstValueFrom(this.dataObs);
+
+    this.isAttending = actualValue ? actualValue['attendantsId'].includes(this._user.getId()) : false;
+    
+    if(actualValue){
+      this.creator = await this._db.getUser(actualValue['author']);
+    }
+
   }
 
   confirm(){
-    console.log("author : ",this.author);
-
     return this.modalCtrl.dismiss(null, 'confirm');
   }
 
   statusChanged($event:any){
-    console.log("checked : ",$event.detail.checked)
-
+    this._db.toggleSubscribtionToCalendarEntry(this.meta.id, $event.detail.checked);
   }
-  
 }

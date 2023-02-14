@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
-import { first, firstValueFrom, Observable, of, switchMap } from 'rxjs';
+import { first, firstValueFrom,map, Observable, of, switchMap } from 'rxjs';
 import { DocumentData } from '@angular/fire/firestore';
 import * as dayjs from 'dayjs';
 
@@ -19,14 +19,14 @@ export class CalendareventsresolveResolver implements Resolve<Observable<Observa
     this.eventsObs = this._db.getCalendarEntries();
     console.log("events ",this.eventsObs);
     
-    this.extractedData  = this.eventsObs.pipe(switchMap(async (e:any) => {
+    let tmp  = this.eventsObs.pipe(map(async (e:any) => {
       e.forEach(async (elem:any)=>
         {
           console.log("elem ",elem);
           
-          elem.author = await this._db.getUser(elem.author);
+          elem.author_full = await this._db.getUser(elem.author);
           
-          elem.eventDate = dayjs(elem.eventDate);
+          elem.eventDate_string = dayjs(elem.eventDate);
 
           if(elem.attendantsId){
             elem.attendantsId.forEach(async (attendant:any,index:number) => {
@@ -38,6 +38,7 @@ export class CalendareventsresolveResolver implements Resolve<Observable<Observa
       )
       return e;
       }));
-    return of(this.extractedData);
+      
+    return of(this.eventsObs);
   }
 }

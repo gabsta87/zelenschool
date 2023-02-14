@@ -36,6 +36,8 @@ import { ScheduleadminpageComponent } from './components/scheduleadminpage/sched
 import { AccountadminpageComponent } from './components/accountadminpage/accountadminpage.component';
 import { StudentModalComponent } from './components/student-modal/student-modal.component';
 import { TeacherModalComponent } from './components/teacher-modal/teacher-modal.component';
+import { CalendareventsresolveResolver } from './resolvers/calendareventsresolve.resolver';
+import { TeacherCreateEventModalComponent } from './components/teacher-create-event-modal/teacher-create-event-modal.component';
 
 
 @NgModule({
@@ -62,7 +64,8 @@ import { TeacherModalComponent } from './components/teacher-modal/teacher-modal.
     ScheduleadminpageComponent,
     AccountadminpageComponent,
     StudentModalComponent,
-    TeacherModalComponent
+    TeacherModalComponent,
+    TeacherCreateEventModalComponent
   ],
   imports: [
     SwiperModule,
@@ -92,7 +95,7 @@ import { TeacherModalComponent } from './components/teacher-modal/teacher-modal.
           path:"schedule",
           component:SchedulepageComponent,
           resolve:{
-            scheduleData:CalendarfixedeventsResolver
+            scheduleData:CalendareventsresolveResolver
           }
         },{
           path:"gallery",

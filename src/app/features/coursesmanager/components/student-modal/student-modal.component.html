@@ -5,19 +5,24 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <p>
-        <ion-text>Author : {{author}}</ion-text>
+    <div *ngIf="dataObs |async as currentEvent">
+    <p *ngIf="creator">
+        <ion-text>Author : {{creator.f_name}} {{creator.l_name}}</ion-text>
     </p>
     <p>
-        <ion-text>Time : {{time}}</ion-text>
+        <ion-text>DataObs : {{dataObs |async |json}}</ion-text>
     </p>
     <p>
-        <ion-text>Room : {{room}}</ion-text>
+        <ion-text>Time : {{currentEvent['eventDate'] | date: "HH:mm d MMM, yy"}}</ion-text>
     </p>
-    <ion-item>
-        <ion-checkbox slot="start" (ionChange)="statusChanged($event)"></ion-checkbox>
+    <p>
+        <ion-text>Room : {{meta.room_id}}</ion-text>
+    </p>
+    <ion-item lines="none">
+        <ion-checkbox slot="start" [(ngModel)]="isAttending" (ionChange)="statusChanged($event)"></ion-checkbox>
         <ion-label>Participate</ion-label>
     </ion-item>
+    </div>
 </ion-content>
 
 <ion-footer>

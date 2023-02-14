@@ -16,3 +16,13 @@ pre {
   margin-right: 5%;
   margin-bottom: 5%;
 }
+
+.participantsCounter{
+  display: flex; 
+  justify-content: center;
+}
+
+.eventsTable :hover{
+  background-color: rgb(230, 235, 236);
+  cursor:pointer;
+}

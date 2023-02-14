@@ -57,7 +57,6 @@
         [refresh]="refresh"
         [activeDayIsOpen]="activeDayIsOpen"
         (eventClicked)="handleCalendarEntry('Clicked', $event.event)"
-        (eventTimesChanged)="eventTimesChanged($event)"
         (dayClicked)="dayClicked($event.day)"
     >
     </mwl-calendar-month-view>
@@ -67,7 +66,6 @@
         [events]="events"
         [refresh]="refresh"
         (eventClicked)="handleCalendarEntry('Clicked', $event.event)"
-        (eventTimesChanged)="eventTimesChanged($event)"
     >
     </mwl-calendar-week-view>
     <mwl-calendar-day-view
@@ -76,7 +74,6 @@
         [events]="events"
         [refresh]="refresh"
         (eventClicked)="handleCalendarEntry('Clicked', $event.event)"
-        (eventTimesChanged)="eventTimesChanged($event)"
     >
     </mwl-calendar-day-view>
 </div>
@@ -100,53 +97,88 @@
     </ion-row>
 </ion-grid>
 
-<div class="events_grid" *ngIf="extractedData as eventsList">
-<ion-grid>
-    <ion-row>
-        <ion-col>
-            Title
-        </ion-col>
-        <ion-col>
-            Time
-        </ion-col>
-        <ion-col>
-            Teacher	
-        </ion-col>
-        <ion-col>
-            Classroom	
-        </ion-col>
-        <ion-col>
-            Attendants
-        </ion-col>
-    </ion-row>
-    <ion-row *ngFor="let event of eventsList; index as i">
-        <ion-col>
-            {{event['title']}}
-        </ion-col>
-        <ion-col>
-            {{event['eventDate']| date: "HH:mm d MMM, yy"}}
-        </ion-col>
-        <ion-col>
-            {{event['author'].f_name}} {{event['author'].l_name}}
-        </ion-col>
-        <ion-col>            
-            {{event['room_id']}}
-        </ion-col>
-        <ion-col>
-            <ion-list *ngIf="event['attendantsId']" lines="none" class="ion-no-padding">
-                <ion-item class="ion-no-padding">
-                    <ion-text style="display: flex; align-items: center;">
-                        ({{event['attendantsId'].length}}/{{event['max_participants']}})
-                    </ion-text>
-                </ion-item>
-                <ion-item *ngFor="let att of event['attendantsId']" class="ion-no-padding">
-                    {{att.f_name}} {{att.l_name}}
-                </ion-item>
-            </ion-list>
-        </ion-col>
-    </ion-row>
-</ion-grid>
+<div class="events_grid" *ngIf="extractedData | async as eventsList">
+    <ion-grid class="eventsTable">
+        <ion-row>
+            <ion-col>
+                Title
+            </ion-col>
+            <ion-col>
+                Time
+            </ion-col>
+            <ion-col>
+                Teacher	
+            </ion-col>
+            <ion-col>
+                Classroom	
+            </ion-col>
+            <ion-col>
+                Attendants
+            </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let event of eventsList; index as i">
+            <ion-col>
+                {{event['title']}}
+            </ion-col>
+            <ion-col>
+                {{event['eventDate']| date: "HH:mm d MMM, yy"}}
+            </ion-col>
+            <ion-col>
+                {{event['author'].f_name}} {{event['author'].l_name}}
+            </ion-col>
+            <ion-col>            
+                {{event['room_id']}}
+            </ion-col>
+            <ion-col>
+                <div *ngIf="event['attendantsId']">
+                <ion-text class="participantsCounter">
+                    ({{event['attendantsId'].length}}/{{event['max_participants']}})
+                </ion-text>
+                <ion-list lines="none" class="ion-no-padding">
+                    <ion-item *ngFor="let att of event['attendantsId']" class="ion-no-padding">
+                        {{att.f_name}} {{att.l_name}}
+                    </ion-item>
+                </ion-list>
+                </div>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </div>
+
 </div>
 </ion-content>
 
+<!-- <ng-template #customCellTemplate let-day="day"
+             let-openDay="openDay"
+             let-locale="locale"
+             let-tooltipPlacement="tooltipPlacement"
+             let-highlightDay="highlightDay"
+             let-unhighlightDay="unhighlightDay"
+             let-eventClicked="eventClicked"
+             let-tooltipTemplate="tooltipTemplate"
+             let-tooltipAppendToBody="tooltipAppendToBody">
+    <div class="cal-cell-top">
+        <span class="cal-day-badge bg-{{day.dayPoints[0].meta.value >= 2 ? 'success' : 'warning'}}"
+              *ngIf="day.dayPoints.length">
+            {{ day.dayPoints[0].meta.value }}
+        </span>
+        <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+        <div class="cal-day-notes" *ngIf="day.dayPoints.length" [ngbPopover]="day.dayPoints[0].meta.notes">
+            {{day.dayPoints[0].meta.notes}}
+        </div>
+    </div>
+    <div class="cal-events" *ngIf="day.events.length > 0">
+        <div class="cal-event"
+            *ngFor="let event of day.events"
+            [style.backgroundColor]="event.color.primary"
+            [ngClass]="event?.cssClass"
+            (mouseenter)="highlightDay.emit({event: event})"
+            (mouseleave)="unhighlightDay.emit({event: event})"
+            [mwlCalendarTooltip]="event.title | calendarEventTitle:'monthTooltip':event"
+            [tooltipPlacement]="tooltipPlacement"
+            [tooltipEvent]="event"
+            [tooltipTemplate]="tooltipTemplate"
+            [tooltipAppendToBody]="tooltipAppendToBody">
+        </div>
+    </div>
+</ng-template> -->

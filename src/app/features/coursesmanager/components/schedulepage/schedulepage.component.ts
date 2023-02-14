@@ -1,7 +1,7 @@
-import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, Output, EventEmitter, } from '@angular/core';
-import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, } from 'date-fns';
-import { WeekDay, MonthView, MonthViewDay, ViewPeriod, } from 'calendar-utils';
-import { BehaviorSubject, elementAt, firstValueFrom, map, Observable, Subject, switchMap } from 'rxjs';
+import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
+import { isSameDay, isSameMonth } from 'date-fns';
+import { WeekDay, MonthView, MonthViewDay } from 'calendar-utils';
+import { BehaviorSubject, combineLatest, elementAt, firstValueFrom, map, Observable, Subject, switchMap } from 'rxjs';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import * as dayjs from 'dayjs';
@@ -11,7 +11,8 @@ import { IonModal, ModalController } from '@ionic/angular';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 import { StudentModalComponent } from '../student-modal/student-modal.component';
 import { TeacherModalComponent } from '../teacher-modal/teacher-modal.component';
-
+import { TeacherCreateEventModalComponent } from '../teacher-create-event-modal/teacher-create-event-modal.component';
+import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 
 export interface CalendarMonthViewEventTimesChangedEvent<
   EventMetaType = any,
@@ -43,80 +44,95 @@ const colors: Record<string, EventColor> = {
 })
 export class SchedulepageComponent {
   @ViewChild(IonModal) studentModal!: IonModal;
-  
+ 
+  // Angular Calendar
+  refresh = new Subject<void>();
+  events: CalendarEvent[] = [];
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
+  activeDayIsOpen: boolean = false;
   viewDate: Date = new Date();
+  
+  // Schedulepage
   clickedDate: dayjs.Dayjs = dayjs(this.viewDate);
   isTeacher:BehaviorSubject<boolean> = this._user.isLoggedAsTeacher;
   isAdmin:BehaviorSubject<boolean> = this._user.isLoggedAsAdmin;
-
   newEvent:{title:string,time:string,room:number,max_participants:number} = {title:"",time:"",room:-1,max_participants:0};
-
-  // extractedData:Observable<any> = this._route.snapshot.data["scheduleData"];
-  extractedData!:DocumentData[];
+  extractedData!:Observable<DocumentData[]>;
 
   constructor(
     private readonly _route: ActivatedRoute,
+    private readonly _db: AngularfireService,
     private readonly _user: UsermanagementService,
     private readonly modalController: ModalController
     ) {
-      this.extractedData = this._route.snapshot.data["scheduleData"];
-      
-      let elem = this.events as any;
-      console.log("extracted data before init : ",this.extractedData);
-      
-      
-      this.extractedData.forEach((e:DocumentData) => {
-        elem.push({
-          id : e['id'],
+    // this.extractedData = this._route.snapshot.data["scheduleData"];
+    this.extractedData = this._db.getCalendarEntries();
+  }
+
+  async ngOnInit(){
+    this.extractedData.subscribe((newValues) => {
+      this.events = [];
+      newValues.forEach(async e =>{
+        
+        let user = await this._db.getUser(e['author']);
+        let tempAttendants:any[] = [];
+
+        e['attendantsId'].forEach(async (e:string) =>
+          this._db.getUser(e).then(e => tempAttendants.push(e))
+        )
+        
+        this.events.push({
           title : e['title'],
-          authorId: e['author'],
-          author: e['author_full'],
-          room: e['roomId'],
           start : dayjs(e['eventDate']).toDate(), 
           actions : this.actions, 
-          allDay:false })
-      });
-      console.log("extracted data after init: ",this.extractedData);
-      console.log("events after : ",this.events);
-      
-    }
+          allDay:false,
+          meta:{
+            id : e['id'],
+            time : e['eventDate'],
+            authorId: e['author'],
+            author : user,
+            room_id: e['room_id'],
+            attendantsId: e['attendantsId'],
+            attendants : tempAttendants,
+            max_participants: e['max_participants'],
+          },
+        })
+        console.log("events : ",this.events);
+      })
+    })
+
+    // setTimeout(() => {
+    //   this.refresh.next();
+    // }, 200);
+  }
+
+  async ionViewWillEnter(){
+    setTimeout(() => {
+      this.refresh.next();
+    }, 200);
+  }
 
   actions: CalendarEventAction[] = [
     {
       label: '<i class="fas fa-fw fa-pencil-alt"></i>',
       a11yLabel: 'Edit',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleCalendarEntry('Edited', event);
+        console.log('Edit event', event);
+        // this.handleCalendarEntry('Edited', event);
       },
     },
     {
       label: '<i class="fas fa-fw fa-trash-alt"></i>',
       a11yLabel: 'Delete',
       onClick: ({ event }: { event: CalendarEvent }): void => {
+        console.log('Delete event', event);
+        //     this.events = this.events.filter((iEvent) => iEvent !== event);
+        //     this.handleCalendarEntry('Deleted', event);
       },
     },
-    // {
-    //   label: '<i class="fas fa-fw fa-trash-alt"></i>',
-    //   a11yLabel: 'Delete',
-    //   onClick: ({ event }: { event: CalendarEvent }): void => {
-    //     this.events = this.events.filter((iEvent) => iEvent !== event);
-    //     this.handleCalendarEntry('Deleted', event);
-    //   },
-    // },
   ];
 
-  refresh = new Subject<void>();
-
-  events: CalendarEvent[] = [];
-  
-  async ionViewWillEnter(){
-    setTimeout(() => {
-      this.refresh.next();
-    }, 200);
-  }
-  
   // events: CalendarEvent[] = [
   //   {
   //     start: subDays(startOfDay(new Date()), 1),
@@ -133,21 +149,6 @@ export class SchedulepageComponent {
   //   },
   // ];
 
-  activeDayIsOpen: boolean = false;
-
-  eventTimesChanged({ event, newStart, newEnd, }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent) => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd,
-        };
-      }
-      return iEvent;
-    });
-    this.handleCalendarEntry('Dropped or resized', event);
-  }
 
   async handleCalendarEntry(action: string, event: CalendarEvent) {
     
@@ -155,14 +156,10 @@ export class SchedulepageComponent {
     const modal = await this.modalController.create({
       component: this.isTeacher.value ? TeacherModalComponent: StudentModalComponent,
       componentProps: {
-        author: (event as any).author_full,
-        id: (event as any).id,
-        title: (event as any).title,
+        meta: event.meta,
+        title: event.title,
       },
     });
-    console.log("is teacher : ",this.isTeacher.value);
-    
-    console.log("component : ",modal.component);
     
     modal.present();
   }
@@ -193,14 +190,17 @@ export class SchedulepageComponent {
     }
   }
   
-  updateTime($event:any){
-    this.newEvent.time = dayjs($event.target.value).toISOString();
-    // this.newEvent.time = $event.target.value;
-  }
-
-  creatingEvent($event:any){
+  async creatingEvent($event:any){
     console.log("clicked date : ",this.clickedDate);
     console.log("new event time : ",this.newEvent.time);
+    const modal = await this.modalController.create({
+      component: this.isTeacher.value ? TeacherCreateEventModalComponent: null,
+      componentProps: {
+        time: this.newEvent.time,
+      },
+    });
+    
+    modal.present();
   }
 
 }
