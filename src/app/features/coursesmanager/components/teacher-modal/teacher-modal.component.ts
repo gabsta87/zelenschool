@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ActionSheetController, ModalController } from '@ionic/angular';
 import { DocumentData } from 'firebase/firestore';
 import { firstValueFrom, Observable } from 'rxjs';
 import { AngularfireService, UserInfos } from 'src/app/shared/service/angularfire.service';
@@ -19,6 +19,7 @@ export class TeacherModalComponent{
   meta!:any;
   creatorName!:string;
 
+  presentingElement = undefined;
   dataObs!:Observable<DocumentData|undefined>;
   creator!:UserInfos|undefined;
 
@@ -26,8 +27,11 @@ export class TeacherModalComponent{
   isAdmin!:boolean;
   isDisabled!:boolean;
 
-  constructor(private modalCtrl: ModalController,private readonly _db: AngularfireService,private readonly _user:UsermanagementService) {
-  }
+  constructor(
+    private modalCtrl: ModalController,
+    private readonly _db: AngularfireService,
+    private readonly _user:UsermanagementService,
+    private actionSheetCtrl: ActionSheetController) { }
   
   async ionViewWillEnter(){
     this.dataObs = this._db.getCalendarEntry(this.meta.id);
@@ -57,8 +61,44 @@ export class TeacherModalComponent{
     this._db.toggleSubscribtionToCalendarEntry(this.meta.id, $event.detail.checked);
   }
 
+  canDismiss = async () => {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: 'Are you sure?',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'confirm',
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+      ],
+    });
+
+    actionSheet.present();
+
+    const { role } = await actionSheet.onWillDismiss();
+
+    return role === 'confirm';
+  };
+  
+  async deleteEntry(){
+    if(!(this._user.isAdmin)){
+      console.log("Only admins can remove a course");
+      return;
+    }
+
+    let response = await this.canDismiss();
+    if(!response)
+      return;
+
+    this._db.deleteCalendarEntry(this.meta.id);
+    return this.modalCtrl.dismiss(null, 'delete');
+  }
+
   cancel(){
-    return this.modalCtrl.dismiss(null, 'confirm');
+    return this.modalCtrl.dismiss(null, 'cancel');
   }
 
   confirm(){

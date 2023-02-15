@@ -135,9 +135,7 @@ export class SchedulepageComponent {
 
 
   async handleCalendarEntry(action: string, event: CalendarEvent) {
-    let modal!:any;
-    
-    modal = await this.modalController.create({
+    const modal = await this.modalController.create({
       component: (this.isTeacher.value || this.isAdmin.value )? TeacherModalComponent: StudentModalComponent,
       componentProps: {
         meta: event.meta,
@@ -174,21 +172,21 @@ export class SchedulepageComponent {
     }
   }
   
-  async updateEvent(evt : CalendarEvent){
-    if(!(this.isTeacher.value || this.isAdmin.value)){
-      console.log("Cannot update if not admin or teacher");
-      return
-    }
+  // async updateEvent(evt : CalendarEvent){
+  //   if(!(this.isTeacher.value || this.isAdmin.value)){
+  //     console.log("Cannot update if not admin or teacher");
+  //     return
+  //   }
 
-    const modal = await this.modalController.create({
-      component: TeacherModalComponent,
-      componentProps: {
-        title:evt.title,
-        meta:evt.meta,
-      },
-    });
-    modal.present();
-  }
+  //   const modal = await this.modalController.create({
+  //     component: TeacherModalComponent,
+  //     componentProps: {
+  //       title:evt.title,
+  //       meta:evt.meta,
+  //     },
+  //   });
+  //   modal.present();
+  // }
 
   async createEvent(){
     if (!(this.isTeacher.value || this.isAdmin.value)){

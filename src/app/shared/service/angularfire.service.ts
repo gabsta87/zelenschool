@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Auth, User } from '@angular/fire/auth';
 import { collection, QueryConstraint, Firestore, addDoc, collectionData, doc, setDoc, DocumentData, where, arrayUnion, arrayRemove} from '@angular/fire/firestore';
-import { query, updateDoc } from '@firebase/firestore';
+import { deleteDoc, query, updateDoc } from '@firebase/firestore';
 import { find, firstValueFrom, map, Observable } from 'rxjs';
 import { getDatabase } from "firebase/database";
 import * as dayjs from 'dayjs';
@@ -52,6 +52,15 @@ export class AngularfireService{
       room_id:newEntry.room_id,
       max_participants:newEntry.max_participants
     });
+  }
+
+  deleteCalendarEntry(entryId:string){
+    if(this._auth.currentUser?.uid){
+      return deleteDoc(doc(this._dbaccess,"calendarEntries",entryId))
+    }else{
+      console.log("User not logged, impossible to delete event");
+      return;
+    }
   }
 
   async toggleSubscribtionToCalendarEntry(eventId:string,subscribe:boolean){

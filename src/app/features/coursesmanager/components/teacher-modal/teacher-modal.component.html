@@ -1,14 +1,16 @@
-<ion-header>
+<ion-footer>
     <ion-toolbar>
         <ion-buttons slot="start">
             <ion-button (click)="cancel()">Cancel</ion-button>
         </ion-buttons>
-        <ion-title>Welcome</ion-title>
+        <ion-buttons *ngIf="isAdmin" slot="secondary">
+            <ion-button (click)="deleteEntry()" color="danger">Delete</ion-button>
+        </ion-buttons>
         <ion-buttons slot="end">
             <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
         </ion-buttons>
     </ion-toolbar>
-</ion-header>
+</ion-footer>
 
 <ion-content class="ion-padding">
     <ion-item>

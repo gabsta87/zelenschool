@@ -11,28 +11,12 @@ import { AngularfireService, UserInfos } from 'src/app/shared/service/angularfir
 })
 export class TeacherCreateEventModalComponent {
   time!:string;
-  title:string = "";
-  max_participants = 0;
+  title!:string;
+  max_participants!:number;
   room_id!:string;
   meta!:any;
-  fullName!:string;
-
-  dataObs!:Observable<DocumentData|undefined>;
-  creator!:UserInfos|undefined;
 
   constructor(private readonly modalCtrl:ModalController,private readonly _db: AngularfireService){ }
-
-  async ionViewWillEnter(){
-
-    this.dataObs = this._db.getCalendarEntry(this.meta.id);
-
-    let actualValue = await firstValueFrom(this.dataObs);
-
-    if(actualValue){
-      this.creator = await this._db.getUser(actualValue['author']);
-      this.fullName = this.creator?.f_name+" "+this.creator?.l_name
-    }
-  }
 
   cancel(){
     return this.modalCtrl.dismiss(null, 'confirm');

@@ -29,8 +29,6 @@ export class StudentModalComponent {
   constructor(private modalCtrl: ModalController,private readonly _db: AngularfireService,private readonly _user:UsermanagementService) { }
   
   async ionViewWillEnter(){
-    console.log("author id : ",this.meta.authorId);
-    
     this.dataObs = this._db.getCalendarEntry(this.meta.id);
 
     let actualValue = await firstValueFrom(this.dataObs);
@@ -49,11 +47,12 @@ export class StudentModalComponent {
     }
   }
 
-  confirm(){
+  cancel(){
     return this.modalCtrl.dismiss(null, 'confirm');
   }
 
-  statusChanged($event:any){
-    this._db.toggleSubscribtionToCalendarEntry(this.meta.id, $event.detail.checked);
+  confirm(){
+    this._db.toggleSubscribtionToCalendarEntry(this.meta.id, this.isAttending);
+    return this.modalCtrl.dismiss(null, 'confirm');
   }
 }
