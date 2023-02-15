@@ -4,6 +4,7 @@ import { collection, QueryConstraint, Firestore, addDoc, collectionData, doc, se
 import { query, updateDoc } from '@firebase/firestore';
 import { find, firstValueFrom, map, Observable } from 'rxjs';
 import { getDatabase } from "firebase/database";
+import * as dayjs from 'dayjs';
 
 @Injectable({
   providedIn:'root'
@@ -23,18 +24,32 @@ export class AngularfireService{
     return observableStream;
   }
 
-  createCalendarEntry(newEntry: {title:string,time:string,room:number,max_participants:number}) {
+  createCalendarEntry(newEntry: {title:string,eventDate:string,room_id:string,max_participants:number}){
     if(!this._auth.currentUser?.uid){
       console.log("User not logged, no event created");
       return
     }
-
     return addDoc(collection(this._dbaccess,"calendarEntries"),{
-      eventDate:newEntry.time,
+      eventDate:newEntry.eventDate,
       attendantsId:[],
       title:newEntry.title,
       author:this._auth.currentUser.uid,
-      room_id:newEntry.room,
+      room_id:newEntry.room_id,
+      max_participants:newEntry.max_participants
+    });
+  }
+  
+  updateCalendarEntry(newEntry: {id:string,title:string,eventDate:string,room_id:string,max_participants:number}) {
+    if(!this._auth.currentUser?.uid){
+      console.log("User not logged, impossible to edit event");
+      return
+    }
+
+    return updateDoc(doc(this._dbaccess,"calendarEntries",newEntry.id),{
+      eventDate:dayjs(newEntry.eventDate).toISOString(),
+      title:newEntry.title,
+      author:this._auth.currentUser.uid,
+      room_id:newEntry.room_id,
       max_participants:newEntry.max_participants
     });
   }

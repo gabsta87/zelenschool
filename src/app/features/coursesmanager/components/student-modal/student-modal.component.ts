@@ -19,10 +19,14 @@ export class StudentModalComponent {
   creator!:UserInfos|undefined;
   date!:string;
 
-  isAttending!:boolean;
+  participants!:number;
+  max_participants!:number;
 
-  constructor(private modalCtrl: ModalController,private readonly _db: AngularfireService,private readonly _user:UsermanagementService) {
-  }
+  isAttending!:boolean;
+  isCourseFull!:boolean;
+  isSubscribtionBlocked!:boolean;
+
+  constructor(private modalCtrl: ModalController,private readonly _db: AngularfireService,private readonly _user:UsermanagementService) { }
   
   async ionViewWillEnter(){
     console.log("author id : ",this.meta.authorId);
@@ -31,12 +35,18 @@ export class StudentModalComponent {
 
     let actualValue = await firstValueFrom(this.dataObs);
 
-    this.isAttending = actualValue ? actualValue['attendantsId'].includes(this._user.getId()) : false;
-    
     if(actualValue){
-      this.creator = await this._db.getUser(actualValue['author']);
-    }
+      this.isAttending = actualValue['attendantsId'].includes(this._user.getId());
+  
+      this.isCourseFull = actualValue['attendantsId'].length >= actualValue['max_participants'];
 
+      this.isSubscribtionBlocked = this.isCourseFull && !this.isAttending;
+      
+      this.creator = await this._db.getUser(actualValue['author']);
+
+      this.participants = actualValue['attendantsId'].length;
+      this.max_participants = actualValue['max_participants'];
+    }
   }
 
   confirm(){

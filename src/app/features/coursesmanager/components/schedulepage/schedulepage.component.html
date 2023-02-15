@@ -87,17 +87,17 @@
             </h3>
         </ion-col>
         <ion-col>
-            <ion-text>{{clickedDate|json}}</ion-text>
+            <ion-text>{{adjustedDate|json}}</ion-text>
         </ion-col>
         <ion-col *ngIf="(isTeacher|async) || (isAdmin|async)">
             <ion-buttons class="ion-justify-content-center">
-                <ion-button id="open-modal" fill="solid" (click)="creatingEvent($event)">Add new</ion-button>
+                <ion-button id="open-modal" fill="solid" (click)="createEvent()">Add new</ion-button>
             </ion-buttons>
         </ion-col>
     </ion-row>
 </ion-grid>
 
-<div class="events_grid" *ngIf="extractedData | async as eventsList">
+<div id="eventsSecTable" class="events_grid" *ngIf="extractedData | async as eventsList">
     <ion-grid class="eventsTable">
         <ion-row>
             <ion-col>
@@ -124,7 +124,7 @@
                 {{event['eventDate']| date: "HH:mm d MMM, yy"}}
             </ion-col>
             <ion-col>
-                {{event['author'].f_name}} {{event['author'].l_name}}
+                {{event['author_full']?.f_name}} {{event['author_full']?.l_name}}
             </ion-col>
             <ion-col>            
                 {{event['room_id']}}
@@ -134,11 +134,6 @@
                 <ion-text class="participantsCounter">
                     ({{event['attendantsId'].length}}/{{event['max_participants']}})
                 </ion-text>
-                <ion-list lines="none" class="ion-no-padding">
-                    <ion-item *ngFor="let att of event['attendantsId']" class="ion-no-padding">
-                        {{att.f_name}} {{att.l_name}}
-                    </ion-item>
-                </ion-list>
                 </div>
             </ion-col>
         </ion-row>

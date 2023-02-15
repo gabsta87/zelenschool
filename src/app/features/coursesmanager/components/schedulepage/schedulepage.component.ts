@@ -54,7 +54,7 @@ export class SchedulepageComponent {
   viewDate: Date = new Date();
   
   // Schedulepage
-  clickedDate: dayjs.Dayjs = dayjs(this.viewDate);
+  adjustedDate: dayjs.Dayjs = dayjs(this.viewDate);
   isTeacher:BehaviorSubject<boolean> = this._user.isLoggedAsTeacher;
   isAdmin:BehaviorSubject<boolean> = this._user.isLoggedAsAdmin;
   newEvent:{title:string,time:string,room:number,max_participants:number} = {title:"",time:"",room:-1,max_participants:0};
@@ -66,21 +66,13 @@ export class SchedulepageComponent {
     private readonly _user: UsermanagementService,
     private readonly modalController: ModalController
     ) {
-    // this.extractedData = this._route.snapshot.data["scheduleData"];
-    this.extractedData = this._db.getCalendarEntries();
+    this.extractedData = this._route.snapshot.data["scheduleData"];
   }
 
   async ngOnInit(){
     this.extractedData.subscribe((newValues) => {
       this.events = [];
       newValues.forEach(async e =>{
-        
-        let user = await this._db.getUser(e['author']);
-        let tempAttendants:any[] = [];
-
-        e['attendantsId'].forEach(async (e:string) =>
-          this._db.getUser(e).then(e => tempAttendants.push(e))
-        )
         
         this.events.push({
           title : e['title'],
@@ -91,26 +83,18 @@ export class SchedulepageComponent {
             id : e['id'],
             time : e['eventDate'],
             authorId: e['author'],
-            author : user,
+            author:e['author_full'],
             room_id: e['room_id'],
             attendantsId: e['attendantsId'],
-            attendants : tempAttendants,
             max_participants: e['max_participants'],
           },
         })
-        console.log("events : ",this.events);
       })
-    })
-
-    // setTimeout(() => {
-    //   this.refresh.next();
-    // }, 200);
+    });
   }
 
-  async ionViewWillEnter(){
-    setTimeout(() => {
-      this.refresh.next();
-    }, 200);
+  ngAfterViewInit(){
+    this.refresh.next();
   }
 
   actions: CalendarEventAction[] = [
@@ -151,10 +135,10 @@ export class SchedulepageComponent {
 
 
   async handleCalendarEntry(action: string, event: CalendarEvent) {
+    let modal!:any;
     
-    console.log("event while creating modal : ",event);
-    const modal = await this.modalController.create({
-      component: this.isTeacher.value ? TeacherModalComponent: StudentModalComponent,
+    modal = await this.modalController.create({
+      component: (this.isTeacher.value || this.isAdmin.value )? TeacherModalComponent: StudentModalComponent,
       componentProps: {
         meta: event.meta,
         title: event.title,
@@ -174,8 +158,8 @@ export class SchedulepageComponent {
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
 
-    this.clickedDate = dayjs(date).add(13,'hour');
-    this.newEvent.time = this.clickedDate.toISOString();
+    this.adjustedDate = dayjs(date).add(13,'hour');
+    this.newEvent.time = this.adjustedDate.toISOString();
 
     if (isSameMonth(date, this.viewDate)) {
       if (
@@ -190,17 +174,35 @@ export class SchedulepageComponent {
     }
   }
   
-  async creatingEvent($event:any){
-    console.log("clicked date : ",this.clickedDate);
-    console.log("new event time : ",this.newEvent.time);
+  async updateEvent(evt : CalendarEvent){
+    if(!(this.isTeacher.value || this.isAdmin.value)){
+      console.log("Cannot update if not admin or teacher");
+      return
+    }
+
     const modal = await this.modalController.create({
-      component: this.isTeacher.value ? TeacherCreateEventModalComponent: null,
+      component: TeacherModalComponent,
       componentProps: {
-        time: this.newEvent.time,
+        title:evt.title,
+        meta:evt.meta,
       },
     });
-    
     modal.present();
   }
 
+  async createEvent(){
+    if (!(this.isTeacher.value || this.isAdmin.value)){
+      console.log("Cannot create if not admin or not teacher");
+      return
+    }
+    console.log("clicked date : ",this.adjustedDate);
+    
+    const modal = await this.modalController.create({
+      component:  TeacherCreateEventModalComponent,
+      componentProps: {
+        time: this.adjustedDate.toISOString()
+      },
+    });
+    modal.present();
+  }
 }

@@ -27,9 +27,7 @@ import { AdminpageresolveResolver } from './resolvers/adminpageresolve.resolver'
 import { AccountpageComponent } from './components/accountpage/accountpage.component';
 import { UserpageResolver } from './resolvers/userpage.resolver';
 import { UserLoggedGuard } from './guards/user-logged.guard';
-import { CalendarfixedeventsResolver } from './resolvers/calendarfixedevents.resolver';
 import { CreateAccountComponent } from './components/create-account/create-account.component';
-import { ScheduleteacherpageComponent } from './components/scheduleteacherpage/scheduleteacherpage.component';
 import { AccountteacherpageComponent } from './components/accountteacherpage/accountteacherpage.component';
 import { CreateAccountTeacherComponent } from './components/create-account-teacher/create-account-teacher.component';
 import { ScheduleadminpageComponent } from './components/scheduleadminpage/scheduleadminpage.component';
@@ -58,7 +56,6 @@ import { TeacherCreateEventModalComponent } from './components/teacher-create-ev
     AdminpageComponent,
     AccountpageComponent,
     CreateAccountComponent,
-    ScheduleteacherpageComponent,
     AccountteacherpageComponent,
     CreateAccountTeacherComponent,
     ScheduleadminpageComponent,

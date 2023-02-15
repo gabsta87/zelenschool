@@ -18,8 +18,11 @@
     <p>
         <ion-text>Room : {{meta.room_id}}</ion-text>
     </p>
+    <p>
+        <ion-text>Participants : {{participants}}/{{max_participants}}</ion-text>
+    </p>
     <ion-item lines="none">
-        <ion-checkbox slot="start" [(ngModel)]="isAttending" (ionChange)="statusChanged($event)"></ion-checkbox>
+        <ion-checkbox slot="start" [(ngModel)]="isAttending" (ionChange)="statusChanged($event)" [disabled]="isSubscribtionBlocked"></ion-checkbox>
         <ion-label>Participate</ion-label>
     </ion-item>
     </div>
