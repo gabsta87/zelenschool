@@ -6,21 +6,18 @@
 </ion-header>
 <ion-content>
     <div *ngIf="dataObs |async as currentEvent">
-    <p *ngIf="creator">
+    <ion-item *ngIf="creator">
         <ion-text>Author : {{creator.f_name}} {{creator.l_name}}</ion-text>
-    </p>
-    <p>
-        <ion-text>DataObs : {{dataObs |async |json}}</ion-text>
-    </p>
-    <p>
+    </ion-item>
+    <ion-item>
         <ion-text>Time : {{currentEvent['eventDate'] | date: "HH:mm d MMM, yy"}}</ion-text>
-    </p>
-    <p>
+    </ion-item>
+    <ion-item>
         <ion-text>Room : {{meta.room_id}}</ion-text>
-    </p>
-    <p>
+    </ion-item>
+    <ion-item>
         <ion-text>Participants : {{participants}}/{{max_participants}}</ion-text>
-    </p>
+    </ion-item>
     <ion-item lines="none">
         <ion-checkbox slot="start" [(ngModel)]="isAttending" [disabled]="isSubscribtionBlocked"></ion-checkbox>
         <ion-label>Participate</ion-label>
