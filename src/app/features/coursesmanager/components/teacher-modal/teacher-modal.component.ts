@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { DocumentData } from 'firebase/firestore';
-import { firstValueFrom, map, Observable } from 'rxjs';
+import { combineLatest, firstValueFrom, flatMap, map, mergeMap, Observable, switchMap } from 'rxjs';
 import { AngularfireService, UserInfos } from 'src/app/shared/service/angularfire.service';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 
@@ -27,8 +27,6 @@ export class TeacherModalComponent{
   isAdmin!:boolean;
   isDisabled!:boolean;
 
-  studentsList!:any;
-
   constructor(
     private modalCtrl: ModalController,
     private readonly _db: AngularfireService,
@@ -39,19 +37,25 @@ export class TeacherModalComponent{
     this.dataObs = this._db.getCalendarEntry(this.meta.id);
 
     let actualValue = await firstValueFrom(this.dataObs);
-    console.log("actual value = ",actualValue);
-    this.studentsList = this.dataObs.pipe(map((e:any)=> e['attendantsId']));
 
-    this.studentsList = this.studentsList.pipe(map((e:any) => {
-      console.log("e : ",e);
-      let tmp = this._db.getUser(e);
-      console.log("temp : ",tmp);
-      return tmp;
-    } ))
+    this.dataObs = this.dataObs.pipe(
+      switchMap((entry:any) => {
+        const observables = entry.attendantsId.map((id:string) => {
+          return this._db.getUserObs(id);
+        });
+        return combineLatest(observables).pipe(
+          map((users:any) => {
+            entry.attendantsId.forEach((id:string, i:number) => {
+              entry.attendantsId[i] = users[i];
+            });
+            return entry;
+          })
+        );
+      })
+    );
 
-    let actualStudentsIdList = await firstValueFrom(this.studentsList);
-    console.log("students id : ",actualStudentsIdList);
-    
+    let newDataObs = await firstValueFrom(this.dataObs);
+    console.log("new data Obs : ",newDataObs);
 
     this.id = this.meta.id;
     this.room_id = this.meta.room_id;

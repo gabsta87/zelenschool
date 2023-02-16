@@ -6,7 +6,7 @@
 
 <ion-content class="ion-padding">
     <ion-item>
-        <ion-label position="stacked">Enter title</ion-label>
+        <ion-label>Title : </ion-label>
         <ion-input type="text" placeholder="Course title" [(ngModel)]="title" [disabled]="isDisabled"></ion-input>
     </ion-item>
 
@@ -33,8 +33,27 @@
 
     <ion-item>
         <ion-label>Max participants</ion-label>
-        <ion-input type="number" placeholder="00" [(ngModel)]="max_participants" [disabled]="isDisabled"></ion-input>
+        <ion-input type="number" placeholder="0" [(ngModel)]="max_participants" [disabled]="isDisabled"></ion-input>
     </ion-item>
+
+    <ion-item *ngIf="dataObs|async as event">
+        <ion-grid>
+            <ion-row>
+                <ion-label>Students ({{event['attendantsId'].length}}/{{max_participants}})</ion-label>
+            </ion-row>
+            <ion-row>
+
+    <ion-list lines="none" >
+        <ion-item *ngFor="let stud of event['attendantsId']" >
+            {{stud.f_name}} {{stud.l_name}}
+        </ion-item>
+    </ion-list>
+
+    </ion-row>
+
+        </ion-grid>
+    </ion-item>
+
 </ion-content>
 
 <ion-footer>
