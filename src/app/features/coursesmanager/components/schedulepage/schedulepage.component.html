@@ -124,7 +124,7 @@
                 {{event['eventDate']| date: "HH:mm d MMM, yy"}}
             </ion-col>
             <ion-col>
-                {{event['author_full']?.f_name}} {{event['author_full']?.l_name}}
+                {{event['author'].l_name}} {{event['author'].f_name}}
             </ion-col>
             <ion-col>            
                 {{event['room_id']}}

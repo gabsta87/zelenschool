@@ -54,9 +54,6 @@ export class TeacherModalComponent{
       })
     );
 
-    let newDataObs = await firstValueFrom(this.dataObs);
-    console.log("new data Obs : ",newDataObs);
-
     this.id = this.meta.id;
     this.room_id = this.meta.room_id;
     this.time = this.meta.time;

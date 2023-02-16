@@ -73,6 +73,7 @@ export class SchedulepageComponent {
     this.extractedData.subscribe((newValues) => {
       this.events = [];
       newValues.forEach(async e =>{
+        console.log();
         
         this.events.push({
           title : e['title'],
@@ -82,8 +83,7 @@ export class SchedulepageComponent {
           meta:{
             id : e['id'],
             time : e['eventDate'],
-            authorId: e['author'],
-            author:e['author_full'],
+            author: e['author'],
             room_id: e['room_id'],
             attendantsId: e['attendantsId'],
             max_participants: e['max_participants'],
@@ -91,6 +91,10 @@ export class SchedulepageComponent {
         })
       })
     });
+
+    let tmp = await this.extractedData
+    console.log(" extracted Data = ",tmp);
+    
   }
 
   ngAfterViewInit(){
