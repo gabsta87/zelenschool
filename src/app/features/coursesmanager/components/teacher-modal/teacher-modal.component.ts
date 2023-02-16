@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { DocumentData } from 'firebase/firestore';
-import { firstValueFrom, Observable } from 'rxjs';
+import { firstValueFrom, map, Observable } from 'rxjs';
 import { AngularfireService, UserInfos } from 'src/app/shared/service/angularfire.service';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 
@@ -27,6 +27,8 @@ export class TeacherModalComponent{
   isAdmin!:boolean;
   isDisabled!:boolean;
 
+  studentsList!:any;
+
   constructor(
     private modalCtrl: ModalController,
     private readonly _db: AngularfireService,
@@ -37,6 +39,19 @@ export class TeacherModalComponent{
     this.dataObs = this._db.getCalendarEntry(this.meta.id);
 
     let actualValue = await firstValueFrom(this.dataObs);
+    console.log("actual value = ",actualValue);
+    this.studentsList = this.dataObs.pipe(map((e:any)=> e['attendantsId']));
+
+    this.studentsList = this.studentsList.pipe(map((e:any) => {
+      console.log("e : ",e);
+      let tmp = this._db.getUser(e);
+      console.log("temp : ",tmp);
+      return tmp;
+    } ))
+
+    let actualStudentsIdList = await firstValueFrom(this.studentsList);
+    console.log("students id : ",actualStudentsIdList);
+    
 
     this.id = this.meta.id;
     this.room_id = this.meta.room_id;
@@ -44,11 +59,14 @@ export class TeacherModalComponent{
     this.max_participants = this.meta.max_participants;
 
     console.log("meta : ",this.meta);
-    
 
     this.isAuthor = actualValue ? actualValue['author'] == this._user.getId() : false;
     this.isAdmin = this._user.isAdmin();
+
+    // USE THIS VERSION FOR FINAL RELEASE
     // this.isDisabled = !this.isAuthor && !this.isAdmin;
+
+    // TEMPORARY FOR TESTING
     this.isDisabled = !this.isAuthor;
     
     if(actualValue){
