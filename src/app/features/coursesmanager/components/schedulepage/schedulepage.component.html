@@ -57,6 +57,7 @@
         [refresh]="refresh"
         [activeDayIsOpen]="activeDayIsOpen"
         (eventClicked)="handleCalendarEntry('Clicked', $event.event)"
+        (beforeViewRender)="beforeMonthViewRender($event)"
         (dayClicked)="dayClicked($event.day)"
     >
     </mwl-calendar-month-view>
@@ -66,6 +67,8 @@
         [events]="events"
         [refresh]="refresh"
         (eventClicked)="handleCalendarEntry('Clicked', $event.event)"
+        (beforeViewRender)="beforeWeekOrDayViewRender($event)"
+        (hourSegmentClicked)="hourSegmentClicked($event.date)"
     >
     </mwl-calendar-week-view>
     <mwl-calendar-day-view
@@ -74,6 +77,8 @@
         [events]="events"
         [refresh]="refresh"
         (eventClicked)="handleCalendarEntry('Clicked', $event.event)"
+        (beforeViewRender)="beforeWeekOrDayViewRender($event)"
+        (hourSegmentClicked)="hourSegmentClicked($event.date)"
     >
     </mwl-calendar-day-view>
 </div>

@@ -2,8 +2,8 @@ import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { isSameDay, isSameMonth } from 'date-fns';
 import { WeekDay, MonthView, MonthViewDay } from 'calendar-utils';
 import { BehaviorSubject, combineLatest, elementAt, firstValueFrom, map, Observable, Subject, switchMap } from 'rxjs';
-import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
-import { EventColor } from 'calendar-utils';
+import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarMonthViewDay, CalendarView, CalendarWeekViewBeforeRenderEvent, } from 'angular-calendar';
+import { EventColor,WeekViewHour, WeekViewHourColumn } from 'calendar-utils';
 import * as dayjs from 'dayjs';
 import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
@@ -91,14 +91,21 @@ export class SchedulepageComponent {
         })
       })
     });
-
-    let tmp = await this.extractedData
-    console.log(" extracted Data = ",tmp);
-    
   }
 
-  ngAfterViewInit(){
-    this.refresh.next();
+  async createEvent(){
+    if (!(this.isTeacher.value || this.isAdmin.value)){
+      console.log("Cannot create if not admin or not teacher");
+      return
+    }
+    
+    const modal = await this.modalController.create({
+      component:  TeacherCreateEventModalComponent,
+      componentProps: {
+        time: this.adjustedDate.toISOString()
+      },
+    });
+    modal.present();
   }
 
   actions: CalendarEventAction[] = [
@@ -121,23 +128,6 @@ export class SchedulepageComponent {
     },
   ];
 
-  // events: CalendarEvent[] = [
-  //   {
-  //     start: subDays(startOfDay(new Date()), 1),
-  //     end: addDays(new Date(), 1),
-  //     title: 'A 3 day event',
-  //     color: { ...colors['red'] },
-  //     actions: this.actions,
-  //     allDay: true,
-  //     resizable: {
-  //       beforeStart: true,
-  //       afterEnd: true,
-  //     },
-  //     draggable: true,
-  //   },
-  // ];
-
-
   async handleCalendarEntry(action: string, event: CalendarEvent) {
     const modal = await this.modalController.create({
       component: (this.isTeacher.value || this.isAdmin.value )? TeacherModalComponent: StudentModalComponent,
@@ -146,7 +136,6 @@ export class SchedulepageComponent {
         title: event.title,
       },
     });
-    
     modal.present();
   }
 
@@ -158,53 +147,85 @@ export class SchedulepageComponent {
     this.activeDayIsOpen = false;
   }
 
-  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+  selectedMonthViewDay!: CalendarMonthViewDay;
+  selectedDayViewDate!: Date;
+  hourColumns!: WeekViewHourColumn[];
+  selectedDays: any = [];
 
-    this.adjustedDate = dayjs(date).add(13,'hour');
+  // dayClicked({ date, events }: { date: CalendarMonthViewDay; events: CalendarEvent[] }): void {
+  dayClicked( cmwDay: CalendarMonthViewDay): void {
+    console.log("date : ",cmwDay);
+    let date = cmwDay.date;
+    this.adjustedDate = dayjs(cmwDay.date).add(13,'hour');
     this.newEvent.time = this.adjustedDate.toISOString();
 
-    if (isSameMonth(date, this.viewDate)) {
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
-        this.activeDayIsOpen = false;
-      } else {
-        this.activeDayIsOpen = true;
-      }
-      this.viewDate = date;
-    }
-  }
-  
-  // async updateEvent(evt : CalendarEvent){
-  //   if(!(this.isTeacher.value || this.isAdmin.value)){
-  //     console.log("Cannot update if not admin or teacher");
-  //     return
-  //   }
+    // // FIND A WAY TO GIVE EVENTS
+    // if (isSameMonth(date, this.viewDate)) {
+    //   if (
+    //     (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+    //     events.length === 0
+    //   ) {
+    //     this.activeDayIsOpen = false;
+    //   } else {
+    //     this.activeDayIsOpen = true;
+    //   }
+    //   this.viewDate = date;
+    // }
 
-  //   const modal = await this.modalController.create({
-  //     component: TeacherModalComponent,
-  //     componentProps: {
-  //       title:evt.title,
-  //       meta:evt.meta,
-  //     },
-  //   });
-  //   modal.present();
-  // }
 
-  async createEvent(){
-    if (!(this.isTeacher.value || this.isAdmin.value)){
-      console.log("Cannot create if not admin or not teacher");
-      return
-    }
-    console.log("clicked date : ",this.adjustedDate);
+    this.selectedMonthViewDay = cmwDay;
+
+    const selectedDateTime = this.selectedMonthViewDay.date.getTime();
+    const dateIndex = this.selectedDays.findIndex(
+      (selectedDay:any) => selectedDay.date.getTime() === selectedDateTime
+    );
     
-    const modal = await this.modalController.create({
-      component:  TeacherCreateEventModalComponent,
-      componentProps: {
-        time: this.adjustedDate.toISOString()
-      },
-    });
-    modal.present();
+    if (dateIndex > -1) {
+      delete this.selectedMonthViewDay.cssClass;
+      this.selectedDays.splice(dateIndex, 1);
+    } else {
+      this.selectedDays.push(this.selectedMonthViewDay);
+      cmwDay.cssClass = 'cal-day-selected';
+      this.selectedMonthViewDay = cmwDay;
+    }
   }
+
+  beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
+    body.forEach((day) => {
+      if (
+        this.selectedDays.some(
+          (selectedDay:any) => selectedDay.date.getTime() === day.date.getTime()
+        )
+      ) {
+        day.cssClass = 'cal-day-selected';
+      }
+    });
+  }
+
+  hourSegmentClicked(date: Date) {
+    this.selectedDayViewDate = date;
+    this.addSelectedDayViewClass();
+  }
+
+  beforeWeekOrDayViewRender(event: CalendarWeekViewBeforeRenderEvent) {
+    this.hourColumns = event.hourColumns;
+    this.addSelectedDayViewClass();
+  }
+
+  private addSelectedDayViewClass() {
+    this.hourColumns.forEach((column) => {
+      column.hours.forEach((hourSegment) => {
+        hourSegment.segments.forEach((segment) => {
+          delete segment.cssClass;
+          if (
+            this.selectedDayViewDate &&
+            segment.date.getTime() === this.selectedDayViewDate.getTime()
+          ) {
+            segment.cssClass = 'cal-day-selected';
+          }
+        });
+      });
+    });
+  }
+
 }

@@ -18,6 +18,11 @@ export class TeacherCreateEventModalComponent {
 
   constructor(private readonly modalCtrl:ModalController,private readonly _db: AngularfireService){ }
 
+  async ionViewWillEnter(){
+    console.log("time : ",this.time);
+    
+  }
+
   cancel(){
     return this.modalCtrl.dismiss(null, 'confirm');
   }
