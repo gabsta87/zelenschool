@@ -36,23 +36,16 @@
         <ion-input type="number" placeholder="0" [(ngModel)]="max_participants" [disabled]="isDisabled"></ion-input>
     </ion-item>
 
-    <ion-item *ngIf="dataObs|async as event">
-        <ion-grid>
-            <ion-row>
-                <ion-label>Students ({{event['attendantsId'].length}}/{{max_participants}})</ion-label>
-            </ion-row>
-            <ion-row>
-
-    <ion-list lines="none" >
-        <ion-item *ngFor="let stud of event['attendantsId']" >
-            {{stud.f_name}} {{stud.l_name}}
+    <ion-accordion-group *ngIf="dataObs|async as event">
+    <ion-accordion value="students">
+        <ion-item slot="header" color="light">
+          <ion-label>Students ({{event['attendantsId'].length}}/{{max_participants}})</ion-label>
         </ion-item>
-    </ion-list>
-
-    </ion-row>
-
-        </ion-grid>
-    </ion-item>
+        <div class="ion-padding" slot="content" *ngFor="let stud of event['attendantsId']">
+            {{stud.f_name}} {{stud.l_name}}
+        </div>
+      </ion-accordion>
+      </ion-accordion-group>
 
 </ion-content>
 
