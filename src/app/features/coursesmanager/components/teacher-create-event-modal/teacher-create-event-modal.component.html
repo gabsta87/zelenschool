@@ -6,7 +6,7 @@
 
     <ion-item>
         <ion-label>Room :</ion-label>
-        <ion-select interface="popover" placeholder="Select room" [(ngModel)]="room_id">
+        <ion-select interface="popover" placeholder="Select room" [(ngModel)]="room_id" (ionChange)="updateRoom($event)">
             <ion-select-option value="1">1</ion-select-option>
             <ion-select-option value="2">2</ion-select-option>
             <ion-select-option value="3">3</ion-select-option>
@@ -26,6 +26,25 @@
         <ion-label>Max participants</ion-label>
         <ion-input type="number" placeholder="00" [(ngModel)]="max_participants"></ion-input>
     </ion-item>
+
+    <div *ngIf="collisionEvents">
+        <ion-label>Courses at the same time : </ion-label>
+        <ion-list>
+            <ion-item *ngFor="let evt of collisionEvents; let i = index">
+                <ion-label *ngIf="i == collisionIndex ;else normal" color="danger">
+                    <h2>{{evt['title']}}</h2>
+                    <p>Room : {{evt['room_id']}}</p>
+                </ion-label>
+                <ng-template #normal>
+                <ion-label>
+                    <h2>{{evt['title']}}</h2>
+                    <p>Room : {{evt['room_id']}}</p>
+                </ion-label>
+                </ng-template>
+            </ion-item>
+        </ion-list>
+    </div>
+    
 </ion-content>
 
 <ion-footer>
@@ -34,7 +53,7 @@
         <ion-button (click)="cancel()">Cancel</ion-button>
         </ion-buttons>
         <ion-buttons slot="end">
-        <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+        <ion-button (click)="confirm()" [strong]="true" [disabled]="!isValid.value">Confirm</ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-footer>

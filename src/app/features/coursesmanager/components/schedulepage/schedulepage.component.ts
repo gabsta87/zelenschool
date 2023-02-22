@@ -92,10 +92,6 @@ export class SchedulepageComponent {
         })
       })
     });
-
-    let tmp = await this.extractedData
-    console.log(" extracted Data = ",tmp);
-    
   }
 
   ngAfterViewInit(){

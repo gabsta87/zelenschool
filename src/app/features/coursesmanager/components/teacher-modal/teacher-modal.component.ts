@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ActionSheetController, ModalController } from '@ionic/angular';
+import * as dayjs from 'dayjs';
 import { DocumentData } from 'firebase/firestore';
-import { combineLatest, firstValueFrom, flatMap, map, mergeMap, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, combineLatest, firstValueFrom, map, Observable, switchMap } from 'rxjs';
 import { AngularfireService, UserInfos } from 'src/app/shared/service/angularfire.service';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 
@@ -126,7 +127,32 @@ export class TeacherModalComponent{
     return this.modalCtrl.dismiss(null, 'confirm');
   }
 
-  updateTime($event:any){
+  isValid = new BehaviorSubject<Boolean>(true);
+  collisionEvents!:DocumentData[]|undefined;
+  collisionIndex !: number;
+
+  async updateTime($event:any){
+    this.collisionEvents = this.collisionEvents?.filter(e=> e['id'] != this.id);
+    
+    this.collisionEvents = await firstValueFrom(this._db.getCalendarEntryByTime(dayjs($event.detail.value)));
+    if(this.collisionEvents){
+      console.log("events found ",this.collisionEvents);
+      this.collisionIndex = this.collisionEvents.findIndex(e => e['room_id'] == this.room_id);
+      this.isValid.next(this.collisionIndex == -1)
+    }else{
+      console.log("empty");
+      this.isValid.next(true);
+    }
     this.time = $event.detail.value;
+  }
+
+  updateRoom($event:any){
+    // If there are no events at the same time, no validation required
+    if(!this.collisionEvents){
+      return
+    }
+    
+    this.collisionIndex = this.collisionEvents.findIndex(e => e['room_id'] == $event.detail.value);
+    this.isValid.next(this.collisionIndex == -1)
   }
 }

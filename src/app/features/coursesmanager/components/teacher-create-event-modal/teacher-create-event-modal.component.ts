@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import * as dayjs from 'dayjs';
 import { DocumentData } from 'firebase/firestore';
-import { firstValueFrom, Observable } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { AngularfireService, UserInfos } from 'src/app/shared/service/angularfire.service';
 
 @Component({
@@ -16,7 +17,11 @@ export class TeacherCreateEventModalComponent {
   room_id!:string;
   meta!:any;
 
-  constructor(private readonly modalCtrl:ModalController,private readonly _db: AngularfireService){ }
+  isValid = new BehaviorSubject<Boolean>(true);
+  collisionEvents!:DocumentData[]|undefined;
+  collisionIndex !: number;
+
+  constructor(private readonly modalCtrl:ModalController,private readonly _db: AngularfireService){  }
 
   cancel(){
     return this.modalCtrl.dismiss(null, 'confirm');
@@ -29,7 +34,26 @@ export class TeacherCreateEventModalComponent {
     return this.modalCtrl.dismiss(null, 'confirm');
   }
 
-  updateTime($event:any){
+  async updateTime($event:any){
+    this.collisionEvents = await firstValueFrom(this._db.getCalendarEntryByTime(dayjs($event.detail.value)));
+    if(this.collisionEvents){
+      console.log("events found ",this.collisionEvents);
+      this.collisionIndex = this.collisionEvents.findIndex(e => e['room_id'] == this.room_id);
+      this.isValid.next(this.collisionIndex == -1)
+    }else{
+      console.log("empty");
+      this.isValid.next(true);
+    }
     this.time = $event.detail.value;
+  }
+
+  updateRoom($event:any){
+    // If there are no events at the same time, no validation required
+    if(!this.collisionEvents){
+      return
+    }
+    
+    this.collisionIndex = this.collisionEvents.findIndex(e => e['room_id'] == $event.detail.value);
+    this.isValid.next(this.collisionIndex == -1)
   }
 }
