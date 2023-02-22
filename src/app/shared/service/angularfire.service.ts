@@ -84,6 +84,11 @@ export class AngularfireService{
     return temp.pipe(map(datas => datas.find(e => e['id'] === idToFind)));
   }
 
+  getFutureCalendarEntries(){
+    let temp = this.getCalendarEntries();
+    return temp.pipe(map(datas => datas.find(e => dayjs(e['eventDate']).isAfter(dayjs(new Date())))));
+  }
+
   getUsers(){
     return this.getElements("users");
   }
