@@ -128,19 +128,21 @@ export class TeacherModalComponent{
   }
 
   isValid = new BehaviorSubject<Boolean>(true);
+  collisionEventsObs!:any;
   collisionEvents!:DocumentData[]|undefined;
   collisionIndex !: number;
 
   async updateTime($event:any){
-    this.collisionEvents = this.collisionEvents?.filter(e=> e['id'] != this.id);
-    
-    this.collisionEvents = await firstValueFrom(this._db.getCalendarEntryByTime(dayjs($event.detail.value)));
+
+    this.collisionEventsObs = this._db.getCalendarEntryByTime(dayjs($event.detail.value));
+
+    this.collisionEventsObs = this.collisionEventsObs.pipe(map((e:any) => e.filter((elem:any)=> elem['id'] != this.id))) 
+
+    this.collisionEvents = await firstValueFrom(this.collisionEventsObs);
     if(this.collisionEvents){
-      console.log("events found ",this.collisionEvents);
       this.collisionIndex = this.collisionEvents.findIndex(e => e['room_id'] == this.room_id);
       this.isValid.next(this.collisionIndex == -1)
     }else{
-      console.log("empty");
       this.isValid.next(true);
     }
     this.time = $event.detail.value;
