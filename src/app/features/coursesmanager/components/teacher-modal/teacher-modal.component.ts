@@ -71,7 +71,7 @@ export class TeacherModalComponent{
     
     if(actualValue){
       this.creator = await this._db.getUser(actualValue['author']);
-      this.creatorName = this.creator?.f_name+" "+this.creator?.l_name
+      this.creatorName = this.creator?.f_name+" "+this.creator?.l_name;
     }
   }
 

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 
 @Component({
   selector: 'app-adminpage',
@@ -10,7 +11,7 @@ import { Observable } from 'rxjs';
 export class AdminpageComponent {
   constructor(
     // private readonly _auth: Auth,
-    // private readonly _dbAccess:AngularfireService,
+    private readonly _db:AngularfireService,
     private readonly _route: ActivatedRoute
   ) {}
 
@@ -23,5 +24,13 @@ export class AdminpageComponent {
     
     this.usersListObs = this.adminData.usersObs;
     this.coursesObs = this.adminData.coursesObs;
+  }
+
+  banUser(id:string){
+    this._db.banUser(id,"TODO");
+  }
+
+  unbanUser(id:string){
+    this._db.unbanUser(id);
   }
 }

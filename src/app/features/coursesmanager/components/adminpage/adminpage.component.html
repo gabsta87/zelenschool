@@ -1,10 +1,33 @@
 <ion-content>
-    <ion-list>
+    <ion-list lines="none">
         <ion-list-header>
             <ion-label>Users</ion-label>
         </ion-list-header>
         <ion-item *ngFor="let usr of usersListObs|async;">
-            <ion-label>{{usr|json}}</ion-label>
+
+
+            <ion-accordion-group>
+                <ion-accordion [value]="usr.l_name">
+                    <ion-item slot="header" color="light">
+                      <ion-label>{{usr.l_name}} {{usr.f_name}}</ion-label>
+                    </ion-item>
+                    <div class="ion-padding" slot="content">
+                        <p>email : {{usr.email}}</p>
+                        <p *ngIf="usr.phone">Phone : {{usr.phone}}</p>
+                        <p *ngIf="usr.birthday">Birthday : {{usr.birthday}}</p>
+                        <p *ngIf="usr.s_permit_id">S permit ID : {{usr.s_permit_id}}</p>
+                        <p *ngIf="usr.address">Address : {{usr.address}}</p>
+                        <p *ngIf="usr.subscribeDate">Subscribe date : {{usr.subscribeDate}}</p>
+                        <p *ngIf="usr.ban">Banned by : {{usr.ban.author}}</p>
+                        <p *ngIf="usr.ban">Banned on : {{usr.ban.date}}</p>
+                        <p *ngIf="usr.ban">Banned reason : {{usr.ban.comment}}</p>
+                        <ion-button *ngIf="usr.ban == undefined; else unban" (click)="banUser(usr.id)">Ban</ion-button>
+                        <ng-template #unban>
+                            <ion-button (click)="unbanUser(usr.id)">Unban</ion-button>
+                        </ng-template>
+                    </div>
+                </ion-accordion>
+            </ion-accordion-group>
         </ion-item>
     </ion-list>
     <ion-list>

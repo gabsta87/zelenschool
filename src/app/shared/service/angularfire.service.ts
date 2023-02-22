@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth, User } from '@angular/fire/auth';
-import { collection, QueryConstraint, Firestore, addDoc, collectionData, doc, setDoc, DocumentData, where, arrayUnion, arrayRemove} from '@angular/fire/firestore';
+import { collection, QueryConstraint, Firestore, addDoc, collectionData, doc, setDoc, DocumentData, where, arrayUnion, arrayRemove, getDocs} from '@angular/fire/firestore';
 import { deleteDoc, query, updateDoc } from '@firebase/firestore';
 import { find, firstValueFrom, map, Observable } from 'rxjs';
 import { getDatabase } from "firebase/database";
@@ -104,16 +104,44 @@ export class AngularfireService{
     return temp.find(e => e['id'] === userId);
   }
 
+  banUser(userId:string,message:string){
+    const docRef = doc(this._dbaccess,'users/'+userId);
+    
+    this.removeUserFromCourses(userId);
+
+    return updateDoc(docRef,{ban:{
+      author:this._auth.currentUser?.uid,
+      date: dayjs(new Date()).format('DD.MM.YYYY'),
+      comment: message,
+    }})
+  }
+
+  async unbanUser(userId:string){
+    const docRef = doc(this._dbaccess,'users/'+userId);
+    return updateDoc(docRef,{ban:null});
+  }
+
+  private async removeUserFromCourses(userId:string){
+    const coll = getDocs(collection(this._dbaccess,"calendarEntries"));
+    (await coll).forEach((doc:any) => {
+      updateDoc(doc.data['attendantsId'], {
+        attendantsId : arrayRemove(userId)
+      });
+    })
+  }
+
   getUserObs(userId:string):Observable<DocumentData | undefined>{
     let tempObs = this.getUsers();
     return tempObs.pipe(map(datas => datas.find(e => e['id'] === userId)));
   }
 
+  // Modifies current user infos
   setUser(param:UserInfos) {
     const docRef = doc(this._dbaccess,'users/'+this._auth.currentUser?.uid);
     return setDoc(docRef,{f_name:param.f_name,l_name:param.l_name,birthday:param.birthday,email:param.email,phone:param.phone,s_permit_id:param.s_permit_id,address:param.address});
   }
 
+  // Updates current user infos
   updateUser(newValue:any){
     const docRef = doc(this._dbaccess,'users/'+this._auth.currentUser?.uid);
     return updateDoc(docRef,newValue);
@@ -142,7 +170,8 @@ export interface UserInfos {
   email?:string|undefined|null,
   phone?:string|undefined|null,
   s_permit_id?:string|undefined|null,
-  address?:string|undefined|null
+  address?:string|undefined|null,
+  ban?:{author:string,comment:string,date:string}|undefined|null,
 }
 
   // addOrder(newValue:number){

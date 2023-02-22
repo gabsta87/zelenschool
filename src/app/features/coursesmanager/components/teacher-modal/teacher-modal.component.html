@@ -37,7 +37,18 @@
         <ion-input type="number" placeholder="0" [(ngModel)]="max_participants" [disabled]="isDisabled"></ion-input>
     </ion-item>
 
-    <div *ngIf="collisionEvents">
+    <ion-accordion-group *ngIf="dataObs|async as event">
+    <ion-accordion value="students">
+        <ion-item slot="header" color="light">
+          <ion-label>Students ({{event['attendantsId'].length}}/{{max_participants}})</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content" *ngFor="let stud of event['attendantsId']">
+            {{stud.f_name}} {{stud.l_name}}
+        </div>
+    </ion-accordion>
+    </ion-accordion-group>
+
+      <div *ngIf="collisionEvents && !isDisabled">
         <ion-label>Courses at the same time : </ion-label>
         <ion-list>
             <ion-item *ngFor="let evt of collisionEvents; let i = index">
@@ -54,17 +65,6 @@
             </ion-item>
         </ion-list>
     </div>
-
-    <ion-accordion-group *ngIf="dataObs|async as event">
-    <ion-accordion value="students">
-        <ion-item slot="header" color="light">
-          <ion-label>Students ({{event['attendantsId'].length}}/{{max_participants}})</ion-label>
-        </ion-item>
-        <div class="ion-padding" slot="content" *ngFor="let stud of event['attendantsId']">
-            {{stud.f_name}} {{stud.l_name}}
-        </div>
-      </ion-accordion>
-      </ion-accordion-group>
 
 </ion-content>
 
