@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { isSameDay, isSameMonth } from 'date-fns';
 import { WeekDay, MonthView, MonthViewDay } from 'calendar-utils';
 import { BehaviorSubject, combineLatest, elementAt, firstValueFrom, map, Observable, Subject, switchMap } from 'rxjs';
-import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
+import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, DAYS_OF_WEEK, } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import * as dayjs from 'dayjs';
 import { DocumentData } from '@angular/fire/firestore';
@@ -52,7 +52,8 @@ export class SchedulepageComponent {
   CalendarView = CalendarView;
   activeDayIsOpen: boolean = false;
   viewDate: Date = new Date();
-  
+  weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
+
   // Schedulepage
   adjustedDate: dayjs.Dayjs = dayjs(this.viewDate);
   isTeacher:BehaviorSubject<boolean> = this._user.isLoggedAsTeacher;
@@ -121,23 +122,6 @@ export class SchedulepageComponent {
     },
   ];
 
-  // events: CalendarEvent[] = [
-  //   {
-  //     start: subDays(startOfDay(new Date()), 1),
-  //     end: addDays(new Date(), 1),
-  //     title: 'A 3 day event',
-  //     color: { ...colors['red'] },
-  //     actions: this.actions,
-  //     allDay: true,
-  //     resizable: {
-  //       beforeStart: true,
-  //       afterEnd: true,
-  //     },
-  //     draggable: true,
-  //   },
-  // ];
-
-
   async handleCalendarEntry(action: string, event: CalendarEvent) {
     const modal = await this.modalController.create({
       component: (this.isTeacher.value || this.isAdmin.value )? TeacherModalComponent: StudentModalComponent,
@@ -175,22 +159,6 @@ export class SchedulepageComponent {
       this.viewDate = date;
     }
   }
-  
-  // async updateEvent(evt : CalendarEvent){
-  //   if(!(this.isTeacher.value || this.isAdmin.value)){
-  //     console.log("Cannot update if not admin or teacher");
-  //     return
-  //   }
-
-  //   const modal = await this.modalController.create({
-  //     component: TeacherModalComponent,
-  //     componentProps: {
-  //       title:evt.title,
-  //       meta:evt.meta,
-  //     },
-  //   });
-  //   modal.present();
-  // }
 
   async createEvent(){
     if (!(this.isTeacher.value || this.isAdmin.value)){
