@@ -38,7 +38,7 @@ export class StudentModalComponent {
   
       this.isCourseFull = actualValue['attendantsId'].length >= actualValue['max_participants'];
 
-      this.isSubscribtionBlocked = this.isCourseFull && !this.isAttending;
+      this.isSubscribtionBlocked = (this.isCourseFull && !this.isAttending) || !this._user.isLogged.value;
       
       this.creator = await this._db.getUser(actualValue['author']);
 
