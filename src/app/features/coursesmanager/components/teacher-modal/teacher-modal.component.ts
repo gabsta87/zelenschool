@@ -60,8 +60,6 @@ export class TeacherModalComponent{
     this.time = this.meta.time;
     this.max_participants = this.meta.max_participants;
 
-    console.log("meta : ",this.meta);
-
     this.isAuthor = actualValue ? actualValue['author'] == this._user.getId() : false;
     this.isAdmin = this._user.isAdmin();
 

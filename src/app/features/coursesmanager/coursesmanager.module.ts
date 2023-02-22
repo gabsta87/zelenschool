@@ -36,6 +36,7 @@ import { StudentModalComponent } from './components/student-modal/student-modal.
 import { TeacherModalComponent } from './components/teacher-modal/teacher-modal.component';
 import { CalendareventsresolveResolver } from './resolvers/calendareventsresolve.resolver';
 import { TeacherCreateEventModalComponent } from './components/teacher-create-event-modal/teacher-create-event-modal.component';
+import * as dayjs from 'dayjs';
 
 
 @NgModule({
@@ -149,10 +150,8 @@ import { TeacherCreateEventModalComponent } from './components/teacher-create-ev
     )
   ],
   providers:[
-    {
-      provide:"MyDatabaseService",
-      useClass:AngularfireService
-    }
+    { provide:"MyDatabaseService", useClass:AngularfireService },
+    { provide: 'dayjs', useValue: dayjs }
   ]
 })
 export class CoursesmanagerModule { }
