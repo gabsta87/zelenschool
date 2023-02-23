@@ -7,12 +7,12 @@
 <ion-content class="ion-padding">
     <ion-item>
         <ion-label>Title : </ion-label>
-        <ion-input type="text" placeholder="Course title" [(ngModel)]="title" [disabled]="isDisabled"></ion-input>
+        <ion-input type="text" placeholder="Course title" [(ngModel)]="title" [disabled]="cannotModify"></ion-input>
     </ion-item>
 
     <ion-item>
         <ion-label>Room :</ion-label>
-        <ion-select interface="popover" placeholder="Select room" [(ngModel)]="room_id" [disabled]="isDisabled" (ionChange)="updateRoom($event)">
+        <ion-select interface="popover" placeholder="Select room" [(ngModel)]="room_id" [disabled]="cannotModify" (ionChange)="updateRoom($event)">
             <ion-select-option value="1">1</ion-select-option>
             <ion-select-option value="2">2</ion-select-option>
             <ion-select-option value="3">3</ion-select-option>
@@ -24,7 +24,7 @@
     </ion-item>
 
     <ion-item>
-        <ion-datetime-button datetime="datetime" [disabled]="isDisabled"></ion-datetime-button>
+        <ion-datetime-button datetime="datetime" [disabled]="cannotModify"></ion-datetime-button>
         <ion-modal [keepContentsMounted]="true" (ionChange)="updateTime($event)">
             <ng-template>
             <ion-datetime id="datetime" value="{{time}}"></ion-datetime>
@@ -34,7 +34,7 @@
 
     <ion-item>
         <ion-label>Max participants</ion-label>
-        <ion-input type="number" placeholder="0" [(ngModel)]="max_participants" [disabled]="isDisabled"></ion-input>
+        <ion-input type="number" placeholder="0" [(ngModel)]="max_participants" [disabled]="cannotModify"></ion-input>
     </ion-item>
 
     <ion-accordion-group *ngIf="dataObs|async as event">
@@ -48,7 +48,7 @@
     </ion-accordion>
     </ion-accordion-group>
 
-      <div *ngIf="collisionEvents && !isDisabled">
+      <div *ngIf="(collisionEvents && collisionEvents.length > 0) && !cannotModify">
         <ion-label>Courses at the same time : </ion-label>
         <ion-list>
             <ion-item *ngFor="let evt of collisionEvents; let i = index">
@@ -77,7 +77,7 @@
             <ion-button (click)="deleteEntry()" color="danger">Delete</ion-button>
         </ion-buttons>
         <ion-buttons slot="end">
-            <ion-button (click)="confirm()" [strong]="true" [disabled]="!isValid.value">Confirm</ion-button>
+            <ion-button (click)="confirm()" [strong]="true" [disabled]="!isRoomAvailable.value">Confirm</ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-footer>

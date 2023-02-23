@@ -26,7 +26,7 @@ export class TeacherModalComponent{
 
   isAuthor!:boolean;
   isAdmin!:boolean;
-  isDisabled!:boolean;
+  cannotModify!:boolean;
 
   constructor(
     private modalCtrl: ModalController,
@@ -64,10 +64,10 @@ export class TeacherModalComponent{
     this.isAdmin = this._user.isAdmin();
 
     // USE THIS VERSION FOR FINAL RELEASE
-    // this.isDisabled = !this.isAuthor && !this.isAdmin;
+    // this.cannotModify = !this.isAuthor && !this.isAdmin;
 
     // TEMPORARY FOR TESTING
-    this.isDisabled = !this.isAuthor;
+    this.cannotModify = !this.isAuthor;
     
     if(actualValue){
       this.creator = await this._db.getUser(actualValue['author']);
@@ -125,7 +125,7 @@ export class TeacherModalComponent{
     return this.modalCtrl.dismiss(null, 'confirm');
   }
 
-  isValid = new BehaviorSubject<Boolean>(true);
+  isRoomAvailable = new BehaviorSubject<Boolean>(true);
   collisionEventsObs!:any;
   collisionEvents!:DocumentData[]|undefined;
   collisionIndex !: number;
@@ -137,11 +137,13 @@ export class TeacherModalComponent{
     this.collisionEventsObs = this.collisionEventsObs.pipe(map((e:any) => e.filter((elem:any)=> elem['id'] != this.id))) 
 
     this.collisionEvents = await firstValueFrom(this.collisionEventsObs);
+    console.log("collistion events ", this.collisionEvents);
+    
     if(this.collisionEvents){
       this.collisionIndex = this.collisionEvents.findIndex(e => e['room_id'] == this.room_id);
-      this.isValid.next(this.collisionIndex == -1)
+      this.isRoomAvailable.next(this.collisionIndex == -1)
     }else{
-      this.isValid.next(true);
+      this.isRoomAvailable.next(true);
     }
     this.time = $event.detail.value;
   }
@@ -153,6 +155,6 @@ export class TeacherModalComponent{
     }
     
     this.collisionIndex = this.collisionEvents.findIndex(e => e['room_id'] == $event.detail.value);
-    this.isValid.next(this.collisionIndex == -1)
+    this.isRoomAvailable.next(this.collisionIndex == -1)
   }
 }

@@ -19,10 +19,14 @@ export class UsermanagementService {
         this.checkStatus("teacher").then(newVal=>{
           this.isLoggedAsTeacher.next(newVal);
         })
+        this.checkBan().then(ban => {
+          this.isUserBanned.next(ban);
+        })
       }else{
           this.isLoggedAsAdmin.next(false);
           this.isLoggedAsTeacher.next(false);
           this.isLogged.next(false);
+          this.isUserBanned.next(false);
       }
     })
   }
@@ -30,6 +34,7 @@ export class UsermanagementService {
   isLoggedAsAdmin = new BehaviorSubject(false);
   isLoggedAsTeacher = new BehaviorSubject(false);
   isLogged = new BehaviorSubject(false);
+  isUserBanned = new BehaviorSubject(false);
   
 
   getStatus(){
@@ -56,6 +61,23 @@ export class UsermanagementService {
       return false
   }
 
+  private async checkBan(){
+    let userId = this._auth?.currentUser?.uid;
+    if(userId){
+      if(this.userData == undefined)
+        this.userData = await this._db.getUser(userId);
+
+      console.log("user data : ",this.userData);
+      
+      console.log("ban : ",this.userData['ban']);
+      
+      if(this.userData && this.userData['ban'] != undefined){
+        return true;
+      }
+    }
+    return false;
+  }
+
   async updateUser(newValue:any){
     this._db.updateUser(newValue);
   }
@@ -77,6 +99,10 @@ export class UsermanagementService {
     console.log("fixed value : ",this.userData);
     
     return this.userData;
+  }
+  
+  isBanned():boolean{
+    return this.isUserBanned.value;
   }
 
   isAdmin():boolean{

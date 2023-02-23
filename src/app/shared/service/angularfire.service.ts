@@ -104,7 +104,7 @@ export class AngularfireService{
     return temp.find(e => e['id'] === userId);
   }
 
-  banUser(userId:string,message:string){
+  banUser(userId:string,message="missed courses"){
     const docRef = doc(this._dbaccess,'users/'+userId);
     
     this.removeUserFromCourses(userId);
@@ -124,10 +124,16 @@ export class AngularfireService{
   private async removeUserFromCourses(userId:string){
     const coll = getDocs(collection(this._dbaccess,"calendarEntries"));
     (await coll).forEach((doc:any) => {
-      updateDoc(doc.data['attendantsId'], {
-        attendantsId : arrayRemove(userId)
-      });
+      this.removeUserFromCourse(doc.id,userId);
     })
+  }
+
+  async removeUserFromCourse(eventId:string,userId:string){
+    const docRef = doc(this._dbaccess,'calendarEntries/'+eventId);
+
+    await updateDoc(docRef, {
+      attendantsId: arrayRemove(userId)
+    });
   }
 
   getUserObs(userId:string):Observable<DocumentData | undefined>{

@@ -38,7 +38,7 @@ export class StudentModalComponent {
   
       this.isCourseFull = actualValue['attendantsId'].length >= actualValue['max_participants'];
 
-      this.isSubscribtionBlocked = (this.isCourseFull && !this.isAttending) || !this._user.isLogged.value;
+      this.isSubscribtionBlocked = (this.isCourseFull && !this.isAttending) || !this._user.isLogged.value || this._user.isBanned();
       
       this.creator = await this._db.getUser(actualValue['author']);
 
@@ -52,7 +52,8 @@ export class StudentModalComponent {
   }
 
   confirm(){
-    this._db.toggleSubscribtionToCalendarEntry(this.meta.id, this.isAttending);
+    if(!this._user.isBanned())
+      this._db.toggleSubscribtionToCalendarEntry(this.meta.id, this.isAttending);
     return this.modalCtrl.dismiss(null, 'confirm');
   }
 }
