@@ -114,6 +114,9 @@ import * as dayjs from 'dayjs';
           path:"create",
           component:CreateAccountComponent
         },{
+          path:"createTeacher",
+          component:CreateAccountTeacherComponent
+        },{
           path:"account",
           component:AccountpageComponent,
           canActivate:[UserLoggedGuard],

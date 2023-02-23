@@ -22,7 +22,7 @@ export class TeacherModalComponent{
 
   presentingElement = undefined;
   dataObs!:Observable<DocumentData|undefined>;
-  creator!:UserInfos|undefined;
+  creator!:DocumentData|undefined;
 
   isAuthor!:boolean;
   isAdmin!:boolean;
@@ -71,7 +71,8 @@ export class TeacherModalComponent{
     
     if(actualValue){
       this.creator = await this._db.getUser(actualValue['author']);
-      this.creatorName = this.creator?.f_name+" "+this.creator?.l_name;
+      if(this.creator)
+        this.creatorName = this.creator['f_name']+" "+this.creator['l_name'];
     }
   }
 

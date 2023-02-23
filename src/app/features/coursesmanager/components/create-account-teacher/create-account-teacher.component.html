@@ -1,1 +1,51 @@
-<p>create-account-teacher works!</p>
+<ion-content>
+    <div class="createItems">
+        <form (ngSubmit)="register()" [formGroup]="profileForm">
+            <ion-list lines="none">
+                <ion-item>
+                    <ion-label>Email :</ion-label>
+                    <ion-input formControlName="email" placeholder="name@domain.com" type="email"></ion-input>
+                </ion-item>
+                
+                <div formGroupName="passData">
+                <ion-item>
+                    <ion-label>Password :</ion-label>
+                    <ion-input formControlName="password" type="password" placeholder="At least 6 characters"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Password confirm :</ion-label>
+                    <ion-input formControlName="password2" type="password"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="profileForm.get('passData')?.invalid">
+                    <label  [ngClass] = "'error'"> Password error</label>
+                </ion-item>
+                </div>
+
+                <ion-item>
+                    <ion-label>First name :</ion-label>
+                    <ion-input formControlName="firstName"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Last name :</ion-label>
+                    <ion-input formControlName="lastName"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Phone :</ion-label>
+                    <ion-input formControlName="phone" placeholder="+88 88 888 88 88"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-text [ngClass] = "'error'">
+                        Your registration as teacher will request an admin confirmation
+                    </ion-text>
+                </ion-item>
+
+                <div class="createItems">
+                    <ion-item>
+                        <ion-button [disabled]="!profileForm.valid" type="submit">Confirm</ion-button>
+                    </ion-item>
+                </div>
+            </ion-list>
+        </form>
+    </div>
+</ion-content>

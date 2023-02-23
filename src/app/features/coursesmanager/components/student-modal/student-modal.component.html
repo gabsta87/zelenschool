@@ -7,7 +7,7 @@
 <ion-content>
     <div *ngIf="dataObs |async as currentEvent">
     <ion-item *ngIf="creator">
-        <ion-text>Author : {{creator.f_name}} {{creator.l_name}}</ion-text>
+        <ion-text>Author : {{creator['f_name']}} {{creator['l_name']}}</ion-text>
     </ion-item>
     <ion-item>
         <ion-text>Time : {{currentEvent['eventDate'] | date: "HH:mm d MMM, yy"}}</ion-text>

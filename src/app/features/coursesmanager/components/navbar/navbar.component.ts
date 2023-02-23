@@ -21,6 +21,5 @@ export class NavbarComponent {
     {title:"Schedule",page:"schedule"},
     {title:"Contact",page:"contact"},
     {title:"Donate",page:"donate"},
-    // {title:"Login",page:"login"},
   ]
 }

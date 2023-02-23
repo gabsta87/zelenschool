@@ -16,7 +16,7 @@ export class StudentModalComponent {
   meta!:any;
   title!:string;
   dataObs!:Observable<DocumentData|undefined>;
-  creator!:UserInfos|undefined;
+  creator!:DocumentData|undefined;
   date!:string;
 
   participants!:number;
@@ -31,19 +31,19 @@ export class StudentModalComponent {
   async ionViewWillEnter(){
     this.dataObs = this._db.getCalendarEntry(this.meta.id);
 
-    let actualValue = await firstValueFrom(this.dataObs);
+    let courseActualValues = await firstValueFrom(this.dataObs);
 
-    if(actualValue){
-      this.isAttending = actualValue['attendantsId'].includes(this._user.getId());
+    if(courseActualValues){
+      this.isAttending = courseActualValues['attendantsId'].includes(this._user.getId());
   
-      this.isCourseFull = actualValue['attendantsId'].length >= actualValue['max_participants'];
+      this.isCourseFull = courseActualValues['attendantsId'].length >= courseActualValues['max_participants'];
 
       this.isSubscribtionBlocked = (this.isCourseFull && !this.isAttending) || !this._user.isLogged.value || this._user.isBanned();
       
-      this.creator = await this._db.getUser(actualValue['author']);
+      this.creator = await this._db.getUser(courseActualValues['author']);
 
-      this.participants = actualValue['attendantsId'].length;
-      this.max_participants = actualValue['max_participants'];
+      this.participants = courseActualValues['attendantsId'].length;
+      this.max_participants = courseActualValues['max_participants'];
     }
   }
 

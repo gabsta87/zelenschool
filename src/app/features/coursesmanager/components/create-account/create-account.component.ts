@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AbstractControl, Form, FormControl,FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl,FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { createUserWithEmailAndPassword, getAuth } from '@angular/fire/auth';
@@ -28,8 +28,7 @@ export class CreateAccountComponent {
   isTeacher = new BehaviorSubject(false);
   errorMessage = "";
 
-    constructor(private readonly _db:AngularfireService,private readonly _router: Router){
-
+  constructor(private readonly _db:AngularfireService,private readonly _router: Router){
     this.profileForm = new FormGroup({
       email: new FormControl('',Validators.compose([
         emailValidator(),
@@ -65,10 +64,6 @@ export class CreateAccountComponent {
     });
   }
 
-  updateStatus($event:any){
-    this.isTeacher.next($event.target.checked);
-  }
-
   register(){
 
     const auth = getAuth();
@@ -81,24 +76,27 @@ export class CreateAccountComponent {
         // Signed in 
         const user = userCredential.user;
         // ...
-        console.log("current user : ",auth.currentUser);
-        console.log("credential : ", user);
         
         this._db.createUser(user);
-        console.log(user);
 
+        let tmpFName = this.profileForm.get('firstName')?.value;
+        let tmpLName = this.profileForm.get('lastName')?.value;
+        let tmpMail = this.profileForm.get('email')?.value;
+
+        if(tmpFName && tmpLName && tmpMail){
         this._db.setUser({
-          f_name : this.profileForm.get('firstName')?.value,
-          l_name : this.profileForm.get('lastName')?.value,
-          email : this.profileForm.get('email')?.value,
+          f_name : tmpFName,
+          l_name : tmpLName,
+          email : tmpMail,
+          status:"student",
           s_permit_id : this.profileForm.get('permitId')?.value,
           birthday : this.profileForm.get('b_day')?.value,
           phone : this.profileForm.get('phone')?.value,
           address : this.profileForm.get('address')?.value,
         });
         
-        // ...
         this._router.navigate(['/account/']);
+        }
       })
       .catch((error) => {
         const errorCode = error.code;

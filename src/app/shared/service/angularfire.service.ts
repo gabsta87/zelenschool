@@ -99,7 +99,7 @@ export class AngularfireService{
     return this.getElements("users");
   }
 
-  async getUser(userId:string):Promise<UserInfos|undefined>{
+  async getUser(userId:string):Promise<DocumentData|undefined>{
     let temp = await firstValueFrom(this.getUsers());
     return temp.find(e => e['id'] === userId);
   }
@@ -170,28 +170,13 @@ export class AngularfireService{
 }
 
 export interface UserInfos {
-  f_name?:string|undefined|null,
-  l_name?:string|undefined|null,
-  birthday?:string|undefined|null,
-  email?:string|undefined|null,
+  f_name:string,
+  l_name:string,
+  email:string,
+  status:string,
   phone?:string|undefined|null,
+  birthday?:string|undefined|null,
   s_permit_id?:string|undefined|null,
   address?:string|undefined|null,
   ban?:{author:string,comment:string,date:string}|undefined|null,
 }
-
-  // addOrder(newValue:number){
-  //   const id = Date.now();
-  //   const docRef = doc(this._dbaccess,this._dbName+'/'+id);
-  //   setDoc(docRef,{orderValue:newValue});
-  // }
-
-  // async updateOrder(id:string){
-  //   const docRef = doc(this._dbaccess, `${this._dbName}/${id}`);
-  //   updateDoc(docRef,{done:true});
-  // }
-
-  // async deleteOrder(id:string){
-  //   const docRef = doc(this._dbaccess,`${this._dbName}/${id}`);
-  //   deleteDoc(docRef);
-  // }
