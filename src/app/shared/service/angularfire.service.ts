@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Auth, User } from '@angular/fire/auth';
-import { collection, QueryConstraint, Firestore, addDoc, collectionData, doc, setDoc, DocumentData, where, arrayUnion, arrayRemove, getDocs} from '@angular/fire/firestore';
+import { collection, QueryConstraint, Firestore, addDoc, collectionData, doc, setDoc, DocumentData, arrayUnion, arrayRemove, getDocs} from '@angular/fire/firestore';
 import { deleteDoc, query, updateDoc } from '@firebase/firestore';
-import { find, firstValueFrom, map, Observable } from 'rxjs';
-import { getDatabase } from "firebase/database";
+import { firstValueFrom, map, Observable } from 'rxjs';
 import * as dayjs from 'dayjs';
 
 @Injectable({
@@ -161,10 +160,12 @@ export class AngularfireService{
     let userId = newUser.uid;
     let userStored = await this.getUser(userId);
 
+    // If the user already exists, return undefined : nothing created
     if(userStored){
-      return
+      return undefined;
     }
-
+    
+    // Otherwise, returns reference to doc created
     return doc(this._dbaccess,'users/'+userId);
   }
 }
