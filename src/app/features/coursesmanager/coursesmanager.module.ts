@@ -37,6 +37,7 @@ import { TeacherModalComponent } from './components/teacher-modal/teacher-modal.
 import { CalendareventsresolveResolver } from './resolvers/calendareventsresolve.resolver';
 import { TeacherCreateEventModalComponent } from './components/teacher-create-event-modal/teacher-create-event-modal.component';
 import * as dayjs from 'dayjs';
+import { ChoiceModalComponent } from './components/choice-modal/choice-modal.component';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import * as dayjs from 'dayjs';
     AccountadminpageComponent,
     StudentModalComponent,
     TeacherModalComponent,
-    TeacherCreateEventModalComponent
+    TeacherCreateEventModalComponent,
+    ChoiceModalComponent
   ],
   imports: [
     SwiperModule,
@@ -146,8 +148,11 @@ import * as dayjs from 'dayjs';
           }  
         },{
           path:"",
-          redirectTo:"/homepage",
+          redirectTo:"/about",
           pathMatch:"full",
+        },{ 
+          path: '**', 
+          redirectTo: "/about"
         }
       ]}]  
     )
