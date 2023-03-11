@@ -94,10 +94,6 @@ export class UsermanagementService {
   }
 
   getUserData(){
-    if(this._auth.currentUser)
-    console.log("observable value : ",firstValueFrom(this._db.getUserObs(this._auth.currentUser?.uid)));
-    console.log("fixed value : ",this.userData);
-    
     return this.userData;
   }
   

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Auth, getAuth, GoogleAuthProvider, signInAnonymously, signInWithEmailAndPassword, signInWithPopup } from '@angular/fire/auth';
+import { Auth, getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from '@angular/fire/auth';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { ModalController } from '@ionic/angular';
 import { ChoiceModalComponent } from '../choice-modal/choice-modal.component';
@@ -38,8 +38,10 @@ export class LoginpageComponent {
       choiceModal.present();
       const {data, role} = await choiceModal.onWillDismiss();
       if(role === "student"){
+        this._dbAccess.updateUser({status:"student"})
         this._router.navigate(['/account/']);
       }else if(role === "teacher"){
+        this._dbAccess.updateUser({status:"teacher"})
         this._router.navigate(['/accountTeacher/']);
       }
     }else{

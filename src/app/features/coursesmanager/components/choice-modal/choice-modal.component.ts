@@ -9,12 +9,8 @@ import { ModalController } from '@ionic/angular';
 export class ChoiceModalComponent {
   constructor(private modalCtrl: ModalController) { }
 
-  confirmStudent(){
-    return this.modalCtrl.dismiss(null, 'student');
-  }
-  
-  confirmTeacher(){
-    return this.modalCtrl.dismiss(null, 'teacher');
+  confirm(role : string){
+    return this.modalCtrl.dismiss(null, role);
   }
 
 }

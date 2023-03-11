@@ -1,7 +1,13 @@
 <ion-content>
+    <div class="modalContent">
     <ion-text>
         <p>It's the first time you connect to this website. Which of the following are you ? </p>
+        <p>Please complete your profile after choosing</p>
     </ion-text>
-    <ion-button (click)="confirmStudent()"> Student </ion-button>
-    <ion-button (click)="confirmStudent()"> Teacher </ion-button>
+
+    <div class="modalButtons">
+        <ion-button (click)="confirm('student')"> Student </ion-button>
+        <ion-button (click)="confirm('teacher')"> Teacher </ion-button>
+    </div>    
+    </div>
 </ion-content>
