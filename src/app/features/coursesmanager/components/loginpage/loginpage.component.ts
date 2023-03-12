@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Auth, getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from '@angular/fire/auth';
+import { Auth, getAuth, GoogleAuthProvider, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup } from '@angular/fire/auth';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { ChoiceModalComponent } from '../choice-modal/choice-modal.component';
 
 @Component({
@@ -14,12 +14,14 @@ export class LoginpageComponent {
 
   email:string = "";
   password:string = "";
+  error:string = "";
 
   constructor(
     private readonly _auth: Auth,
     private readonly _dbAccess:AngularfireService,
     private readonly _router: Router,
     private readonly _modalCtrl: ModalController,
+    private readonly _alertController: AlertController,
     ) {
   }
 
@@ -51,8 +53,10 @@ export class LoginpageComponent {
   }
 
   async loginWithEmail(){
-    if(this.email == "")
+    if(this.email == ""){
+      this.error = "Please enter an email"
       return;
+    }
 
     const auth = getAuth();
     
@@ -67,9 +71,27 @@ export class LoginpageComponent {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log("error : ",error);
-        
+        this.error = error.message;
       });
     return credential;
+  }
+
+  resetPassword(){
+    if(this.email == "")
+      return;
+
+    sendPasswordResetEmail(this._auth, this.email)
+    .then(async (result) => {
+      const alert = this._alertController.create({
+        header: "An email to reset your password was sent to "+this.email,
+        buttons: ['OK'],
+      });
+      (await alert).present();
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log("Error : ",errorMessage);
+    });
   }
 }
