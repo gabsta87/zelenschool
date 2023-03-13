@@ -33,4 +33,9 @@ export class AdminpageComponent {
   unbanUser(id:string){
     this._db.unbanUser(id);
   }
+
+  addPartner(){
+    // TODO 
+    console.log("TODO");
+  }
 }
