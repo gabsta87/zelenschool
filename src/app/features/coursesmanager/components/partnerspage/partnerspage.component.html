@@ -1,21 +1,7 @@
 <ion-content>
     <div class="partnersPageContainer">
-        <h1>Partners</h1>
-        <ion-grid>
-            <ion-row>
-                <ion-col>
-                    <img src="~/../assets/partners/flag.png"/>
-                </ion-col>
-                <ion-col>
-                    <img src="~/../assets/partners/partner1.jpeg"/>
-                </ion-col>
-                <ion-col>
-                    <img src="~/../assets/partners/flag.png"/>
-                </ion-col>
-                <ion-col>
-                    <img src="~/../assets/partners/flag.png"/>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
+        <ion-button *ngFor="let partner of partners" href={{partner.link}} fill="clear">
+            <img src="{{'~/../assets/partners/' + partner.logoName}}" style="height:100%;"/>
+        </ion-button>
     </div>
 </ion-content>
