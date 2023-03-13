@@ -7,17 +7,8 @@
         [config]="config"
         class="banner-slides"
         >
-        <ng-template swiperSlide>
-            <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-        </ng-template>
-        <ng-template swiperSlide>
-            <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-        </ng-template>
-        <ng-template swiperSlide>
-            <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-        </ng-template>
-        <ng-template swiperSlide>
-            <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
+        <ng-template swiperSlide *ngFor="let img of images">
+            <img src="/assets/images/{{img}}"/>
         </ng-template>
 
     </swiper>
@@ -26,6 +17,16 @@
     <ion-button (click)="slidePrev()">Prev slide</ion-button>
     <ion-button (click)="slideNext()">Next slide</ion-button>
 
+</div>
+
+<div class="photoGallery">
+    <ion-grid>
+        <ion-row>
+            <ion-thumbnail *ngFor="let img of images; let i = index" (click)="selectImage(i+1)">
+                <img src="/assets/images/{{img}}"/>
+            </ion-thumbnail>
+        </ion-row>
+    </ion-grid>
 </div>
 
 </ion-content>

@@ -33,3 +33,16 @@
   padding-top: 20px;
   padding-bottom: 20px;
 }
+
+.photoGallery{
+
+  ion-thumbnail{
+    margin:5px;
+    --size:100px;
+    opacity: 0.8;
+    cursor: pointer;
+  }
+  ion-thumbnail:hover{
+    opacity: 1;
+  }
+}
