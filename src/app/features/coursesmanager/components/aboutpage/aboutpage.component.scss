@@ -2,3 +2,28 @@
     margin-left:5%;
     margin-right:5%;
 }
+
+ion-thumbnail {
+    --size: 200px;
+    --border-radius: 50%;
+    opacity: 0.8;
+}
+
+.memberCard{
+    margin:5px;
+    border-radius: 10px;
+    ion-thumbnail:hover {
+        opacity: 1;
+    }
+    ion-label{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    a{
+        text-decoration: none;
+    }
+}
+.memberCard:hover{
+    background-color: lightblue;
+}

@@ -1,22 +1,68 @@
 <ion-content>
     <div class="aboutContainer">
 
-    <ion-text color="primary">
-        <h1>Association's name</h1>
+    <ion-text>
+
+        <h1>
+            Ukraine Reborn association
+        </h1>
+        <p>
+            We are an Independent Humanitarian Support Association that has started from a little collection point in Swiss Romande in the first week of war in Ukraine.  
+        </p>
+        <p>
+            In just 3 weeks we have been able to collect more then 1000 boxes of humanitarian help that was sent to Ukraine and helped over 20 families  fleeing to Switzerland. 
+        </p>
+        <p>
+            We have seen and personally were touched by how stressed and lost refugees are,  and how our small actions are making a big difference. Now, we are elevating our efforts uniting with our allies for the good cause. 
+        </p>
+        
+        <h1>
+            Our mission
+        </h1>
+        <p>
+            We believe that everyone has a right to live in freedom and safety. That’s why we are on a mission to help Ukrainian refuges that have fled to Switzerland  restarting their lives and making the integration process as smooth as possible. Our primary focus is on most vulnerable population women and kids.
+        </p>
+        
+        <h1>
+            Our Team
+        </h1>
+        Agile team of experienced professionals with:
+        <ul>
+            <li>
+                Deep understanding of Ukrainian mentality and refugees integration needs in Switzerland
+            </li>
+            <li>
+                Proven experience in managing complex projects at the global scale, including education
+            </li>
+            <li>
+                Know-how in mobilizing people through social to create a movement and impact at scale
+            </li>
+        </ul>
     </ion-text>
 
+    <ion-grid>
+        <ion-row>
+            <div class="memberCard" *ngFor="let member of members">
+                <a *ngIf="member.link; else withoutLink" href="{{member.link}}">
+                <ion-thumbnail>
+                    <img src="{{'/assets/members/'+member.photo}}"/>
+                </ion-thumbnail>
+        
+                <ion-label>{{member.name}} </ion-label>
+                <ion-label>{{member.role}}</ion-label>
+                </a>
+                <ng-template #withoutLink>
+                    <ion-thumbnail>
+                        <img src="{{'/assets/members/'+member.photo}}"/>
+                    </ion-thumbnail>
+            
+                    <ion-label>{{member.name}} </ion-label>
+                    <ion-label>{{member.role}}</ion-label>
+                </ng-template>
 
-    <ion-text color="tertiary">
-        <h3>H3: The quick brown fox jumps over the lazy dog</h3>
-    </ion-text>
-
-    <p>
-        <ion-text color="warning"><ion-icon name="warning"></ion-icon></ion-text>
-        I saw a werewolf with a Chinese menu in his hand.
-        Walking through the <ion-text color="success"><sub>streets</sub></ion-text> of Soho in the rain.
-        He <ion-text color="medium"><i>was</i></ion-text> looking for a place called Lee Ho Fook's.
-        Gonna get a <ion-text color="danger">big dish of beef chow mein.</ion-text>
-    </p>
-    
+            </div>
+        </ion-row>
+    </ion-grid>
+        
     </div>
 </ion-content>
