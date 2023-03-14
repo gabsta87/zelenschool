@@ -32,7 +32,8 @@ export class TeacherModalComponent{
     private modalCtrl: ModalController,
     private readonly _db: AngularfireService,
     private readonly _user:UsermanagementService,
-    private actionSheetCtrl: ActionSheetController) { }
+    private actionSheetCtrl: ActionSheetController
+    ) { }
   
   async ionViewWillEnter(){
     this.dataObs = this._db.getCalendarEntry(this.meta.id);

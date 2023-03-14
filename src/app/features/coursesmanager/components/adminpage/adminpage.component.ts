@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
+import { BanmodalComponent } from '../banmodal/banmodal.component';
 
 @Component({
   selector: 'app-adminpage',
@@ -12,7 +14,8 @@ export class AdminpageComponent {
   constructor(
     // private readonly _auth: Auth,
     private readonly _db:AngularfireService,
-    private readonly _route: ActivatedRoute
+    private readonly _route: ActivatedRoute,
+    private readonly _modal: ModalController,
   ) {}
 
   adminData!:any;
@@ -26,8 +29,21 @@ export class AdminpageComponent {
     this.coursesObs = this.adminData.coursesObs;
   }
 
-  banUser(id:string){
-    this._db.banUser(id,"TODO");
+  async banUser(id:string){
+
+    const modal = await this._modal.create({
+      component:BanmodalComponent
+    })
+    modal.present();
+
+    const { data,role } = await modal.onWillDismiss();
+
+    console.log("role : ",role);
+    console.log("data : ",data);
+
+    if(role == "confirm")
+      this._db.banUser(id,data);
+
   }
 
   unbanUser(id:string){

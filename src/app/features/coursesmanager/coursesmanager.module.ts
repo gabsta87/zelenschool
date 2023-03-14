@@ -38,6 +38,7 @@ import { CalendareventsresolveResolver } from './resolvers/calendareventsresolve
 import { TeacherCreateEventModalComponent } from './components/teacher-create-event-modal/teacher-create-event-modal.component';
 import * as dayjs from 'dayjs';
 import { ChoiceModalComponent } from './components/choice-modal/choice-modal.component';
+import { BanmodalComponent } from './components/banmodal/banmodal.component';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { ChoiceModalComponent } from './components/choice-modal/choice-modal.com
     StudentModalComponent,
     TeacherModalComponent,
     TeacherCreateEventModalComponent,
-    ChoiceModalComponent
+    ChoiceModalComponent,
+    BanmodalComponent
   ],
   imports: [
     SwiperModule,

@@ -1,0 +1,14 @@
+<ion-content>
+    <ion-textarea placeholder="Please explain why you are banning this user" [(ngModel)]="explanation"></ion-textarea>
+</ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button (click)="cancel()">Cancel</ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>

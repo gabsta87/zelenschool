@@ -73,9 +73,6 @@
         <ion-buttons slot="start">
             <ion-button (click)="cancel()">Cancel</ion-button>
         </ion-buttons>
-        <ion-buttons *ngIf="isAdmin" slot="secondary">
-            <ion-button (click)="deleteEntry()" color="danger">Delete</ion-button>
-        </ion-buttons>
         <ion-buttons slot="end">
             <ion-button (click)="confirm()" [strong]="true" [disabled]="!isRoomAvailable.value">Confirm</ion-button>
         </ion-buttons>
