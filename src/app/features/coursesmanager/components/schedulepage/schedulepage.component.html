@@ -118,7 +118,7 @@
                 <b>Attendants</b>
             </ion-col>
         </ion-row>
-        <ion-row *ngFor="let event of eventsList; index as i">
+        <ion-row *ngFor="let event of eventsList; index as i" (click)="handleEvent(event)">
             <ion-col>
                 {{event['title']}}
             </ion-col>

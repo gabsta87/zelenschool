@@ -1,0 +1,86 @@
+Teacher can also be admin ?
+Phone numbers : swiss format only ?
+Are we supposed to add rooms ? Is the number of participant limited according to the teacher's will ? Or by the room's choice ? Or both ?
+Courses longer than 1 hour ?
+
+Features
+TODO Admin page : actions allowed (IMPORTANT)
+TODO request admin approval for teachers (on users list of admin, put badge for waiting approval users)
+TODO Announce to user that he has been banned
+TODO change selected day color
+TODO Teachers can create recurrent courses (every week)
+TODO Teachers can Mark a course as canceled / Mail sent to all participants
+TODO search bar for events / filter by course type (do we need to restrain courses type ?)
+TODO Multilingual system (Complex)
+TODO Admins can see each course a user is attending to
+TODO Admin : group users by teacher/student (or different colors)
+TODO Admin : color banned users
+
+Technical
+TODO test teacher/student account creation
+TODO Force comment for banning
+TODO teachers can ban their students
+TODO students can see their banning date (start and end)
+TODO Use Angular Forms to validate modals
+TODO prevent modifying past courses for teachers/students
+TODO Impossible to subscribe to past dates
+TODO click on bottom table to create modal
+TODO create Doc
+
+Cosmetics
+TODO different colors for teacher's own events / students subscribed events
+
+DONE Banned user (variable into userManagement service to prevent subscription to courses)
+DONE Manage forgotten password problem for email/pwd login
+DONC Teacher who wants to register with google account
+DONE Create teacher account (new simpler page) (URGENT)
+DONE Ban system (REQUESTED)
+DONE prevent from creating a course in an occupied classroom (same time and same room id)
+DONE Teachers can see their course's students
+DONE debug teachers'names display on schedule page
+DONE Corriger author : undefined dans meta du teacher-modal
+DONE Changer la page Account pour permettre de changer les infos de son compte
+DONE Mise à jour des informations du compte
+DONE Modal pour s'inscrire dans les cours
+DONE Modal pour que les admins puissent modifier les données
+
+
+Students
+First name
+Last name
+Birthday
+S permit number
+Address
+Phone number
+Email
+
+Teachers
+First name
+Last name
+Phone number
+Experience
+Age of students
+Email
+
+Password forgotten function, send email to reset it
+
+Visitor
+- create account
+- see courses
+- donate
+
+students
+- see/subscribe courses
+- create account
+
+Teachers
+- see/download students list
+- option to signal a missing person
+- create/edit own course
+
+Administrators
+- write/edit/delete gallery/news/about us
+- edit students/teachers list
+- ban/unban student (30 days cannot subscribe)
+
+Creation of teachers accounts

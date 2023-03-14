@@ -12,7 +12,6 @@ import { UsermanagementService } from 'src/app/shared/service/usermanagement.ser
 import { StudentModalComponent } from '../student-modal/student-modal.component';
 import { TeacherModalComponent } from '../teacher-modal/teacher-modal.component';
 import { TeacherCreateEventModalComponent } from '../teacher-create-event-modal/teacher-create-event-modal.component';
-import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 
 export interface CalendarMonthViewEventTimesChangedEvent<
   EventMetaType = any,
@@ -63,7 +62,6 @@ export class SchedulepageComponent {
 
   constructor(
     private readonly _route: ActivatedRoute,
-    private readonly _db: AngularfireService,
     private readonly _user: UsermanagementService,
     private readonly modalController: ModalController
     ) {
@@ -92,10 +90,6 @@ export class SchedulepageComponent {
         })
       })
     });
-  }
-
-  ngAfterViewInit(){
-    this.refresh.next();
   }
 
   actions: CalendarEventAction[] = [
@@ -128,6 +122,14 @@ export class SchedulepageComponent {
     });
     
     modal.present();
+  }
+
+  async handleEvent(event:DocumentData){
+    const result = this.events.find((e)=> e.meta.id == event['id']);
+    if(result == undefined)
+      return
+
+    this.handleCalendarEntry("Clicked",result);
   }
 
   setView(view: CalendarView) {

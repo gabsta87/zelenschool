@@ -66,10 +66,6 @@ export class UsermanagementService {
     if(userId){
       if(this.userData == undefined)
         this.userData = await this._db.getUser(userId);
-
-      console.log("user data : ",this.userData);
-      
-      console.log("ban : ",this.userData['ban']);
       
       if(this.userData && this.userData['ban'] != undefined){
         return true;
