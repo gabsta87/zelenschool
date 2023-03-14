@@ -27,6 +27,7 @@ export class AdminpageComponent {
     
     this.usersListObs = this.adminData.usersObs;
     this.coursesObs = this.adminData.coursesObs;
+
   }
 
   async banUser(id:string){
@@ -37,9 +38,6 @@ export class AdminpageComponent {
     modal.present();
 
     const { data,role } = await modal.onWillDismiss();
-
-    console.log("role : ",role);
-    console.log("data : ",data);
 
     if(role == "confirm")
       this._db.banUser(id,data);

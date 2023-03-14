@@ -109,7 +109,7 @@ export class AngularfireService{
     this.removeUserFromCourses(userId);
 
     return updateDoc(docRef,{ban:{
-      author:this._auth.currentUser?.uid,
+      authorID:this._auth.currentUser?.uid,
       date: dayjs(new Date()).format('DD.MM.YYYY'),
       comment: message,
     }})

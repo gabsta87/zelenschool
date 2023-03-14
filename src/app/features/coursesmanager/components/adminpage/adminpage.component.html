@@ -18,9 +18,10 @@
                         <p *ngIf="usr.s_permit_id">S permit ID : {{usr.s_permit_id}}</p>
                         <p *ngIf="usr.address">Address : {{usr.address}}</p>
                         <p *ngIf="usr.subscribeDate">Subscribe date : {{usr.subscribeDate}}</p>
-                        <p *ngIf="usr.ban">Banned by : {{usr.ban.author}}</p>
-                        <p *ngIf="usr.ban">Banned on : {{usr.ban.date}}</p>
-                        <p *ngIf="usr.ban">Banned reason : {{usr.ban.comment}}</p>
+                        <ion-text *ngIf="usr.ban" color="danger">
+                        <p> Banned on : {{usr.ban.date}} by {{usr.ban.author.l_name}} {{usr.ban.author.f_name}}<br>
+                        Reason : {{usr.ban.comment}}</p>
+                        </ion-text>
                         <ion-button *ngIf="usr.ban == undefined; else unban" (click)="banUser(usr.id)">Ban</ion-button>
                         <ng-template #unban>
                             <ion-button (click)="unbanUser(usr.id)">Unban</ion-button>
