@@ -1,9 +1,38 @@
 <ion-content>
 <div class="adminContent">
+
+
+    <h1>Manage</h1>
+
+    <ion-button (click)="addPartner()">
+        Partners
+    </ion-button>
+    <ion-button>
+        Photos gallery
+    </ion-button>
+    <ion-button>
+        Association members
+    </ion-button>
+    <ion-button>
+        Projects
+    </ion-button>
+    <ion-button>
+        Articles
+    </ion-button>
+
+
     <h1>Users</h1>
     
     <ion-item lines="none">
-        <ion-item lines="none">
+        <ion-select interface="action-sheet" placeholder="Select fruit" (ionChange)="filterUsersList($event)" value="all">
+            <ion-select-option value="all">All</ion-select-option>
+            <ion-select-option value="students">Students</ion-select-option>
+            <ion-select-option value="teachers">Teachers</ion-select-option>
+            <ion-select-option value="admins">Admins</ion-select-option>
+            <ion-select-option value="requests">Teachers requests</ion-select-option>
+            <ion-select-option value="bans">Banned</ion-select-option>
+        </ion-select>
+        <!-- <ion-item lines="none">
             <ion-checkbox slot="start"></ion-checkbox>
             <ion-label>Students</ion-label> 
         </ion-item>
@@ -12,7 +41,7 @@
             <ion-label>Teachers</ion-label> 
         </ion-item>
         <ion-item lines="none">
-            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-checkbox slot="start" (ionChange)="filterList()"></ion-checkbox>
             <ion-label>Admins</ion-label> 
         </ion-item>
         <ion-item lines="none">
@@ -22,11 +51,9 @@
         <ion-item lines="none">
             <ion-checkbox slot="start"></ion-checkbox>
             <ion-label>Teachers requests</ion-label> 
-        </ion-item>
+        </ion-item> -->
     </ion-item>
     <ion-searchbar placeholder="Search"></ion-searchbar>
-
-
 
     <ion-list lines="none">
 
@@ -96,11 +123,6 @@
         </ion-item>
     </ion-list>
 
-    <h1>Partners</h1>
-
-    <ion-button (click)="addPartner()">
-        Add partner
-    </ion-button>
 
 </div>
 </ion-content>

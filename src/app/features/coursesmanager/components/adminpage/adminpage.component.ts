@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { Observable } from 'rxjs';
+import { filter, map, Observable } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { BanmodalComponent } from '../banmodal/banmodal.component';
 
@@ -30,6 +30,42 @@ export class AdminpageComponent {
 
   }
 
+  filterUsersList($event : any){
+    this.usersListObs = this.adminData.usersObs;
+    switch($event.detail.value){
+      case "students":
+        this.usersListObs = this.filterStatus("student");
+        break;
+      case "teachers":
+        this.usersListObs = this.filterStatus("teacher");
+        break;
+      case "admins":
+        this.usersListObs = this.filterStatus("admin");
+        break;
+      case "requests":
+        this.usersListObs = this.filterStatus("request");
+        break;
+      case "bans":
+        this.usersListObs = this.filterBannedUsers();
+        break;
+      default:
+        this.usersListObs = this.adminData.usersObs;
+        break;
+    }
+  }
+
+  private filterStatus(status:string){
+    return this.usersListObs.pipe(map(e => e.filter( (e:any) => 
+      e.status == status
+    )))
+  }
+
+  private filterBannedUsers(){
+    return this.usersListObs.pipe(map(e => e.filter ((e:any) => 
+      e.ban != undefined
+    )))
+  }
+
   async banUser(id:string){
 
     const modal = await this._modal.create({
@@ -52,4 +88,6 @@ export class AdminpageComponent {
     // TODO 
     console.log("TODO");
   }
+
+
 }
