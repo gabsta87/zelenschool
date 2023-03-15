@@ -15,6 +15,7 @@ TODO Announce to user that he has been banned
 TODO change selected day color
 TODO Teachers can create recurrent courses (every week)
 TODO Teachers can Mark a course as canceled / Mail sent to all participants
+    https://firebase.google.com/docs/extensions/official/firestore-send-email?hl=fr
 TODO search bar for events / filter by course type (do we need to restrain courses type ?)
 TODO Multilingual system (Complex)
 TODO Admins can see each course a user is attending to
@@ -35,8 +36,14 @@ TODO Admin page : add search tool
 TODO Schedule : add search tool
 TODO Schedule : sort table by date
 TODO Schedule : Correct popover infos (add hour)
+    https://mattlewis92.github.io/angular-calendar/#/show-dates-on-titles
+    https://mattlewis92.github.io/angular-calendar/#/disable-tooltips
+    https://mattlewis92.github.io/angular-calendar/#/editable-deletable-events
 TODO Schedule : Color selected day
+    https://mattlewis92.github.io/angular-calendar/#/selectable-period
 TODO Schedule : different colors for teacher's own events / students subscribed events
+TODO show titles in each day 
+    https://mattlewis92.github.io/angular-calendar/#/custom-templates
 
 Refactoring
 TODO create Doc
