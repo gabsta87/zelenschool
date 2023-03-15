@@ -4,6 +4,9 @@ Questions
     Are we supposed to add rooms ? Is the number of participant limited according to the teacher's will ? Or by the room's choice ? Or both ?
     Courses longer than 1 hour ?
     teachers : students age. Is it some course select blocking option ? recommandation ?
+    request admin action for teachers registration ?
+    request email validation ? for users/teachers
+    prevent with email when course is canceled ?
 
 Features
 TODO Admin page : actions allowed (IMPORTANT)
@@ -74,8 +77,6 @@ Experience
 Age of students
 Email
 
-Password forgotten function, send email to reset it
-
 Visitor
 - create account
 - see courses
@@ -94,5 +95,3 @@ Administrators
 - write/edit/delete gallery/news/about us
 - edit students/teachers list
 - ban/unban student (30 days cannot subscribe)
-
-Creation of teachers accounts

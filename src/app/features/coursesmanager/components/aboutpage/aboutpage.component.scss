@@ -6,15 +6,12 @@
 ion-thumbnail {
     --size: 200px;
     --border-radius: 50%;
-    opacity: 0.8;
 }
 
 .memberCard{
+    opacity: 0.8;
     margin:5px;
     border-radius: 10px;
-    ion-thumbnail:hover {
-        opacity: 1;
-    }
     ion-label{
         display: flex;
         justify-content: center;
@@ -25,5 +22,6 @@ ion-thumbnail {
     }
 }
 .memberCard:hover{
+    opacity: 1;
     background-color: lightblue;
 }
