@@ -60,7 +60,13 @@ export class AdminpageComponent {
     this.coursesObs = this.coursesObs.pipe(
       map((e:any) => e.filter((course:any) =>
         course.description?.toLowerCase().includes(this.searchString.toLowerCase()) ||
-        course.title.toLowerCase().includes(this.searchString.toLowerCase())
+        course.title.toLowerCase().includes(this.searchString.toLowerCase()) ||
+        course.author.l_name.toLowerCase().includes(this.searchString.toLocaleLowerCase()) ||
+        course.author.f_name.toLowerCase().includes(this.searchString.toLocaleLowerCase()) ||
+        course.attendantsId.find((e:any) => 
+          e.l_name.toLowerCase().includes(this.searchString.toLowerCase()) ||
+          e.f_name.toLowerCase().includes(this.searchString.toLowerCase())
+        )
       ))
     )
   }

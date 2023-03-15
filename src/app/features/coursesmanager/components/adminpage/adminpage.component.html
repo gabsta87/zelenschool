@@ -81,11 +81,16 @@
             <ion-accordion-group>
                 <ion-accordion [value]="course.title">
                     <ion-item slot="header" color="light">
-                      <ion-label>{{course.title}} {{course.eventDate| date: "HH:mm d MMM, yy"}} {{course.author}}</ion-label>
+                      <ion-label>{{course.title}} {{course.eventDate| date: "HH:mm d MMM, yy"}} {{course.author.l_name}} {{course.author.f_name}}</ion-label>
                     </ion-item>
                     <div class="ion-padding" slot="content">
-                        <ion-text>{{course|json}}</ion-text>
-                        
+                        <p>Room : {{course.room_id}}</p>
+                        <p>Participants : {{course.attendantsId.length}}/{{course.max_participants}}</p>
+                        <p *ngIf="course.description">Description : {{course.description}}</p>
+                        <ion-list *ngIf="course.attendantsId.length > 0" class="ion-no-padding">
+                            <ion-label>Students</ion-label>
+                            <ion-item *ngFor="let student of course.attendantsId">{{student.l_name}} {{student.f_name}}</ion-item>
+                        </ion-list>
                     </div>
                 </ion-accordion>
             </ion-accordion-group>
