@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import * as dayjs from 'dayjs';
-import { filter, map, Observable } from 'rxjs';
+import { BehaviorSubject, filter, map, Observable } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { BanmodalComponent } from '../banmodal/banmodal.component';
 
@@ -23,6 +23,8 @@ export class AdminpageComponent {
   usersListObs!:Observable<any[]>;
   coursesObs!:Observable<any[]>;
 
+  search = new BehaviorSubject(null as any);
+
   searchString = "";
 
   ionViewWillEnter():void{
@@ -34,17 +36,19 @@ export class AdminpageComponent {
   }
 
   updateValue(){
+    this.search.next(this.searchString);
+
     this.usersListObs = this.usersListObs.pipe(
       map(e => e.filter((user:any) => 
-        user.f_name.includes(this.searchString) ||
-        user.l_name.includes(this.searchString)
+        user.f_name.toLowerCase().includes(this.searchString.toLowerCase()) ||
+        user.l_name.toLowerCase().includes(this.searchString.toLowerCase())
       ))
     )
 
     this.coursesObs = this.coursesObs.pipe(
       map(e => e.filter((course:any) =>
-        course.description?.includes(this.searchString) ||
-        course.title.includes(this.searchString)
+        course.description?.toLowerCase().includes(this.searchString.toLowerCase()) ||
+        course.title.toLowerCase().includes(this.searchString.toLowerCase())
       ))
     )
   }
