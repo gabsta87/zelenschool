@@ -40,6 +40,13 @@ export class AdminpageComponent {
         user.l_name.includes(this.searchString)
       ))
     )
+
+    this.coursesObs = this.coursesObs.pipe(
+      map(e => e.filter((course:any) =>
+        course.description?.includes(this.searchString) ||
+        course.title.includes(this.searchString)
+      ))
+    )
   }
 
   filterUsersList($event : any){
