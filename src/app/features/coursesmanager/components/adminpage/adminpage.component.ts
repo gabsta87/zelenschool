@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+import * as dayjs from 'dayjs';
 import { filter, map, Observable } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { BanmodalComponent } from '../banmodal/banmodal.component';
@@ -22,12 +23,23 @@ export class AdminpageComponent {
   usersListObs!:Observable<any[]>;
   coursesObs!:Observable<any[]>;
 
+  searchString = "";
+
   ionViewWillEnter():void{
     this.adminData = this._route.snapshot.data['adminData'];
     
     this.usersListObs = this.adminData.usersObs;
     this.coursesObs = this.adminData.coursesObs;
 
+  }
+
+  updateValue(){
+    this.usersListObs = this.usersListObs.pipe(
+      map(e => e.filter((user:any) => 
+        user.f_name.includes(this.searchString) ||
+        user.l_name.includes(this.searchString)
+      ))
+    )
   }
 
   filterUsersList($event : any){
@@ -55,8 +67,8 @@ export class AdminpageComponent {
   }
 
   private filterStatus(status:string){
-    return this.usersListObs.pipe(map(e => e.filter( (e:any) => 
-      e.status == status
+    return this.usersListObs.pipe(map(e => e.filter( (user:any) => 
+      user.status == status
     )))
   }
 
@@ -87,6 +99,25 @@ export class AdminpageComponent {
   addPartner(){
     // TODO 
     console.log("TODO");
+  }
+
+  filterCoursesList($event:any){
+    this.filterCourses($event.detail.value);
+  }
+
+  private filterCourses(option:string){
+    this.coursesObs = this.adminData.coursesObs;
+    switch(option){
+      case "future":
+        this.coursesObs = this.coursesObs.pipe(map(e=> e.filter((course:any) => dayjs(course.eventDate).isAfter(new Date()) )))
+        break;
+      case "past":
+        this.coursesObs = this.coursesObs.pipe(map(e=> e.filter((course:any) => dayjs(course.eventDate).isBefore(new Date()) )))
+        break;
+      default:
+        this.coursesObs = this.adminData.coursesObs;
+        break;
+    }
   }
 
 

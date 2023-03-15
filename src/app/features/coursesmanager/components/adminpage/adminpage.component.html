@@ -1,7 +1,6 @@
 <ion-content>
 <div class="adminContent">
 
-
     <h1>Manage</h1>
 
     <ion-button (click)="addPartner()">
@@ -20,11 +19,13 @@
         Articles
     </ion-button>
 
+    <ion-searchbar placeholder="Search" [(ngModel)]="searchString" (ionChange)="updateValue()"></ion-searchbar>
+    <!-- <ion-searchbar placeholder="Search" [(ngModel)]="searchString"></ion-searchbar> -->
 
     <h1>Users</h1>
     
     <ion-item lines="none">
-        <ion-select interface="action-sheet" placeholder="Select fruit" (ionChange)="filterUsersList($event)" value="all">
+        <ion-select interface="action-sheet" (ionChange)="filterUsersList($event)" value="all">
             <ion-select-option value="all">All</ion-select-option>
             <ion-select-option value="students">Students</ion-select-option>
             <ion-select-option value="teachers">Teachers</ion-select-option>
@@ -32,33 +33,11 @@
             <ion-select-option value="requests">Teachers requests</ion-select-option>
             <ion-select-option value="bans">Banned</ion-select-option>
         </ion-select>
-        <!-- <ion-item lines="none">
-            <ion-checkbox slot="start"></ion-checkbox>
-            <ion-label>Students</ion-label> 
-        </ion-item>
-        <ion-item lines="none">
-            <ion-checkbox slot="start"></ion-checkbox>
-            <ion-label>Teachers</ion-label> 
-        </ion-item>
-        <ion-item lines="none">
-            <ion-checkbox slot="start" (ionChange)="filterList()"></ion-checkbox>
-            <ion-label>Admins</ion-label> 
-        </ion-item>
-        <ion-item lines="none">
-            <ion-checkbox slot="start"></ion-checkbox>
-            <ion-label>Banned</ion-label> 
-        </ion-item>
-        <ion-item lines="none">
-            <ion-checkbox slot="start"></ion-checkbox>
-            <ion-label>Teachers requests</ion-label> 
-        </ion-item> -->
     </ion-item>
-    <ion-searchbar placeholder="Search"></ion-searchbar>
 
     <ion-list lines="none">
 
         <ion-item *ngFor="let usr of usersListObs|async;">
-
             <ion-accordion-group>
                 <ion-accordion [value]="usr.l_name">
                     <ion-item slot="header" color="light">
@@ -86,25 +65,18 @@
         
     </ion-list>
 
-
-
     <h1>Courses</h1>
 
     <ion-item lines="none">
-        <ion-item lines="none">
-            <ion-checkbox slot="start"></ion-checkbox>
-            <ion-label>Courses to come</ion-label> 
-        </ion-item>
-        <ion-item lines="none">
-            <ion-checkbox slot="start"></ion-checkbox>
-            <ion-label>Past courses</ion-label> 
-        </ion-item>
+        <ion-select interface="action-sheet" (ionChange)="filterCoursesList($event)" value="all">
+            <ion-select-option value="all">All</ion-select-option>
+            <ion-select-option value="future">Courses to come</ion-select-option>
+            <ion-select-option value="past">Past courses</ion-select-option>
+        </ion-select>
     </ion-item>
-    <ion-searchbar placeholder="Search"></ion-searchbar>
 
     <ion-list lines="none">
         <ion-item *ngFor="let course of coursesObs|async;">
-
 
             <ion-accordion-group>
                 <ion-accordion [value]="course.title">
@@ -117,12 +89,9 @@
                     </div>
                 </ion-accordion>
             </ion-accordion-group>
-            <br>
-
 
         </ion-item>
     </ion-list>
-
 
 </div>
 </ion-content>

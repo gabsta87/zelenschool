@@ -9,6 +9,8 @@ Questions
     prevent with email when course is canceled ?
 
 Features
+TODO Admin page : add search tool
+TODO Admin page : load teachers names
 TODO Admin page : actions allowed (IMPORTANT)
 TODO request admin approval for teachers (on users list of admin, put badge for waiting approval users)
 TODO Announce to user that he has been banned
@@ -32,7 +34,6 @@ TODO Impossible to subscribe to past dates
 
 Cosmetics
 TODO admin page : better display for courses
-TODO Admin page : add search tool
 TODO Schedule : add search tool
 TODO Schedule : sort table by date
 TODO Schedule : Correct popover infos (add hour)
