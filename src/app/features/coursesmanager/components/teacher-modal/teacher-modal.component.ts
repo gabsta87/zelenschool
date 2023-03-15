@@ -19,6 +19,7 @@ export class TeacherModalComponent{
   max_participants!:number;
   meta!:any;
   creatorName!:string;
+  description!:string;
 
   presentingElement = undefined;
   dataObs!:Observable<DocumentData|undefined>;
@@ -60,6 +61,7 @@ export class TeacherModalComponent{
     this.room_id = this.meta.room_id;
     this.time = this.meta.time;
     this.max_participants = this.meta.max_participants;
+    this.description = this.meta.description;
 
     this.isAuthor = actualValue ? actualValue['author'] == this._user.getId() : false;
     this.isAdmin = this._user.isAdmin();
@@ -122,7 +124,7 @@ export class TeacherModalComponent{
   }
 
   confirm(){
-    let entry = {id:this.id,title:this.title,eventDate:this.time,room_id:this.room_id,max_participants:this.max_participants}
+    let entry = {id:this.id,title:this.title,eventDate:this.time,room_id:this.room_id,max_participants:this.max_participants,description:this.description}
     this._db.updateCalendarEntry(entry);
     return this.modalCtrl.dismiss(null, 'confirm');
   }
@@ -138,8 +140,8 @@ export class TeacherModalComponent{
 
     this.collisionEventsObs = this.collisionEventsObs.pipe(map((e:any) => e.filter((elem:any)=> elem['id'] != this.id))) 
 
+    // TODO remplacer par un pipe ?
     this.collisionEvents = await firstValueFrom(this.collisionEventsObs);
-    console.log("collistion events ", this.collisionEvents);
     
     if(this.collisionEvents){
       this.collisionIndex = this.collisionEvents.findIndex(e => e['room_id'] == this.room_id);

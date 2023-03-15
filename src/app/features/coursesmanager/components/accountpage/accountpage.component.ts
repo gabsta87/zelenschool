@@ -29,7 +29,7 @@ export class AccountpageComponent {
   }
 
   loadData(){
-    let myValue = this.userData.user;
+    const myValue = this.userData.user;
 
     this.profileForm = new FormGroup({
       email : new FormControl(myValue.email,emailValidator()),

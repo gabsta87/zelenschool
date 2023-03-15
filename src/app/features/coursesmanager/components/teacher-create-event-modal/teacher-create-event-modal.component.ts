@@ -14,7 +14,7 @@ export class TeacherCreateEventModalComponent {
   title!:string;
   max_participants!:number;
   room_id!:string;
-  meta!:any;
+  description!:string;
   @Inject('dayjs') private readonly dayjs: any;
 
   isValid = new BehaviorSubject<Boolean>(true);
@@ -28,7 +28,7 @@ export class TeacherCreateEventModalComponent {
   }
 
   confirm(){
-    let entry = {title:this.title,eventDate:this.time,room_id:this.room_id,max_participants:this.max_participants}
+    let entry = {title:this.title,eventDate:this.time,room_id:this.room_id,max_participants:this.max_participants,description:this.description}
     
     this._db.createCalendarEntry(entry);
     return this.modalCtrl.dismiss(null, 'confirm');

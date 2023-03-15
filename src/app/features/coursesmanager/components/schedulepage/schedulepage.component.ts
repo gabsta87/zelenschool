@@ -86,6 +86,7 @@ export class SchedulepageComponent {
             room_id: e['room_id'],
             attendantsId: e['attendantsId'],
             max_participants: e['max_participants'],
+            description: e['description'],
           },
         })
       })

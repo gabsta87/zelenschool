@@ -1,8 +1,34 @@
 <ion-content>
+<div class="adminContent">
+    <h1>Users</h1>
+    
+    <ion-item lines="none">
+        <ion-item lines="none">
+            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-label>Students</ion-label> 
+        </ion-item>
+        <ion-item lines="none">
+            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-label>Teachers</ion-label> 
+        </ion-item>
+        <ion-item lines="none">
+            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-label>Admins</ion-label> 
+        </ion-item>
+        <ion-item lines="none">
+            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-label>Banned</ion-label> 
+        </ion-item>
+        <ion-item lines="none">
+            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-label>Teachers requests</ion-label> 
+        </ion-item>
+    </ion-item>
+    <ion-searchbar placeholder="Search"></ion-searchbar>
+
+
+
     <ion-list lines="none">
-        <ion-list-header>
-            <ion-label>Users</ion-label>
-        </ion-list-header>
 
         <ion-item *ngFor="let usr of usersListObs|async;">
 
@@ -33,17 +59,48 @@
         
     </ion-list>
 
-    <ion-list>
-        <ion-list-header>
-            <ion-label>Courses</ion-label>
-        </ion-list-header>
+
+
+    <h1>Courses</h1>
+
+    <ion-item lines="none">
+        <ion-item lines="none">
+            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-label>Courses to come</ion-label> 
+        </ion-item>
+        <ion-item lines="none">
+            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-label>Past courses</ion-label> 
+        </ion-item>
+    </ion-item>
+    <ion-searchbar placeholder="Search"></ion-searchbar>
+
+    <ion-list lines="none">
         <ion-item *ngFor="let course of coursesObs|async;">
-            <ion-label>{{course|json}}</ion-label>
+
+
+            <ion-accordion-group>
+                <ion-accordion [value]="course.title">
+                    <ion-item slot="header" color="light">
+                      <ion-label>{{course.title}} {{course.eventDate| date: "HH:mm d MMM, yy"}} {{course.author}}</ion-label>
+                    </ion-item>
+                    <div class="ion-padding" slot="content">
+                        <ion-text>{{course|json}}</ion-text>
+                        
+                    </div>
+                </ion-accordion>
+            </ion-accordion-group>
+            <br>
+
+
         </ion-item>
     </ion-list>
+
+    <h1>Partners</h1>
 
     <ion-button (click)="addPartner()">
         Add partner
     </ion-button>
 
+</div>
 </ion-content>

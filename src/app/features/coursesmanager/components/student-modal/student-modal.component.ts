@@ -14,11 +14,12 @@ import { UsermanagementService } from 'src/app/shared/service/usermanagement.ser
 })
 export class StudentModalComponent {
   meta!:any;
-  title!:string;
   dataObs!:Observable<DocumentData|undefined>;
+  title!:string;
   creator!:DocumentData|undefined;
   date!:string;
-
+  description!:string;
+  
   participants!:number;
   max_participants!:number;
 
@@ -44,6 +45,7 @@ export class StudentModalComponent {
 
       this.participants = courseActualValues['attendantsId'].length;
       this.max_participants = courseActualValues['max_participants'];
+      this.description =  courseActualValues['description'];
     }
   }
 

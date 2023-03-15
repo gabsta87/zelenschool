@@ -37,6 +37,11 @@
         <ion-input type="number" placeholder="0" [(ngModel)]="max_participants" [disabled]="cannotModify"></ion-input>
     </ion-item>
 
+    <ion-item>
+        <ion-label>Description</ion-label>
+        <ion-input [(ngModel)]="description" [disabled]="cannotModify"> </ion-input>
+    </ion-item>
+
     <ion-accordion-group *ngIf="dataObs|async as event">
     <ion-accordion value="students">
         <ion-item slot="header" color="light">

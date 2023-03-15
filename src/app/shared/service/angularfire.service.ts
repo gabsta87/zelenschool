@@ -23,37 +23,32 @@ export class AngularfireService{
     return observableStream;
   }
 
-  createCalendarEntry(newEntry: {title:string,eventDate:string,room_id:string,max_participants:number}){
+  createCalendarEntry(newEntry: any){
     if(!this._auth.currentUser?.uid){
       console.log("User not logged, no event created");
       return
     }
     return addDoc(collection(this._dbaccess,"calendarEntries"),{
-      eventDate:newEntry.eventDate,
+      ...newEntry,
       attendantsId:[],
-      title:newEntry.title,
       author:this._auth.currentUser.uid,
-      room_id:newEntry.room_id,
-      max_participants:newEntry.max_participants
     });
   }
   
-  updateCalendarEntry(newEntry: {id:string,title:string,eventDate:string,room_id:string,max_participants:number}) {
+  updateCalendarEntry(newEntry: any) {
     if(!this._auth.currentUser?.uid){
       console.log("User not logged, impossible to edit event");
       return
     }
 
     return updateDoc(doc(this._dbaccess,"calendarEntries",newEntry.id),{
-      eventDate:dayjs(newEntry.eventDate).toISOString(),
-      title:newEntry.title,
-      author:this._auth.currentUser.uid,
-      room_id:newEntry.room_id,
-      max_participants:newEntry.max_participants
+      ...newEntry,
+      // author:this._auth.currentUser.uid,
     });
   }
 
   deleteCalendarEntry(entryId:string){
+    // TODO add security : admin or owner of course
     if(this._auth.currentUser?.uid){
       return deleteDoc(doc(this._dbaccess,"calendarEntries",entryId))
     }else{
@@ -103,7 +98,7 @@ export class AngularfireService{
     return temp.find(e => e['id'] === userId);
   }
 
-  banUser(userId:string,message="missed courses"){
+  banUser(userId:string,message="SYSTEM : missed courses"){
     const docRef = doc(this._dbaccess,'users/'+userId);
     
     this.removeUserFromCourses(userId);
