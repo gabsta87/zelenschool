@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import * as dayjs from 'dayjs';
-import { BehaviorSubject, filter, map, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, filter, map, Observable } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { BanmodalComponent } from '../banmodal/banmodal.component';
 
@@ -19,34 +19,46 @@ export class AdminpageComponent {
     private readonly _modal: ModalController,
   ) {}
 
-  adminData!:any;
-  usersListObs!:Observable<any[]>;
-  coursesObs!:Observable<any[]>;
+  // usersListObs!:Observable<any[]>;
+  // coursesObs!:Observable<any[]>;
 
-  search = new BehaviorSubject(null as any);
-
+  adminData = this._route.snapshot.data['adminData'];
+  
+  usersListObs = this.adminData.usersObs;
+  coursesObs = this.adminData.coursesObs;
   searchString = "";
-
-  ionViewWillEnter():void{
-    this.adminData = this._route.snapshot.data['adminData'];
-    
-    this.usersListObs = this.adminData.usersObs;
-    this.coursesObs = this.adminData.coursesObs;
-
-  }
+  
+  // search = new BehaviorSubject(null as any);
+  // searchUserOption = "";
+  // usersListObs = combineLatest([
+  //   this.adminData.usersObs as Observable<any[]>,
+  //   this.search.asObservable()
+  // ]).pipe(
+  //   map(observables => {
+  //     const list = observables[0];
+  //     const searchStr: any = observables[1];
+  //     if (!searchStr) {
+  //       return list;
+  //     }
+  //     return list.filter((user:any) => 
+  //       user.f_name.toLowerCase().includes(this.searchString.toLowerCase()) ||
+  //       user.l_name.toLowerCase().includes(this.searchString.toLowerCase())
+  //     )
+  //   })
+  // );
 
   updateValue(){
-    this.search.next(this.searchString);
+    // this.search.next(this.searchString);
 
     this.usersListObs = this.usersListObs.pipe(
-      map(e => e.filter((user:any) => 
+      map((e:any) => e.filter((user:any) => 
         user.f_name.toLowerCase().includes(this.searchString.toLowerCase()) ||
         user.l_name.toLowerCase().includes(this.searchString.toLowerCase())
       ))
     )
 
     this.coursesObs = this.coursesObs.pipe(
-      map(e => e.filter((course:any) =>
+      map((e:any) => e.filter((course:any) =>
         course.description?.toLowerCase().includes(this.searchString.toLowerCase()) ||
         course.title.toLowerCase().includes(this.searchString.toLowerCase())
       ))
@@ -78,13 +90,13 @@ export class AdminpageComponent {
   }
 
   private filterStatus(status:string){
-    return this.usersListObs.pipe(map(e => e.filter( (user:any) => 
+    return this.usersListObs.pipe(map((e:any) => e.filter( (user:any) => 
       user.status == status
     )))
   }
 
   private filterBannedUsers(){
-    return this.usersListObs.pipe(map(e => e.filter ((e:any) => 
+    return this.usersListObs.pipe(map((e:any) => e.filter ((e:any) => 
       e.ban != undefined
     )))
   }
@@ -120,10 +132,10 @@ export class AdminpageComponent {
     this.coursesObs = this.adminData.coursesObs;
     switch(option){
       case "future":
-        this.coursesObs = this.coursesObs.pipe(map(e=> e.filter((course:any) => dayjs(course.eventDate).isAfter(new Date()) )))
+        this.coursesObs = this.coursesObs.pipe(map((e:any) => e.filter((course:any) => dayjs(course.eventDate).isAfter(new Date()) )))
         break;
       case "past":
-        this.coursesObs = this.coursesObs.pipe(map(e=> e.filter((course:any) => dayjs(course.eventDate).isBefore(new Date()) )))
+        this.coursesObs = this.coursesObs.pipe(map((e:any) => e.filter((course:any) => dayjs(course.eventDate).isBefore(new Date()) )))
         break;
       default:
         this.coursesObs = this.adminData.coursesObs;
