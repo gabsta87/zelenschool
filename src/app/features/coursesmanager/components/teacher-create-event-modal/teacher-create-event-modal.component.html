@@ -1,4 +1,4 @@
-<ion-content class="ion-padding">
+<ion-content class="ion-padding" (keydown.enter)="confirm()">
     <ion-item>
         <ion-label position="stacked">Enter title</ion-label>
         <ion-input type="text" placeholder="Course title" [(ngModel)]="title"></ion-input>

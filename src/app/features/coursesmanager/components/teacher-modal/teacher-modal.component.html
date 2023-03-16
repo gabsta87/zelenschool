@@ -4,7 +4,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="ion-padding" (keydown.enter)="confirm()">
     <ion-item>
         <ion-label>Title : </ion-label>
         <ion-input type="text" placeholder="Course title" [(ngModel)]="title" [disabled]="cannotModify"></ion-input>

@@ -4,7 +4,7 @@
         <ion-title>{{title}}</ion-title>
     </ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content (keydown.enter)="confirm()">
     <div *ngIf="dataObs |async as currentEvent">
     <ion-item *ngIf="creator">
         <ion-text>Author : {{creator['f_name']}} {{creator['l_name']}}</ion-text>
