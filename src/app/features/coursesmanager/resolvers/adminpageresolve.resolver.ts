@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
+import { DocumentData } from '@angular/fire/firestore';
 import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot, ActivationEnd } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 
 interface AdminData{
   articles:any[],
-  usersObs:Observable<any[]>,
-  coursesObs:Observable<any[]>,
+  usersObs:Observable<DocumentData[]>,
+  coursesObs:Observable<DocumentData[]>,
 }
 
 @Injectable({

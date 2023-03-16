@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import * as dayjs from 'dayjs';
@@ -13,98 +14,87 @@ import { BanmodalComponent } from '../banmodal/banmodal.component';
 })
 export class AdminpageComponent {
   constructor(
-    // private readonly _auth: Auth,
     private readonly _db:AngularfireService,
     private readonly _route: ActivatedRoute,
     private readonly _modal: ModalController,
   ) {}
 
-  // usersListObs!:Observable<any[]>;
-  // coursesObs!:Observable<any[]>;
-
   adminData = this._route.snapshot.data['adminData'];
   
-  usersListObs = this.adminData.usersObs;
-  coursesObs = this.adminData.coursesObs;
+  usersListObs:Observable<DocumentData[]> = this.adminData.usersObs;
+  coursesObs:Observable<DocumentData[]> = this.adminData.coursesObs;
   searchString = "";
+  statusToFilter = "all";
+  timeFilter = "all";
   
-  // search = new BehaviorSubject(null as any);
-  // searchUserOption = "";
-  // usersListObs = combineLatest([
-  //   this.adminData.usersObs as Observable<any[]>,
-  //   this.search.asObservable()
-  // ]).pipe(
-  //   map(observables => {
-  //     const list = observables[0];
-  //     const searchStr: any = observables[1];
-  //     if (!searchStr) {
-  //       return list;
-  //     }
-  //     return list.filter((user:any) => 
-  //       user.f_name.toLowerCase().includes(this.searchString.toLowerCase()) ||
-  //       user.l_name.toLowerCase().includes(this.searchString.toLowerCase())
-  //     )
-  //   })
-  // );
+  search = new BehaviorSubject("" as any);
+  filterUsersActivated = new BehaviorSubject("all" as any);
+  filterCoursesActivated = new BehaviorSubject("all" as any);
 
-  updateValue(){
-    // this.search.next(this.searchString);
+  filteredDataObs = combineLatest([
+    this.search.asObservable(),
+    this.usersListObs,
+    this.coursesObs,
+    this.filterUsersActivated.asObservable(),
+    this.filterCoursesActivated.asObservable(),
+  ]).pipe(
+    map(([searchString, users, courses, usersFilter, coursesFilter]) => {
 
-    this.usersListObs = this.usersListObs.pipe(
-      map((e:any) => e.filter((user:any) => 
-        user.f_name.toLowerCase().includes(this.searchString.toLowerCase()) ||
-        user.l_name.toLowerCase().includes(this.searchString.toLowerCase())
-      ))
-    )
+      if(searchString == "" && usersFilter == "all" && coursesFilter == "all")
+          return [users,courses];
 
-    this.coursesObs = this.coursesObs.pipe(
-      map((e:any) => e.filter((course:any) =>
-        course.description?.toLowerCase().includes(this.searchString.toLowerCase()) ||
-        course.title.toLowerCase().includes(this.searchString.toLowerCase()) ||
-        course.author.l_name.toLowerCase().includes(this.searchString.toLocaleLowerCase()) ||
-        course.author.f_name.toLowerCase().includes(this.searchString.toLocaleLowerCase()) ||
+      switch(usersFilter){
+        case "all":
+          break;
+        case "ban":
+          users = users.filter ((e:any) => e.ban != undefined)
+          break;
+        default:
+          users = users.filter( (user:any) => user.status == usersFilter )
+          break;
+      }
+
+      switch(coursesFilter){
+        case "all":
+          break;
+        case "future":
+          courses = courses.filter((course:any) => dayjs(course.eventDate).isAfter(new Date()) )
+          break;
+        case "past":
+          courses = courses.filter((course:any) => dayjs(course.eventDate).isBefore(new Date()) )
+          break;
+        default:
+          break;
+      }
+
+      const filteredUsers = users.filter((user:any) => 
+        user.f_name.toLowerCase().includes(searchString.toLowerCase()) ||
+        user.l_name.toLowerCase().includes(searchString.toLowerCase())
+      );
+      const filteredCourses = courses.filter((course:any) =>
+        course.description?.toLowerCase().includes(searchString.toLowerCase()) ||
+        course.title.toLowerCase().includes(searchString.toLowerCase()) ||
+        course.author.l_name.toLowerCase().includes(searchString.toLocaleLowerCase()) ||
+        course.author.f_name.toLowerCase().includes(searchString.toLocaleLowerCase()) ||
         course.attendantsId.find((e:any) => 
-          e.l_name.toLowerCase().includes(this.searchString.toLowerCase()) ||
-          e.f_name.toLowerCase().includes(this.searchString.toLowerCase())
+          e.l_name.toLowerCase().includes(searchString.toLowerCase()) ||
+          e.f_name.toLowerCase().includes(searchString.toLowerCase())
         )
-      ))
-    )
+      );
+      return [filteredUsers, filteredCourses];
+    })
+  );
+
+  updateSearchValue(){
+    this.search.next(this.searchString);
   }
 
-  filterUsersList($event : any){
-    this.usersListObs = this.adminData.usersObs;
-    switch($event.detail.value){
-      case "students":
-        this.usersListObs = this.filterStatus("student");
-        break;
-      case "teachers":
-        this.usersListObs = this.filterStatus("teacher");
-        break;
-      case "admins":
-        this.usersListObs = this.filterStatus("admin");
-        break;
-      case "requests":
-        this.usersListObs = this.filterStatus("request");
-        break;
-      case "bans":
-        this.usersListObs = this.filterBannedUsers();
-        break;
-      default:
-        this.usersListObs = this.adminData.usersObs;
-        break;
-    }
+  filterUsersList(){
+    this.filterUsersActivated.next(this.statusToFilter);
   }
 
-  private filterStatus(status:string){
-    return this.usersListObs.pipe(map((e:any) => e.filter( (user:any) => 
-      user.status == status
-    )))
-  }
-
-  private filterBannedUsers(){
-    return this.usersListObs.pipe(map((e:any) => e.filter ((e:any) => 
-      e.ban != undefined
-    )))
+  filterCoursesList(){
+    this.filterCoursesActivated.next(this.timeFilter);
   }
 
   async banUser(id:string){
@@ -129,25 +119,4 @@ export class AdminpageComponent {
     // TODO 
     console.log("TODO");
   }
-
-  filterCoursesList($event:any){
-    this.filterCourses($event.detail.value);
-  }
-
-  private filterCourses(option:string){
-    this.coursesObs = this.adminData.coursesObs;
-    switch(option){
-      case "future":
-        this.coursesObs = this.coursesObs.pipe(map((e:any) => e.filter((course:any) => dayjs(course.eventDate).isAfter(new Date()) )))
-        break;
-      case "past":
-        this.coursesObs = this.coursesObs.pipe(map((e:any) => e.filter((course:any) => dayjs(course.eventDate).isBefore(new Date()) )))
-        break;
-      default:
-        this.coursesObs = this.adminData.coursesObs;
-        break;
-    }
-  }
-
-
 }

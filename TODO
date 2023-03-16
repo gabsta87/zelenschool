@@ -7,6 +7,7 @@ Questions
     request admin action for teachers registration ?
     request email validation ? for users/teachers
     prevent with email when course is canceled ?
+    Rooms have a name/address instead of number ? Admins can add/remove rooms ?
 
 URGENT
 TODO See why user Kiki has no status
@@ -28,15 +29,16 @@ DONE Admin page : add search tool
 DONE Admin page : load teachers names
 
 Technical
+TODO Create service to manage course (modal creation) that can be launched from both schedule and admin page
 TODO test teacher/student account creation
 TODO teachers can mark their past students as "absent"
 TODO students can see their banning date (start and end)
 TODO Use Angular Forms to validate modals
 TODO prevent modifying past courses for teachers/students (mark student as absent)
 TODO Impossible to subscribe to past dates
+DONE Faster search using combinelatest
 
 Cosmetics
-TODO admin page : better display for courses
 TODO Schedule : add search tool
 TODO Schedule : sort table by date
 TODO Schedule : Correct popover infos (add hour)
@@ -48,6 +50,8 @@ TODO Schedule : Color selected day
 TODO Schedule : different colors for teacher's own events / students subscribed events
 TODO show titles in each day 
     https://mattlewis92.github.io/angular-calendar/#/custom-templates
+DONE admin page : better display for courses
+
 
 Refactoring
 TODO create Doc
