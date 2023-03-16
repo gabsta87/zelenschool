@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Auth, User } from '@angular/fire/auth';
 import { collection, QueryConstraint, Firestore, addDoc, collectionData, doc, setDoc, DocumentData, arrayUnion, arrayRemove, getDocs} from '@angular/fire/firestore';
-import { deleteDoc, query, updateDoc } from '@firebase/firestore';
+import { deleteDoc, getDoc, query, updateDoc } from '@firebase/firestore';
 import { firstValueFrom, map, Observable } from 'rxjs';
 import * as dayjs from 'dayjs';
 
@@ -78,12 +78,6 @@ export class AngularfireService{
     return temp.pipe(map(datas => datas.find(e => e['id'] === idToFind)));
   }
 
-  // Useless for now
-  private getFutureCalendarEntries(){
-    let temp = this.getCalendarEntries();
-    return temp.pipe(map(datas => datas.filter(e => dayjs(e['eventDate']).isAfter(dayjs(new Date())))));
-  }
-
   getCalendarEntryByTime(dateToFind:dayjs.Dayjs){
     let temp = this.getCalendarEntries();
     return temp.pipe(map(datas => datas.filter(e => dayjs(e['eventDate']).isSame(dateToFind))));
@@ -98,7 +92,7 @@ export class AngularfireService{
     return temp.find(e => e['id'] === userId);
   }
 
-  banUser(userId:string,message="SYSTEM : missed courses"){
+  banUser(userId:string,message="SYSTEM : missed too many courses"){
     const docRef = doc(this._dbaccess,'users/'+userId);
     
     this.removeUserFromCourses(userId);
@@ -113,6 +107,27 @@ export class AngularfireService{
   async unbanUser(userId:string){
     const docRef = doc(this._dbaccess,'users/'+userId);
     return updateDoc(docRef,{ban:null});
+  }
+
+  async toggleUserAbsent(value: boolean, userId: string, courseId: string) {
+    const docRef = doc(this._dbaccess,'users/'+userId);
+
+    await updateDoc(docRef, {
+      missedCourses: value ? arrayUnion(courseId) : arrayRemove(courseId)
+    });
+
+    const getR = await getDoc(docRef);
+
+    const missed = getR.data();
+    let size = 0
+    if(missed)
+      size = missed['missedCourses'].length
+
+    // Too many missed courses, the user is banned
+    if(size >= 3){
+      updateDoc(docRef, { missedCourses: null });
+      this.banUser(userId)
+    }
   }
 
   private async removeUserFromCourses(userId:string){
@@ -176,4 +191,5 @@ export interface UserInfos {
   s_permit_id?:string|undefined|null,
   address?:string|undefined|null,
   ban?:{author:string,comment:string,date:string}|undefined|null,
+  missedCourses?:{courseId:string}|undefined|null,
 }

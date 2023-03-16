@@ -48,8 +48,24 @@
           <ion-label>Students ({{event['attendantsId'].length}}/{{max_participants}})</ion-label>
         </ion-item>
 
-        <div class="ion-padding" slot="content" *ngFor="let stud of event['attendantsId']">
-            <ng-container *ngIf="stud; else unknown">{{stud.f_name}} {{stud.l_name}}</ng-container>
+        <div class="ion-no-padding" slot="content" *ngFor="let stud of event['attendantsId']">
+            <ng-container *ngIf="stud; else unknown">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>
+                            <ion-item lines="none">
+                                <ion-text>{{stud.f_name}} {{stud.l_name}} </ion-text>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col *ngIf="isPassedEvent">
+                            <ion-item lines="none">
+                                <ion-label>Absent</ion-label>
+                                <ion-toggle slot="end" (ionChange)="setStudentAbsent($event,stud.id)"></ion-toggle>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ng-container>
             <ng-template #unknown>Unknown</ng-template>
         </div>
     </ion-accordion>

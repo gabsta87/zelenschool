@@ -20,6 +20,7 @@ export class TeacherModalComponent{
   meta!:any;
   creatorName!:string;
   description!:string;
+  absentStudents:boolean[] = [];
 
   presentingElement = undefined;
   dataObs!:Observable<DocumentData|undefined>;
@@ -28,6 +29,7 @@ export class TeacherModalComponent{
   isAuthor!:boolean;
   isAdmin!:boolean;
   cannotModify!:boolean;
+  isPassedEvent!:boolean;
 
   constructor(
     private modalCtrl: ModalController,
@@ -39,13 +41,18 @@ export class TeacherModalComponent{
   async ionViewWillEnter(){
     this.dataObs = this._db.getCalendarEntry(this.meta.id);
 
-    let actualValue = await firstValueFrom(this.dataObs);
+    const actualValue = await firstValueFrom(this.dataObs);
 
     this.dataObs = this.dataObs.pipe(
       switchMap((entry:any) => {
+        // Getting users informations
         const observables = entry.attendantsId.map((id:string) => {
           return this._db.getUserObs(id);
         });
+
+        console.log("observables : ",observables);
+        
+        
         return combineLatest(observables).pipe(
           map((users:any) => {
             entry.attendantsId.forEach((id:string, i:number) => {
@@ -65,13 +72,13 @@ export class TeacherModalComponent{
 
     this.isAuthor = actualValue ? actualValue['author'] == this._user.getId() : false;
     this.isAdmin = this._user.isAdmin();
+    this.isPassedEvent = dayjs(this.time).isBefore(new Date()) ;
 
     // USE THIS VERSION FOR FINAL RELEASE
-    // this.cannotModify = (!this.isAuthor || dayjs(this.time).isBefore(new Date()) ) && !this.isAdmin;
+    // this.cannotModify = (!this.isAuthor || this.isPassedEvent ) && !this.isAdmin;
 
     // TEMPORARY FOR TESTING
-    this.cannotModify = !this.isAuthor || dayjs(this.time).isBefore(new Date()) ;
-
+    this.cannotModify = !this.isAuthor || this.isPassedEvent;
     
     if(actualValue){
       this.creator = await this._db.getUser(actualValue['author']);
@@ -151,6 +158,10 @@ export class TeacherModalComponent{
       this.isRoomAvailable.next(true);
     }
     this.time = $event.detail.value;
+  }
+
+  setStudentAbsent($event:any,userId:string){
+    this._db.toggleUserAbsent($event.detail.checked,userId,this.id);
   }
 
   updateRoom($event:any){
