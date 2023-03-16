@@ -20,7 +20,6 @@ export class TeacherModalComponent{
   meta!:any;
   creatorName!:string;
   description!:string;
-  absentStudents:boolean[] = [];
 
   presentingElement = undefined;
   dataObs!:Observable<DocumentData|undefined>;
@@ -44,23 +43,32 @@ export class TeacherModalComponent{
     const actualValue = await firstValueFrom(this.dataObs);
 
     this.dataObs = this.dataObs.pipe(
-      switchMap((entry:any) => {
-        // Getting users informations
-        const observables = entry.attendantsId.map((id:string) => {
-          return this._db.getUserObs(id);
-        });
+      switchMap(async (entry:any) => {
+        // Getting users IDs
+        const usersIds = entry.attendantsId;
 
-        console.log("observables : ",observables);
-        
-        
-        return combineLatest(observables).pipe(
-          map((users:any) => {
-            entry.attendantsId.forEach((id:string, i:number) => {
-              entry.attendantsId[i] = users[i];
-            });
-            return entry;
-          })
-        );
+        // Getting users infos
+        const usersInfos = await Promise.all(entry.attendantsId.map((id:string) => this._db.getUser(id)));
+
+        // Replace IDs by users 
+        entry.attendantsId.forEach((usr:string,index:number) =>{
+          entry.attendantsId[index] = usersInfos.find((e:any) => e.id == usr);
+        })
+        return entry;
+
+        // const observables = entry.attendantsId.map((id:string) => {
+        //   return this._db.getUserObs(id);
+        // });
+
+        // return combineLatest(observables).pipe(
+        //   map((users:any) => {
+        //     entry.attendantsId.forEach((id:string, i:number) => {
+        //       entry.attendantsId[i] = users[i];
+        //     });
+        //     return entry;
+        //   })
+        // );
+
       })
     );
 
