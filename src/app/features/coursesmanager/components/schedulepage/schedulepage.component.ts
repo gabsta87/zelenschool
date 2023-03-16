@@ -164,7 +164,6 @@ export class SchedulepageComponent {
       console.log("Cannot create if not admin or not teacher");
       return
     }
-    console.log("clicked date : ",this.adjustedDate);
     
     const modal = await this.modalController.create({
       component:  TeacherCreateEventModalComponent,

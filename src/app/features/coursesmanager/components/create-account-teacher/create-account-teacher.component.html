@@ -1,5 +1,5 @@
 <ion-content>
-    <div class="createItems">
+    <div class="createItems" (keydown.enter)="register()">
         <form (ngSubmit)="register()" [formGroup]="profileForm">
             <ion-list lines="none">
                 <ion-item>

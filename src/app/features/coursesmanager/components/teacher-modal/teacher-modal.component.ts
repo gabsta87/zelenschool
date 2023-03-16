@@ -67,10 +67,11 @@ export class TeacherModalComponent{
     this.isAdmin = this._user.isAdmin();
 
     // USE THIS VERSION FOR FINAL RELEASE
-    // this.cannotModify = !this.isAuthor && !this.isAdmin;
+    // this.cannotModify = (!this.isAuthor || dayjs(this.time).isBefore(new Date()) ) && !this.isAdmin;
 
     // TEMPORARY FOR TESTING
-    this.cannotModify = !this.isAuthor;
+    this.cannotModify = !this.isAuthor || dayjs(this.time).isBefore(new Date()) ;
+
     
     if(actualValue){
       this.creator = await this._db.getUser(actualValue['author']);

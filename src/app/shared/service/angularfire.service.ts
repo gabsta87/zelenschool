@@ -138,7 +138,8 @@ export class AngularfireService{
   // Modifies current user infos
   setUser(param:UserInfos) {
     const docRef = doc(this._dbaccess,'users/'+this._auth.currentUser?.uid);
-    return setDoc(docRef,{f_name:param.f_name,l_name:param.l_name,birthday:param.birthday,email:param.email,phone:param.phone,s_permit_id:param.s_permit_id,address:param.address});
+    return setDoc(docRef,{...param});
+    // return setDoc(docRef,{f_name:param.f_name,l_name:param.l_name,birthday:param.birthday,email:param.email,phone:param.phone,s_permit_id:param.s_permit_id,address:param.address});
   }
 
   // Updates current user infos

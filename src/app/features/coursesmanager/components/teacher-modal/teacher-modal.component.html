@@ -19,8 +19,8 @@
         </ion-select>
     </ion-item>
 
-    <ion-item *ngIf="!isAuthor">
-        <ion-text>{{creatorName}}</ion-text>
+    <ion-item>
+        <ion-text>Author : {{creatorName}}</ion-text>
     </ion-item>
 
     <ion-item>
@@ -47,8 +47,10 @@
         <ion-item slot="header" color="light">
           <ion-label>Students ({{event['attendantsId'].length}}/{{max_participants}})</ion-label>
         </ion-item>
+
         <div class="ion-padding" slot="content" *ngFor="let stud of event['attendantsId']">
-            {{stud.f_name}} {{stud.l_name}}
+            <ng-container *ngIf="stud; else unknown">{{stud.f_name}} {{stud.l_name}}</ng-container>
+            <ng-template #unknown>Unknown</ng-template>
         </div>
     </ion-accordion>
     </ion-accordion-group>

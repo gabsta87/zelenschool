@@ -95,7 +95,7 @@ export class CreateAccountComponent {
           address : this.profileForm.get('address')?.value,
         });
         
-        this._router.navigate(['/account/']);
+        this._router.navigate(['/schedule/']);
         }
       })
       .catch((error) => {

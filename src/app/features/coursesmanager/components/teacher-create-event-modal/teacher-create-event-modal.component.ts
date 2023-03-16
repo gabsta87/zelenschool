@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import * as dayjs from 'dayjs';
 import { DocumentData } from 'firebase/firestore';
 import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { AngularfireService, UserInfos } from 'src/app/shared/service/angularfire.service';
@@ -15,7 +16,6 @@ export class TeacherCreateEventModalComponent {
   max_participants!:number;
   room_id!:string;
   description!:string;
-  @Inject('dayjs') private readonly dayjs: any;
 
   isValid = new BehaviorSubject<Boolean>(true);
   collisionEvents!:DocumentData[]|undefined;
@@ -35,13 +35,11 @@ export class TeacherCreateEventModalComponent {
   }
 
   async updateTime($event:any){
-    this.collisionEvents = await firstValueFrom(this._db.getCalendarEntryByTime(this.dayjs($event.detail.value)));
+    this.collisionEvents = await firstValueFrom(this._db.getCalendarEntryByTime(dayjs($event.detail.value)));
     if(this.collisionEvents){
-      console.log("events found ",this.collisionEvents);
       this.collisionIndex = this.collisionEvents.findIndex(e => e['room_id'] == this.room_id);
       this.isValid.next(this.collisionIndex == -1)
     }else{
-      console.log("empty");
       this.isValid.next(true);
     }
     this.time = $event.detail.value;
