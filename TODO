@@ -8,12 +8,13 @@ Questions
     request email validation ? for users/teachers
     prevent with email when course is canceled ?
 
+URGENT
+TODO See why user Kiki has no status
+
 Features
-TODO Admin page : add search tool
-TODO Admin page : load teachers names
 TODO Admin page : actions allowed (IMPORTANT)
 TODO request admin approval for teachers (on users list of admin, put badge for waiting approval users)
-TODO Announce to user that he has been banned
+TODO Announce/show to user that he has been banned
 TODO change selected day color
 TODO Teachers can create recurrent courses (every week)
 TODO Teachers can Mark a course as canceled / Mail sent to all participants
@@ -23,13 +24,15 @@ TODO Multilingual system (Complex)
 TODO Admins can see each course a user is attending to
 TODO Admin : group users by teacher/student (or different colors)
 TODO Admin : color banned users
+DONE Admin page : add search tool
+DONE Admin page : load teachers names
 
 Technical
 TODO test teacher/student account creation
 TODO teachers can mark their past students as "absent"
 TODO students can see their banning date (start and end)
 TODO Use Angular Forms to validate modals
-TODO prevent modifying past courses for teachers/students
+TODO prevent modifying past courses for teachers/students (mark student as absent)
 TODO Impossible to subscribe to past dates
 
 Cosmetics
