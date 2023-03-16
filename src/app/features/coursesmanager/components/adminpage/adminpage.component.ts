@@ -27,9 +27,9 @@ export class AdminpageComponent {
   statusToFilter = "all";
   timeFilter = "all";
   
-  search = new BehaviorSubject("" as any);
-  filterUsersActivated = new BehaviorSubject("all" as any);
-  filterCoursesActivated = new BehaviorSubject("all" as any);
+  search = new BehaviorSubject("");
+  filterUsersActivated = new BehaviorSubject("all");
+  filterCoursesActivated = new BehaviorSubject("all");
 
   filteredDataObs = combineLatest([
     this.search.asObservable(),
