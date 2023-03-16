@@ -8,6 +8,7 @@ Questions
     request email validation ? for users/teachers
     prevent with email when course is canceled ?
     Rooms have a name/address instead of number ? Admins can add/remove rooms ?
+    Do you want admins to be able to change the 3 missed courses limit ? 
 
 URGENT
 TODO See why user Kiki has no status
@@ -20,11 +21,12 @@ TODO change selected day color
 TODO Teachers can create recurrent courses (every week)
 TODO Teachers can Mark a course as canceled / Mail sent to all participants
     https://firebase.google.com/docs/extensions/official/firestore-send-email?hl=fr
-TODO search bar for events / filter by course type (do we need to restrain courses type ?)
+TODO filter by course type (do we need to restrain courses type ?)
 TODO Multilingual system (Complex)
-TODO Admins can see each course a user is attending to
-TODO Admin : group users by teacher/student (or different colors)
-TODO Admin : color banned users
+DONE search bar for events
+USELESS Admins can see each course a user is attending to
+USELESS Admin : group users by teacher/student (or different colors)
+USELESS Admin : color banned users
 DONE Admin page : add search tool
 DONE Admin page : load teachers names
 
@@ -34,7 +36,8 @@ TODO test teacher/student account creation
 TODO teachers can mark their past students as "absent"
 TODO students can see their banning date (start and end)
 TODO Use Angular Forms to validate modals
-TODO prevent modifying past courses for teachers/students (mark student as absent)
+TODO teacher : mark student as absent in past courses
+DONE prevent modifying past courses for teachers/students 
 DONE Impossible to subscribe to past dates
 DONE Faster search using combinelatest
 
