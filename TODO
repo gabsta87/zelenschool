@@ -35,7 +35,7 @@ TODO teachers can mark their past students as "absent"
 TODO students can see their banning date (start and end)
 TODO Use Angular Forms to validate modals
 TODO prevent modifying past courses for teachers/students (mark student as absent)
-TODO Impossible to subscribe to past dates
+DONE Impossible to subscribe to past dates
 DONE Faster search using combinelatest
 
 Cosmetics

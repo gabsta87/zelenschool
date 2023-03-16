@@ -3,7 +3,7 @@ import { ModalController } from '@ionic/angular';
 import * as dayjs from 'dayjs';
 import { DocumentData } from 'firebase/firestore';
 import { firstValueFrom, Observable } from 'rxjs';
-import { AngularfireService, UserInfos } from 'src/app/shared/service/angularfire.service';
+import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 
 
@@ -15,13 +15,9 @@ import { UsermanagementService } from 'src/app/shared/service/usermanagement.ser
 export class StudentModalComponent {
   meta!:any;
   dataObs!:Observable<DocumentData|undefined>;
+
   title!:string;
   creator!:DocumentData|undefined;
-  date!:string;
-  description!:string;
-  
-  participants!:number;
-  max_participants!:number;
 
   isAttending!:boolean;
   isCourseFull!:boolean;
@@ -35,17 +31,24 @@ export class StudentModalComponent {
     let courseActualValues = await firstValueFrom(this.dataObs);
 
     if(courseActualValues){
-      this.isAttending = courseActualValues['attendantsId'].includes(this._user.getId());
-  
-      this.isCourseFull = courseActualValues['attendantsId'].length >= courseActualValues['max_participants'];
 
-      this.isSubscribtionBlocked = (this.isCourseFull && !this.isAttending) || !this._user.isLogged.value || this._user.isBanned();
-      
       this.creator = await this._db.getUser(courseActualValues['author']);
 
-      this.participants = courseActualValues['attendantsId'].length;
-      this.max_participants = courseActualValues['max_participants'];
-      this.description =  courseActualValues['description'];
+      this.isAttending = courseActualValues['attendantsId'].includes(this._user.getId());
+      this.isCourseFull = courseActualValues['attendantsId'].length >= courseActualValues['max_participants'];
+
+      this.isSubscribtionBlocked = 
+        // The course is full
+        (this.isCourseFull && !this.isAttending) || 
+        
+        // User is not logged
+        !this._user.isLogged.value || 
+
+        // User is banned
+        this._user.isBanned() ||
+
+        // Date is already passed
+        dayjs(courseActualValues['eventDate']).isBefore(new Date()) ;
     }
   }
 

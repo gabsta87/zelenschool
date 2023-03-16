@@ -16,10 +16,10 @@
         <ion-text>Room : {{meta.room_id}}</ion-text>
     </ion-item>
     <ion-item>
-        <ion-text>Description : {{description}}</ion-text>
+        <ion-text>Description : {{currentEvent['description']}}</ion-text>
     </ion-item>
     <ion-item>
-        <ion-text>Participants : {{participants}}/{{max_participants}}</ion-text>
+        <ion-text>Participants : {{currentEvent['attendantsId'].length}}/{{currentEvent['max_participants']}}</ion-text>
     </ion-item>
     <ion-item lines="none">
         <ion-checkbox slot="start" [(ngModel)]="isAttending" [disabled]="isSubscribtionBlocked"></ion-checkbox>
