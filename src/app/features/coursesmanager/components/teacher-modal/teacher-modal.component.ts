@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import * as dayjs from 'dayjs';
 import { DocumentData } from 'firebase/firestore';
-import { BehaviorSubject, combineLatest, firstValueFrom, map, Observable, switchMap } from 'rxjs';
-import { AngularfireService, UserInfos } from 'src/app/shared/service/angularfire.service';
+import { BehaviorSubject, firstValueFrom, map, Observable, switchMap } from 'rxjs';
+import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 
 @Component({
@@ -18,8 +18,8 @@ export class TeacherModalComponent{
   time!:string;
   max_participants!:number;
   meta!:any;
-  creatorName!:string;
-  description!:string;
+  creatorName:string = "";
+  description:string = "";
 
   presentingElement = undefined;
   dataObs!:Observable<DocumentData|undefined>;
@@ -53,22 +53,12 @@ export class TeacherModalComponent{
         // Replace IDs by users 
         entry.attendantsId.forEach((usr:string,index:number) =>{
           entry.attendantsId[index] = usersInfos.find((e:any) => e.id == usr);
+          
+          // Determining if the user was absent from this course
+          entry.attendantsId[index].isAbsent = entry.attendantsId[index].missedCourses != undefined && entry.attendantsId[index].missedCourses.includes(this.meta.id)
         })
+
         return entry;
-
-        // const observables = entry.attendantsId.map((id:string) => {
-        //   return this._db.getUserObs(id);
-        // });
-
-        // return combineLatest(observables).pipe(
-        //   map((users:any) => {
-        //     entry.attendantsId.forEach((id:string, i:number) => {
-        //       entry.attendantsId[i] = users[i];
-        //     });
-        //     return entry;
-        //   })
-        // );
-
       })
     );
 
@@ -140,7 +130,8 @@ export class TeacherModalComponent{
   }
 
   confirm(){
-    let entry = {id:this.id,title:this.title,eventDate:this.time,room_id:this.room_id,max_participants:this.max_participants,description:this.description}
+    let entry = {id:this.id,title:this.title,eventDate:this.time,room_id:this.room_id,max_participants:this.max_participants,description:this.description?this.description:""}
+    
     this._db.updateCalendarEntry(entry);
     return this.modalCtrl.dismiss(null, 'confirm');
   }

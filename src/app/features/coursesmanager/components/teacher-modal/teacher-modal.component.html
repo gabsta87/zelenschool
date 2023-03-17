@@ -60,7 +60,7 @@
                         <ion-col *ngIf="isPassedEvent">
                             <ion-item lines="none">
                                 <ion-label>Absent</ion-label>
-                                <ion-toggle slot="end" (ionChange)="setStudentAbsent($event,stud.id)"></ion-toggle>
+                                <ion-toggle slot="end" [checked]="stud.isAbsent" (ionChange)="setStudentAbsent($event,stud.id)"></ion-toggle>
                             </ion-item>
                         </ion-col>
                     </ion-row>

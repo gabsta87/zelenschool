@@ -11,7 +11,7 @@ Questions
     Do you want admins to be able to change the 3 missed courses limit ? 
 
 URGENT
-TODO See why user Kiki has no status
+DONE See why user Kiki has no status
 
 Features
 TODO Admin page : actions allowed (IMPORTANT)
@@ -31,6 +31,9 @@ USELESS Admin : group users by teacher/student (or different colors)
 USELESS Admin : color banned users
 DONE Admin page : add search tool
 DONE Admin page : load teachers names
+TODO : admins can upload gallery images
+TODO : admins can manage association members
+DONE : Uploading images to cloud
 
 Technical
 TODO Create service to manage course (modal creation) that can be launched from both schedule and admin page
