@@ -34,6 +34,13 @@ export class AngularfireService{
       author:this._auth.currentUser.uid,
     });
   }
+
+  createImageEntry(newImage:any){
+    return addDoc(collection(this._dbaccess,"images"),{
+      ...newImage,
+      uploadedBy:this._auth.currentUser?.uid
+    })
+  }
   
   updateCalendarEntry(newEntry: any) {
     if(!this._auth.currentUser?.uid){

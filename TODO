@@ -16,6 +16,8 @@ TODO See why user Kiki has no status
 Features
 TODO Admin page : actions allowed (IMPORTANT)
 TODO request admin approval for teachers (on users list of admin, put badge for waiting approval users)
+TODO admins can manage assoc members/upload image files
+    https://blog.angular-university.io/angular-file-upload/
 TODO Announce/show to user that he has been banned
 TODO change selected day color
 TODO Teachers can create recurrent courses (every week)

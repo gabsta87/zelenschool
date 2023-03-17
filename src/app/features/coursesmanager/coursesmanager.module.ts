@@ -20,6 +20,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
+import { StorageService } from 'src/app/shared/service/storage.service';
 import { ProjectspageComponent } from './components/projectspage/projectspage.component';
 import { AdminpageComponent } from './components/adminpage/adminpage.component';
 import { AdminpageGuard } from './guards/adminpage.guard';
@@ -39,7 +40,7 @@ import { TeacherCreateEventModalComponent } from './components/teacher-create-ev
 import * as dayjs from 'dayjs';
 import { ChoiceModalComponent } from './components/choice-modal/choice-modal.component';
 import { BanmodalComponent } from './components/banmodal/banmodal.component';
-
+import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { BanmodalComponent } from './components/banmodal/banmodal.component';
     SchedulepageComponent,
     ContactpageComponent,
     DonatepageComponent,
+    ImageUploadComponent,
     EditnewsComponent,
     ProjectspageComponent,
     AdminpageComponent,
@@ -67,7 +69,7 @@ import { BanmodalComponent } from './components/banmodal/banmodal.component';
     TeacherModalComponent,
     TeacherCreateEventModalComponent,
     ChoiceModalComponent,
-    BanmodalComponent
+    BanmodalComponent,
   ],
   imports: [
     SwiperModule,
@@ -142,6 +144,9 @@ import { BanmodalComponent } from './components/banmodal/banmodal.component';
             userData:UserpageResolver
           }
         },{
+          path:"imageUpload",
+          component:ImageUploadComponent,
+        },{
           path:"admin",
           component:AdminpageComponent,
           canActivate:[AdminpageGuard],
@@ -161,6 +166,7 @@ import { BanmodalComponent } from './components/banmodal/banmodal.component';
   ],
   providers:[
     { provide:"MyDatabaseService", useClass:AngularfireService },
+    { provide:"MyStorageService", useClass:StorageService },
     { provide: 'dayjs', useValue: dayjs }
   ]
 })

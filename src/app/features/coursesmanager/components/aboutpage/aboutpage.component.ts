@@ -79,17 +79,17 @@ export class AboutpageComponent {
     {
       name:"Inna Ivanisenko",
       photo:"Inna_I.jpeg",
-      role:"Project manager",
+      role:"Member",
     },
     {
       name:"Ninel Omelianenko ",
       photo:"Ninel.jpeg",
-      role:"Project manager",
+      role:"Member",
     },
     {
       name:"Natalia Korogod",
       photo:"Natalia.png",
-      role:"Project manager",
+      role:"Member",
     },
   ]
 

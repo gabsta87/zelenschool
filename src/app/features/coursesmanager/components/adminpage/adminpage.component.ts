@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DocumentData } from '@angular/fire/firestore';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import * as dayjs from 'dayjs';
 import { BehaviorSubject, combineLatest, filter, map, Observable } from 'rxjs';
@@ -16,6 +16,7 @@ export class AdminpageComponent {
   constructor(
     private readonly _db:AngularfireService,
     private readonly _route: ActivatedRoute,
+    private readonly _router: Router,
     private readonly _modal: ModalController,
   ) {}
 
@@ -116,7 +117,16 @@ export class AdminpageComponent {
   }
 
   addPartner(){
-    // TODO 
-    console.log("TODO");
+    this._router.navigate(['/imageUpload/']);
+
+  }
+
+  addMember(){
+    this._router.navigate(['/imageUpload/']);
+  }
+
+  addPhotoToGallery(){
+    this._router.navigate(['/imageUpload/']);
+
   }
 }
