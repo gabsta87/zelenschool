@@ -41,6 +41,7 @@ import * as dayjs from 'dayjs';
 import { ChoiceModalComponent } from './components/choice-modal/choice-modal.component';
 import { BanmodalComponent } from './components/banmodal/banmodal.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { ImageUploadComponent } from './components/image-upload/image-upload.com
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     IonicModule,
     FlatpickrModule.forRoot(),
     CalendarModule.forRoot({

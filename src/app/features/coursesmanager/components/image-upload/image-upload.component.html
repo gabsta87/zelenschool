@@ -1,9 +1,15 @@
 <ion-content>
 <form (ngSubmit)="saveImage()" #imageForm="ngForm">
-    <ion-item>
-    <ion-label position="stacked">Select Image</ion-label>
-    <input type="file" (change)="onFileSelected($event)" accept="*" required>
-    </ion-item>
+    <!-- <ion-item> -->
+    <!-- <ion-label position="stacked">Select Image</ion-label> -->
+    <input type="file" (change)="onFileSelected($event)" accept="*" required style="display: none;" #fileUpload>
+    <ion-grid>
+        <ion-row>
+            <ion-button (click)="fileUpload.click()">Select Image...</ion-button>
+            <ion-input *ngIf="imageFile" [disabled]="true">{{imageFile.name}}</ion-input>
+        </ion-row>
+    </ion-grid>
+    <!-- </ion-item> -->
 
     <ion-item>
     <ion-label position="stacked">Name</ion-label>
@@ -30,6 +36,7 @@
 
     <!-- <ion-button expand="block" type="submit" [disabled]="!imageForm.valid || !croppedImage || uploading">Save Image</ion-button> -->
     <ion-button expand="block" type="submit" [disabled]="!imageForm.valid || uploading">Save Image</ion-button>
+    <ion-button expand="block" (click)="saveImageOnServer()" [disabled]="!imageForm.valid || uploading">Save Image on server</ion-button>
 </form>
 </ion-content>
   

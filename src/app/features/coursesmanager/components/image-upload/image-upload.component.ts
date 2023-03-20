@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { StorageService } from 'src/app/shared/service/storage.service';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -15,28 +16,10 @@ export class ImageUploadComponent {
   downloadURL!: Observable<string>;
   uploading = false;
 
-  constructor(private storage: StorageService, private _db: AngularfireService) { }
+  private readonly _apiUrl = 'http://localhost:3000/assets/';
 
-  // onUpload() {
-  //   const file = this.selectedFile;
-  //   const filePath = `images/${file.name}`;
 
-  //   const fileRef = this.storage.ref(filePath);
-  //   const task = this.storage.upload(filePath, file);
-
-  //   task.snapshotChanges().pipe(
-  //     finalize(() => {
-  //       this.downloadURL = fileRef.getDownloadURL();
-  //       this.downloadURL.subscribe(url => {
-  //         this._db.createImageEntry({
-  //           name: file.name,
-  //           function: '',
-  //           url: url
-  //         })
-  //       });
-  //     })
-  //   ).subscribe();
-  // }
+  constructor(private storage: StorageService, private _db: AngularfireService,private readonly _http: HttpClient) { }
 
   imageFile!: File;
   croppedImage: any = '';
@@ -52,25 +35,27 @@ export class ImageUploadComponent {
     this.croppedImage = event.base64;
   }
 
-  // saveImage(): void {
-  //   const filePath = `${this.imageFile.name}`;
-  //   const fileRef = this.storage.ref(filePath);
-  //   const uploadTask = this.storage.upload(filePath, this.imageFile);
+  saveImageOnServer() {
+    const formData = new FormData();
+    formData.append('file', this.imageFile, this.imageFile.name);
 
-  //   uploadTask.snapshotChanges().pipe(
-  //     finalize(() => {
-  //       fileRef.getDownloadURL().subscribe((downloadUrl:any) => {
-  //         const data = {
-  //           name: this.imageName,
-  //           function: this.imageFunction,
-  //           imageUrl: downloadUrl
-  //         };
+    console.log("saving on server");
+    console.log("data : ",formData);
+    
+    
+    const data = {
+      name: this.imageName,
+      function: this.imageFunction
+    };
 
-  //         this._db.createImageEntry(data);
-  //       });
-  //     })
-  //   ).subscribe();
-  // }
+   formData.append('data', JSON.stringify(data));
+
+    this.uploading = true;
+    const result = this._http.post(this._apiUrl, formData);
+    console.log("result : ",firstValueFrom(result));
+    this.uploading = false;
+    return result;
+  }
 
   async saveImage() {
     const filePath = `${this.imageFile.name}`;
