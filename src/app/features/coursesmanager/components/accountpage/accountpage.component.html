@@ -2,8 +2,6 @@
     <div class="accountItems">
         <ion-list>
             <form [formGroup]="profileForm" (ngSubmit)="update()" >
-        <!-- <ion-list *ngIf="userObs | async as user">
-                <ion-text>{{user | json}}</ion-text> -->
                 <ion-item>
                     <ion-label>Email :</ion-label>
                     <ion-input formControlName="email" placeholder="name@domain.com" type="email"></ion-input>
