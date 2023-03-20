@@ -37,7 +37,7 @@
 
     <ion-list lines="none">
         <ion-item *ngFor="let usr of filteredData[0];">
-            <ion-accordion-group>
+            <ion-accordion-group [multiple]="true">
                 <ion-accordion [value]="usr['l_name']">
                     <ion-item slot="header" color="light">
                       <ion-label>{{usr['l_name']}} {{usr['f_name']}}</ion-label>
@@ -76,7 +76,7 @@
 
     <ion-list lines="none">
         <ion-item *ngFor="let course of filteredData[1]">
-            <ion-accordion-group>
+            <ion-accordion-group [multiple]="true">
                 <ion-accordion [value]="course['title']">
                     <ion-item slot="header" color="light">
                       <ion-label>{{course['title']}} {{course['eventDate']| date: "HH:mm d MMM, yy"}} {{course['author'].l_name}} {{course['author'].f_name}}</ion-label>
