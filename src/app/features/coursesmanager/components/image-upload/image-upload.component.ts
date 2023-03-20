@@ -48,7 +48,7 @@ export class ImageUploadComponent {
       function: this.imageFunction
     };
 
-   formData.append('data', JSON.stringify(data));
+  //  formData.append('data', JSON.stringify(data));
 
     this.uploading = true;
     const result = this._http.post(this._apiUrl, formData);

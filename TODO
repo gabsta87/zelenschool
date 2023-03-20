@@ -11,7 +11,7 @@ Questions
     Do you want admins to be able to change the 3 missed courses limit ? 
 
 URGENT
-DONE See why user Kiki has no status
+DONE See why some users have no status
 
 Features
 TODO Admin page : actions allowed (IMPORTANT)
@@ -38,15 +38,15 @@ DONE : Uploading images to cloud
 Technical
 TODO Create service to manage course (modal creation) that can be launched from both schedule and admin page
 TODO test teacher/student account creation
-TODO teachers can mark their past students as "absent"
 TODO students can see their banning date (start and end)
 TODO Use Angular Forms to validate modals
-TODO teacher : mark student as absent in past courses
+DONE teacher : mark student as absent in past courses
 DONE prevent modifying past courses for teachers/students 
 DONE Impossible to subscribe to past dates
 DONE Faster search using combinelatest
 
 Cosmetics
+TODO fix all account pages on same style
 TODO Schedule : add search tool
 TODO Schedule : sort table by date
 TODO Schedule : Correct popover infos (add hour)
@@ -60,6 +60,8 @@ TODO show titles in each day
     https://mattlewis92.github.io/angular-calendar/#/custom-templates
 DONE admin page : better display for courses
 
+File Transfer on Angular
+    https://blog.angular-university.io/angular-file-upload/
 
 Refactoring
 TODO create Doc

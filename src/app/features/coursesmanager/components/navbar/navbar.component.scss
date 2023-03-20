@@ -1,9 +1,15 @@
 ion-tab-button{
-    --color:rgb(56, 52, 255);
+    --color : var(--ion-color-primary);
+    // --color-selected : var(--ion-color-primary-shade);
+
+
+    // --color:rgb(56, 52, 255);
     --color-selected:rgb(147, 146, 211);
 }
 
 ion-tab-bar{
+    // --background: var(--ion-color-primary);
+
     --background:white;
     margin-bottom: 20px;
 }

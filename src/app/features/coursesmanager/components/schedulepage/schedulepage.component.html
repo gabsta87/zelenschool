@@ -6,7 +6,6 @@
             <ion-col>
                 <ion-buttons class="ion-justify-content-center">
                 <ion-button
-                    fill="solid"
                     class="btn btn-primary"
                     mwlCalendarPreviousView
                     [view]="view"
@@ -16,7 +15,6 @@
                     Previous
                 </ion-button>
                 <ion-button
-                    fill="solid"
                     class="btn btn-outline-secondary"
                     mwlCalendarToday
                     [(viewDate)]="viewDate"
@@ -24,7 +22,6 @@
                     Today
                 </ion-button>
                 <ion-button
-                    fill="solid"
                     class="btn btn-primary"
                     mwlCalendarNextView
                     [view]="view"
@@ -40,9 +37,9 @@
             </ion-col>
             <ion-col>
                 <ion-buttons class="ion-justify-content-center">
-                    <ion-button fill="solid" (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">Month</ion-button>
-                    <ion-button fill="solid" (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">Week</ion-button>
-                    <ion-button fill="solid" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">Day</ion-button>
+                    <ion-button (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">Month</ion-button>
+                    <ion-button (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">Week</ion-button>
+                    <ion-button (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">Day</ion-button>
                 </ion-buttons>
             </ion-col>
         </ion-row>
@@ -93,7 +90,8 @@
         </ion-col>
         <ion-col *ngIf="(isTeacher|async) || (isAdmin|async)">
             <ion-buttons class="ion-justify-content-center">
-                <ion-button id="open-modal" fill="solid" (click)="createEvent()">Create course</ion-button>
+                <!-- <ion-button id="open-modal" (click)="createEvent()">Create course</ion-button> -->
+                <ion-button id="open-modal" fill="solid" style="color:white;" (click)="createEvent()">Create course</ion-button>
             </ion-buttons>
         </ion-col>
     </ion-row>
