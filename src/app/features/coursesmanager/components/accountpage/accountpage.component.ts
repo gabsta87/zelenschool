@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
-import { bdValidator, emailValidator,permitValidator,phoneValidator,passwordValidator } from 'src/app/shared/service/validators-lib.service';
+import { bdValidator, emailValidator,permitValidator,phoneValidator } from 'src/app/shared/service/validators-lib.service';
 
 @Component({
   selector: 'app-accountpage',

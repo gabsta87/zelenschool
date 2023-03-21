@@ -1,9 +1,9 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import * as dayjs from 'dayjs';
 import { DocumentData } from 'firebase/firestore';
-import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
-import { AngularfireService, UserInfos } from 'src/app/shared/service/angularfire.service';
+import { BehaviorSubject, firstValueFrom } from 'rxjs';
+import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 
 @Component({
   selector: 'app-teacher-create-event-modal',
@@ -17,7 +17,7 @@ export class TeacherCreateEventModalComponent {
   room_id!:string;
   description!:string;
 
-  isValid = new BehaviorSubject<Boolean>(true);
+  isValid = new BehaviorSubject<Boolean>(false);
   collisionEvents!:DocumentData[]|undefined;
   collisionIndex !: number;
 
@@ -29,7 +29,7 @@ export class TeacherCreateEventModalComponent {
 
   confirm(){
     let entry = {title:this.title,eventDate:this.time,room_id:this.room_id,max_participants:this.max_participants,description:this.description}
-    
+
     this._db.createCalendarEntry(entry);
     return this.modalCtrl.dismiss(null, 'confirm');
   }
@@ -48,6 +48,7 @@ export class TeacherCreateEventModalComponent {
   updateRoom($event:any){
     // If there are no events at the same time, no validation required
     if(!this.collisionEvents){
+      this.isValid.next(this.room_id != undefined)
       return
     }
     

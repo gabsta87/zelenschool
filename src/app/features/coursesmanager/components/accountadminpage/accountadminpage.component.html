@@ -42,7 +42,7 @@
 
         <div class="accountItems">
             <ion-button (click)="cancel()">Reload</ion-button>
-            <ion-button (click)="update()">Update</ion-button>
+            <ion-button (click)="update()" [disabled]="!profileForm.valid">Update</ion-button>
         </div>
         <div class="accountItems">
             <ion-button (click)="logout()">Logout</ion-button>

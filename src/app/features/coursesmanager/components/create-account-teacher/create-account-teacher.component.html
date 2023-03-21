@@ -17,7 +17,8 @@
                     <ion-input formControlName="password2" type="password"></ion-input>
                 </ion-item>
                 <ion-item *ngIf="profileForm.get('passData')?.invalid">
-                    <label  [ngClass] = "'error'"> Password error</label>
+                    <!-- <label  [ngClass] = "'error'"> Password error</label> -->
+                    <!-- <label  [ngClass] = "'error'"> Password error : {{profileForm.get('passData')?.getError()}}</label> -->
                 </ion-item>
                 </div>
 

@@ -1,12 +1,13 @@
 <ion-content class="ion-padding" (keydown.enter)="confirm()">
+    <form (ngSubmit)="confirm()" #evtCreation="ngForm">
     <ion-item>
         <ion-label position="stacked">Enter title</ion-label>
-        <ion-input type="text" placeholder="Course title" [(ngModel)]="title"></ion-input>
+        <ion-input type="text" placeholder="Course title" name="title" [(ngModel)]="title"></ion-input>
     </ion-item>
 
     <ion-item>
         <ion-label>Room :</ion-label>
-        <ion-select interface="popover" placeholder="Select room" [(ngModel)]="room_id" (ionChange)="updateRoom($event)">
+        <ion-select interface="popover" placeholder="Select room" name="room_id" required [(ngModel)]="room_id" (ionChange)="updateRoom($event)">
             <ion-select-option value="1">1</ion-select-option>
             <ion-select-option value="2">2</ion-select-option>
             <ion-select-option value="3">3</ion-select-option>
@@ -24,12 +25,12 @@
 
     <ion-item>
         <ion-label>Max participants</ion-label>
-        <ion-input type="number" placeholder="00" [(ngModel)]="max_participants"></ion-input>
+        <ion-input type="number" placeholder="00" name="max_participants" required [(ngModel)]="max_participants"></ion-input>
     </ion-item>
 
     <ion-item>
         <ion-label>Description</ion-label>
-        <ion-input [(ngModel)]="description"> </ion-input>
+        <ion-input [(ngModel)]="description" required name="descr"> </ion-input>
     </ion-item>
 
     <div *ngIf="collisionEvents">
@@ -49,8 +50,9 @@
             </ion-item>
         </ion-list>
     </div>
-    
+    </form>
 </ion-content>
+
 
 <ion-footer>
     <ion-toolbar>
@@ -58,7 +60,10 @@
         <ion-button (click)="cancel()">Cancel</ion-button>
         </ion-buttons>
         <ion-buttons slot="end">
-        <ion-button (click)="confirm()" [strong]="true" [disabled]="!isValid.value">Confirm</ion-button>
+        <!-- <ion-button (click)="confirm()" [strong]="true" [disabled]="!isValid.value">Confirm</ion-button> -->
+        <!-- <ion-button (click)="confirm()" [strong]="true" type="submit" [disabled]="!isValid.value && !evtCreation.valid">Confirm</ion-button> -->
+        <ion-button (click)="confirm()" [strong]="true" [disabled]="!isValid.value || !evtCreation.valid">Confirm</ion-button>
+        <!-- <ion-button (click)="evtCreation.ngSubmit.emit()" [strong]="true" [disabled]="!isValid.value && !evtCreation.valid">Confirm</ion-button> -->
         </ion-buttons>
     </ion-toolbar>
 </ion-footer>
