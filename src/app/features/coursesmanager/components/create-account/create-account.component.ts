@@ -75,7 +75,6 @@ export class CreateAccountComponent {
       .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
-        // ...
         
         this._db.createUser(user);
 

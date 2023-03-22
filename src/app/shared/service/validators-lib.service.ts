@@ -27,7 +27,6 @@ export function passwordValidator(): ValidatorFn {
     let first = c.get("password")?.value;
     let second = c.get("password2")?.value;
 
-    // TODO add password constraints
     if(first.length < 6)
       return {'passwordTooShort':true}
 
