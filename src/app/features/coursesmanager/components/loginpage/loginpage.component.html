@@ -26,6 +26,9 @@
                     <ion-spinner></ion-spinner>
                 </ion-col>
             </ion-row>
+            <ion-row *ngIf="error">
+                <ion-text color="danger">{{error}}</ion-text>
+            </ion-row>
         </ion-grid>
     </div>
 
@@ -55,7 +58,7 @@
         </ion-row>
         <ion-row>
             <ion-col>
-                <ion-button>Login with Facebook</ion-button>
+                <ion-button (click)="loginWithFB()">Login with Facebook</ion-button>
             </ion-col>
         </ion-row>
     </ion-grid>
