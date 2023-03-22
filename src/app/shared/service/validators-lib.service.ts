@@ -64,7 +64,7 @@ export function emailValidator(): ValidatorFn {
 export function bdValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
 
-    let expression = RegExp("^(\\d{1,2}[\\.\\/]){2}(\\d{2}|\\d{4})$");
+    const expression = RegExp("^(([1-9]|[12][0-9]|3[01]))[\\/\\.\\-](0?[1-9]|[10-12])[\\/\\.\\-](19|20)?\\d{2}$");
 
     if (!expression.test(control.value))
       return { 'invalidDate': true };
