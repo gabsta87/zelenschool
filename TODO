@@ -35,6 +35,7 @@ TODO : admins can manage association members
 DONE : Uploading images to cloud
 
 Technical
+TODO fix CORS problem to upload files on server
 TODO Create service to manage course (modal creation) that can be launched from both schedule and admin page
 TODO test teacher/student account creation
 TODO students can see their banning date (start and end) / Announce/show to user that he has been banned
@@ -45,6 +46,7 @@ DONE Impossible to subscribe to past dates
 DONE Faster search using combinelatest
 
 Cosmetics
+TODO Better errors management for forms
 TODO fix all account pages on same style
 TODO Schedule : add search tool
 TODO Schedule : sort table by date
