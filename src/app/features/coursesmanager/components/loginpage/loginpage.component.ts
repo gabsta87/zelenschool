@@ -15,6 +15,11 @@ export class LoginpageComponent {
   email:string = "";
   password:string = "";
   error:string = "";
+  loading!:boolean;
+
+  provider = new GoogleAuthProvider();
+  auth = getAuth();
+
 
   constructor(
     private readonly _auth: Auth,
@@ -26,8 +31,8 @@ export class LoginpageComponent {
   }
 
   async loginWithGoogle(){
-    const provider = new GoogleAuthProvider();
-    const credential = await signInWithPopup(this._auth,provider);
+    this.loading = true;
+    const credential = await signInWithPopup(this._auth,this.provider);
     const createdUser = await this._dbAccess.createUser(credential.user);
 
     // User is new, and an entry was added to the database
@@ -49,6 +54,7 @@ export class LoginpageComponent {
     }else{
       this._router.navigate(['/about/']);
     }
+    this.loading = false;
     return credential;
   }
 
@@ -57,15 +63,15 @@ export class LoginpageComponent {
       this.error = "Please enter an email"
       return;
     }
-
-    const auth = getAuth();
     
-    const credential = await signInWithEmailAndPassword(auth, this.email, this.password)
+    this.loading = true;
+    const credential = await signInWithEmailAndPassword(this.auth, this.email, this.password)
       .then(async (userCredential) => {
         // Signed in 
         const user = userCredential.user;
         this._dbAccess.createUser(user);
         this._router.navigate(['/schedule/']);
+        this.loading = false;
         return userCredential;
       })
       .catch((error) => {
@@ -73,6 +79,7 @@ export class LoginpageComponent {
         const errorMessage = error.message;
         this.error = error.message;
       });
+      this.loading = false;
     return credential;
   }
 
