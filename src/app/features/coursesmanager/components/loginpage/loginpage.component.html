@@ -1,5 +1,6 @@
 <ion-content>
-<div class="loginPageContainer" (keydown.enter)="loginWithEmail()">
+<div class="loginPageContainer" (keydown.enter)="loginWithEmail()" >
+<form (ngSubmit)="loginWithEmail()" #loginForm="ngForm">
 
     <div class="accountItems loginPageElements">
         <ion-grid>
@@ -8,7 +9,7 @@
                     <ion-label>Email</ion-label>
                 </ion-col>
                 <ion-col>
-                    <ion-input [(ngModel)]="email"></ion-input>
+                    <ion-input [(ngModel)]="email" required name="email"></ion-input>
                 </ion-col>
             </ion-row>
             <ion-row>
@@ -16,7 +17,7 @@
                     <ion-label>Password</ion-label>
                 </ion-col>
                 <ion-col>
-                    <ion-input type="password" [(ngModel)]="password"></ion-input>
+                    <ion-input type="password" [(ngModel)]="password" required name="pwd"></ion-input>
                 </ion-col>
             </ion-row>
             <ion-row *ngIf="loading">
@@ -31,7 +32,7 @@
     <ion-grid class="buttonsGrid">
         <ion-row>
             <ion-col>
-                <ion-button (click)="loginWithEmail()">Login</ion-button>
+                <ion-button (click)="loginWithEmail()" [disabled]="!loginForm.valid">Login</ion-button>
             </ion-col>
             <ion-col>
                 <ion-button [routerLink]="['/create']">Register</ion-button>
@@ -58,5 +59,6 @@
             </ion-col>
         </ion-row>
     </ion-grid>
+</form>
 </div>
 </ion-content>
