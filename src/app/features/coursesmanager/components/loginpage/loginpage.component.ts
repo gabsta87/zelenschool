@@ -42,13 +42,26 @@ export class LoginpageComponent {
 
     if(credential == null)
       return;
+
+    this.completeUserInscription(credential);
     
-    this.error = "";
+    this.loading = false;
+    return credential;
+  }
+
+  private async completeUserInscription(credential:any){
+
+    console.log("credential : ",credential);
+    
     const createdUser = await this._dbAccess.createUser(credential.user);
 
     // User is new, and an entry was added to the database
     if(createdUser != undefined){
-      this._dbAccess.banUser(credential.user.uid,"Waiting for user to complete profile informations");
+      this.error = "";
+      console.log("created user : ",createdUser);
+      console.log("credential : ",credential);
+
+      this._dbAccess.banUser(createdUser.id,"Waiting for user to complete profile informations");
 
       const choiceModal = await this._modalCtrl.create({
         component : ChoiceModalComponent
@@ -65,44 +78,10 @@ export class LoginpageComponent {
     }else{
       this._router.navigate(['/about/']);
     }
-    this.loading = false;
-    return credential;
   }
 
   async loginWithFB() {
-    const url = "https://zelenschool-6981a.firebaseapp.com/__/auth/handler"
-    console.log("starting fb connexion");
-
-    // this.providerFB = new FacebookAuthProvider();
-
-    // this.auth.signOut();
-    // this.auth = getAuth();
-    console.log("auth : ",this.auth);
-    console.log("provider : ",this.providerFB);
-    
-    console.log("current user : ",this.auth.currentUser);
-
-    signInWithPopup(this.auth, this.providerFB)
-    .then((result) => {
-      // The signed-in user info.
-      const user = result.user;
-      
-      console.log("logging in with FB");
-      // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-      const credential = FacebookAuthProvider.credentialFromResult(result);
-
-      console.log("credential : ",credential);
-      
-      let accessToken = undefined;
-      if(credential)
-        accessToken = credential.accessToken;
-
-      console.log("access token : ",accessToken);
-      this.error = "";
-      
-      // IdP data available using getAdditionalUserInfo(result)
-      // ...
-    })
+    const credential = await signInWithPopup(this.auth, this.providerFB)
     .catch((error) => {
       // Handle Errors here.
       const errorCode = error.code;
@@ -110,12 +89,39 @@ export class LoginpageComponent {
       // The email of the user's account used.
       const email = error.customData.email;
       // The AuthCredential type that was used.
-      const credential = FacebookAuthProvider.credentialFromError(error);
+      const credentialError = FacebookAuthProvider.credentialFromError(error);
       console.log("error while logging in with FB",error.message);
+      console.log("credential from error : ",credentialError);
+      
       this.error = error.message;
-
-      // ...
     });
+
+    if(credential == null)
+      return;
+
+    this.completeUserInscription(credential);
+
+    this.error = "";
+    return credential;
+    
+    // .then((result) => {
+    //   // The signed-in user info.
+    //   const user = result.user;
+      
+    //   // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+    //   const credential = FacebookAuthProvider.credentialFromResult(result);
+
+    //   let accessToken = undefined;
+    //   if(credential)
+    //     accessToken = credential.accessToken;
+
+    //   console.log("access token : ",accessToken);
+    //   this.error = "";
+      
+    //   // IdP data available using getAdditionalUserInfo(result)
+    //   // ...
+    // })
+    
   }
 
   async loginWithEmail(){
