@@ -73,10 +73,14 @@ export class LoginpageComponent {
     const url = "https://zelenschool-6981a.firebaseapp.com/__/auth/handler"
     console.log("starting fb connexion");
 
-    this.providerFB = new FacebookAuthProvider();
+    // this.providerFB = new FacebookAuthProvider();
 
     // this.auth.signOut();
-    this.auth = getAuth();
+    // this.auth = getAuth();
+    console.log("auth : ",this.auth);
+    console.log("provider : ",this.providerFB);
+    
+    console.log("current user : ",this.auth.currentUser);
 
     signInWithPopup(this.auth, this.providerFB)
     .then((result) => {

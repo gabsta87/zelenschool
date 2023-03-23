@@ -66,12 +66,12 @@ export class CreateAccountComponent {
 
   register(){
 
-    const auth = getAuth();
     let email = this.profileForm.get('email')?.value;
     let password = this.profileForm.get('passData')?.get("password")?.value;
     
     if(email!=null && password != null){
-    createUserWithEmailAndPassword(auth, email, password)
+      const auth = getAuth();
+      createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
@@ -111,5 +111,10 @@ export class CreateAccountComponent {
       console.log("password : ",password);
       
     }
+  }
+
+  return(){
+    this.errorMessage = "";
+    this._router.navigate(['/login/']);
   }
 }
