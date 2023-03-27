@@ -14,30 +14,18 @@ export class AccountadminpageComponent {
   userData = this._route.snapshot.data['userData'];
   userObs!:Observable<any>;
 
-  profileForm!:FormGroup<any>;
+  profileForm = new FormGroup({
+      email : new FormControl(this.userData.user.email?this.userData.user.email:"",emailValidator()),
+      f_name : new FormControl(this.userData.user.f_name?this.userData.user.f_name:"",Validators.required),
+      l_name : new FormControl(this.userData.user.l_name?this.userData.user.l_name:"",Validators.required),
+      phone : new FormControl(this.userData.user.phone?this.userData.user.phone:"",phoneValidator()),
+    })
 
   constructor(
     private readonly _user:UsermanagementService,
     private readonly _router:Router,
     private readonly _route:ActivatedRoute
-  ){
-    this.loadData()
-  }
-
-  ionViewWillEnter(){
-    this.loadData();
-  }
-
-  loadData(){
-    let myValue = this.userData.user;
-
-    this.profileForm = new FormGroup({
-      email : new FormControl(myValue.email,emailValidator()),
-      f_name : new FormControl(myValue.f_name,Validators.required),
-      l_name : new FormControl(myValue.l_name,Validators.required),
-      phone : new FormControl(myValue.phone,phoneValidator()),
-    })
-  }
+  ){ }
 
   async logout(){
     this._user.logout();

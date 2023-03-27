@@ -87,7 +87,14 @@ export class AngularfireService{
 
   getCalendarEntryByTime(dateToFind:dayjs.Dayjs){
     let temp = this.getCalendarEntries();
-    return temp.pipe(map(datas => datas.filter(e => dayjs(e['eventDate']).isSame(dateToFind))));
+    console.log("date to find : ",dateToFind);
+    
+    return temp.pipe(map(datas => datas.filter(e => {
+      console.log("e eventDate : ",dayjs(e['eventDate']));
+      
+      dayjs(e['eventDate']).isSame(dateToFind)
+    })));
+    // return temp.pipe(map(datas => datas.filter(e => dayjs(e['eventDate']).isSame(dateToFind))));
   }
 
   getUsers(){

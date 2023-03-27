@@ -15,32 +15,20 @@ export class AccountteacherpageComponent {
   userData = this._route.snapshot.data['userData'];
   userObs!:Observable<any>;
 
-  profileForm!:FormGroup<any>;
-
   constructor(
     private readonly _user:UsermanagementService,
     private readonly _router:Router,
     private readonly _route:ActivatedRoute
-  ){
-    this.loadData()
-  }
+  ){ }
 
-  ionViewWillEnter(){
-    this.loadData();
-  }
-
-  loadData(){
-    let myValue = this.userData.user;
-
-    this.profileForm = new FormGroup({
-      email : new FormControl(myValue.email,emailValidator()),
-      f_name : new FormControl(myValue.f_name,Validators.required),
-      l_name : new FormControl(myValue.l_name,Validators.required),
-      phone : new FormControl(myValue.phone,phoneValidator()),
-      experience : new FormControl(myValue.experience),
-      students_age : new FormControl(myValue.students_age)
-    })
-  }
+  profileForm = new FormGroup({
+    email : new FormControl(this.userData.user.email?this.userData.user.email:"",emailValidator()),
+    f_name : new FormControl(this.userData.user.f_name?this.userData.user.f_name:"",Validators.required),
+    l_name : new FormControl(this.userData.user.l_name?this.userData.user.l_name:"",Validators.required),
+    phone : new FormControl(this.userData.user.phone?this.userData.user.phone:"",phoneValidator()),
+    experience : new FormControl(this.userData.user.experience?this.userData.user.experience:""),
+    students_age : new FormControl(this.userData.user.students_age?this.userData.user.students_age:"")
+  })
 
   async logout(){
     this._user.logout();

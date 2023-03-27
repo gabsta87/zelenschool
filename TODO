@@ -1,30 +1,49 @@
 Questions
     Teacher can also be admin ?
+        NO
     Phone numbers : swiss format only ?
+        swiss/ukrainian or whatever
     Are we supposed to add rooms ? Is the number of participant limited according to the teacher's will ? Or by the room's choice ? Or both ?
+        yes
     Courses longer than 1 hour ?
+        yes
     teachers : students age. Is it some course select blocking option ? recommandation ?
+
     request admin action for teachers registration ?
+        yes
     request email validation ? for users/teachers
-    prevent with email when course is canceled ?
+    send email when course is canceled ?
+        https://firebase.google.com/docs/extensions/official/firestore-send-email?hl=fr
     Rooms have a name/address instead of number ? Admins can add/remove rooms ?
+        Rooms in database
     Do you want admins to be able to change the 3 missed courses limit ? 
 
+
+Course creation needs approval
+Popup to confirm registration to a course for students
+Verify if banning doesnt remove from past courses
+Projects -> activities
+gallery -> folders
+
+create courses in the past : prevent it ? 
+
 URGENT
+TODO Collision events not working
 DONE See why some users have no status
 
 Features
 TODO automatic unban after 30 days
+    Yes but only for absence
 TODO Admin page : actions allowed (IMPORTANT)
 TODO request admin approval for teachers (on users list of admin, put badge for waiting approval users)
 TODO admins can manage assoc members/upload image files
     https://blog.angular-university.io/angular-file-upload/
+    https://firebase.google.com/docs/storage/web/list-files?hl=fr&authuser=0
 TODO change selected day color
 TODO Teachers can create recurrent courses (every week)
-TODO Teachers can Mark a course as canceled / Mail sent to all participants
+OPTIONAL Teachers can Mark a course as canceled / Mail sent to all participants
     https://firebase.google.com/docs/extensions/official/firestore-send-email?hl=fr
-TODO filter by course type (do we need to restrain courses type ?)
-TODO Multilingual system (Complex)
+TODO Multilingual system
 DONE search bar for events
 USELESS Admins can see each course a user is attending to
 USELESS Admin : group users by teacher/student (or different colors)
@@ -36,10 +55,14 @@ TODO : admins can manage association members
 DONE : Uploading images to cloud
 
 Technical
+TODO sort by upload date
 TODO fix CORS problem to upload files on server
 TODO Create service to manage course (modal creation) that can be launched from both schedule and admin page
 TODO test teacher/student account creation
 TODO students can see their banning date (start and end) / Announce/show to user that he has been banned
+TODO Secure firebase access
+    https://firebase.blog/posts/2021/01/code-review-security-rules
+    https://firebase.google.com/docs/reference/rules/rules.firestore.Request?hl=fr#auth
 DONE Use Angular Forms to validate modals
 DONE teacher : mark student as absent in past courses
 DONE prevent modifying past courses for teachers/students 

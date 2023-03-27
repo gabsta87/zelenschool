@@ -35,6 +35,8 @@ export class TeacherCreateEventModalComponent {
   }
 
   async updateTime($event:any){
+    console.log("dayjs event : ",dayjs($event.detail.value));
+    
     this.collisionEvents = await firstValueFrom(this._db.getCalendarEntryByTime(dayjs($event.detail.value)));
     if(this.collisionEvents){
       this.collisionIndex = this.collisionEvents.findIndex(e => e['room_id'] == this.room_id);
