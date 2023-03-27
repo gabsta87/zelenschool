@@ -3,6 +3,10 @@
 
     <h1>Manage</h1>
 
+    <ion-button *ngIf="requestsCount|async as count" (click)="filterRequests()">
+        Teachers requests 
+        <ion-badge color="danger" slot="end">{{count}}</ion-badge>
+    </ion-button>
     <ion-button (click)="addPartner()">
         Partners
     </ion-button>
@@ -30,7 +34,7 @@
             <ion-select-option value="student">Students</ion-select-option>
             <ion-select-option value="teacher">Teachers</ion-select-option>
             <ion-select-option value="admin">Admins</ion-select-option>
-            <ion-select-option value="request">Teachers requests</ion-select-option>
+            <ion-select-option value="request">Teachers requests </ion-select-option>
             <ion-select-option value="ban">Banned</ion-select-option>
         </ion-select>
     </ion-item>
@@ -60,6 +64,7 @@
                             <ion-button (click)="unbanUser(usr['id'])">Unban</ion-button>
                         </ng-template>
                         <ion-button (click)="deleteUser(usr['id'])">Delete</ion-button>
+                        <ion-button *ngIf="usr['status']=='request'" (click)="acceptRequest(usr['id'])">Accept teacher</ion-button>
                         </span>
                     </div>
                 </ion-accordion>

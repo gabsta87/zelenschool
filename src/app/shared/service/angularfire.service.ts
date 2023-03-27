@@ -124,6 +124,11 @@ export class AngularfireService{
     deleteDoc(docRef);
   }
 
+  acceptRequest(userId:string){
+    const docRef = doc(this._dbaccess,'users/'+userId);
+    return updateDoc(docRef,{status:"teacher"});
+  }
+
   async unbanUser(userId:string){
     const docRef = doc(this._dbaccess,'users/'+userId);
     return updateDoc(docRef,{ban:null});

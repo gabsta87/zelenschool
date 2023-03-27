@@ -3,7 +3,7 @@ import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import * as dayjs from 'dayjs';
-import { BehaviorSubject, combineLatest, filter, map, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, count, filter, firstValueFrom, map, Observable } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { BanmodalComponent } from '../banmodal/banmodal.component';
 
@@ -27,6 +27,11 @@ export class AdminpageComponent {
   searchString = "";
   statusToFilter = "all";
   timeFilter = "all";
+
+  requestsCount = this.usersListObs.pipe(
+    map(usersList =>usersList.filter((user:any) => user.status == 'request')),
+    map(filteredUsers => filteredUsers.length)
+  )
   
   search = new BehaviorSubject("");
   filterUsersActivated = new BehaviorSubject("all");
@@ -90,6 +95,10 @@ export class AdminpageComponent {
     this.search.next(this.searchString);
   }
 
+  filterRequests(){
+    this.statusToFilter = "request";
+  }
+
   filterUsersList(){
     this.filterUsersActivated.next(this.statusToFilter);
   }
@@ -114,6 +123,10 @@ export class AdminpageComponent {
 
   deleteUser(id:string){
     this._db.removeUser(id);
+  }
+
+  acceptRequest(id:string){
+    this._db.acceptRequest(id);
   }
 
   unbanUser(id:string){

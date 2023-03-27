@@ -69,7 +69,7 @@ export class CreateAccountTeacherComponent {
             l_name : tmpLName,
             email : tmpMail,
             phone : this.profileForm.get('phone')?.value,
-            status : "teacher"
+            status : "request"
           });
           this._router.navigate(['/accountTeacher/']);
         }
