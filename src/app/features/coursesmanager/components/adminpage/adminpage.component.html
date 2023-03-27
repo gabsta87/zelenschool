@@ -54,10 +54,13 @@
                         <p> Banned on : {{usr['ban'].date}} by {{usr['ban'].author.l_name}} {{usr['ban'].author.f_name}}<br>
                         Reason : {{usr['ban'].comment}}</p>
                         </ion-text>
+                        <span>
                         <ion-button *ngIf="usr['ban'] == undefined; else unban" (click)="banUser(usr['id'])">Ban</ion-button>
                         <ng-template #unban>
                             <ion-button (click)="unbanUser(usr['id'])">Unban</ion-button>
                         </ng-template>
+                        <ion-button (click)="deleteUser(usr['id'])">Delete</ion-button>
+                        </span>
                     </div>
                 </ion-accordion>
             </ion-accordion-group>
@@ -87,7 +90,10 @@
                         <p *ngIf="course['description']">Description : {{course['description']}}</p>
                         <ion-list *ngIf="course['attendantsId'].length > 0" class="ion-no-padding">
                             <ion-label>Students</ion-label>
-                            <ion-item *ngFor="let student of course['attendantsId']">{{student['l_name']}} {{student['f_name']}}</ion-item>
+                            <ion-item *ngFor="let student of course['attendantsId']">
+                                <ion-label *ngIf="student; else unknown">{{student['l_name']}} {{student['f_name']}}</ion-label>
+                                <ng-template #unknown><ion-label>Unknown</ion-label></ng-template>
+                            </ion-item>
                         </ion-list>
                     </div>
                 </ion-accordion>

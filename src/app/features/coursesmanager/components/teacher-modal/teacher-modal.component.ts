@@ -52,10 +52,11 @@ export class TeacherModalComponent{
 
         // Replace IDs by users 
         entry.attendantsId.forEach((usr:string,index:number) =>{
-          entry.attendantsId[index] = usersInfos.find((e:any) => e.id == usr);
+          entry.attendantsId[index] = usersInfos.find((e:any) => e && e.id ? e.id == usr : false);
           
           // Determining if the user was absent from this course
-          entry.attendantsId[index].isAbsent = entry.attendantsId[index].missedCourses != undefined && entry.attendantsId[index].missedCourses.includes(this.meta.id)
+          if(entry.attendantsId[index])
+            entry.attendantsId[index].isAbsent = entry.attendantsId[index].missedCourses != undefined && entry.attendantsId[index].missedCourses.includes(this.meta.id)
         })
 
         return entry;

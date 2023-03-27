@@ -65,7 +65,7 @@ export class AdminpageresolveResolver implements Resolve<AdminData> {
 
         // Remplacement des IDs par les données des utilisateurs
         courses.map((course:any) => course.attendantsId = course.attendantsId.map((studentId:string) => 
-          studentId = attendantsInfos.find((e:any) => e.id == studentId)
+          studentId = attendantsInfos.find((e:any) => e && e.id ? e.id == studentId : false)
         ));
 
         return courses;

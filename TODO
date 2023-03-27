@@ -55,6 +55,7 @@ TODO : admins can manage association members
 DONE : Uploading images to cloud
 
 Technical
+TODO banned teacher cannot create courses
 TODO sort by upload date
 TODO fix CORS problem to upload files on server
 TODO Create service to manage course (modal creation) that can be launched from both schedule and admin page

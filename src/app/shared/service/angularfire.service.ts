@@ -91,7 +91,7 @@ export class AngularfireService{
     
     return temp.pipe(map(datas => datas.filter(e => {
       console.log("e eventDate : ",dayjs(e['eventDate']));
-      
+       
       dayjs(e['eventDate']).isSame(dateToFind)
     })));
     // return temp.pipe(map(datas => datas.filter(e => dayjs(e['eventDate']).isSame(dateToFind))));
@@ -116,6 +116,12 @@ export class AngularfireService{
       date: dayjs(new Date()).format('DD.MM.YYYY'),
       comment: message,
     }})
+  }
+
+  removeUser(userId:string){
+    this.removeUserFromCourses(userId);
+    const docRef = doc(this._dbaccess,'users/'+userId);
+    deleteDoc(docRef);
   }
 
   async unbanUser(userId:string){

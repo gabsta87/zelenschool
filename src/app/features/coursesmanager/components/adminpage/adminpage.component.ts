@@ -112,6 +112,10 @@ export class AdminpageComponent {
 
   }
 
+  deleteUser(id:string){
+    this._db.removeUser(id);
+  }
+
   unbanUser(id:string){
     this._db.unbanUser(id);
   }

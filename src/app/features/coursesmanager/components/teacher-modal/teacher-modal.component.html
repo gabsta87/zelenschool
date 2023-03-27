@@ -67,7 +67,15 @@
                     </ion-row>
                 </ion-grid>
             </ng-container>
-            <ng-template #unknown>Unknown</ng-template>
+            <ng-template #unknown>
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>
+                            <ion-item lines="none"><ion-label>Unknown</ion-label></ion-item>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ng-template>
         </div>
     </ion-accordion>
     </ion-accordion-group>
