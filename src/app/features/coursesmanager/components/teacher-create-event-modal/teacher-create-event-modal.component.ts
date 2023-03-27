@@ -19,9 +19,16 @@ export class TeacherCreateEventModalComponent {
 
   isValid = new BehaviorSubject<Boolean>(false);
   collisionEvents!:DocumentData[]|undefined;
+
   collisionIndex !: number;
 
   constructor(private readonly modalCtrl:ModalController,private readonly _db: AngularfireService){ }
+
+  async ionViewDidEnter(){
+    console.log("this time : ",dayjs(this.time).format("DD:MM:YY HH:mm Z"));
+    
+    this.updateTime(this.time);
+  }
 
   cancel(){
     return this.modalCtrl.dismiss(null, 'confirm');
@@ -34,17 +41,22 @@ export class TeacherCreateEventModalComponent {
     return this.modalCtrl.dismiss(null, 'confirm');
   }
 
-  async updateTime($event:any){
-    console.log("dayjs event : ",dayjs($event.detail.value));
+  async updateTime(newTime:any){
+    console.log("dayjs event : ",dayjs(newTime).format("DD:MM:YY HH:mm Z"));
     
-    this.collisionEvents = await firstValueFrom(this._db.getCalendarEntryByTime(dayjs($event.detail.value)));
+    this.collisionEvents = await firstValueFrom(this._db.getCalendarEntryByTime(dayjs(newTime)));
+
     if(this.collisionEvents){
       this.collisionIndex = this.collisionEvents.findIndex(e => e['room_id'] == this.room_id);
       this.isValid.next(this.collisionIndex == -1)
     }else{
       this.isValid.next(true);
     }
-    this.time = $event.detail.value;
+    this.time = newTime;
+  }
+
+  updateTimeFromEvent($event:any){
+    return this.updateTime($event.detail.value);
   }
 
   updateRoom($event:any){

@@ -5,6 +5,7 @@ import { deleteDoc, getDoc, query, updateDoc } from '@firebase/firestore';
 import { firstValueFrom, map, Observable } from 'rxjs';
 import * as dayjs from 'dayjs';
 
+
 @Injectable({
   providedIn:'root'
 })
@@ -12,7 +13,9 @@ export class AngularfireService{
   constructor(
     private readonly _dbaccess:Firestore,
     private readonly _auth:Auth,
-  ) { }
+  ) {
+
+  }
 
   private getElements(name:string,...constraint:QueryConstraint[]){
     const myCollection = collection(this._dbaccess,name);
@@ -87,14 +90,30 @@ export class AngularfireService{
 
   getCalendarEntryByTime(dateToFind:dayjs.Dayjs){
     let temp = this.getCalendarEntries();
-    console.log("date to find : ",dateToFind);
+    console.log("date to find : ",dayjs(dateToFind).format("DD:MM:YY HH:mm Z"));
     
-    return temp.pipe(map(datas => datas.filter(e => {
-      console.log("e eventDate : ",dayjs(e['eventDate']));
-       
-      dayjs(e['eventDate']).isSame(dateToFind)
-    })));
+    return temp.pipe(map(datas => datas.filter(e => 
+      // dayjs(e['eventDate']).isSame(dateToFind)
+      
+      {
+      // console.log("e eventDate : ",dayjs(e['eventDate']).format("DD:MM:YY HH:mm Z"));
+      return dayjs(e['eventDate']).isSame(dateToFind);
+      }
+
+    )));
     // return temp.pipe(map(datas => datas.filter(e => dayjs(e['eventDate']).isSame(dateToFind))));
+  }
+
+  private isColliding(startTime1:string, endTime1:string ,startTime2:string, endTime2:string){
+    // if(dayjs(startTime1).isSameOrBefore
+
+
+    // function dateRangeOverlaps(a_start, a_end, b_start, b_end) {
+    //   if (a_start <= b_start && b_start <= a_end) return true; // b starts in a
+    //   if (a_start <= b_end   && b_end   <= a_end) return true; // b ends in a
+    //   if (b_start <  a_start && a_end   <  b_end) return true; // a in b
+    //   return false;
+    // }
   }
 
   getUsers(){

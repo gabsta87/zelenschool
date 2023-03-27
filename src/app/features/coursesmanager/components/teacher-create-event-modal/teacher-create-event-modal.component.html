@@ -16,7 +16,7 @@
 
     <ion-item>
         <ion-datetime-button datetime="datetime"></ion-datetime-button>
-        <ion-modal [keepContentsMounted]="true" (ionChange)="updateTime($event)">
+        <ion-modal [keepContentsMounted]="true" (ionChange)="updateTimeFromEvent($event)">
             <ng-template>
                 <ion-datetime id="datetime" value="{{time}}"></ion-datetime>
             </ng-template>
@@ -34,6 +34,7 @@
     </ion-item>
 
     <div *ngIf="collisionEvents">
+        <ion-text>{{collisionEvents|json}}</ion-text>
         <ion-label>Courses at the same time : </ion-label>
         <ion-list>
             <ion-item *ngFor="let evt of collisionEvents; let i = index">
