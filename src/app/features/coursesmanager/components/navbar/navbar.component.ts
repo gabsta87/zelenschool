@@ -12,6 +12,7 @@ export class NavbarComponent {
   isAdmin = this._userS.isLoggedAsAdmin;
   isTeacher = this._userS.isLoggedAsTeacher;
   isLogged = this._userS.isLogged;
+  // status = this._userS.status;
 
   navigationItems = [
     {title:"About us",page:"about"},

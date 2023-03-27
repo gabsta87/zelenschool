@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
-import { BehaviorSubject, firstValueFrom, of } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable, of } from 'rxjs';
 import { AngularfireService } from './angularfire.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsermanagementService {
+export class UsermanagementService{
 
   constructor(private readonly _db:AngularfireService, private readonly _auth:Auth) {
     
@@ -36,6 +36,23 @@ export class UsermanagementService {
   isLogged = new BehaviorSubject(false);
   isUserBanned = new BehaviorSubject(false);
   
+  // status = of("visitor");
+  // load(){
+  //   console.log("auth : ",this._auth);
+  //   console.log("currentUser : ",this._auth.currentUser);
+  //   console.log("uid : ",this._auth.currentUser?.uid);
+    
+  //   this.status = this._auth.currentUser?.uid ? 
+  //   this.status = this._db.getUserObs(this._auth?.currentUser?.uid).pipe((e:any)=>{
+  //     console.log("e : ",e);
+      
+  //     return e.status
+  //   }
+  //   )
+  //   : of("visitor");
+  //   console.log("status : ",this.status);
+    
+  // }
 
   getStatus(){
     if(this.userData && this.userData['status'])

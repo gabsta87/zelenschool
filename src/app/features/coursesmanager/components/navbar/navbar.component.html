@@ -5,24 +5,28 @@
             <ion-label>{{item.title}}</ion-label>
         </ion-tab-button>
 
-        <!-- TODO replace with ngswitch -->
-        <ion-tab-button *ngIf="isTeacher|async" tab="accountTeacher">
-            <ion-label> Account </ion-label>
-        </ion-tab-button>
-
-        <ion-tab-button *ngIf="!(isLogged|async)" tab="login">
+        <ion-tab-button *ngIf="!(isLogged|async); else logged" tab="login">
             <ion-label> Login </ion-label>
         </ion-tab-button>
 
-        <ion-tab-button *ngIf="(isLogged|async) && !(isAdmin|async) && !(isTeacher|async)" tab="account">
-            <ion-label> Account </ion-label>
-        </ion-tab-button>
-
-        <ion-tab-button *ngIf="isAdmin|async" tab="accountAdmin">
-            <ion-label> Account </ion-label>
-        </ion-tab-button>
-        <ion-tab-button *ngIf="isAdmin|async" tab="admin">
-            <ion-label> Administration </ion-label>
-        </ion-tab-button>
+        <!-- TODO replace with ngswitch -->
+        <!-- <ng-template #logged [ngSwitch]=""> -->
+        <ng-template #logged>
+            <ion-tab-button *ngIf="isTeacher|async" tab="accountTeacher">
+                <ion-label> Account </ion-label>
+            </ion-tab-button>
+            
+            <ion-tab-button *ngIf="isAdmin|async" tab="accountAdmin">
+                <ion-label> Account </ion-label>
+            </ion-tab-button>
+    
+            <ion-tab-button *ngIf="!(isAdmin|async) && !(isTeacher|async)" tab="account">
+                <ion-label> Account </ion-label>
+            </ion-tab-button>
+            
+            <ion-tab-button *ngIf="isAdmin|async" tab="admin">
+                <ion-label> Administration </ion-label>
+            </ion-tab-button>
+        </ng-template>
     </ion-tab-bar>
 </ion-tabs>
