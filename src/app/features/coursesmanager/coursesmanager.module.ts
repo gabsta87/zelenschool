@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomepageComponent } from './components/homepage/homepage.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LoginpageComponent } from './components/loginpage/loginpage.component';
@@ -21,7 +20,6 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { StorageService } from 'src/app/shared/service/storage.service';
-import { ProjectspageComponent } from './components/projectspage/projectspage.component';
 import { AdminpageComponent } from './components/adminpage/adminpage.component';
 import { AdminpageGuard } from './guards/adminpage.guard';
 import { AdminpageresolveResolver } from './resolvers/adminpageresolve.resolver';
@@ -42,10 +40,10 @@ import { ChoiceModalComponent } from './components/choice-modal/choice-modal.com
 import { BanmodalComponent } from './components/banmodal/banmodal.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ActivitiespageComponent } from './components/activitiespage/activitiespage.component';
 
 @NgModule({
   declarations: [
-    HomepageComponent,
     HeaderComponent,
     FooterComponent,
     LoginpageComponent,
@@ -58,7 +56,6 @@ import { HttpClientModule } from '@angular/common/http';
     DonatepageComponent,
     ImageUploadComponent,
     EditnewsComponent,
-    ProjectspageComponent,
     AdminpageComponent,
     AccountpageComponent,
     CreateAccountComponent,
@@ -71,6 +68,7 @@ import { HttpClientModule } from '@angular/common/http';
     TeacherCreateEventModalComponent,
     ChoiceModalComponent,
     BanmodalComponent,
+    ActivitiespageComponent,
   ],
   imports: [
     SwiperModule,
@@ -89,9 +87,6 @@ import { HttpClientModule } from '@angular/common/http';
       component:HeaderComponent,
       children:[
         {
-          path:"homepage",
-          component:HomepageComponent
-        },{
           path:"login",
           component:LoginpageComponent
         },{
@@ -116,8 +111,8 @@ import { HttpClientModule } from '@angular/common/http';
           path:"donate",
           component:DonatepageComponent
         },{
-          path:"projects",
-          component:ProjectspageComponent
+          path:"activities",
+          component:ActivitiespageComponent
         },{
           path:"create",
           component:CreateAccountComponent

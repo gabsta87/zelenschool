@@ -15,7 +15,7 @@ export class NavbarComponent {
 
   navigationItems = [
     {title:"About us",page:"about"},
-    {title:"Projects",page:"projects"},
+    {title:"Activities",page:"activities"},
     {title:"Gallery",page:"gallery"},
     {title:"Partners",page:"partners"},
     {title:"Schedule",page:"schedule"},
