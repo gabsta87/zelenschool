@@ -6,9 +6,15 @@
 }
 
 .buttonsGrid{
-    max-width: 220px;
+    max-width: 260px;
 
     ion-button{
         width: 100%;
     }
+}
+
+ion-icon{
+    background-color:white;
+    border-radius: 25%;
+    min-width: 30px;
 }

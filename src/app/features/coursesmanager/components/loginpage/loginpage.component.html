@@ -53,15 +53,21 @@
         </ion-row>
         <ion-row>
             <ion-col>
-                <ion-button (click)="loginWithGoogle()">Login with Google</ion-button>
+                <ion-button (click)="loginWithGoogle()">
+                    <ion-icon slot="start" size="large" src="/assets/logos/logo_google.svg"></ion-icon>
+                    Login with Google
+                </ion-button>
             </ion-col>
         </ion-row>
         <ion-row>
             <ion-col>
-                <ion-button (click)="loginWithFB()">Login with Facebook</ion-button>
+                <ion-button (click)="loginWithFB()">
+                    <ion-icon slot="start" size="large" src="/assets/logos/logo_facebook.svg"></ion-icon>
+                    Login with Facebook</ion-button>
             </ion-col>
         </ion-row>
     </ion-grid>
+
 </form>
 </div>
 </ion-content>
