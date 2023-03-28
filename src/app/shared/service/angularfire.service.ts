@@ -4,7 +4,8 @@ import { collection, QueryConstraint, Firestore, addDoc, collectionData, doc, se
 import { deleteDoc, getDoc, query, updateDoc } from '@firebase/firestore';
 import { firstValueFrom, map, Observable } from 'rxjs';
 import * as dayjs from 'dayjs';
-
+import * as isBetween from 'dayjs/plugin/isBetween';
+dayjs.extend(isBetween);
 
 @Injectable({
   providedIn:'root'
@@ -104,9 +105,18 @@ export class AngularfireService{
     // return temp.pipe(map(datas => datas.filter(e => dayjs(e['eventDate']).isSame(dateToFind))));
   }
 
-  private isColliding(startTime1:string, endTime1:string ,startTime2:string, endTime2:string){
-    // if(dayjs(startTime1).isSameOrBefore
+  getCalendarEntriesCollisions(startTime:string,endTime:string){
+    return this.getCalendarEntries().pipe(
+      map(datas=> datas.filter(e => this.isColliding(startTime,endTime,e['timeStart'],e['timeEnd'])))
+    )
+  }
 
+  private isColliding(startTime1:string, endTime1:string ,startTime2:string, endTime2:string){
+    if(dayjs(startTime1).isBetween(startTime2,endTime2,'minutes','[)')) return true;  // 1 starts in 2
+    if(dayjs(endTime1).isBetween(startTime2,endTime2,'minutes','(]')) return true;    // 1 ends in 2
+    if(dayjs(startTime2).isBetween(startTime1,endTime1,'minutes','[)'))return true;   // 2 starts in 1
+
+    return false;
 
     // function dateRangeOverlaps(a_start, a_end, b_start, b_end) {
     //   if (a_start <= b_start && b_start <= a_end) return true; // b starts in a
