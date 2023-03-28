@@ -37,6 +37,7 @@
     <!-- <ion-button expand="block" type="submit" [disabled]="!imageForm.valid || !croppedImage || uploading">Save Image</ion-button> -->
     <ion-button expand="block" type="submit" [disabled]="!imageForm.valid || uploading">Save Image</ion-button>
     <ion-button expand="block" (click)="saveImageOnServer()" [disabled]="!imageForm.valid || uploading">Save Image on server</ion-button>
+    <ion-button (click)="returnToAdminPage()">Return</ion-button>
 </form>
 </ion-content>
   

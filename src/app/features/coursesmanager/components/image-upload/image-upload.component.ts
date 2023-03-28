@@ -4,6 +4,7 @@ import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { StorageService } from 'src/app/shared/service/storage.service';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class ImageUploadComponent {
   private readonly _apiUrl = 'http://localhost:3000/assets/';
 
 
-  constructor(private storage: StorageService, private _db: AngularfireService,private readonly _http: HttpClient) { }
+  constructor(private storage: StorageService, private _db: AngularfireService,private readonly _http: HttpClient,private readonly _router:Router) { }
 
   imageFile!: File;
   croppedImage: any = '';
@@ -79,5 +80,9 @@ export class ImageUploadComponent {
     this.croppedImage = '';
     this.imageName = '';
     this.imageFunction = '';
+  }
+
+  returnToAdminPage(){
+    this._router.navigate(['/admin/'])
   }
 }
