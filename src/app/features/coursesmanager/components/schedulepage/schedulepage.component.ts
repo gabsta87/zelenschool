@@ -168,7 +168,7 @@ export class SchedulepageComponent {
     const modal = await this.modalController.create({
       component:  TeacherCreateEventModalComponent,
       componentProps: {
-        time: this.adjustedDate.toISOString()
+        timeStart: this.adjustedDate.toISOString()
       },
     });
     modal.present();

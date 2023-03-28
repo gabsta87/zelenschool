@@ -15,7 +15,8 @@ export class TeacherModalComponent{
   id!:string;
   title!:string;
   room_id!:string;
-  time!:string;
+  timeStart!:string;
+  timeEnd!:string;
   max_participants!:number;
   meta!:any;
   creatorName:string = "";
@@ -65,13 +66,14 @@ export class TeacherModalComponent{
 
     this.id = this.meta.id;
     this.room_id = this.meta.room_id;
-    this.time = this.meta.time;
+    this.timeStart = this.meta.timeStart;
+    this.timeEnd = this.meta.timeEnd;
     this.max_participants = this.meta.max_participants;
     this.description = this.meta.description;
 
     this.isAuthor = actualValue ? actualValue['author'] == this._user.getId() : false;
     this.isAdmin = this._user.isAdmin();
-    this.isPassedEvent = dayjs(this.time).isBefore(new Date()) ;
+    this.isPassedEvent = dayjs(this.timeStart).isBefore(new Date()) ;
 
     // USE THIS VERSION FOR FINAL RELEASE
     // this.cannotModify = (!this.isAuthor || this.isPassedEvent ) && !this.isAdmin;
@@ -131,7 +133,7 @@ export class TeacherModalComponent{
   }
 
   confirm(){
-    let entry = {id:this.id,title:this.title,eventDate:this.time,room_id:this.room_id,max_participants:this.max_participants,description:this.description?this.description:""}
+    let entry = {id:this.id,title:this.title,timeStart:this.timeStart,timeEnd:this.timeEnd,room_id:this.room_id,max_participants:this.max_participants,description:this.description?this.description:""}
     
     this._db.updateCalendarEntry(entry);
     return this.modalCtrl.dismiss(null, 'confirm');
@@ -157,7 +159,7 @@ export class TeacherModalComponent{
     }else{
       this.isRoomAvailable.next(true);
     }
-    this.time = $event.detail.value;
+    // this.time = $event.detail.value;
   }
 
   setStudentAbsent($event:any,userId:string){

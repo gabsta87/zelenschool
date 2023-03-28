@@ -48,7 +48,7 @@ export class StudentModalComponent {
         this._user.isBanned() ||
 
         // Date is already passed
-        dayjs(courseActualValues['eventDate']).isBefore(new Date()) ;
+        dayjs(courseActualValues['timeStart']).isBefore(new Date()) ;
     }
   }
 

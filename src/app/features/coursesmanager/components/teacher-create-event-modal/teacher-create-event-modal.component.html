@@ -15,13 +15,33 @@
     </ion-item>
 
     <ion-item>
+        <ion-label>Time</ion-label>
         <ion-datetime-button datetime="datetime"></ion-datetime-button>
-        <ion-modal [keepContentsMounted]="true" (ionChange)="updateTimeFromEvent($event)">
+        <ion-modal [keepContentsMounted]="true" (ionChange)="updateTimeStartFromEvent($event)">
             <ng-template>
-                <ion-datetime id="datetime" value="{{time}}"></ion-datetime>
+                <ion-datetime id="datetime" min="{{now}}" value="{{timeStart}}"></ion-datetime>
             </ng-template>
         </ion-modal>
     </ion-item>
+
+
+    <ion-item>
+        <ion-label>Duration</ion-label>
+        <ion-input type="number" value="1" required name="duration" [(ngModel)]="duration" (ionChange)="updateDuration($event)"></ion-input>
+        <ion-select value="hour" interface="popover" name="durationUnit" [(ngModel)]="durationUnit">
+            <ion-select-option value="hour" (ionChange)="updateDurationUnit($event)">hours</ion-select-option>
+            <ion-select-option value="minute">minutes</ion-select-option>
+        </ion-select>
+    </ion-item>
+    <!-- <ion-item>
+        <ion-label>End</ion-label>
+        <ion-datetime-button datetime="datetime"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true" (ionChange)="updateTimeEndFromEvent($event)">
+            <ng-template>
+                <ion-datetime id="datetime" min="{{now}}" value="{{timeEnd}}"></ion-datetime>
+            </ng-template>
+        </ion-modal>
+    </ion-item> -->
 
     <ion-item>
         <ion-label>Max participants</ion-label>
@@ -34,18 +54,21 @@
     </ion-item>
 
     <div *ngIf="collisionEvents">
-        <ion-text>{{collisionEvents|json}}</ion-text>
         <ion-label>Courses at the same time : </ion-label>
         <ion-list>
             <ion-item *ngFor="let evt of collisionEvents; let i = index">
                 <ion-label *ngIf="i == collisionIndex ;else normal" color="danger">
                     <h2>{{evt['title']}}</h2>
                     <p>Room : {{evt['room_id']}}</p>
+                    <p>From {{evt['timeStart']| date: "HH:mm"}} to {{evt['timeEnd']| date: "HH:mm"}}</p>
+                    <p>{{evt['timeStart']}}</p>
                 </ion-label>
                 <ng-template #normal>
                 <ion-label>
                     <h2>{{evt['title']}}</h2>
                     <p>Room : {{evt['room_id']}}</p>
+                    <p>From {{evt['timeStart']| date: "HH:mm"}} to {{evt['timeEnd']| date: "HH:mm"}}</p>
+                    <p>{{evt['timeStart']}}</p>
                 </ion-label>
                 </ng-template>
             </ion-item>

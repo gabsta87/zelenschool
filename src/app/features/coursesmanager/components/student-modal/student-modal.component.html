@@ -10,7 +10,7 @@
         <ion-text>Author : {{creator['f_name']}} {{creator['l_name']}}</ion-text>
     </ion-item>
     <ion-item>
-        <ion-text>Time : {{currentEvent['eventDate'] | date: "HH:mm d MMM, yy"}}</ion-text>
+        <ion-text>From {{currentEvent['timeStart'] | date: "HH:mm dd,MMM"}} to {{currentEvent['timeEnd'] | date: "HH:mm"}}</ion-text>
     </ion-item>
     <ion-item>
         <ion-text>Room : {{meta.room_id}}</ion-text>

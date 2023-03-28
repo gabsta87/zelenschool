@@ -25,10 +25,21 @@
     </ion-item>
 
     <ion-item>
+        <ion-label>Start</ion-label>
         <ion-datetime-button datetime="datetime" [disabled]="cannotModify"></ion-datetime-button>
         <ion-modal [keepContentsMounted]="true" required (ionChange)="updateTime($event)">
             <ng-template>
-            <ion-datetime id="datetime" value="{{time}}"></ion-datetime>
+            <ion-datetime id="datetime" value="{{timeStart}}"></ion-datetime>
+            </ng-template>
+        </ion-modal>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>End</ion-label>
+        <ion-datetime-button datetime="datetime" [disabled]="cannotModify"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true" required (ionChange)="updateTime($event)">
+            <ng-template>
+            <ion-datetime id="datetime" value="{{timeEnd}}"></ion-datetime>
             </ng-template>
         </ion-modal>
     </ion-item>

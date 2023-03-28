@@ -11,11 +11,16 @@ import { AngularfireService } from 'src/app/shared/service/angularfire.service';
   styleUrls: ['./teacher-create-event-modal.component.scss']
 })
 export class TeacherCreateEventModalComponent {
-  time!:string;
+  timeStart!:string;
+  timeEnd!:string;
   title!:string;
   max_participants!:number;
   room_id!:string;
   description!:string;
+  duration = 1;
+  durationUnit!:dayjs.ManipulateType;
+
+  now = dayjs(new Date()).toISOString();
 
   isValid = new BehaviorSubject<Boolean>(false);
   collisionEvents!:DocumentData[]|undefined;
@@ -25,9 +30,9 @@ export class TeacherCreateEventModalComponent {
   constructor(private readonly modalCtrl:ModalController,private readonly _db: AngularfireService){ }
 
   async ionViewDidEnter(){
-    console.log("this time : ",dayjs(this.time).format("DD:MM:YY HH:mm Z"));
+    console.log("this time : ",dayjs(this.timeStart).format("DD:MM:YY HH:mm Z"));
     
-    this.updateTime(this.time);
+    this.updateTime(this.timeStart,true);
   }
 
   cancel(){
@@ -35,16 +40,20 @@ export class TeacherCreateEventModalComponent {
   }
 
   confirm(){
-    let entry = {title:this.title,eventDate:this.time,room_id:this.room_id,max_participants:this.max_participants,description:this.description}
+    let entry = {title:this.title,timeStart:this.timeStart,timeEnd:this.timeEnd,room_id:this.room_id,max_participants:this.max_participants,description:this.description}
 
     this._db.createCalendarEntry(entry);
     return this.modalCtrl.dismiss(null, 'confirm');
   }
 
-  async updateTime(newTime:any){
-    console.log("dayjs event : ",dayjs(newTime).format("DD:MM:YY HH:mm Z"));
+  async updateTime(newTime:string,isStart:boolean){
+    console.log("new Time : ",dayjs(newTime).format("HH:mm Z"));
     
-    this.collisionEvents = await firstValueFrom(this._db.getCalendarEntryByTime(dayjs(newTime)));
+    console.log("start time : ",dayjs(this.timeStart).format("HH:mm Z"));
+    console.log("end time : ",dayjs(this.timeEnd).format("HH:mm Z"));
+    
+    // this.collisionEvents = await firstValueFrom(this._db.getCalendarEntryByTime(dayjs(newTime)));
+    this.collisionEvents = await firstValueFrom(this._db.getCalendarEntriesCollisions(this.timeStart,this.timeEnd));
 
     if(this.collisionEvents){
       this.collisionIndex = this.collisionEvents.findIndex(e => e['room_id'] == this.room_id);
@@ -52,11 +61,31 @@ export class TeacherCreateEventModalComponent {
     }else{
       this.isValid.next(true);
     }
-    this.time = newTime;
+   
+    // if(isStart){
+    //   this.timeStart = newTime;
+    // }else{
+    //   this.timeEnd = newTime;
+    // }
   }
 
-  updateTimeFromEvent($event:any){
-    return this.updateTime($event.detail.value);
+  updateTimeStartFromEvent($event:any){
+    this.timeStart = $event.detail.value;
+    this.timeEnd = (dayjs(this.timeStart).add(this.duration,this.durationUnit)).toISOString();
+
+    return this.updateTime($event.detail.value,true);
+  }
+  
+  updateDuration($event:any){
+    this.duration = $event.detail.value;
+    this.timeEnd = (dayjs(this.timeStart).add($event.detail.value,this.durationUnit)).toISOString();
+
+    return this.updateTime($event.detail.value,false);
+  }
+
+  updateDurationUnit($event:any){
+    this.durationUnit = $event.detail.value;
+    this.timeEnd = (dayjs(this.timeStart).add(this.duration,$event.detail.value)).toISOString();
   }
 
   updateRoom($event:any){
