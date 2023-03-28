@@ -40,7 +40,8 @@ TODO admins can manage assoc members/upload image files
     https://blog.angular-university.io/angular-file-upload/
     https://firebase.google.com/docs/storage/web/list-files?hl=fr&authuser=0
 TODO change selected day color
-TODO Teachers can create recurrent courses (every week)
+TODO Teachers can create several courses
+    https://mattlewis92.github.io/angular-calendar/#/selectable-period
 OPTIONAL Teachers can Mark a course as canceled / Mail sent to all participants
     https://firebase.google.com/docs/extensions/official/firestore-send-email?hl=fr
 TODO Multilingual system
@@ -76,8 +77,8 @@ TODO fix all account pages on same style
 TODO Schedule : add search tool
 TODO Schedule : sort table by date
 TODO Schedule : Correct popover infos (add hour)
+https://mattlewis92.github.io/angular-calendar/#/disable-tooltips
     https://mattlewis92.github.io/angular-calendar/#/show-dates-on-titles
-    https://mattlewis92.github.io/angular-calendar/#/disable-tooltips
     https://mattlewis92.github.io/angular-calendar/#/editable-deletable-events
 TODO Schedule : Color selected day
     https://mattlewis92.github.io/angular-calendar/#/selectable-period
