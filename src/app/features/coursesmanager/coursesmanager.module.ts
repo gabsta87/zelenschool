@@ -29,7 +29,6 @@ import { UserLoggedGuard } from './guards/user-logged.guard';
 import { CreateAccountComponent } from './components/create-account/create-account.component';
 import { AccountteacherpageComponent } from './components/accountteacherpage/accountteacherpage.component';
 import { CreateAccountTeacherComponent } from './components/create-account-teacher/create-account-teacher.component';
-import { ScheduleadminpageComponent } from './components/scheduleadminpage/scheduleadminpage.component';
 import { AccountadminpageComponent } from './components/accountadminpage/accountadminpage.component';
 import { StudentModalComponent } from './components/student-modal/student-modal.component';
 import { TeacherModalComponent } from './components/teacher-modal/teacher-modal.component';
@@ -61,7 +60,6 @@ import { ActivitiespageComponent } from './components/activitiespage/activitiesp
     CreateAccountComponent,
     AccountteacherpageComponent,
     CreateAccountTeacherComponent,
-    ScheduleadminpageComponent,
     AccountadminpageComponent,
     StudentModalComponent,
     TeacherModalComponent,
