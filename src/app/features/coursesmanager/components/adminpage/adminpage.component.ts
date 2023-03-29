@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ActionSheetController, ModalController } from '@ionic/angular';
 import * as dayjs from 'dayjs';
 import { BehaviorSubject, combineLatest, count, filter, firstValueFrom, map, Observable } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
@@ -18,6 +18,7 @@ export class AdminpageComponent {
     private readonly _route: ActivatedRoute,
     private readonly _router: Router,
     private readonly _modal: ModalController,
+    private readonly actionSheetCtrl: ActionSheetController
   ) {}
 
   adminData = this._route.snapshot.data['adminData'];
@@ -121,9 +122,38 @@ export class AdminpageComponent {
 
   }
 
-  deleteUser(id:string){
+  async deleteUser(id:string){
+
+    let response = await this.canDismiss();
+    if(!response)
+      return;
+
     this._db.removeUser(id);
+    return this._modal.dismiss(null, 'delete');
   }
+
+
+  canDismiss = async () => {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: 'Are you sure?',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'confirm',
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+      ],
+    });
+
+    actionSheet.present();
+
+    const { role } = await actionSheet.onWillDismiss();
+
+    return role === 'confirm';
+  };
 
   acceptRequest(id:string){
     this._db.acceptRequest(id);
