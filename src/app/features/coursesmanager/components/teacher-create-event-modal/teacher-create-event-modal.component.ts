@@ -29,33 +29,19 @@ export class TeacherCreateEventModalComponent {
 
   constructor(private readonly modalCtrl:ModalController,private readonly _db: AngularfireService){ }
 
-  async ionViewDidEnter(){
-    console.log("this time : ",dayjs(this.timeStart).format("DD:MM:YY HH:mm Z"));
-    
-    this.updateTime(this.timeStart,true);
-  }
-
   cancel(){
     return this.modalCtrl.dismiss(null, 'confirm');
   }
 
   confirm(){
-    let entry = {title:this.title,timeStart:this.timeStart,timeEnd:this.timeEnd,room_id:this.room_id,max_participants:this.max_participants,description:this.description}
+    let entry = {title:this.title,timeStart:dayjs(this.timeStart).utc().toISOString(),timeEnd:dayjs(this.timeEnd).utc().toISOString(),room_id:this.room_id,max_participants:this.max_participants,description:this.description}
 
     this._db.createCalendarEntry(entry);
     return this.modalCtrl.dismiss(null, 'confirm');
   }
 
-  async updateTime(newTime:string,isStart:boolean){
-    console.log("new Time : ",dayjs(newTime).format("HH:mm Z"));
+  async updateTime(){
     
-    console.log("start time : ",dayjs(this.timeStart).format("HH:mm Z"));
-    console.log("end time : ",dayjs(this.timeEnd).format("HH:mm Z"));
-
-
-
-    
-    // this.collisionEvents = await firstValueFrom(this._db.getCalendarEntryByTime(dayjs(newTime)));
     this.collisionEvents = await firstValueFrom(this._db.getCalendarEntriesCollisions(this.timeStart,this.timeEnd));
 
     if(this.collisionEvents){
@@ -64,34 +50,27 @@ export class TeacherCreateEventModalComponent {
     }else{
       this.isValid.next(true);
     }
-   
-    // if(isStart){
-    //   this.timeStart = newTime;
-    // }else{
-    //   this.timeEnd = newTime;
-    // }
   }
-
-
-
 
   updateTimeStartFromEvent($event:any){
     this.timeStart = $event.detail.value;
-    this.timeEnd = (dayjs(this.timeStart).add(this.duration,this.durationUnit)).toISOString();
+    this.timeEnd = (dayjs(this.timeStart).add(this.duration,this.durationUnit)).utc().toISOString();
 
-    return this.updateTime($event.detail.value,true);
+    return this.updateTime();
   }
   
   updateDuration($event:any){
     this.duration = $event.detail.value;
-    this.timeEnd = (dayjs(this.timeStart).add($event.detail.value,this.durationUnit)).toISOString();
+    this.timeEnd = (dayjs(this.timeStart).add($event.detail.value,this.durationUnit)).utc().toISOString();
 
-    return this.updateTime($event.detail.value,false);
+    return this.updateTime();
   }
 
   updateDurationUnit($event:any){
     this.durationUnit = $event.detail.value;
-    this.timeEnd = (dayjs(this.timeStart).add(this.duration,$event.detail.value)).toISOString();
+    this.timeEnd = (dayjs(this.timeStart).add(this.duration,$event.detail.value)).utc().toISOString();
+    
+    return this.updateTime();
   }
 
   updateRoom($event:any){
