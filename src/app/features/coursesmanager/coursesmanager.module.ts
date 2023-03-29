@@ -10,7 +10,7 @@ import { GallerypageComponent } from './components/gallerypage/gallerypage.compo
 import { SwiperModule } from 'swiper/angular';
 import { PartnerspageComponent } from './components/partnerspage/partnerspage.component';
 import { AboutpageComponent } from './components/aboutpage/aboutpage.component';
-import { CustomDateFormatter, SchedulepageComponent } from './components/schedulepage/schedulepage.component';
+import { SchedulepageComponent } from './components/schedulepage/schedulepage.component';
 import { ContactpageComponent } from './components/contactpage/contactpage.component';
 import { DonatepageComponent } from './components/donatepage/donatepage.component';
 import { EditnewsComponent } from './components/editnews/editnews.component';

@@ -104,10 +104,10 @@
 <div id="eventsSecTable" class="events_grid" *ngIf="extractedData | async as eventsList">
     <ion-grid class="eventsTable ion-no-padding">
         <ion-row>
-            <ion-col>
+            <ion-col (click)="sortByTitle()">
                 <b>Title</b>
             </ion-col>
-            <ion-col>
+            <ion-col (click)="sortByTime()">
                 <b>Time</b>
             </ion-col>
             <ion-col>

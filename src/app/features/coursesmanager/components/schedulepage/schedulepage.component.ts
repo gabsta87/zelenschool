@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
-import { isSameDay, isSameMonth } from 'date-fns';
+import { compareAsc, isSameDay, isSameMonth } from 'date-fns';
 import { WeekDay, MonthView, MonthViewDay } from 'calendar-utils';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarNativeDateFormatter, CalendarView, DateFormatterParams, DAYS_OF_WEEK, } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import * as dayjs from 'dayjs';
@@ -67,6 +67,8 @@ export class SchedulepageComponent {
   isBanned = this._user.isUserBanned;
   newEvent:{title:string,time:string,room:number,max_participants:number} = {title:"",time:"",room:-1,max_participants:0};
   extractedData!:Observable<DocumentData[]>;
+  filterAscTitle = true;
+  filterAscTime = true;
 
   constructor(
     private readonly _route: ActivatedRoute,
@@ -187,5 +189,29 @@ export class SchedulepageComponent {
       },
     });
     modal.present();
+  }
+
+  sortByTitle(){
+    let result;
+    if(this.filterAscTitle)
+      result = this.extractedData.pipe(map((e:any)=> [...e].sort( (a,b) => a['title'].toLowerCase() > b['title'].toLowerCase() ? 1 : -1)))
+    else
+      result = this.extractedData.pipe(map((e:any)=> [...e].sort( (a,b) => a['title'].toLowerCase() < b['title'].toLowerCase() ? 1 : -1)))
+      
+    this.extractedData = result;
+    this.filterAscTitle = !this.filterAscTitle;
+    this.filterAscTime = true;
+  }
+
+  sortByTime(){
+    let result;
+    if(this.filterAscTime)
+      result = this.extractedData.pipe(map((e:any)=> [...e].sort( (a,b) => dayjs(a['startTime']).isAfter(b['startTime'],"minute") ? 1 : -1)))
+    else
+      result = this.extractedData.pipe(map((e:any)=> [...e].sort( (a,b) => dayjs(a['startTime']).isBefore(b['startTime'],"minute") ? 1 : -1)))
+      
+    this.extractedData = result;
+    this.filterAscTime = !this.filterAscTime;
+    this.filterAscTitle = true;
   }
 }
