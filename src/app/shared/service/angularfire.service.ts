@@ -105,10 +105,16 @@ export class AngularfireService{
     // return temp.pipe(map(datas => datas.filter(e => dayjs(e['eventDate']).isSame(dateToFind))));
   }
 
-  getCalendarEntriesCollisions(startTime:string,endTime:string){
-    return this.getCalendarEntries().pipe(
-      map(datas=> datas.filter(e => this.isColliding(startTime,endTime,e['timeStart'],e['timeEnd'])))
-    )
+  getCalendarEntriesCollisions(startTime:string,endTime:string,currentEventId?:string){
+    if(currentEventId){
+      return this.getCalendarEntries().pipe(
+        map(datas=> datas.filter(e => this.isColliding(startTime,endTime,e['timeStart'],e['timeEnd']) && e['id'] != currentEventId))
+      )
+    }else{
+      return this.getCalendarEntries().pipe(
+        map(datas=> datas.filter(e => this.isColliding(startTime,endTime,e['timeStart'],e['timeEnd'])))
+      )
+    }
   }
 
   private isColliding(startTime1:string, endTime1:string ,startTime2:string, endTime2:string){
