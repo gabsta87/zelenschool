@@ -24,7 +24,7 @@
         <ion-text>Author : {{creatorName}}</ion-text>
     </ion-item>
 
-    <ion-item [disabled]="cannotModify">
+    <ion-item *ngIf="cannotModify; else modif" [disabled]="cannotModify">
         <ion-label>Time</ion-label>
         <ion-datetime-button datetime="datetime"></ion-datetime-button>
         <ion-modal [keepContentsMounted]="true" (ionChange)="updateTimeStart($event)">
@@ -33,6 +33,17 @@
             </ng-template>
         </ion-modal>
     </ion-item>
+    <ng-template #modif>
+        <ion-item>
+            <ion-label>Time</ion-label>
+            <ion-datetime-button datetime="datetime"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true" (ionChange)="updateTimeStart($event)">
+                <ng-template>
+                    <ion-datetime id="datetime" min="{{now}}" value="{{timeStart}}"></ion-datetime>
+                </ng-template>
+            </ion-modal>
+        </ion-item>
+    </ng-template>
 
     <ion-item [disabled]="cannotModify">
         <ion-label>Duration</ion-label>
