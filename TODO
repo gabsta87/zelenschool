@@ -50,6 +50,7 @@ TODO Teachers can create several courses
 OPTIONAL Teachers can Mark a course as canceled / Mail sent to all participants
     https://firebase.google.com/docs/extensions/official/firestore-send-email?hl=fr
 TODO Multilingual system
+TODO Schedule : filter available courses, filter by teacher, search tool
 DONE admins can access to teacher modal through admin page
 DONE search bar for events
 USELESS Admins can see each course a user is attending to
