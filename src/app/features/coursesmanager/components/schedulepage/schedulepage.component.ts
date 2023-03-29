@@ -13,12 +13,9 @@ import { StudentModalComponent } from '../student-modal/student-modal.component'
 import { TeacherModalComponent } from '../teacher-modal/teacher-modal.component';
 import { TeacherCreateEventModalComponent } from '../teacher-create-event-modal/teacher-create-event-modal.component';
 
-// export class CustomDateFormatter extends CalendarNativeDateFormatter {
-//   public override dayViewHour({date, locale}: DateFormatterParams): string {
-//     // change this to return a different date format
-//     return new Intl.DateTimeFormat(locale, {hour: 'numeric'}).format(date);
-//   }
-// }
+import * as utc from 'dayjs/plugin/utc';
+
+dayjs.extend(utc)
 
 export interface CalendarMonthViewEventTimesChangedEvent<
   EventMetaType = any,
@@ -82,18 +79,16 @@ export class SchedulepageComponent {
     this.extractedData.subscribe((newValues) => {
       this.events = [];
       newValues.forEach(async e =>{
-        console.log();
-        
         this.events.push({
           title : e['title'],
-          start : dayjs(e['timeStart']).toDate(),
-          end : dayjs(e['timeEnd']).toDate(),
+          start : dayjs(e['timeStart']).utc(false).toDate(),
+          end : dayjs(e['timeEnd']).utc(false).toDate(),
           actions : this.actions, 
           allDay:false,
           meta:{
             id : e['id'],
-            timeStart : e['timeStart'],
-            timeEnd : e['timeEnd'],
+            timeStart : dayjs(e['timeStart']).utc().toISOString(),
+            timeEnd : dayjs(e['timeEnd']).utc().toISOString(),
             author: e['author'],
             room_id: e['room_id'],
             attendantsId: e['attendantsId'],
@@ -156,7 +151,7 @@ export class SchedulepageComponent {
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
 
     this.adjustedDate = dayjs(date).add(13,'hour');
-    this.newEvent.time = this.adjustedDate.toISOString();
+    this.newEvent.time = this.adjustedDate.utc().toISOString();
 
     if (isSameMonth(date, this.viewDate)) {
       if (
@@ -185,7 +180,8 @@ export class SchedulepageComponent {
     const modal = await this.modalController.create({
       component:  TeacherCreateEventModalComponent,
       componentProps: {
-        timeStart: this.adjustedDate.toISOString()
+        timeStart: dayjs(this.adjustedDate).utc().toISOString(),
+        timeEnd: dayjs(this.adjustedDate).add(1,'hour').utc().toISOString(),
       },
     });
     modal.present();
@@ -205,10 +201,11 @@ export class SchedulepageComponent {
 
   sortByTime(){
     let result;
-    if(this.filterAscTime)
-      result = this.extractedData.pipe(map((e:any)=> [...e].sort( (a,b) => dayjs(a['startTime']).isAfter(b['startTime'],"minute") ? 1 : -1)))
-    else
-      result = this.extractedData.pipe(map((e:any)=> [...e].sort( (a,b) => dayjs(a['startTime']).isBefore(b['startTime'],"minute") ? 1 : -1)))
+    if(this.filterAscTime){
+      result = this.extractedData.pipe(map((e:any)=> [...e].sort( (a,b) => dayjs(a['timeStart']).utc().isAfter(dayjs(b['timeStart']).utc(),"minute") ? 1 : -1 )))
+    }else{
+      result = this.extractedData.pipe(map((e:any)=> [...e].sort( (a,b) => dayjs(a['timeStart']).utc().isBefore(dayjs(b['timeStart']).utc(),"minute") ? 1 : -1)))
+    }
       
     this.extractedData = result;
     this.filterAscTime = !this.filterAscTime;
