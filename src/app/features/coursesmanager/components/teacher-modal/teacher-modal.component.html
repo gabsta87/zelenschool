@@ -25,23 +25,22 @@
     </ion-item>
 
     <ion-item>
-        <ion-label>Start</ion-label>
-        <ion-datetime-button datetime="datetime" [disabled]="cannotModify"></ion-datetime-button>
-        <ion-modal [keepContentsMounted]="true" required (ionChange)="updateTime($event)">
+        <ion-label>Time</ion-label>
+        <ion-datetime-button datetime="datetime"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true" (ionChange)="updateTimeStart($event)">
             <ng-template>
-            <ion-datetime id="datetime" value="{{timeStart}}"></ion-datetime>
+                <ion-datetime id="datetime" min="{{now}}" value="{{timeStart}}"></ion-datetime>
             </ng-template>
         </ion-modal>
     </ion-item>
 
     <ion-item>
-        <ion-label>End</ion-label>
-        <ion-datetime-button datetime="datetime" [disabled]="cannotModify"></ion-datetime-button>
-        <ion-modal [keepContentsMounted]="true" required (ionChange)="updateTime($event)">
-            <ng-template>
-            <ion-datetime id="datetime" value="{{timeEnd}}"></ion-datetime>
-            </ng-template>
-        </ion-modal>
+        <ion-label>Duration</ion-label>
+        <ion-input type="number" value="1" required name="duration" [(ngModel)]="duration" (ionChange)="updateDuration($event)"></ion-input>
+        <ion-select interface="popover" name="durationUnit" [(ngModel)]="durationUnit">
+            <ion-select-option value="hour" (ionChange)="updateDurationUnit($event)">hours</ion-select-option>
+            <ion-select-option value="minute">minutes</ion-select-option>
+        </ion-select>
     </ion-item>
 
     <ion-item>
@@ -91,18 +90,22 @@
     </ion-accordion>
     </ion-accordion-group>
 
-      <div *ngIf="(collisionEvents && collisionEvents.length > 0) && !cannotModify">
+    <div *ngIf="collisionEvents && collisionEvents.length > 0">
         <ion-label>Courses at the same time : </ion-label>
         <ion-list>
             <ion-item *ngFor="let evt of collisionEvents; let i = index">
                 <ion-label *ngIf="i == collisionIndex ;else normal" color="danger">
                     <h2>{{evt['title']}}</h2>
                     <p>Room : {{evt['room_id']}}</p>
+                    <p>From {{evt['timeStart']| date: "HH:mm"}} to {{evt['timeEnd']| date: "HH:mm"}}</p>
+                    <p>{{evt['timeStart']}}</p>
                 </ion-label>
                 <ng-template #normal>
                 <ion-label>
                     <h2>{{evt['title']}}</h2>
                     <p>Room : {{evt['room_id']}}</p>
+                    <p>From {{evt['timeStart']| date: "HH:mm"}} to {{evt['timeEnd']| date: "HH:mm"}}</p>
+                    <p>{{evt['timeStart']}}</p>
                 </ion-label>
                 </ng-template>
             </ion-item>

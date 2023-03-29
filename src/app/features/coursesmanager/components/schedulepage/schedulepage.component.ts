@@ -76,12 +76,14 @@ export class SchedulepageComponent {
         
         this.events.push({
           title : e['title'],
-          start : dayjs(e['eventDate']).toDate(), 
+          start : dayjs(e['timeStart']).toDate(),
+          end : dayjs(e['timeEnd']).toDate(),
           actions : this.actions, 
           allDay:false,
           meta:{
             id : e['id'],
-            time : e['eventDate'],
+            timeStart : e['timeStart'],
+            timeEnd : e['timeEnd'],
             author: e['author'],
             room_id: e['room_id'],
             attendantsId: e['attendantsId'],

@@ -18,7 +18,7 @@ export class TeacherCreateEventModalComponent {
   room_id!:string;
   description!:string;
   duration = 1;
-  durationUnit!:dayjs.ManipulateType;
+  durationUnit = 'hour' as dayjs.ManipulateType;
 
   now = dayjs(new Date()).toISOString();
 
@@ -51,6 +51,9 @@ export class TeacherCreateEventModalComponent {
     
     console.log("start time : ",dayjs(this.timeStart).format("HH:mm Z"));
     console.log("end time : ",dayjs(this.timeEnd).format("HH:mm Z"));
+
+
+
     
     // this.collisionEvents = await firstValueFrom(this._db.getCalendarEntryByTime(dayjs(newTime)));
     this.collisionEvents = await firstValueFrom(this._db.getCalendarEntriesCollisions(this.timeStart,this.timeEnd));
@@ -68,6 +71,9 @@ export class TeacherCreateEventModalComponent {
     //   this.timeEnd = newTime;
     // }
   }
+
+
+
 
   updateTimeStartFromEvent($event:any){
     this.timeStart = $event.detail.value;

@@ -24,24 +24,14 @@
         </ion-modal>
     </ion-item>
 
-
     <ion-item>
         <ion-label>Duration</ion-label>
         <ion-input type="number" value="1" required name="duration" [(ngModel)]="duration" (ionChange)="updateDuration($event)"></ion-input>
-        <ion-select value="hour" interface="popover" name="durationUnit" [(ngModel)]="durationUnit">
+        <ion-select interface="popover" name="durationUnit" [(ngModel)]="durationUnit">
             <ion-select-option value="hour" (ionChange)="updateDurationUnit($event)">hours</ion-select-option>
             <ion-select-option value="minute">minutes</ion-select-option>
         </ion-select>
     </ion-item>
-    <!-- <ion-item>
-        <ion-label>End</ion-label>
-        <ion-datetime-button datetime="datetime"></ion-datetime-button>
-        <ion-modal [keepContentsMounted]="true" (ionChange)="updateTimeEndFromEvent($event)">
-            <ng-template>
-                <ion-datetime id="datetime" min="{{now}}" value="{{timeEnd}}"></ion-datetime>
-            </ng-template>
-        </ion-modal>
-    </ion-item> -->
 
     <ion-item>
         <ion-label>Max participants</ion-label>
@@ -53,7 +43,7 @@
         <ion-input [(ngModel)]="description" required name="descr"> </ion-input>
     </ion-item>
 
-    <div *ngIf="collisionEvents">
+    <div *ngIf="collisionEvents && collisionEvents.length > 0">
         <ion-label>Courses at the same time : </ion-label>
         <ion-list>
             <ion-item *ngFor="let evt of collisionEvents; let i = index">

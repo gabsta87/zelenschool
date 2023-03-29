@@ -23,6 +23,9 @@ export class StudentModalComponent {
   isCourseFull!:boolean;
   isSubscribtionBlocked!:boolean;
 
+  duration = 1;
+  durationUnit!:dayjs.ManipulateType;
+
   constructor(private modalCtrl: ModalController,private readonly _db: AngularfireService,private readonly _user:UsermanagementService) { }
   
   async ionViewWillEnter(){
@@ -36,6 +39,14 @@ export class StudentModalComponent {
 
       this.isAttending = courseActualValues['attendantsId'].includes(this._user.getId());
       this.isCourseFull = courseActualValues['attendantsId'].length >= courseActualValues['max_participants'];
+
+      this.duration = dayjs(courseActualValues['timeEnd']).diff(courseActualValues['timeStart'],"minute");
+      if(this.duration < 60 || this.duration % 60 != 0){
+        this.durationUnit = "minute"
+      }else{
+        this.duration = dayjs(courseActualValues['timeEnd']).diff(courseActualValues['timeStart'],"hour");
+        this.durationUnit = "hour"
+      }
 
       this.isSubscribtionBlocked = 
         // The course is full

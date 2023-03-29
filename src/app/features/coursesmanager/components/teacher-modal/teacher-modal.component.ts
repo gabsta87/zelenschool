@@ -22,6 +22,10 @@ export class TeacherModalComponent{
   creatorName:string = "";
   description:string = "";
 
+  now = dayjs(new Date()).toISOString();
+  duration = 1;
+  durationUnit = 'hour' as dayjs.ManipulateType;
+
   presentingElement = undefined;
   dataObs!:Observable<DocumentData|undefined>;
   creator!:DocumentData|undefined;
@@ -32,10 +36,10 @@ export class TeacherModalComponent{
   isPassedEvent!:boolean;
 
   constructor(
-    private modalCtrl: ModalController,
+    private readonly modalCtrl: ModalController,
     private readonly _db: AngularfireService,
     private readonly _user:UsermanagementService,
-    private actionSheetCtrl: ActionSheetController
+    private readonly actionSheetCtrl: ActionSheetController
     ) { }
   
   async ionViewWillEnter(){
@@ -70,6 +74,14 @@ export class TeacherModalComponent{
     this.timeEnd = this.meta.timeEnd;
     this.max_participants = this.meta.max_participants;
     this.description = this.meta.description;
+
+    this.duration = dayjs(this.timeEnd).diff(this.timeStart,"minute");
+    if(this.duration < 60 || this.duration % 60 != 0){
+      this.durationUnit = "minute"
+    }else{
+      this.duration = dayjs(this.timeEnd).diff(this.timeStart,"hour");
+      this.durationUnit = "hour"
+    }
 
     this.isAuthor = actualValue ? actualValue['author'] == this._user.getId() : false;
     this.isAdmin = this._user.isAdmin();
@@ -144,22 +156,38 @@ export class TeacherModalComponent{
   collisionEvents!:DocumentData[]|undefined;
   collisionIndex !: number;
 
-  async updateTime($event:any){
-
-    this.collisionEventsObs = this._db.getCalendarEntryByTime(dayjs($event.detail.value));
-
-    this.collisionEventsObs = this.collisionEventsObs.pipe(map((e:any) => e.filter((elem:any)=> elem['id'] != this.id))) 
-
-    // TODO remplacer par un pipe ?
-    this.collisionEvents = await firstValueFrom(this.collisionEventsObs);
+  async updateTime(){
     
+    this.collisionEvents = await firstValueFrom(this._db.getCalendarEntriesCollisions(this.timeStart,this.timeEnd,this.id));
+
     if(this.collisionEvents){
       this.collisionIndex = this.collisionEvents.findIndex(e => e['room_id'] == this.room_id);
       this.isRoomAvailable.next(this.collisionIndex == -1)
     }else{
       this.isRoomAvailable.next(true);
     }
-    // this.time = $event.detail.value;
+   
+  }
+
+  updateTimeStart($event:any){
+    this.timeStart = $event.detail.value;
+    this.timeEnd = (dayjs(this.timeStart).add(this.duration,this.durationUnit)).toISOString();
+
+    return this.updateTime();
+  }
+  
+  updateDuration($event:any){
+    this.duration = $event.detail.value;
+    this.timeEnd = (dayjs(this.timeStart).add($event.detail.value,this.durationUnit)).toISOString();
+
+    return this.updateTime();
+  }
+
+  updateDurationUnit($event:any){
+    this.durationUnit = $event.detail.value;
+    this.timeEnd = (dayjs(this.timeStart).add(this.duration,$event.detail.value)).toISOString();
+   
+    return this.updateTime();
   }
 
   setStudentAbsent($event:any,userId:string){

@@ -10,7 +10,10 @@
         <ion-text>Author : {{creator['f_name']}} {{creator['l_name']}}</ion-text>
     </ion-item>
     <ion-item>
-        <ion-text>From {{currentEvent['timeStart'] | date: "HH:mm dd,MMM"}} to {{currentEvent['timeEnd'] | date: "HH:mm"}}</ion-text>
+        <ion-text>Time : {{currentEvent['timeStart'] | date: "HH:mm"}}</ion-text>
+    </ion-item>
+    <ion-item>
+        <ion-text>Duration : {{duration}} {{durationUnit}}<span *ngIf="duration > 1">s</span></ion-text>
     </ion-item>
     <ion-item>
         <ion-text>Room : {{meta.room_id}}</ion-text>
