@@ -5,6 +5,7 @@ import { deleteDoc, getDoc, query, updateDoc } from '@firebase/firestore';
 import { firstValueFrom, map, Observable } from 'rxjs';
 import * as dayjs from 'dayjs';
 import * as isBetween from 'dayjs/plugin/isBetween';
+import { isColliding } from './hour-management.service';
 dayjs.extend(isBetween);
 
 @Injectable({
@@ -89,39 +90,16 @@ export class AngularfireService{
     return temp.pipe(map(datas => datas.find(e => e['id'] === idToFind)));
   }
 
-  getCalendarEntryByTime(dateToFind:dayjs.Dayjs){
-    let temp = this.getCalendarEntries();
-    console.log("date to find : ",dayjs(dateToFind).format("DD:MM:YY HH:mm Z"));
-    
-    return temp.pipe(map(datas => datas.filter(e => 
-      // dayjs(e['eventDate']).isSame(dateToFind)
-      
-      {
-      // console.log("e eventDate : ",dayjs(e['eventDate']).format("DD:MM:YY HH:mm Z"));
-      return dayjs(e['eventDate']).isSame(dateToFind);
-      }
-
-    )));
-    // return temp.pipe(map(datas => datas.filter(e => dayjs(e['eventDate']).isSame(dateToFind))));
-  }
-
   getCalendarEntriesCollisions(startTime:string,endTime:string,currentEventId?:string){
     if(currentEventId){
       return this.getCalendarEntries().pipe(
-        map(datas=> datas.filter(e => this.isColliding(startTime,endTime,e['timeStart'],e['timeEnd']) && e['id'] != currentEventId))
+        map(datas=> datas.filter(e => isColliding(startTime,endTime,e['timeStart'],e['timeEnd']) && e['id'] != currentEventId))
       )
     }else{
       return this.getCalendarEntries().pipe(
-        map(datas=> datas.filter(e => this.isColliding(startTime,endTime,e['timeStart'],e['timeEnd'])))
+        map(datas=> datas.filter(e => isColliding(startTime,endTime,e['timeStart'],e['timeEnd'])))
       )
     }
-  }
-
-  private isColliding(startTime1:string, endTime1:string ,startTime2:string, endTime2:string){
-    if(dayjs(startTime1).isBetween(startTime2,endTime2,'minutes','[)')) return true;  // 1 starts in 2
-    if(dayjs(endTime1).isBetween(startTime2,endTime2,'minutes','(]')) return true;    // 1 ends in 2
-    if(dayjs(startTime2).isBetween(startTime1,endTime1,'minutes','[)'))return true;   // 2 starts in 1
-    return false;
   }
 
   getUsers(){
