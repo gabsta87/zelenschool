@@ -1,3 +1,5 @@
+https://angular.io/guide/testing
+
 Questions
     Teacher can also be admin ?
         NO
@@ -19,11 +21,13 @@ Questions
     Do you want admins to be able to change the 3 missed courses limit ? 
 
 
+activities -> goes to anchor, not component
 Course creation needs approval
 Popup to confirm registration to a course for students
 Verify if banning doesnt remove from past courses
 Projects -> activities
 gallery -> folders
+restrict hours for daily/weekly display in schedule
 
 create courses in the past : prevent it ? 
 
@@ -58,6 +62,7 @@ DONE : Uploading images to cloud
 Technical
 TODO banned teacher cannot create courses
 TODO sort by upload date
+TODO create component for conflicting courses (used in both teachermodal and teachercreatemodal)
 TODO fix CORS problem to upload files on server
 TODO Create service to manage course (modal creation) that can be launched from both schedule and admin page
 TODO test teacher/student account creation
