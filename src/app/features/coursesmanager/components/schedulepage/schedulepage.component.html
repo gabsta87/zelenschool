@@ -63,6 +63,8 @@
         [viewDate]="viewDate"
         [events]="events"
         [refresh]="refresh"
+        [dayStartHour]="7"
+        [dayEndHour]="22"
         [weekStartsOn]="weekStartsOn"
         (eventClicked)="handleCalendarEntry('Clicked', $event.event)"
     >
@@ -70,6 +72,8 @@
     <mwl-calendar-day-view
         *ngSwitchCase="CalendarView.Day"
         [viewDate]="viewDate"
+        [dayStartHour]="7"
+        [dayEndHour]="22"
         [events]="events"
         [refresh]="refresh"
         (eventClicked)="handleCalendarEntry('Clicked', $event.event)"
@@ -121,7 +125,7 @@
                 {{event['title']}}
             </ion-col>
             <ion-col>
-                {{event['eventDate']| date: "HH:mm d MMM, yy"}}
+                {{event['timeStart']| date: "HH:mm d MMM, yy"}}
             </ion-col>
             <ion-col>
                 {{event['author'].l_name}} {{event['author'].f_name}}
