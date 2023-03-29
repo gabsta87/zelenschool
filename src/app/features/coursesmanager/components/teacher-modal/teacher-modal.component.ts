@@ -40,7 +40,7 @@ export class TeacherModalComponent{
     private readonly _db: AngularfireService,
     private readonly _user:UsermanagementService,
     private readonly actionSheetCtrl: ActionSheetController
-    ) { }
+  ) { }
   
   async ionViewWillEnter(){
     this.dataObs = this._db.getCalendarEntry(this.meta.id);
@@ -49,6 +49,10 @@ export class TeacherModalComponent{
 
     this.dataObs = this.dataObs.pipe(
       switchMap(async (entry:any) => {
+
+        if(!entry)
+          return;
+
         // Getting users IDs
         const usersIds = entry.attendantsId;
 
@@ -145,7 +149,7 @@ export class TeacherModalComponent{
   }
 
   confirm(){
-    let entry = {id:this.id,title:this.title,timeStart:this.timeStart,timeEnd:this.timeEnd,room_id:this.room_id,max_participants:this.max_participants,description:this.description?this.description:""}
+    let entry = {id:this.id,title:this.title,timeStart:dayjs(this.timeStart).utc().toISOString(),timeEnd:dayjs(this.timeEnd).utc().toISOString(),room_id:this.room_id,max_participants:this.max_participants,description:this.description?this.description:""}
     
     this._db.updateCalendarEntry(entry);
     return this.modalCtrl.dismiss(null, 'confirm');
@@ -170,22 +174,26 @@ export class TeacherModalComponent{
   }
 
   updateTimeStart($event:any){
+    console.log("time start : ",this.timeStart);
+    console.log("evt utc : ",dayjs($event.detail.value).toISOString());
+    console.log("evt utc iso : ",dayjs($event.detail.value).utc().toISOString());
+    
     this.timeStart = $event.detail.value;
-    this.timeEnd = (dayjs(this.timeStart).add(this.duration,this.durationUnit)).toISOString();
+    this.timeEnd = (dayjs(this.timeStart).add(this.duration,this.durationUnit)).utc().toISOString();
 
     return this.updateTime();
   }
   
   updateDuration($event:any){
     this.duration = $event.detail.value;
-    this.timeEnd = (dayjs(this.timeStart).add($event.detail.value,this.durationUnit)).toISOString();
+    this.timeEnd = (dayjs(this.timeStart).add($event.detail.value,this.durationUnit)).utc().toISOString();
 
     return this.updateTime();
   }
 
   updateDurationUnit($event:any){
     this.durationUnit = $event.detail.value;
-    this.timeEnd = (dayjs(this.timeStart).add(this.duration,$event.detail.value)).toISOString();
+    this.timeEnd = (dayjs(this.timeStart).add(this.duration,$event.detail.value)).utc().toISOString();
    
     return this.updateTime();
   }
