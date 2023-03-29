@@ -57,6 +57,7 @@ export class SchedulepageComponent {
   adjustedDate: dayjs.Dayjs = dayjs(this.viewDate);
   isTeacher:BehaviorSubject<boolean> = this._user.isLoggedAsTeacher;
   isAdmin:BehaviorSubject<boolean> = this._user.isLoggedAsAdmin;
+  isBanned = this._user.isUserBanned;
   newEvent:{title:string,time:string,room:number,max_participants:number} = {title:"",time:"",room:-1,max_participants:0};
   extractedData!:Observable<DocumentData[]>;
 
@@ -164,6 +165,11 @@ export class SchedulepageComponent {
   async createEvent(){
     if (!(this.isTeacher.value || this.isAdmin.value)){
       console.log("Cannot create if not admin or not teacher");
+      return
+    }
+
+    if(this._user.isUserBanned.value){
+      console.log("Banned teacher cannot create a course");
       return
     }
     

@@ -32,7 +32,8 @@ restrict hours for daily/weekly display in schedule
 create courses in the past : prevent it ? 
 
 URGENT
-TODO Collision events not working
+TODO Fix hours properly
+DONE Collision events not working
 DONE See why some users have no status
 
 Features
@@ -49,6 +50,7 @@ TODO Teachers can create several courses
 OPTIONAL Teachers can Mark a course as canceled / Mail sent to all participants
     https://firebase.google.com/docs/extensions/official/firestore-send-email?hl=fr
 TODO Multilingual system
+DONE admins can access to teacher modal through admin page
 DONE search bar for events
 USELESS Admins can see each course a user is attending to
 USELESS Admin : group users by teacher/student (or different colors)
@@ -60,7 +62,6 @@ TODO : admins can manage association members
 DONE : Uploading images to cloud
 
 Technical
-TODO banned teacher cannot create courses
 TODO sort by upload date
 TODO create component for conflicting courses (used in both teachermodal and teachercreatemodal)
 TODO fix CORS problem to upload files on server
@@ -70,6 +71,7 @@ TODO students can see their banning date (start and end) / Announce/show to user
 TODO Secure firebase access
     https://firebase.blog/posts/2021/01/code-review-security-rules
     https://firebase.google.com/docs/reference/rules/rules.firestore.Request?hl=fr#auth
+DONE banned teacher cannot create courses
 DONE Use Angular Forms to validate modals
 DONE teacher : mark student as absent in past courses
 DONE prevent modifying past courses for teachers/students 

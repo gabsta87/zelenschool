@@ -3,9 +3,10 @@ import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import * as dayjs from 'dayjs';
-import { BehaviorSubject, combineLatest, count, filter, firstValueFrom, map, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, count, filter, find, firstValueFrom, map, Observable } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { BanmodalComponent } from '../banmodal/banmodal.component';
+import { TeacherModalComponent } from '../teacher-modal/teacher-modal.component';
 
 @Component({
   selector: 'app-adminpage',
@@ -65,10 +66,21 @@ export class AdminpageComponent {
         case "all":
           break;
         case "future":
-          courses = courses.filter((course:any) => dayjs(course.eventDate).isAfter(new Date()) )
+          // courses = courses.filter((course:any) => dayjs(course.timeStart).isAfter(new Date()) )
+
+          courses = courses.filter((course:any) => {
+            console.log("course date : ",dayjs(course.timeStart).toISOString());
+            console.log("new date : ",dayjs(new Date()).toISOString());
+            console.log("is after : ",dayjs(course.timeStart).isAfter(dayjs(new Date())));
+            
+            
+            return dayjs(course.timeStart).isAfter(dayjs(new Date())) 
+            
+            }
+            )
           break;
         case "past":
-          courses = courses.filter((course:any) => dayjs(course.eventDate).isBefore(new Date()) )
+          courses = courses.filter((course:any) => dayjs(course.timeStart).isBefore(new Date()) )
           break;
         default:
           break;
@@ -174,6 +186,33 @@ export class AdminpageComponent {
 
   addPhotoToGallery(){
     this._router.navigate(['/imageUpload/']);
+  }
 
+  async handleEvent(event:DocumentData){
+    console.log("event : ",event);
+    
+    const result = await firstValueFrom(this.coursesObs.pipe(
+      map( (courses:any) => courses.find((e:any)=> e.id == event['id'] ) ) ));
+    console.log("result = ",result);
+    
+    if(result == undefined)
+      return
+    
+    const modal = await this._modal.create({
+      component: TeacherModalComponent,
+      componentProps: {
+        meta : {
+          id : result.id,
+          room_id : result.room_id,
+          timeStart : result.timeStart,
+          timeEnd : result.timeEnd,
+          max_participants : result.max_participants,
+          description : result.description,
+        },
+        title: result.title,
+      },
+    });
+      
+    modal.present();
   }
 }

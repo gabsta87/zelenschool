@@ -95,7 +95,7 @@
         <ion-col *ngIf="(isTeacher|async) || (isAdmin|async)">
             <ion-buttons class="ion-justify-content-center">
                 <!-- <ion-button id="open-modal" (click)="createEvent()">Create course</ion-button> -->
-                <ion-button id="open-modal" fill="solid" style="color:white;" (click)="createEvent()">Create course</ion-button>
+                <ion-button id="open-modal" fill="solid" [disabled]="isBanned|async" style="color:white;" (click)="createEvent()">Create course</ion-button>
             </ion-buttons>
         </ion-col>
     </ion-row>
