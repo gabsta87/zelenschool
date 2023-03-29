@@ -92,6 +92,8 @@ TODO Schedule : Color selected day
 TODO Schedule : different colors for teacher's own events / students subscribed events
 TODO show titles in each day 
     https://mattlewis92.github.io/angular-calendar/#/custom-templates
+TODO : change to 24h format for day and week display in schedule
+    https://github.com/mattlewis92/angular-calendar/issues/78
 DONE admin page : better display for courses
 
 File Transfer on Angular

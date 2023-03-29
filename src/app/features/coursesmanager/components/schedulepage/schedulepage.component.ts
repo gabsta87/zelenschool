@@ -1,8 +1,8 @@
 import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { isSameDay, isSameMonth } from 'date-fns';
 import { WeekDay, MonthView, MonthViewDay } from 'calendar-utils';
-import { BehaviorSubject, combineLatest, elementAt, firstValueFrom, map, Observable, Subject, switchMap } from 'rxjs';
-import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, DAYS_OF_WEEK, } from 'angular-calendar';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarNativeDateFormatter, CalendarView, DateFormatterParams, DAYS_OF_WEEK, } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import * as dayjs from 'dayjs';
 import { DocumentData } from '@angular/fire/firestore';
@@ -12,6 +12,13 @@ import { UsermanagementService } from 'src/app/shared/service/usermanagement.ser
 import { StudentModalComponent } from '../student-modal/student-modal.component';
 import { TeacherModalComponent } from '../teacher-modal/teacher-modal.component';
 import { TeacherCreateEventModalComponent } from '../teacher-create-event-modal/teacher-create-event-modal.component';
+
+// export class CustomDateFormatter extends CalendarNativeDateFormatter {
+//   public override dayViewHour({date, locale}: DateFormatterParams): string {
+//     // change this to return a different date format
+//     return new Intl.DateTimeFormat(locale, {hour: 'numeric'}).format(date);
+//   }
+// }
 
 export interface CalendarMonthViewEventTimesChangedEvent<
   EventMetaType = any,
