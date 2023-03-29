@@ -5,8 +5,6 @@ Questions
         NO
     Phone numbers : swiss format only ?
         swiss/ukrainian or whatever
-    Are we supposed to add rooms ? Is the number of participant limited according to the teacher's will ? Or by the room's choice ? Or both ?
-        yes
     Courses longer than 1 hour ?
         yes
     teachers : students age. Is it some course select blocking option ? recommandation ?
@@ -16,10 +14,11 @@ Questions
     request email validation ? for users/teachers
     send email when course is canceled ?
         https://firebase.google.com/docs/extensions/official/firestore-send-email?hl=fr
+    Are we supposed to add rooms ? Is the number of participant limited according to the teacher's will ? Or by the room's choice ? Or both ?
     Rooms have a name/address instead of number ? Admins can add/remove rooms ?
         Rooms in database
     Do you want admins to be able to change the 3 missed courses limit ? 
-
+        No
 
 activities -> goes to anchor, not component
 Course creation needs approval
@@ -29,12 +28,14 @@ Projects -> activities
 gallery -> folders
 restrict hours for daily/weekly display in schedule
 
-create courses in the past : prevent it ? 
 
 URGENT
 TODO Fix hours properly
 DONE Collision events not working
 DONE See why some users have no status
+
+BUGS
+DONE error while deleting a course : reading attendantsID creates an error
 
 Features
 TODO automatic unban after 30 days
@@ -72,6 +73,7 @@ TODO students can see their banning date (start and end) / Announce/show to user
 TODO Secure firebase access
     https://firebase.blog/posts/2021/01/code-review-security-rules
     https://firebase.google.com/docs/reference/rules/rules.firestore.Request?hl=fr#auth
+DONE prevent to create courses in the past 
 DONE banned teacher cannot create courses
 DONE Use Angular Forms to validate modals
 DONE teacher : mark student as absent in past courses
