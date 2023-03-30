@@ -3,10 +3,12 @@ import * as dayjs from 'dayjs';
 import * as isBetween from 'dayjs/plugin/isBetween';
 import * as utc from 'dayjs/plugin/utc';
 import * as timezone from 'dayjs/plugin/timezone';
+import * as minMax from 'dayjs/plugin/minMax';
 
 dayjs.extend(utc)
 dayjs.extend(isBetween);
 dayjs.extend(timezone)
+dayjs.extend(minMax)
 
 @Injectable({
   providedIn: 'root'
@@ -46,3 +48,6 @@ export function isColliding(startTime1:string, endTime1:string ,startTime2:strin
   return false;
 }
 
+export function timeMin(time1:dayjs.Dayjs,time2:dayjs.Dayjs){
+  return dayjs.min(time1,time2);
+}
