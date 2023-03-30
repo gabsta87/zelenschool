@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import * as dayjs from 'dayjs';
 import { DocumentData } from 'firebase/firestore';
-import { BehaviorSubject, firstValueFrom } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
+import { formatTime, getNowDate, HourManagementService } from 'src/app/shared/service/hour-management.service';
 
 @Component({
   selector: 'app-teacher-create-event-modal',
@@ -20,7 +21,7 @@ export class TeacherCreateEventModalComponent {
   duration = 1;
   durationUnit = 'hour' as dayjs.ManipulateType;
 
-  now = dayjs(new Date()).toISOString();
+  now = getNowDate();
 
   isValid = new BehaviorSubject<Boolean>(false);
   collisionEvents!:DocumentData[]|undefined;
@@ -29,12 +30,21 @@ export class TeacherCreateEventModalComponent {
 
   constructor(private readonly modalCtrl:ModalController,private readonly _db: AngularfireService){ }
 
+  ionViewWillEnter(){
+    
+    console.log("time start : ",this.timeStart);
+    console.log("time start formatted : ",formatTime(this.timeStart));
+    console.log("time start local : ",dayjs(this.timeStart).local().format());
+    console.log("time start utc iso: ",dayjs(this.timeStart).utc().toISOString());
+  }
+
   cancel(){
     return this.modalCtrl.dismiss(null, 'confirm');
   }
 
   confirm(){
-    let entry = {title:this.title,timeStart:dayjs(this.timeStart).utc().toISOString(),timeEnd:dayjs(this.timeEnd).utc().toISOString(),room_id:this.room_id,max_participants:this.max_participants,description:this.description}
+    
+    let entry = {title:this.title,timeStart:this.timeStart,timeEnd:this.timeEnd,room_id:this.room_id,max_participants:this.max_participants,description:this.description}
 
     this._db.createCalendarEntry(entry);
     return this.modalCtrl.dismiss(null, 'confirm');
@@ -42,6 +52,7 @@ export class TeacherCreateEventModalComponent {
 
   async updateTime(){
     
+    // Check possibility to do it with observable 
     this.collisionEvents = await firstValueFrom(this._db.getCalendarEntriesCollisions(this.timeStart,this.timeEnd));
 
     if(this.collisionEvents){
@@ -54,21 +65,21 @@ export class TeacherCreateEventModalComponent {
 
   updateTimeStartFromEvent($event:any){
     this.timeStart = $event.detail.value;
-    this.timeEnd = (dayjs(this.timeStart).add(this.duration,this.durationUnit)).utc().toISOString();
+    this.timeEnd = formatTime(dayjs(this.timeStart).add(this.duration,this.durationUnit));
 
     return this.updateTime();
   }
   
   updateDuration($event:any){
     this.duration = $event.detail.value;
-    this.timeEnd = (dayjs(this.timeStart).add($event.detail.value,this.durationUnit)).utc().toISOString();
+    this.timeEnd = formatTime(dayjs(this.timeStart).add($event.detail.value,this.durationUnit));
 
     return this.updateTime();
   }
 
   updateDurationUnit($event:any){
     this.durationUnit = $event.detail.value;
-    this.timeEnd = (dayjs(this.timeStart).add(this.duration,$event.detail.value)).utc().toISOString();
+    this.timeEnd = formatTime(dayjs(this.timeStart).add(this.duration,$event.detail.value));
     
     return this.updateTime();
   }

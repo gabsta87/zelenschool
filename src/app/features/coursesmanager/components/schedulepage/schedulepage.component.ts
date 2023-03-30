@@ -14,6 +14,7 @@ import { TeacherModalComponent } from '../teacher-modal/teacher-modal.component'
 import { TeacherCreateEventModalComponent } from '../teacher-create-event-modal/teacher-create-event-modal.component';
 
 import * as utc from 'dayjs/plugin/utc';
+import { formatTime } from 'src/app/shared/service/hour-management.service';
 
 dayjs.extend(utc)
 
@@ -81,14 +82,14 @@ export class SchedulepageComponent {
       newValues.forEach(async e =>{
         this.events.push({
           title : e['title'],
-          start : dayjs(e['timeStart']).utc(false).toDate(),
-          end : dayjs(e['timeEnd']).utc(false).toDate(),
+          start : new Date(e['timeStart']),
+          end : new Date(e['timeEnd']),
           actions : this.actions, 
           allDay:false,
           meta:{
             id : e['id'],
-            timeStart : dayjs(e['timeStart']).utc().toISOString(),
-            timeEnd : dayjs(e['timeEnd']).utc().toISOString(),
+            timeStart : formatTime(e['timeStart']),
+            timeEnd : formatTime(e['timeEnd']),
             author: e['author'],
             room_id: e['room_id'],
             attendantsId: e['attendantsId'],
@@ -151,7 +152,7 @@ export class SchedulepageComponent {
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
 
     this.adjustedDate = dayjs(date).add(13,'hour');
-    this.newEvent.time = this.adjustedDate.utc().toISOString();
+    this.newEvent.time = formatTime(this.adjustedDate);
 
     if (isSameMonth(date, this.viewDate)) {
       if (
@@ -176,12 +177,16 @@ export class SchedulepageComponent {
       console.log("Banned teacher cannot create a course");
       return
     }
+
+    console.log("adjusted date : ",formatTime(this.adjustedDate));
+    console.log("time end : ",formatTime(dayjs(this.adjustedDate).add(1,'hour').local().toString()));
+    
     
     const modal = await this.modalController.create({
       component:  TeacherCreateEventModalComponent,
       componentProps: {
-        timeStart: dayjs(this.adjustedDate).utc().toISOString(),
-        timeEnd: dayjs(this.adjustedDate).add(1,'hour').utc().toISOString(),
+        timeStart: this.adjustedDate.local().format(),
+        timeEnd: dayjs(this.adjustedDate).add(1,'hour').local().format(),
       },
     });
     modal.present();

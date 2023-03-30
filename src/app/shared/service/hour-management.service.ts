@@ -11,9 +11,30 @@ dayjs.extend(isBetween);
 })
 export class HourManagementService { }
 
-export function formatTime(timeToFormat:string){
-  console.log("hour formatted : ",dayjs(timeToFormat).utc());
-  return dayjs(timeToFormat).utc();
+// const myFormat = "local" as string;
+// const myFormat = "utc" as string;
+const myFormat = "none" as string;
+
+export function formatTime(timeToFormat:string|dayjs.Dayjs):string{
+
+  if(myFormat === "local"){
+    return dayjs(timeToFormat).local().toISOString();
+  }else if(myFormat === "utc"){
+    return dayjs(timeToFormat).utc().toISOString();
+  }else{
+    return timeToFormat.toString();
+  }
+}
+
+export function getNowDate(){
+  if(myFormat === "local"){
+    return dayjs(new Date()).local().toISOString()
+  }else if(myFormat === "utc"){
+    return dayjs(new Date()).utc().toISOString()
+  }else{
+    // TODO
+    return dayjs(new Date()).toISOString();
+  }
 }
 
 export function isColliding(startTime1:string, endTime1:string ,startTime2:string, endTime2:string){

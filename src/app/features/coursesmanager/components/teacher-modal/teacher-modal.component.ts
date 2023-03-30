@@ -4,6 +4,7 @@ import * as dayjs from 'dayjs';
 import { DocumentData } from 'firebase/firestore';
 import { BehaviorSubject, firstValueFrom, map, Observable, switchMap } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
+import { formatTime, getNowDate, HourManagementService } from 'src/app/shared/service/hour-management.service';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 
 @Component({
@@ -39,7 +40,8 @@ export class TeacherModalComponent{
     private readonly modalCtrl: ModalController,
     private readonly _db: AngularfireService,
     private readonly _user:UsermanagementService,
-    private readonly actionSheetCtrl: ActionSheetController
+    private readonly actionSheetCtrl: ActionSheetController,
+    private readonly timeManager : HourManagementService,
   ) { }
   
   async ionViewWillEnter(){
@@ -74,8 +76,8 @@ export class TeacherModalComponent{
 
     this.id = this.meta.id;
     this.room_id = this.meta.room_id;
-    this.timeStart = this.meta.timeStart;
-    this.timeEnd = this.meta.timeEnd;
+    this.timeStart = formatTime(this.meta.timeStart);
+    this.timeEnd = formatTime(this.meta.timeEnd);
     this.max_participants = this.meta.max_participants;
     this.description = this.meta.description;
 
@@ -89,7 +91,7 @@ export class TeacherModalComponent{
 
     this.isAuthor = actualValue ? actualValue['author'] == this._user.getId() : false;
     this.isAdmin = this._user.isAdmin();
-    this.isPassedEvent = dayjs(this.timeStart).isBefore(new Date()) ;
+    this.isPassedEvent = dayjs(this.timeStart).isBefore(getNowDate()) ;
 
     // USE THIS VERSION FOR FINAL RELEASE
     // this.cannotModify = (!this.isAuthor || this.isPassedEvent ) && !this.isAdmin;
@@ -149,7 +151,7 @@ export class TeacherModalComponent{
   }
 
   confirm(){
-    let entry = {id:this.id,title:this.title,timeStart:dayjs(this.timeStart).utc().toISOString(),timeEnd:dayjs(this.timeEnd).utc().toISOString(),room_id:this.room_id,max_participants:this.max_participants,description:this.description?this.description:""}
+    let entry = {id:this.id,title:this.title,timeStart:formatTime(this.timeStart),timeEnd:formatTime(this.timeEnd),room_id:this.room_id,max_participants:this.max_participants,description:this.description?this.description:""}
     
     this._db.updateCalendarEntry(entry);
     return this.modalCtrl.dismiss(null, 'confirm');
@@ -161,7 +163,6 @@ export class TeacherModalComponent{
   collisionIndex !: number;
 
   async updateTime(){
-    
     this.collisionEvents = await firstValueFrom(this._db.getCalendarEntriesCollisions(this.timeStart,this.timeEnd,this.id));
 
     if(this.collisionEvents){
@@ -174,26 +175,47 @@ export class TeacherModalComponent{
   }
 
   updateTimeStart($event:any){
-    console.log("time start : ",this.timeStart);
-    console.log("evt utc : ",dayjs($event.detail.value).toISOString());
-    console.log("evt utc iso : ",dayjs($event.detail.value).utc().toISOString());
+    // console.log("time start : ",this.timeStart);
+    // console.log("event : ",$event.detail.value);
+    // // let 
+    // // this.timeStart = dayjs($event.detail.value).hour
+    // let hour = dayjs($event.detail.value).hour();
+    // let minute = dayjs($event.detail.value).minute();
+    // let year = dayjs($event.detail.value).year();
+    // let month = dayjs($event.detail.value).month();
+    // let day = dayjs($event.detail.value).day();
+    // let myStr = ""+year+"-"+month+"-"+day+"T"+hour+":"+minute+":00.000.Z";
+    // let myDate = new Date(Date.UTC(year=year,month=month,day=day,hour=hour,minute=minute));
+    // console.log("hour : ",hour);
     
-    this.timeStart = $event.detail.value;
-    this.timeEnd = (dayjs(this.timeStart).add(this.duration,this.durationUnit)).utc().toISOString();
+    // console.log("my str : ",myStr);
+    // console.log("my date : ",myDate);
+    
+    
+    // // this.timeStart = dayjs(myDate).toISOString();
+    // // this.timeStart = formatTime($event.detail.value);
+
+    // console.log("After change time start : ",this.timeStart);
+    // console.log("After change event : ",$event.detail.value);
+    this.timeStart = formatTime($event.detail.value);
+    this.timeEnd = formatTime(dayjs(this.timeStart).add(this.duration,this.durationUnit));
+
+    console.log("time start : ",this.timeStart);
+    console.log("time end : ",this.timeEnd);
 
     return this.updateTime();
   }
   
   updateDuration($event:any){
-    this.duration = $event.detail.value;
-    this.timeEnd = (dayjs(this.timeStart).add($event.detail.value,this.durationUnit)).utc().toISOString();
+    // this.duration = $event.detail.value;
+    this.timeEnd = formatTime(dayjs(this.timeStart).add($event.detail.value,this.durationUnit));
 
     return this.updateTime();
   }
 
   updateDurationUnit($event:any){
-    this.durationUnit = $event.detail.value;
-    this.timeEnd = (dayjs(this.timeStart).add(this.duration,$event.detail.value)).utc().toISOString();
+    // this.durationUnit = $event.detail.value;
+    this.timeEnd = formatTime(dayjs(this.timeStart).add(this.duration,$event.detail.value));
    
     return this.updateTime();
   }

@@ -24,6 +24,11 @@
         <ion-text>Author : {{creatorName}}</ion-text>
     </ion-item>
 
+    <!-- <ion-item [disabled]="cannotModify">
+        <ion-label>Time</ion-label>
+        <ion-input type="number" [(ngModel)]="timeStart" (ionChange)="updateTimeStart($event)"> </ion-input>
+    </ion-item> -->
+
     <ion-item *ngIf="cannotModify; else modif" [disabled]="cannotModify">
         <ion-label>Time</ion-label>
         <ion-datetime-button datetime="datetime"></ion-datetime-button>
