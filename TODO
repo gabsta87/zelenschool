@@ -1,161 +1,123 @@
-https://angular.io/guide/testing
 
-Questions
-    Teacher can also be admin ?
-        NO
-    Phone numbers : swiss format only ?
-        swiss/ukrainian or whatever
-    Courses longer than 1 hour ?
-        yes
-    teachers : students age. Is it some course select blocking option ? recommandation ?
+Questions:
+    ✘ Teacher can also be admin ? @cancelled(23-03-30 17:26)
+    ✔ Phone numbers : swiss/ukrainian or whatever @done(23-03-30 17:26)
+    ✔ Courses longer than 1 hour ? @done(23-03-30 17:26)
+    ☐ teachers : students age. Is it some course select blocking option ? recommandation ?
 
-    request admin action for teachers registration ?
-        yes
-    request email validation ? for users/teachers
-    send email when course is canceled ?
+    ✔ request admin action for teachers registration ? @done(23-03-30 17:25)
+    ✘ request email validation ? for users/teachers @cancelled(23-03-30 17:25)
+    ✘ send email when course is canceled ? @cancelled(23-03-30 17:25)
         https://firebase.google.com/docs/extensions/official/firestore-send-email?hl=fr
-    Are we supposed to add rooms ? Is the number of participant limited according to the teacher's will ? Or by the room's choice ? Or both ?
-    Rooms have a name/address instead of number ? Admins can add/remove rooms ?
-        Rooms in database
-    Do you want admins to be able to change the 3 missed courses limit ? 
-        No
+    ✘ admins can change the 3 missed courses limit ? @cancelled(23-03-30 17:24)
 
-activities -> goes to anchor, not component
-Course creation needs approval
-Popup to confirm registration to a course for students
-Verify if banning doesnt remove from past courses
-Projects -> activities
-gallery -> folders
-restrict hours for daily/weekly display in schedule
+Misc : 
+    ☐ activities -> goes to anchor, not component
+    ☐ Course creation needs approval
+    ☐ Popup to confirm registration to a course for students
+    ☐ Verify if banning doesnt remove from past courses
+    ☐ Projects -> activities
+    ☐ gallery -> folders
 
+URGENT :
+    ✔ Fix hours properly @done(23-03-30 17:11)
+    ✔ Collision events not working @done(23-03-30 17:11)
+    ✔ See why some users have no status @done(23-03-30 17:11)
 
-URGENT
-TODO Fix hours properly
-DONE Collision events not working
-DONE See why some users have no status
+BUGS :
+    ☐ Check methods here https://angular.io/guide/testing
+    ✔ error while deleting a course : reading attendantsID creates an error @done(23-03-30 17:11)
 
-BUGS
-DONE error while deleting a course : reading attendantsID creates an error
+Features:
+    ☐ Rooms have a name/address instead of number ? Admins can add/remove rooms ? Rooms from database
+    ☐ automatic unban after 30 days (only for absences)
+    ☐ Admin page : actions allowed @high @started(23-03-30 17:06)
+    ✔ request admin approval for teachers (on users list of admin, put badge for waiting approval users) @done(23-03-30 17:02)
+    ✔ restrict hours for daily/weekly display in schedule @done(23-03-30 17:22)
+    ✔ admins can access to teacher modal through admin page @done(23-03-30 17:03)
+    ✔ Uploading images to cloud @done(23-03-30 17:06)
+    ☐ admins can manage assoc members/upload image files
+        https://blog.angular-university.io/angular-file-upload/
+        https://firebase.google.com/docs/storage/web/list-files?hl=fr&authuser=0
+    ☐ Teachers can create several courses
+        https://mattlewis92.github.io/angular-calendar/#/selectable-period
+    ☐ Teachers can Mark a course as canceled / Mail sent to all participants @low
+        https://firebase.google.com/docs/extensions/official/firestore-send-email?hl=fr
+    ☐ Multilingual system
+    Schedule : 
+        ☐ filter available courses, filter by teacher, search tool
+        ☐ search bar for events
+    Admin Page :
+        ✔ add search tool @done(23-03-30 17:04)
+        ✔ load teachers names @done(23-03-30 17:04)
+        ☐ admins can upload gallery images
+        ☐ admins can manage association members
+    Canceled : 
+        ✘ Admins can see each course a user is attending to @cancelled(23-03-30 16:59)
+        ✘ Admin : group users by teacher/student (or different colors) @cancelled(23-03-30 16:59)
+        ✘ Admin : color banned users @cancelled(23-03-30 16:59)
 
-Features
-TODO automatic unban after 30 days
-    Yes but only for absence
-TODO Admin page : actions allowed (IMPORTANT)
-TODO request admin approval for teachers (on users list of admin, put badge for waiting approval users)
-TODO admins can manage assoc members/upload image files
-    https://blog.angular-university.io/angular-file-upload/
-    https://firebase.google.com/docs/storage/web/list-files?hl=fr&authuser=0
-TODO change selected day color
-TODO Teachers can create several courses
-    https://mattlewis92.github.io/angular-calendar/#/selectable-period
-OPTIONAL Teachers can Mark a course as canceled / Mail sent to all participants
-    https://firebase.google.com/docs/extensions/official/firestore-send-email?hl=fr
-TODO Multilingual system
-TODO Schedule : filter available courses, filter by teacher, search tool
-DONE admins can access to teacher modal through admin page
-DONE search bar for events
-USELESS Admins can see each course a user is attending to
-USELESS Admin : group users by teacher/student (or different colors)
-USELESS Admin : color banned users
-DONE Admin page : add search tool
-DONE Admin page : load teachers names
-TODO : admins can upload gallery images
-TODO : admins can manage association members
-DONE : Uploading images to cloud
+Technical :
+    New:
+        ☐ sort by upload date
+        ☐ create component for conflicting courses (used in both teachermodal and teachercreatemodal)
+        ☐ fix CORS problem to upload files on server
+        ☐ Create service to manage course (modal creation) that can be launched from both schedule and admin page
+        ☐ test teacher/student account creation
+        ☐ students can see their banning date (start and end) / Announce/show to user that he has been banned
+        ☐ Secure firebase access
+            https://firebase.blog/posts/2021/01/code-review-security-rules
+            https://firebase.google.com/docs/reference/rules/rules.firestore.Request?hl=fr#auth
+    Done:
+        ✔ prevent to create courses in the past @done(23-03-30 16:56)
+        ✔ banned teacher cannot create courses @done(23-03-30 16:56)
+        ✔ Use Angular Forms to validate modals @done(23-03-30 16:56)
+        ✔ teacher : mark student as absent in past courses @done(23-03-30 16:56)
+        ✔ prevent modifying past courses for teachers/students @done(23-03-30 16:56)
+        ✔ Impossible to subscribe to past dates @done(23-03-30 16:56)
+        ✔ Faster search using combinelatest @done(23-03-30 16:56)
 
-Technical
-TODO sort by upload date
-TODO create component for conflicting courses (used in both teachermodal and teachercreatemodal)
-TODO fix CORS problem to upload files on server
-TODO Create service to manage course (modal creation) that can be launched from both schedule and admin page
-TODO test teacher/student account creation
-TODO students can see their banning date (start and end) / Announce/show to user that he has been banned
-TODO Secure firebase access
-    https://firebase.blog/posts/2021/01/code-review-security-rules
-    https://firebase.google.com/docs/reference/rules/rules.firestore.Request?hl=fr#auth
-DONE prevent to create courses in the past 
-DONE banned teacher cannot create courses
-DONE Use Angular Forms to validate modals
-DONE teacher : mark student as absent in past courses
-DONE prevent modifying past courses for teachers/students 
-DONE Impossible to subscribe to past dates
-DONE Faster search using combinelatest
-
-Cosmetics
-TODO Better errors management for forms
-TODO fix all account pages on same style
-TODO Schedule : add search tool
-TODO Schedule : sort table by date
-TODO Schedule : Correct popover infos (add hour)
-https://mattlewis92.github.io/angular-calendar/#/disable-tooltips
-    https://mattlewis92.github.io/angular-calendar/#/show-dates-on-titles
-    https://mattlewis92.github.io/angular-calendar/#/editable-deletable-events
-TODO Schedule : Color selected day
-    https://mattlewis92.github.io/angular-calendar/#/selectable-period
-TODO Schedule : different colors for teacher's own events / students subscribed events
-TODO show titles in each day 
-    https://mattlewis92.github.io/angular-calendar/#/custom-templates
-TODO : change to 24h format for day and week display in schedule
-    https://github.com/mattlewis92/angular-calendar/issues/78
-DONE admin page : better display for courses
+Cosmetics :
+    ☐ Better errors management for forms
+    ✔ fix all account pages on same style @done(23-03-30 17:07)
+    Schedule : 
+        ☐ Correct popover infos (add hour) @high
+            https://mattlewis92.github.io/angular-calendar/#/disable-tooltips
+            https://mattlewis92.github.io/angular-calendar/#/show-dates-on-titles
+            https://mattlewis92.github.io/angular-calendar/#/editable-deletable-events
+        ✔ sort table by date @done(23-03-30 17:07)
+        ☐ Color selected day
+            https://mattlewis92.github.io/angular-calendar/#/selectable-period
+        ☐ different colors for teacher's own events / students subscribed events
+        ☐ show titles in each day 
+            https://mattlewis92.github.io/angular-calendar/#/custom-templates
+        ☐ change to 24h format for day and week display in schedule
+            https://github.com/mattlewis92/angular-calendar/issues/78
+        ☐ show course author names
+    Admin page : 
+        ✔ better display for courses @done(23-03-30 17:10)
 
 File Transfer on Angular
     https://blog.angular-university.io/angular-file-upload/
 
-Refactoring
-TODO create Doc
-TODO Move components in sub-folders
+Refactoring:
+    ☐ create Doc
+    ☐ Move components in sub-folders
+    ✔ added description to courses @done(23-03-30 17:16)
+    ✔ click on bottom table to create modal @done(23-03-30 17:16)
+    ✔ Force comment for banning @done(23-03-30 17:16)
+    ✔ Banned user (variable into userManagement service to prevent subscription to courses) @done(23-03-30 17:16)
+    ✔ Manage forgotten password problem for email/pwd login @done(23-03-30 17:16)
+    ✔ Teacher who wants to register with google account @done(23-03-30 17:16)
+    ✔ Create teacher account (new simpler page) (URGENT) @done(23-03-30 17:16)
+    ✔ Ban system (REQUESTED) @done(23-03-30 17:16)
+    ✔ prevent from creating a course in an occupied classroom (same time and same room id) @done(23-03-30 17:16)
+    ✔ Teachers can see their course's students @done(23-03-30 17:16)
+    ✔ debug teachers'names display on schedule page @done(23-03-30 17:16)
+    ✔ Corriger author : undefined dans meta du teacher-modal @done(23-03-30 17:16)
+    ✔ Changer la page Account pour permettre de changer les infos de son compte @done(23-03-30 17:16)
+    ✔ Mise à jour des informations du compte @done(23-03-30 17:16)
+    ✔ Modal pour s'inscrire dans les cours @done(23-03-30 17:16)
+    ✔ Modal pour que les admins puissent modifier les données @done(23-03-30 17:16)
 
-DONE added description to courses
-DONE click on bottom table to create modal
-DONE Force comment for banning
-DONE Banned user (variable into userManagement service to prevent subscription to courses)
-DONE Manage forgotten password problem for email/pwd login
-DONC Teacher who wants to register with google account
-DONE Create teacher account (new simpler page) (URGENT)
-DONE Ban system (REQUESTED)
-DONE prevent from creating a course in an occupied classroom (same time and same room id)
-DONE Teachers can see their course's students
-DONE debug teachers'names display on schedule page
-DONE Corriger author : undefined dans meta du teacher-modal
-DONE Changer la page Account pour permettre de changer les infos de son compte
-DONE Mise à jour des informations du compte
-DONE Modal pour s'inscrire dans les cours
-DONE Modal pour que les admins puissent modifier les données
 
-
-Students
-First name
-Last name
-Birthday
-S permit number
-Address
-Phone number
-Email
-
-Teachers
-First name
-Last name
-Phone number
-Experience
-Age of students
-Email
-
-Visitor
-- create account
-- see courses
-- donate
-
-students
-- see/subscribe courses
-- create account
-
-Teachers
-- see/download students list
-- option to signal a missing person
-- create/edit own course
-
-Administrators
-- write/edit/delete gallery/news/about us
-- edit students/teachers list
-- ban/unban student (30 days cannot subscribe)
