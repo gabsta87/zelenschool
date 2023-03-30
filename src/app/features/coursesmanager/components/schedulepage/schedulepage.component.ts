@@ -14,7 +14,7 @@ import { TeacherModalComponent } from '../teacher-modal/teacher-modal.component'
 import { TeacherCreateEventModalComponent } from '../teacher-create-event-modal/teacher-create-event-modal.component';
 import { WeekViewHourColumn } from 'calendar-utils';
 
-import { formatTime } from 'src/app/shared/service/hour-management.service';
+import { formatTime, getNowDate } from 'src/app/shared/service/hour-management.service';
 
 export interface CalendarMonthViewEventTimesChangedEvent<
   EventMetaType = any,
@@ -69,6 +69,7 @@ export class SchedulepageComponent {
   extractedData!:Observable<DocumentData[]>;
   filterAscTitle = true;
   filterAscTime = true;
+  now = getNowDate();
 
 
   constructor(
@@ -154,9 +155,6 @@ export class SchedulepageComponent {
 
   dayClicked(day:CalendarMonthViewDay): void {
 
-    this.adjustedDate = dayjs(day.date).add(13,'hour');
-    this.newEvent.time = formatTime(this.adjustedDate);
-
     if (isSameMonth(day.date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, day.date) && this.activeDayIsOpen === true) ||
@@ -168,6 +166,12 @@ export class SchedulepageComponent {
       }
       this.viewDate = day.date;
     }
+
+    if(dayjs(day.date).isBefore(dayjs(this.now)))
+      return;
+
+    this.adjustedDate = dayjs(day.date).add(13,'hour');
+    this.newEvent.time = formatTime(this.adjustedDate);
 
     this.selectedMonthViewDay = day;
     const selectedDateTime = this.selectedMonthViewDay.date.getTime();
