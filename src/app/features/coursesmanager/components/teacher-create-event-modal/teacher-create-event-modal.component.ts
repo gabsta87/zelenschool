@@ -30,14 +30,6 @@ export class TeacherCreateEventModalComponent {
 
   constructor(private readonly modalCtrl:ModalController,private readonly _db: AngularfireService){ }
 
-  ionViewWillEnter(){
-    
-    console.log("time start : ",this.timeStart);
-    console.log("time start formatted : ",formatTime(this.timeStart));
-    console.log("time start local : ",dayjs(this.timeStart).local().format());
-    console.log("time start utc iso: ",dayjs(this.timeStart).utc().toISOString());
-  }
-
   cancel(){
     return this.modalCtrl.dismiss(null, 'confirm');
   }

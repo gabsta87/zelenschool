@@ -23,7 +23,7 @@ export class TeacherModalComponent{
   creatorName:string = "";
   description:string = "";
 
-  now = dayjs(new Date()).toISOString();
+  now = getNowDate();
   duration = 1;
   durationUnit = 'hour' as dayjs.ManipulateType;
 

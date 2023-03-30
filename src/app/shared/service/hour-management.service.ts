@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import * as dayjs from 'dayjs';
 import * as isBetween from 'dayjs/plugin/isBetween';
 import * as utc from 'dayjs/plugin/utc';
+import * as timezone from 'dayjs/plugin/timezone';
 
 dayjs.extend(utc)
 dayjs.extend(isBetween);
+dayjs.extend(timezone)
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,7 @@ export class HourManagementService { }
 const myFormat = "none" as string;
 
 export function formatTime(timeToFormat:string|dayjs.Dayjs):string{
-
+  
   if(myFormat === "local"){
     return dayjs(timeToFormat).local().toISOString();
   }else if(myFormat === "utc"){
@@ -27,13 +29,13 @@ export function formatTime(timeToFormat:string|dayjs.Dayjs):string{
 }
 
 export function getNowDate(){
+
   if(myFormat === "local"){
     return dayjs(new Date()).local().toISOString()
   }else if(myFormat === "utc"){
     return dayjs(new Date()).utc().toISOString()
   }else{
-    // TODO
-    return dayjs(new Date()).toISOString();
+    return dayjs(new Date()).format();
   }
 }
 
