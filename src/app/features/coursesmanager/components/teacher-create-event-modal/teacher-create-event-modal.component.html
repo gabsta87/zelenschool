@@ -34,6 +34,11 @@
         </ion-select>
     </ion-item>
 
+    <ion-item *ngIf="selectedDays && selectedDays.length > 1">
+        <!-- {{selectedDays[0]|json}} -->
+        <ion-item *ngFor="let day of selectedDays" lines="none">{{day['date']|date : "dd.MM.YY"}}</ion-item>
+    </ion-item> 
+
     <ion-item>
         <ion-label>Max participants</ion-label>
         <ion-input type="number" placeholder="00" name="max_participants" required [(ngModel)]="max_participants"></ion-input>

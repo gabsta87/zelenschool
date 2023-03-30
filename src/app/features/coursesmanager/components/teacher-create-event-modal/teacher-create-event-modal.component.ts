@@ -21,6 +21,8 @@ export class TeacherCreateEventModalComponent {
   duration = 1;
   durationUnit = 'hour' as dayjs.ManipulateType;
 
+  selectedDays!:any[];
+
   now = getNowDate();
 
   isValid = new BehaviorSubject<Boolean>(false);
