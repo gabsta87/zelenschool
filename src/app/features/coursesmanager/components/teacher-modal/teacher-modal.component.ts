@@ -95,7 +95,7 @@ export class TeacherModalComponent{
     // USE THIS VERSION FOR FINAL RELEASE
     // this.cannotModify = (!this.isAuthor || this.isPassedEvent ) && !this.isAdmin;
 
-    // TEMPORARY FOR TESTING
+    // TEMPORARY FOR TESTING : Admin cannot modify course which are not his own
     this.cannotModify = !this.isAuthor || this.isPassedEvent;
     
     if(actualValue){
@@ -174,46 +174,19 @@ export class TeacherModalComponent{
   }
 
   updateTimeStart($event:any){
-    // console.log("time start : ",this.timeStart);
-    // console.log("event : ",$event.detail.value);
-    // // let 
-    // // this.timeStart = dayjs($event.detail.value).hour
-    // let hour = dayjs($event.detail.value).hour();
-    // let minute = dayjs($event.detail.value).minute();
-    // let year = dayjs($event.detail.value).year();
-    // let month = dayjs($event.detail.value).month();
-    // let day = dayjs($event.detail.value).day();
-    // let myStr = ""+year+"-"+month+"-"+day+"T"+hour+":"+minute+":00.000.Z";
-    // let myDate = new Date(Date.UTC(year=year,month=month,day=day,hour=hour,minute=minute));
-    // console.log("hour : ",hour);
-    
-    // console.log("my str : ",myStr);
-    // console.log("my date : ",myDate);
-    
-    
-    // // this.timeStart = dayjs(myDate).toISOString();
-    // // this.timeStart = formatTime($event.detail.value);
-
-    // console.log("After change time start : ",this.timeStart);
-    // console.log("After change event : ",$event.detail.value);
     this.timeStart = formatTime($event.detail.value);
     this.timeEnd = formatTime(dayjs(this.timeStart).add(this.duration,this.durationUnit));
-
-    console.log("time start : ",this.timeStart);
-    console.log("time end : ",this.timeEnd);
 
     return this.updateTime();
   }
   
   updateDuration($event:any){
-    // this.duration = $event.detail.value;
     this.timeEnd = formatTime(dayjs(this.timeStart).add($event.detail.value,this.durationUnit));
 
     return this.updateTime();
   }
 
   updateDurationUnit($event:any){
-    // this.durationUnit = $event.detail.value;
     this.timeEnd = formatTime(dayjs(this.timeStart).add(this.duration,$event.detail.value));
    
     return this.updateTime();
