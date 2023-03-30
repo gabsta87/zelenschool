@@ -41,7 +41,6 @@ export class TeacherModalComponent{
     private readonly _db: AngularfireService,
     private readonly _user:UsermanagementService,
     private readonly actionSheetCtrl: ActionSheetController,
-    private readonly timeManager : HourManagementService,
   ) { }
   
   async ionViewWillEnter(){
