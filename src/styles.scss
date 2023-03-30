@@ -88,3 +88,9 @@
     --ion-toolbar-backgroudn: white;
     --ion-toolbar-color : var(--ion-color-primary);
 }
+
+
+.cal-day-selected,
+.cal-day-selected:hover {
+  background-color: var(--ion-color-medium) !important;
+}

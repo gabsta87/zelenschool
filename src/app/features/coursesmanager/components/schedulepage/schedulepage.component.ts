@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { compareAsc, isSameDay, isSameMonth } from 'date-fns';
 import { WeekDay, MonthView, MonthViewDay } from 'calendar-utils';
 import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
-import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarNativeDateFormatter, CalendarView, DateFormatterParams, DAYS_OF_WEEK, } from 'angular-calendar';
+import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarMonthViewDay, CalendarNativeDateFormatter, CalendarView, CalendarWeekViewBeforeRenderEvent, DateFormatterParams, DAYS_OF_WEEK, } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import * as dayjs from 'dayjs';
 import { DocumentData } from '@angular/fire/firestore';
@@ -12,11 +12,9 @@ import { UsermanagementService } from 'src/app/shared/service/usermanagement.ser
 import { StudentModalComponent } from '../student-modal/student-modal.component';
 import { TeacherModalComponent } from '../teacher-modal/teacher-modal.component';
 import { TeacherCreateEventModalComponent } from '../teacher-create-event-modal/teacher-create-event-modal.component';
+import { WeekViewHourColumn } from 'calendar-utils';
 
-import * as utc from 'dayjs/plugin/utc';
 import { formatTime } from 'src/app/shared/service/hour-management.service';
-
-dayjs.extend(utc)
 
 export interface CalendarMonthViewEventTimesChangedEvent<
   EventMetaType = any,
@@ -57,6 +55,10 @@ export class SchedulepageComponent {
   activeDayIsOpen: boolean = false;
   viewDate: Date = new Date();
   weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
+  selectedMonthViewDay!: CalendarMonthViewDay;
+  selectedDayViewDate!: Date;
+  hourColumns!: WeekViewHourColumn[];
+  selectedDays: any = [];
 
   // Schedulepage
   adjustedDate: dayjs.Dayjs = dayjs(this.viewDate);
@@ -67,6 +69,7 @@ export class SchedulepageComponent {
   extractedData!:Observable<DocumentData[]>;
   filterAscTitle = true;
   filterAscTime = true;
+
 
   constructor(
     private readonly _route: ActivatedRoute,
@@ -85,8 +88,8 @@ export class SchedulepageComponent {
           start : new Date(e['timeStart']),
           end : new Date(e['timeEnd']),
           actions : this.actions, 
-          allDay:false,
-          meta:{
+          allDay : false,
+          meta : {
             id : e['id'],
             timeStart : formatTime(e['timeStart']),
             timeEnd : formatTime(e['timeEnd']),
@@ -149,22 +152,75 @@ export class SchedulepageComponent {
     this.activeDayIsOpen = false;
   }
 
-  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+  dayClicked(day:CalendarMonthViewDay): void {
 
-    this.adjustedDate = dayjs(date).add(13,'hour');
+    this.adjustedDate = dayjs(day.date).add(13,'hour');
     this.newEvent.time = formatTime(this.adjustedDate);
 
-    if (isSameMonth(date, this.viewDate)) {
+    if (isSameMonth(day.date, this.viewDate)) {
       if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
+        (isSameDay(this.viewDate, day.date) && this.activeDayIsOpen === true) ||
+        day.events.length === 0
       ) {
         this.activeDayIsOpen = false;
       } else {
         this.activeDayIsOpen = true;
       }
-      this.viewDate = date;
+      this.viewDate = day.date;
     }
+
+    this.selectedMonthViewDay = day;
+    const selectedDateTime = this.selectedMonthViewDay.date.getTime();
+    const dateIndex = this.selectedDays.findIndex(
+      (selectedDay:any) => selectedDay.date.getTime() === selectedDateTime
+    );
+    if (dateIndex > -1) {
+      delete this.selectedMonthViewDay.cssClass;
+      this.selectedDays.splice(dateIndex, 1);
+    } else {
+      this.selectedDays.push(this.selectedMonthViewDay);
+      day.cssClass = 'cal-day-selected';
+      this.selectedMonthViewDay = day;
+    }
+  }
+
+  beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
+    
+    body.forEach((day) => {
+      if (
+        this.selectedDays.some(
+          (selectedDay:any) => selectedDay.date.getTime() === day.date.getTime()
+        )
+      ) {
+        day.cssClass = 'cal-day-selected';
+      }
+    });
+  }
+
+  hourSegmentClicked(date: Date) {
+    this.selectedDayViewDate = date;
+    this.addSelectedDayViewClass();
+  }
+
+  beforeWeekOrDayViewRender(event: CalendarWeekViewBeforeRenderEvent) {
+    this.hourColumns = event.hourColumns;
+    this.addSelectedDayViewClass();
+  }
+
+  private addSelectedDayViewClass() {
+    this.hourColumns.forEach((column) => {
+      column.hours.forEach((hourSegment) => {
+        hourSegment.segments.forEach((segment) => {
+          delete segment.cssClass;
+          if (
+            this.selectedDayViewDate &&
+            segment.date.getTime() === this.selectedDayViewDate.getTime()
+          ) {
+            segment.cssClass = 'cal-day-selected';
+          }
+        });
+      });
+    });
   }
 
   async createEvent(){
@@ -178,15 +234,12 @@ export class SchedulepageComponent {
       return
     }
 
-    console.log("adjusted date : ",formatTime(this.adjustedDate));
-    console.log("time end : ",formatTime(dayjs(this.adjustedDate).add(1,'hour').local().toString()));
-    
-    
     const modal = await this.modalController.create({
       component:  TeacherCreateEventModalComponent,
       componentProps: {
         timeStart: this.adjustedDate.local().format(),
         timeEnd: dayjs(this.adjustedDate).add(1,'hour').local().format(),
+        selectedDays : this.selectedDays
       },
     });
     modal.present();

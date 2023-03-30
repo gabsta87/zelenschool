@@ -1,6 +1,12 @@
 <ion-content> 
 <div class="scheduleContainer">
 
+    <ion-popover #popover [isOpen]="isBanned.value">
+        <ng-template>
+            <ion-content class="ion-padding">You have been banned, and hence cannot participate</ion-content>
+        </ng-template>
+    </ion-popover>
+
     <ion-grid class="ion-no-margin">
         <ion-row class="ion-text-center">
             <ion-col>
@@ -55,6 +61,7 @@
         [activeDayIsOpen]="activeDayIsOpen"
         [weekStartsOn]="weekStartsOn"
         (eventClicked)="handleCalendarEntry('Clicked', $event.event)"
+        (beforeViewRender)="beforeMonthViewRender($event)"
         (dayClicked)="dayClicked($event.day)"
     >
     </mwl-calendar-month-view>
@@ -66,7 +73,9 @@
         [dayStartHour]="7"
         [dayEndHour]="22"
         [weekStartsOn]="weekStartsOn"
+        (beforeViewRender)="beforeWeekOrDayViewRender($event)"
         (eventClicked)="handleCalendarEntry('Clicked', $event.event)"
+        (hourSegmentClicked)="hourSegmentClicked($event.date)"
     >
     </mwl-calendar-week-view>
     <mwl-calendar-day-view
@@ -76,7 +85,9 @@
         [dayEndHour]="22"
         [events]="events"
         [refresh]="refresh"
+        (beforeViewRender)="beforeWeekOrDayViewRender($event)"
         (eventClicked)="handleCalendarEntry('Clicked', $event.event)"
+        (hourSegmentClicked)="hourSegmentClicked($event.date)"
     >
     </mwl-calendar-day-view>
 </div>
@@ -89,13 +100,10 @@
                 Edit events
             </h3>
         </ion-col>
-        <ion-col>
-            <ion-text>{{adjustedDate|json}}</ion-text>
-        </ion-col>
         <ion-col *ngIf="(isTeacher|async) || (isAdmin|async)">
             <ion-buttons class="ion-justify-content-center">
                 <!-- <ion-button id="open-modal" (click)="createEvent()">Create course</ion-button> -->
-                <ion-button id="open-modal" fill="solid" [disabled]="isBanned|async" style="color:white;" (click)="createEvent()">Create course</ion-button>
+                <ion-button id="open-modal" fill="solid" [disabled]="isBanned|async" style="color:white;" (click)="createEvent()">Create course<span *ngIf="selectedDays.length > 1">s</span></ion-button>
             </ion-buttons>
         </ion-col>
     </ion-row>
