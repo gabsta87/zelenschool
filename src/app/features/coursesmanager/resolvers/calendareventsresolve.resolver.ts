@@ -27,7 +27,7 @@ export class CalendareventsresolveResolver implements Resolve<Observable<Observa
         const authorInfos = await Promise.all(authorIds.map((id:any) => this._db.getUser(id)));
     
         // Remplace les IDs par les noms des utilisateurs
-        calendarEvent.map((evt:any) => evt.author = authorInfos.find((e:any) => e.id === evt.author))
+        calendarEvent.map((evt:any) => evt.author = authorInfos.find((e:any) => e ? e.id === evt.author : undefined))
     
         return calendarEvent;
       })

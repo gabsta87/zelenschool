@@ -113,10 +113,10 @@
             <ion-col>
                 <b>Teacher</b>
             </ion-col>
-            <ion-col>
+            <ion-col size="1">
                 <b>Classroom</b>
             </ion-col>
-            <ion-col>
+            <ion-col size="1">
                 <b>Attendants</b>
             </ion-col>
         </ion-row>
@@ -130,14 +130,14 @@
                 {{event['timeStart']}}
             </ion-col>
             <ion-col>
-                {{event['author'].l_name}} {{event['author'].f_name}}
+                {{event['author']?.l_name}} {{event['author']?.f_name}}
             </ion-col>
-            <ion-col>
+            <ion-col size="1">
                 <ion-text class="participantsCounter">
                     {{event['room_id']}}
                 </ion-text>
             </ion-col>
-            <ion-col>
+            <ion-col size="1">
                 <div *ngIf="event['attendantsId']">
                 <ion-text class="participantsCounter">
                     ({{event['attendantsId'].length}}/{{event['max_participants']}})
