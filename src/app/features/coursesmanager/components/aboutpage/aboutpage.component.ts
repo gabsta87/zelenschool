@@ -93,4 +93,10 @@ export class AboutpageComponent {
     },
   ]
 
+  partners = [
+    { logoName:"ukrainiandiaspora.png",link:"https://ukrainian-diaspora-geneva.ch/"},
+    { logoName:"Kultura-logo.jpeg",link:"http://kultura.ch/article-4-2/"},
+    { logoName:"deti.png",link:"https://detinow.ch/"},
+    ]
+
 }

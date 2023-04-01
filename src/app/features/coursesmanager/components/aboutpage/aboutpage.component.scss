@@ -1,4 +1,18 @@
 .aboutContainer{
+    padding-bottom: 40px;
+
+    h2{
+        display: flex;
+        justify-content: center;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+    
+}
+
+.partContent{
+    padding-top: 20px;
+    padding-bottom: 20px;
     margin-left:5%;
     margin-right:5%;
 }
@@ -6,6 +20,10 @@
 ion-thumbnail {
     --size: 200px;
     --border-radius: 50%;
+}
+
+.filledPart{
+    background-color: var(--ion-color-primary);
 }
 
 .memberCard{
@@ -25,3 +43,56 @@ ion-thumbnail {
     opacity: 1;
     background-color: lightblue;
 }
+
+.partnersSection{
+    ion-button{
+        min-height: 80px;
+    }
+    img{
+        height:100%;
+    }
+}
+
+.firstPart{
+    background-color: var(--ion-color-light);
+    // border-bottom: solid lightgrey 2px;
+}
+
+.topImage{
+    background-image: url("https://www.ukraine-reborn.ch/wp-content/uploads/2022/04/IMG_9141-1-scaled.jpg");
+    background-repeat: no-repeat;
+    // background-color: rgba(255,255,255,0);
+    background-position: center,center;
+    background-size: cover;
+    min-height: 825px;
+
+    justify-content: center;
+    display: flex;
+
+    h1{
+        color:white;
+        justify-content: center;
+        display: flex;
+        font-size: xxx-large;
+        max-width: 60%;
+        font-family: 'Trebuchet MS', Helvetica, sans-serif;
+        text-align: center;
+        // margin:auto;
+        position: absolute;
+        transform: translate(0,-50%);
+        top:40%;
+        // left:50%;
+    }
+    ion-button{
+        top:60%;
+        position: absolute;
+        color: white;
+        --color : var(--ion-color-primary);
+    }
+}
+
+ion-content{
+    font-family: 'Trebuchet MS', Helvetica, sans-serif;
+}
+// --background : url('https://www.ukraine-reborn.ch/wp-content/uploads/2022/04/IMG_9141-1-scaled.jpg') no-repeat;
+// --background : url('./assets/backgroud/backgroud.jpeg') 0 0/100% 100% no-repeat;
