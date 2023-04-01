@@ -5,6 +5,7 @@ import { ActionSheetController, ModalController } from '@ionic/angular';
 import * as dayjs from 'dayjs';
 import { BehaviorSubject, combineLatest, count, filter, find, firstValueFrom, map, Observable } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
+import { getNowDate } from 'src/app/shared/service/hour-management.service';
 import { BanmodalComponent } from '../banmodal/banmodal.component';
 import { TeacherModalComponent } from '../teacher-modal/teacher-modal.component';
 
@@ -66,21 +67,10 @@ export class AdminpageComponent {
         case "all":
           break;
         case "future":
-          // courses = courses.filter((course:any) => dayjs(course.timeStart).isAfter(new Date()) )
-
-          courses = courses.filter((course:any) => {
-            console.log("course date : ",dayjs(course.timeStart).toISOString());
-            console.log("new date : ",dayjs(new Date()).toISOString());
-            console.log("is after : ",dayjs(course.timeStart).isAfter(dayjs(new Date())));
-            
-            
-            return dayjs(course.timeStart).isAfter(dayjs(new Date())) 
-            
-            }
-            )
+          courses = courses.filter((course:any) => dayjs(course.timeStart).isAfter(dayjs(getNowDate())) )
           break;
         case "past":
-          courses = courses.filter((course:any) => dayjs(course.timeStart).isBefore(new Date()) )
+          courses = courses.filter((course:any) => dayjs(course.timeStart).isBefore(dayjs(getNowDate())) )
           break;
         default:
           break;
@@ -177,7 +167,6 @@ export class AdminpageComponent {
 
   addPartner(){
     this._router.navigate(['/imageUpload/']);
-
   }
 
   addMember(){
