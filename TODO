@@ -3,7 +3,7 @@ Questions:
     ✘ Teacher can also be admin ? @cancelled(23-03-30 17:26)
     ✔ Phone numbers : swiss/ukrainian or whatever @done(23-03-30 17:26)
     ✔ Courses longer than 1 hour ? @done(23-03-30 17:26)
-    ☐ teachers : students age. Is it some course select blocking option ? recommandation ?
+    ✘ teachers : students age. Is it some course select blocking option ? recommandation ? @cancelled(23-03-31 13:04)
 
     ✔ request admin action for teachers registration ? @done(23-03-30 17:25)
     ✘ request email validation ? for users/teachers @cancelled(23-03-30 17:25)
@@ -12,14 +12,23 @@ Questions:
     ✘ admins can change the 3 missed courses limit ? @cancelled(23-03-30 17:24)
 
 Misc : 
-    ☐ activities -> goes to anchor, not component
-    ☐ Course creation needs approval
-    ☐ Popup to confirm registration to a course for students
-    ☐ Verify if banning doesnt remove from past courses
+    ☐ admin can modify courses
+    ☐ Possibility to remove a day from the list of days (recursive course) (same hour for all courses)(test conflicts for all courses )
+    ☐ Allow longer course description
+    ☐ Possibilité de créer un cour le jour même 
+    ☐ partners not a page, but an anchor on the "about us" page
     ☐ Projects -> activities
     ☐ gallery -> folders
+    ☐ activities -> goes to anchor, not component
+    ✘ Course creation needs approval @cancelled(23-03-31 12:38)
+    ☐ Popup to confirm registration to a course for students
+    ☐ Can see a teacher's courses per month (monthly hours)
+    ☐ Generate teachers' hours sheet per month (date-hour duration title)
+    
 
 URGENT :
+    ☐ automatic unban for absences after 30 days (on login of user)
+    ☐ Verify if banning doesnt remove from past courses
     ✔ Fix hours properly @done(23-03-30 17:11)
     ✔ Collision events not working @done(23-03-30 17:11)
     ✔ See why some users have no status @done(23-03-30 17:11)
