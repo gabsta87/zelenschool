@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth, User } from '@angular/fire/auth';
-import { collection, QueryConstraint, Firestore, addDoc, collectionData, doc, setDoc, DocumentData, arrayUnion, arrayRemove, getDocs} from '@angular/fire/firestore';
+import { collection, QueryConstraint, Firestore, addDoc, collectionData, doc, setDoc, DocumentData, arrayUnion, arrayRemove, getDocs, deleteField, where} from '@angular/fire/firestore';
 import { deleteDoc, getDoc, query, updateDoc } from '@firebase/firestore';
 import { firstValueFrom, map, Observable } from 'rxjs';
 import * as dayjs from 'dayjs';
@@ -15,9 +15,7 @@ export class AngularfireService{
   constructor(
     private readonly _dbaccess:Firestore,
     private readonly _auth:Auth,
-  ) {
-
-  }
+  ) { }
 
   private getElements(name:string,...constraint:QueryConstraint[]){
     const myCollection = collection(this._dbaccess,name);
@@ -86,6 +84,7 @@ export class AngularfireService{
 
 
   getCalendarEntry(idToFind: string){
+    // return this.getElements("calendarEntries",where(idToFind,'==','id'))
     let temp = this.getCalendarEntries();
     return temp.pipe(map(datas => datas.find(e => e['id'] === idToFind)));
   }
@@ -136,7 +135,7 @@ export class AngularfireService{
 
   async unbanUser(userId:string){
     const docRef = doc(this._dbaccess,'users/'+userId);
-    return updateDoc(docRef,{ban:null});
+    return updateDoc(docRef,{ban:deleteField()});
   }
 
   async toggleUserAbsent(value: boolean, userId: string, courseId: string) {
@@ -162,6 +161,7 @@ export class AngularfireService{
 
   private async removeUserFromCourses(userId:string){
     const coll = getDocs(collection(this._dbaccess,"calendarEntries"));
+
     (await coll).forEach((doc:any) => {
       this.removeUserFromCourse(doc.id,userId);
     })
@@ -169,6 +169,8 @@ export class AngularfireService{
 
   async removeUserFromCourse(eventId:string,userId:string){
     const docRef = doc(this._dbaccess,'calendarEntries/'+eventId);
+    // TODO if (past course) return
+    // if(query(docRef.)
 
     await updateDoc(docRef, {
       attendantsId: arrayRemove(userId)
