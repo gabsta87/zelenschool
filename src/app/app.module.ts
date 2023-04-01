@@ -12,6 +12,12 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 
+// import { ExtraOptions, RouterModule } from '@angular/router';
+// const routerOptions: ExtraOptions = {
+//   useHash: false,
+//   anchorScrolling: 'enabled',
+//   onSameUrlNavigation: 'reload' //Must have if you want to be able to use the anchor more than once
+// };
 
 @NgModule({
   declarations: [
@@ -25,7 +31,8 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+    // RouterModule.forRoot([],routerOptions)
   ],
   providers: [],
   bootstrap: [AppComponent]

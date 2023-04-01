@@ -3,12 +3,11 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LoginpageComponent } from './components/loginpage/loginpage.component';
-import { RouterModule } from '@angular/router';
+import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { GallerypageComponent } from './components/gallerypage/gallerypage.component';
 import { SwiperModule } from 'swiper/angular';
-import { PartnerspageComponent } from './components/partnerspage/partnerspage.component';
 import { AboutpageComponent } from './components/aboutpage/aboutpage.component';
 import { SchedulepageComponent } from './components/schedulepage/schedulepage.component';
 import { ContactpageComponent } from './components/contactpage/contactpage.component';
@@ -41,6 +40,7 @@ import { ImageUploadComponent } from './components/image-upload/image-upload.com
 import { HttpClientModule } from '@angular/common/http';
 import { ActivitiespageComponent } from './components/activitiespage/activitiespage.component';
 
+
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -48,7 +48,6 @@ import { ActivitiespageComponent } from './components/activitiespage/activitiesp
     LoginpageComponent,
     NavbarComponent,
     GallerypageComponent,
-    PartnerspageComponent,
     AboutpageComponent,
     SchedulepageComponent,
     ContactpageComponent,
@@ -104,9 +103,6 @@ import { ActivitiespageComponent } from './components/activitiespage/activitiesp
           path:"contact",
           component:ContactpageComponent
         },{
-          path:"partners",
-          component:PartnerspageComponent
-        },{
           path:"donate",
           component:DonatepageComponent
         },{
@@ -157,7 +153,7 @@ import { ActivitiespageComponent } from './components/activitiespage/activitiesp
           path: '**', 
           redirectTo: "/about"
         }
-      ]}]  
+      ]}]
     )
   ],
   providers:[
