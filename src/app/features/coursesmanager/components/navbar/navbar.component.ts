@@ -18,7 +18,7 @@ export class NavbarComponent {
     {title:"About us",page:"about"},
     {title:"Activities",page:"activities"},
     {title:"Gallery",page:"gallery"},
-    {title:"Partners",page:"partners"},
+    // {title:"Partners",page:"partners"}, // anchor instead of page
     {title:"Schedule",page:"schedule"},
     {title:"Contact",page:"contact"},
     {title:"Donate",page:"donate"},

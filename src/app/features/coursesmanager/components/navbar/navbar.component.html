@@ -5,6 +5,12 @@
             <ion-label>{{item.title}}</ion-label>
         </ion-tab-button>
 
+        <!-- <ion-tab-button href="#partners" [routerLink] = "['/']" fragment="partners"> -->
+        <!-- <ion-tab-button [routerLink] = "['/']" fragment="partners"> -->
+        <ion-tab-button [routerLink] = "['/about/']" fragment="partners">
+            <ion-label>Partners2</ion-label>
+        </ion-tab-button>
+
         <ion-tab-button *ngIf="!(isLogged|async); else logged" tab="login">
             <ion-label> Login </ion-label>
         </ion-tab-button>
