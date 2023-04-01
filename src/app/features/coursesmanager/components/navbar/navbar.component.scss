@@ -9,9 +9,9 @@ ion-tab-button{
 
 ion-tab-bar{
     // --background: var(--ion-color-primary);
-
+    opacity: 0.8;
+    border-bottom: solid 10px var(--ion-color-primary);
     --background:white;
-    margin-bottom: 20px;
 }
 
 ion-label{
