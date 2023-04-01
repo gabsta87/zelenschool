@@ -10,8 +10,6 @@ import { GallerypageComponent } from './components/gallerypage/gallerypage.compo
 import { SwiperModule } from 'swiper/angular';
 import { AboutpageComponent } from './components/aboutpage/aboutpage.component';
 import { SchedulepageComponent } from './components/schedulepage/schedulepage.component';
-import { ContactpageComponent } from './components/contactpage/contactpage.component';
-import { DonatepageComponent } from './components/donatepage/donatepage.component';
 import { EditnewsComponent } from './components/editnews/editnews.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -38,7 +36,6 @@ import { ChoiceModalComponent } from './components/choice-modal/choice-modal.com
 import { BanmodalComponent } from './components/banmodal/banmodal.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ActivitiespageComponent } from './components/activitiespage/activitiespage.component';
 
 
 @NgModule({
@@ -50,8 +47,6 @@ import { ActivitiespageComponent } from './components/activitiespage/activitiesp
     GallerypageComponent,
     AboutpageComponent,
     SchedulepageComponent,
-    ContactpageComponent,
-    DonatepageComponent,
     ImageUploadComponent,
     EditnewsComponent,
     AdminpageComponent,
@@ -65,7 +60,6 @@ import { ActivitiespageComponent } from './components/activitiespage/activitiesp
     TeacherCreateEventModalComponent,
     ChoiceModalComponent,
     BanmodalComponent,
-    ActivitiespageComponent,
   ],
   imports: [
     SwiperModule,
@@ -99,15 +93,6 @@ import { ActivitiespageComponent } from './components/activitiespage/activitiesp
         },{
           path:"gallery",
           component:GallerypageComponent
-        },{
-          path:"contact",
-          component:ContactpageComponent
-        },{
-          path:"donate",
-          component:DonatepageComponent
-        },{
-          path:"activities",
-          component:ActivitiespageComponent
         },{
           path:"create",
           component:CreateAccountComponent
