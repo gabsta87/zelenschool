@@ -46,7 +46,7 @@
 
     <ion-item>
         <ion-label>Description</ion-label>
-        <ion-input [(ngModel)]="description" required name="descr"> </ion-input>
+        <ion-textarea [(ngModel)]="description" [autoGrow]="true" required name="descr"> </ion-textarea>
     </ion-item>
 
     <div *ngIf="collisionEvents && collisionEvents.length > 0">
