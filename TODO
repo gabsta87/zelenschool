@@ -88,6 +88,8 @@ Technical :
 
 Cosmetics :
     ☐ Better errors management for forms
+    ☐ background linear-gradient
+        https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Images/Using_CSS_gradients
     ✔ fix all account pages on same style @done(23-03-30 17:07)
     Schedule : 
         ☐ Correct popover infos (add hour) @high
