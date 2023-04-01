@@ -8,114 +8,200 @@
 
     <div class="aboutContainer">
 
-    <div class="firstPart">
-        <div class="partContent">
-            <ion-title>
+        <div class="firstPart">
+            <div class="partContent">
+                <ion-title>
+                    <h2>
+                        Ukraine Reborn association
+                    </h2>
+                </ion-title>
+                <ion-text>
+                    <p>
+                        We are an Independent Humanitarian Support Association that has started from a little collection point in Swiss Romande in the first week of war in Ukraine.  
+                    </p>
+                    <p>
+                        In just 3 weeks we have been able to collect more then 1000 boxes of humanitarian help that was sent to Ukraine and helped over 20 families  fleeing to Switzerland. 
+                    </p>
+                    <p>
+                        We have seen and personally were touched by how stressed and lost refugees are,  and how our small actions are making a big difference. Now, we are elevating our efforts uniting with our allies for the good cause. 
+                    </p>
+                </ion-text>
+            </div>
+        </div>
+
+        <div class="firstPart">
+            <div class="partContent">
+                <ion-title>
+                    <h2>
+                        Our mission
+                    </h2>
+                </ion-title>
+                <ion-text>
+                    <p>
+                        We believe that everyone has a right to live in freedom and safety. That’s why we are on a mission to help Ukrainian refuges that have fled to Switzerland  restarting their lives and making the integration process as smooth as possible. Our primary focus is on most vulnerable population women and kids.
+                    </p>
+                </ion-text>
+            </div>
+        </div>
+
+        <!-- Activities Section -->
+        <div class="activitiesPart">
+            <div class="partContent">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>
+
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
+        </div>
+
+        <div class="filledPart">
+            <div class="partContent">
+                <ion-title>
+                    <h2>Want to support us ?</h2>
+                </ion-title>
+            </div>
+        </div>
+
+        <!-- Members Section -->
+        <div class="membersPart">
+            <div class="partContent">
                 <h2>
-                    Ukraine Reborn association
+                    Our Team
                 </h2>
-            </ion-title>
-            <ion-text>
-                <p>
-                    We are an Independent Humanitarian Support Association that has started from a little collection point in Swiss Romande in the first week of war in Ukraine.  
-                </p>
-                <p>
-                    In just 3 weeks we have been able to collect more then 1000 boxes of humanitarian help that was sent to Ukraine and helped over 20 families  fleeing to Switzerland. 
-                </p>
-                <p>
-                    We have seen and personally were touched by how stressed and lost refugees are,  and how our small actions are making a big difference. Now, we are elevating our efforts uniting with our allies for the good cause. 
-                </p>
-            </ion-text>
+                Agile team of experienced professionals with:
+                <ul>
+                    <li>
+                        Deep understanding of Ukrainian mentality and refugees integration needs in Switzerland
+                    </li>
+                    <li>
+                        Proven experience in managing complex projects at the global scale, including education
+                    </li>
+                    <li>
+                        Know-how in mobilizing people through social to create a movement and impact at scale
+                    </li>
+                </ul>
+
+                <ion-grid>
+                    <ion-row>
+                        <ion-col *ngFor="let member of members">
+                            <div class="memberCard">
+                                <a *ngIf="member.link; else withoutLink" href="{{member.link}}">
+                                <ion-thumbnail>
+                                    <img src="{{'/assets/members/'+member.photo}}"/>
+                                </ion-thumbnail>
+                        
+                                <ion-label>{{member.name}} </ion-label>
+                                <ion-label>{{member.role}}</ion-label>
+                                </a>
+                                <ng-template #withoutLink>
+                                    <ion-thumbnail>
+                                        <img src="{{'/assets/members/'+member.photo}}"/>
+                                    </ion-thumbnail>
+                            
+                                    <ion-label>{{member.name}} </ion-label>
+                                    <ion-label>{{member.role}}</ion-label>
+                                </ng-template>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
         </div>
-    </div>
 
-    <div class="firstPart">
-        <div class="partContent">
-            <ion-title>
-                <h2>
-                    Our mission
-                </h2>
-            </ion-title>
-            <ion-text>
-                <p>
-                    We believe that everyone has a right to live in freedom and safety. That’s why we are on a mission to help Ukrainian refuges that have fled to Switzerland  restarting their lives and making the integration process as smooth as possible. Our primary focus is on most vulnerable population women and kids.
-                </p>
-            </ion-text>
+        <!-- Partners Section -->
+        <div class="partnersSection" id="partners">
+            <div class="partContent">
+                <h2>Partners</h2>
+                <ion-grid>
+                    <ion-row class="ion-align-items-center">
+                        <ion-col *ngFor="let partner of partners">
+                            <div class="partnerCard">
+                                <ion-button href={{partner.link}} fill="clear">
+                                    <img src="{{'~/../assets/partners/' + partner.logoName}}"/>
+                                </ion-button>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
         </div>
-    </div>
 
-    <div class="activitiesPart">
-        <div class="partContent">
-            <ion-grid>
-                <ion-row>
-                    <ion-col>
-
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
+        <!-- Contact Section -->
+        <div class="filledPart" id="contact">
+            <div class="partContent">
+                <ion-title>
+                    <h2>Contact us</h2>
+                </ion-title>
+            </div>
         </div>
-    </div>
-
-    <div class="filledPart">
-        <div class="partContent">
-            <ion-title>
-                <h2>Want to support us ?</h2>
-            </ion-title>
-        </div>
-    </div>
-
-    <div class="membersPart">
-        <div class="partContent">
-            <h2>
-                Our Team
-            </h2>
-            Agile team of experienced professionals with:
-            <ul>
-                <li>
-                    Deep understanding of Ukrainian mentality and refugees integration needs in Switzerland
-                </li>
-                <li>
-                    Proven experience in managing complex projects at the global scale, including education
-                </li>
-                <li>
-                    Know-how in mobilizing people through social to create a movement and impact at scale
-                </li>
-            </ul>
-
-            <ion-grid>
-                <ion-row>
-                    <div class="memberCard" *ngFor="let member of members">
-                        <a *ngIf="member.link; else withoutLink" href="{{member.link}}">
-                        <ion-thumbnail>
-                            <img src="{{'/assets/members/'+member.photo}}"/>
-                        </ion-thumbnail>
-                
-                        <ion-label>{{member.name}} </ion-label>
-                        <ion-label>{{member.role}}</ion-label>
-                        </a>
-                        <ng-template #withoutLink>
-                            <ion-thumbnail>
-                                <img src="{{'/assets/members/'+member.photo}}"/>
-                            </ion-thumbnail>
-                    
-                            <ion-label>{{member.name}} </ion-label>
-                            <ion-label>{{member.role}}</ion-label>
-                        </ng-template>
-
-                    </div>
-                </ion-row>
-            </ion-grid>
-        </div>
-    </div>
-
-
-    <div class="partnersSection" id="partners">
-        <h2>Partners</h2>
-        <ion-button *ngFor="let partner of partners" href={{partner.link}} fill="clear">
-            <img src="{{'~/../assets/partners/' + partner.logoName}}"/>
-        </ion-button>
-    </div>
-    <!-- <app-partnerspage></app-partnerspage> -->
+        <div class="contactPageContainer" id="contact">
+            <div class="partContent">
+                <ion-text>
+                    <p>
+                        We are happy to get any help form indifferent people who share our mission
+                    </p>
+                    <p>
+                        ukrainereborn.ch@gmail.com
+                    </p>
+                    <p>
+                        Tel : + 41 79 947 07 59
+                    </p>
+                    <p>
+                        Tel : + 41 76 247 19 85
+                    </p>
+                </ion-text>
         
+                <ion-button fill="clear" href="https://www.facebook.com/ukraine.reborn.ch">
+                    <ion-icon name="logo-facebook" size="large"></ion-icon>
+                </ion-button>
+                <ion-button fill="clear" href="https://t.me/ukraine_reborn">
+                    <ion-icon src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" size="large"></ion-icon>
+                </ion-button>
+            </div>
+        </div>
+
+        <!-- Donate Section -->
+        <div class="donatePart">
+            <div class="partContent">
+                <h1>Donate now</h1>
+                <p>
+                    Our association supports well-being and integration of Ukrainian refugees seeking protection in Switzerland. Your donation is vital for people who have fled Ukraine. You could support our activities by making donations.
+                </p>
+                <p>
+                    IBAN: CH05 0900 0000 1592 7366 8
+                </p>
+                <p>
+                    BIC: POFICHBEXXX
+                </p>
+                <p>
+                    Beneficiary: Ukraine Reborn, 1290 Versoix, Switzerland
+                </p>
+        
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>
+                            <ion-button href="https://www.paypal.com/donate/?hosted_button_id=R8KN2HWSJ3F9E" fill="clear">
+                                <img src="~/../assets/logos/paypal.png" style="height:100%"/>
+                            </ion-button>
+                        </ion-col>
+                        <ion-col>
+                            <img title="twint" src="https://www.ukraine-reborn.ch/wp-content/uploads/2022/06/Screenshot-2022-06-16-230913.jpg" style="max-height: 200px;">
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            
+                <ion-text>
+                    <p class="donateText">
+                        Ukraine Reborn is non-profit association that is tax-exempt due to its public utility purpose. If you are an individual or corporate donor that pays taxes in Switzerland, you may deduct your donations from your taxable income. The maximum deduction amount varies depending on your canton of residence.
+            
+                        We will be happy to send you an attestation for tax purposes upon request, for the donation amounts of minimum 100.- CHF per year. Please send us e-mail with your full name, address, contact details and amount of donation to <a href="mailto: UkraineRebornDonations@gmail.com">e-mail</a>.
+                    </p>
+                </ion-text>
+            </div>
+        </div>
+            
     </div>
 </ion-content>

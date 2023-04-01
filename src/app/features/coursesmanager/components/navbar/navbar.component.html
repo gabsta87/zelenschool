@@ -1,14 +1,10 @@
 <ion-tabs>
     <ion-tab-bar slot="top">
-        <ion-tab-button *ngFor="let item of navigationItems;
-        let i = index;" tab="{{item.page}}">
-            <ion-label>{{item.title}}</ion-label>
-        </ion-tab-button>
 
-        <!-- <ion-tab-button href="#partners" [routerLink] = "['/']" fragment="partners"> -->
-        <!-- <ion-tab-button [routerLink] = "['/']" fragment="partners"> -->
-        <ion-tab-button [routerLink] = "['/about/']" fragment="partners">
-            <ion-label>Partners2</ion-label>
+        <!-- let i = index;" tab="{{item.page}}"> -->
+        <ion-tab-button *ngFor="let item of navigationItems;
+        let i = index;" tab="{{item.page}}" [routerLink]="item.routerLink" fragment="{{item.fragment}}">
+            <ion-label>{{item.title}}</ion-label>
         </ion-tab-button>
 
         <ion-tab-button *ngIf="!(isLogged|async); else logged" tab="login">

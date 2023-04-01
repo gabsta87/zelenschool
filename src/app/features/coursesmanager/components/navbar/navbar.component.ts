@@ -16,11 +16,11 @@ export class NavbarComponent {
 
   navigationItems = [
     {title:"About us",page:"about"},
-    {title:"Activities",page:"activities"},
+    {title:"Activities",routerLink:"about",fragment:"activities"},
+    {title:"Partners",routerLink:"about",fragment:"partners"},
+    {title:"Contact",routerLink:"about",fragment:"contact"},
+    {title:"Donate",routerLink:"about",fragment:"donate"},
     {title:"Gallery",page:"gallery"},
-    // {title:"Partners",page:"partners"}, // anchor instead of page
     {title:"Schedule",page:"schedule"},
-    {title:"Contact",page:"contact"},
-    {title:"Donate",page:"donate"},
   ]
 }
