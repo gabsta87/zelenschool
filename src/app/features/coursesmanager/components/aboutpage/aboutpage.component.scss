@@ -1,5 +1,4 @@
 .aboutContainer{
-    padding-bottom: 40px;
 
     h2{
         display: flex;
@@ -16,10 +15,22 @@
     margin-right:5%;
 }
 
-
 .filledPart{
     background-color: var(--ion-color-primary);
     color : var(--ion-color-primary-contrast);
+}
+
+.activitiesPart{
+    justify-content: center;
+    ion-title,ion-card-content{
+        text-align: center;
+    }
+    ion-icon {
+        font-size: 64px;
+        color : var(--ion-color-primary);
+        display: flex;
+        margin: auto;
+    }
 }
 
 .memberCard{
