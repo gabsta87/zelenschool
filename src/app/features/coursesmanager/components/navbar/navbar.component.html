@@ -1,10 +1,13 @@
 <ion-tabs>
     <ion-tab-bar slot="top">
 
+        <!-- let i = index;" [tab]="item.page" [routerLink]="item.routerLink" [fragment]="item.fragment"> -->
         <!-- let i = index;" tab="{{item.page}}"> -->
         <ion-tab-button *ngFor="let item of navigationItems;
-        let i = index;" tab="{{item.page}}" [routerLink]="item.routerLink" fragment="{{item.fragment}}">
+        let i = index;" [tab]="item.page" [routerLink]="item.routerLink" [fragment]="item.fragment">
+        <!-- <a href="#{{item.fragment}}"> -->
             <ion-label>{{item.title}}</ion-label>
+        <!-- </a> -->
         </ion-tab-button>
 
         <ion-tab-button *ngIf="!(isLogged|async); else logged" tab="login">

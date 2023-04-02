@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LoginpageComponent } from './components/loginpage/loginpage.component';
-import { ExtraOptions, RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { GallerypageComponent } from './components/gallerypage/gallerypage.component';
@@ -122,6 +122,7 @@ import { HttpClientModule } from '@angular/common/http';
           }
         },{
           path:"imageUpload",
+          canActivate:[UserLoggedGuard,AdminpageGuard],
           component:ImageUploadComponent,
         },{
           path:"admin",
@@ -136,7 +137,8 @@ import { HttpClientModule } from '@angular/common/http';
           pathMatch:"full",
         },{ 
           path: '**', 
-          redirectTo: "/about"
+          redirectTo: "/about",
+          pathMatch:"full",
         }
       ]}]
     )

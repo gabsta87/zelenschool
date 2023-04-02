@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-aboutpage',
@@ -6,6 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./aboutpage.component.scss']
 })
 export class AboutpageComponent {
+  @ViewChild('myDiv') myDiv!: ElementRef;
+  element!: HTMLElement;
+  constructor(private readonly _router : Router,private readonly _route: ActivatedRoute){}
   members = [
     {
       name:"Nadiia Olarean",
@@ -93,10 +97,36 @@ export class AboutpageComponent {
     },
   ]
 
-  partners = [
+  partners_addresses = [
     { logoName:"ukrainiandiaspora.png",link:"https://ukrainian-diaspora-geneva.ch/"},
     { logoName:"Kultura-logo.jpeg",link:"http://kultura.ch/article-4-2/"},
     { logoName:"deti.png",link:"https://detinow.ch/"},
     ]
 
+  scrollToElement(element:any): void {
+    element.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+  }
+
+  ionViewWillEnter(){
+    console.log("Ion View Will Enter");
+    
+  }
+
+  ngAfterViewInit(){
+    console.log("After view init");
+  }
+
+  ionViewDidEnter(){
+    console.log("Ion view entered");
+    let elem = this._route.snapshot.fragment;
+
+    if(!elem)
+      return; 
+    console.log(elem);
+    // console.log(this.myDiv.nativeElement.innerHTML);
+    this.element = document.getElementById(elem) as HTMLElement;
+    console.log("elem : ",this.element);
+    
+    this.scrollToElement(this.element);
+  }
 }
