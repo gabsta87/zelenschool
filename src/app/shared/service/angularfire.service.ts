@@ -5,7 +5,7 @@ import { deleteDoc, getDoc, query, updateDoc } from '@firebase/firestore';
 import { firstValueFrom, map, Observable } from 'rxjs';
 import * as dayjs from 'dayjs';
 import * as isBetween from 'dayjs/plugin/isBetween';
-import { isColliding } from './hour-management.service';
+import { HourManagementService, formatForDB, isColliding } from './hour-management.service';
 dayjs.extend(isBetween);
 
 @Injectable({
@@ -15,6 +15,7 @@ export class AngularfireService{
   constructor(
     private readonly _dbaccess:Firestore,
     private readonly _auth:Auth,
+    private readonly _hourManagement : HourManagementService,
   ) { }
 
   private getElements(name:string,...constraint:QueryConstraint[]){
@@ -26,33 +27,31 @@ export class AngularfireService{
     return observableStream;
   }
 
-  createCalendarEntry(newEntry: any){
+  createCalendarEntry(newEntry: CalendarEntry){
     if(!this._auth.currentUser?.uid){
       console.log("User not logged, no event created");
       return
     }
+
     return addDoc(collection(this._dbaccess,"calendarEntries"),{
       ...newEntry,
       attendantsId:[],
+      timeStart : formatForDB(newEntry.timeStart),
+      timeEnd : formatForDB(newEntry.timeEnd),
       author:this._auth.currentUser.uid,
     });
   }
 
-  createImageEntry(newImage:any){
-    return addDoc(collection(this._dbaccess,"images"),{
-      ...newImage,
-      uploadedBy:this._auth.currentUser?.uid
-    })
-  }
-  
   updateCalendarEntry(newEntry: any) {
     if(!this._auth.currentUser?.uid){
       console.log("User not logged, impossible to edit event");
       return
     }
-
+    
     return updateDoc(doc(this._dbaccess,"calendarEntries",newEntry.id),{
       ...newEntry,
+      timeStart : formatForDB(newEntry.timeStart),
+      timeEnd : formatForDB(newEntry.timeEnd),
       // author:this._auth.currentUser.uid,
     });
   }
@@ -81,7 +80,6 @@ export class AngularfireService{
   getCalendarEntries(){
     return this.getElements("calendarEntries");
   }
-
 
   getCalendarEntry(idToFind: string){
     // return this.getElements("calendarEntries",where(idToFind,'==','id'))
@@ -195,6 +193,13 @@ export class AngularfireService{
     return updateDoc(docRef,newValue);
   }
 
+  createImageEntry(newImage:any){
+    return addDoc(collection(this._dbaccess,"images"),{
+      ...newImage,
+      uploadedBy:this._auth.currentUser?.uid
+    })
+  }
+
   getArticles(){
     return firstValueFrom(this.getElements("articles"));
   }
@@ -225,3 +230,16 @@ export interface UserInfos {
   ban?:{author:string,comment:string,date:string}|undefined|null,
   missedCourses?:{courseId:string}|undefined|null,
 }
+
+export interface CalendarEntry{
+  title:string,
+  timeStart:string,
+  timeEnd:string,
+  room_id:string,
+  max_participants:number,
+  description:string,
+  attendantsId?:string[],
+  author?:string,
+  id?:string,
+}
+

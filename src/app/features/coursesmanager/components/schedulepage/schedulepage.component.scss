@@ -27,8 +27,12 @@ pre {
   cursor:pointer;
 }
 
-ion-button{
+.topButtons ion-button{
   color: var(--ion-color-primary);
   border: solid var(--ion-color-primary) 2px;
+  border-radius: 5px;
+}
+
+ion-button{
   border-radius: 5px;
 }

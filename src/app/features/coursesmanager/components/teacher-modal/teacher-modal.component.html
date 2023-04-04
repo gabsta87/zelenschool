@@ -24,12 +24,7 @@
         <ion-text>Author : {{creatorName}}</ion-text>
     </ion-item>
 
-    <!-- <ion-item [disabled]="cannotModify">
-        <ion-label>Time</ion-label>
-        <ion-input type="number" [(ngModel)]="timeStart" (ionChange)="updateTimeStart($event)"> </ion-input>
-    </ion-item> -->
-
-    <ion-item *ngIf="cannotModify; else modif" [disabled]="cannotModify">
+    <!-- <ion-item *ngIf="cannotModify; else modif" [disabled]="cannotModify">
         <ion-label>Time</ion-label>
         <ion-datetime-button datetime="datetime"></ion-datetime-button>
         <ion-modal [keepContentsMounted]="true" (ionChange)="updateTimeStart($event)">
@@ -48,7 +43,13 @@
                 </ng-template>
             </ion-modal>
         </ion-item>
-    </ng-template>
+    </ng-template> -->
+
+    <ion-item class="hours" [disabled]="cannotModify">
+        <ion-label>Time :</ion-label>
+        <ion-input type="number" [value]="timeStart|date:'HH'" placeholder="23" [maxlength]="2" [max]="23" [min]="0" (ionChange)="updateStartingHour($event)"></ion-input>:
+        <ion-input type="number" [value]="timeStart|date:'mm'" placeholder="59" [maxlength]="2" [max]="59" [min]="0" (ionChange)="updateStartingMinute($event)"></ion-input>
+    </ion-item>
 
     <ion-item [disabled]="cannotModify">
         <ion-label>Duration</ion-label>

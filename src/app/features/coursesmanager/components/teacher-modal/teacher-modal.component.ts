@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import * as dayjs from 'dayjs';
 import { DocumentData } from 'firebase/firestore';
-import { BehaviorSubject, firstValueFrom, map, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable, switchMap } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
-import { formatTime, getNowDate, HourManagementService } from 'src/app/shared/service/hour-management.service';
+import { formatForIonDateTime, formatTime, getNowDate } from 'src/app/shared/service/hour-management.service';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 
 @Component({
@@ -75,8 +75,8 @@ export class TeacherModalComponent{
 
     this.id = this.meta.id;
     this.room_id = this.meta.room_id;
-    this.timeStart = formatTime(this.meta.timeStart);
-    this.timeEnd = formatTime(this.meta.timeEnd);
+    this.timeStart = formatForIonDateTime(this.meta.timeStart);
+    this.timeEnd = formatForIonDateTime(this.meta.timeEnd);
     this.max_participants = this.meta.max_participants;
     this.description = this.meta.description;
 
@@ -150,7 +150,15 @@ export class TeacherModalComponent{
   }
 
   confirm(){
-    let entry = {id:this.id,title:this.title,timeStart:formatTime(this.timeStart),timeEnd:formatTime(this.timeEnd),room_id:this.room_id,max_participants:this.max_participants,description:this.description?this.description:""}
+    let entry = {
+      id:this.id,
+      title:this.title,
+      timeStart:this.timeStart,
+      timeEnd:this.timeEnd,
+      room_id:this.room_id,
+      max_participants:this.max_participants,
+      description:this.description,
+    }
     
     this._db.updateCalendarEntry(entry);
     return this.modalCtrl.dismiss(null, 'confirm');
@@ -173,22 +181,54 @@ export class TeacherModalComponent{
    
   }
 
-  updateTimeStart($event:any){
-    this.timeStart = formatTime($event.detail.value);
-    this.timeEnd = formatTime(dayjs(this.timeStart).add(this.duration,this.durationUnit));
 
+  updateStartingHour($event:any){
+    let newValue = $event.detail.value;
+    
+    // this.isValid.next(newValue < 24 && newValue >= 0);
+
+    this.timeStart = dayjs(this.timeStart).hour(newValue).toString();
+    this.timeEnd = dayjs(this.timeStart).add(this.duration,this.durationUnit).toString();
+    this.updateTime();
+  }
+
+  updateStartingMinute($event:any){
+    
+    let newValue = $event.detail.value;
+    
+    // this.isValid.next(newValue < 60 && newValue >= 0);
+    
+    this.timeStart = dayjs(this.timeStart).minute(newValue).toString();
+    this.timeEnd = dayjs(this.timeStart).add(this.duration,this.durationUnit).toString();
+    this.updateTime();
+  }
+
+  updateTimeStart($event:any){
+    // console.log("event value : ",$event.detail.value);
+    // console.log("timeStart : ",this.timeStart);
+    // console.log("formatted event ",formatForIonDateTime($event.detail.value));
+    
+
+    this.timeStart = $event.detail.value;
+    this.timeEnd = dayjs(this.timeStart).add(this.duration,this.durationUnit).toString();
+
+    // console.log("end : ",dayjs(this.timeStart).add(this.duration,this.durationUnit).toString());
+    // console.log("end formatted ",formatForIonDateTime(dayjs(this.timeStart).add(this.duration,this.durationUnit).toString()));
+    
     return this.updateTime();
   }
   
   updateDuration($event:any){
-    this.timeEnd = formatTime(dayjs(this.timeStart).add($event.detail.value,this.durationUnit));
+    this.duration = $event.detail.value;
+    this.timeEnd = dayjs(this.timeStart).add($event.detail.value,this.durationUnit).toString();
 
     return this.updateTime();
   }
 
   updateDurationUnit($event:any){
-    this.timeEnd = formatTime(dayjs(this.timeStart).add(this.duration,$event.detail.value));
-   
+    this.durationUnit = $event.detail.value;
+    this.timeEnd = dayjs(this.timeStart).add(this.duration,$event.detail.value).toString();
+    
     return this.updateTime();
   }
 

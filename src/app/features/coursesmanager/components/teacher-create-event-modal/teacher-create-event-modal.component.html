@@ -1,7 +1,7 @@
 <ion-content class="ion-padding" (keydown.enter)="confirm()">
     <form (ngSubmit)="confirm()" #evtCreation="ngForm">
     <ion-item>
-        <ion-label position="stacked">Enter title</ion-label>
+        <ion-label position="stacked">Enter title :</ion-label>
         <ion-input type="text" placeholder="Course title" name="title" [(ngModel)]="title"></ion-input>
     </ion-item>
 
@@ -14,19 +14,23 @@
         </ion-select>
     </ion-item>
 
-    <ion-item>
-        <ion-label>Time</ion-label>
-        <ion-datetime-button datetime="datetime"></ion-datetime-button>
+    <ion-item class="hours">
+        <ion-label>Time :</ion-label>
+        <ion-input type="number" placeholder="23" [maxlength]="2" [max]="23" [min]="0" (ionChange)="updateStartingHour($event)"></ion-input>:
+        <ion-input type="number" placeholder="59" [maxlength]="2" [max]="59" [min]="0" (ionChange)="updateStartingMinute($event)"></ion-input>
+        <!-- <ion-datetime-button datetime="datetime"></ion-datetime-button>
         <ion-modal [keepContentsMounted]="true" (ionChange)="updateTimeStartFromEvent($event)">
             <ng-template>
-                <ion-datetime id="datetime" min="{{now}}" value="{{timeStart}}"></ion-datetime>
-                <!-- <ion-datetime id="datetime" min="{{now}}" name="datetimepicker" [(ngModel)]="timeStart"></ion-datetime> -->
+                <ion-datetime *ngIf="selectedDays.length > 1; else singleDate" id="datetime" presentation="time" min="{{now}}" value="{{timeStart}}"></ion-datetime>
+                <ng-template #singleDate>
+                    <ion-datetime id="datetime" presentation="date-time" min="{{now}}" value="{{timeStart}}"></ion-datetime>
+                </ng-template>
             </ng-template>
-        </ion-modal>
+        </ion-modal> -->
     </ion-item>
 
     <ion-item>
-        <ion-label>Duration</ion-label>
+        <ion-label>Duration :</ion-label>
         <ion-input type="number" value="1" required name="duration" [(ngModel)]="duration" (ionChange)="updateDuration($event)"></ion-input>
         <ion-select interface="popover" name="durationUnit" [(ngModel)]="durationUnit">
             <ion-select-option value="hour" (ionChange)="updateDurationUnit($event)">hours</ion-select-option>
@@ -35,21 +39,25 @@
     </ion-item>
 
     <ion-item *ngIf="selectedDays && selectedDays.length > 1">
-        <!-- {{selectedDays[0]|json}} -->
-        <ion-item *ngFor="let day of selectedDays" lines="none">{{day['date']|date : "dd.MM.YY"}}</ion-item>
+        <ion-label>Days : </ion-label>
+        <ion-item *ngFor="let day of selectedDays; let index = index" lines="none">
+            {{day['date']|date : "dd.MM.YY"}} 
+            <ion-icon color="danger" name="close-circle-outline" (click)="removeDay(index)">
+            </ion-icon>
+        </ion-item>
     </ion-item> 
 
     <ion-item>
-        <ion-label>Max participants</ion-label>
+        <ion-label>Max participants :</ion-label>
         <ion-input type="number" placeholder="00" name="max_participants" required [(ngModel)]="max_participants"></ion-input>
     </ion-item>
 
     <ion-item>
-        <ion-label>Description</ion-label>
+        <ion-label>Description :</ion-label>
         <ion-textarea [(ngModel)]="description" [autoGrow]="true" required name="descr"> </ion-textarea>
     </ion-item>
 
-    <div *ngIf="collisionEvents && collisionEvents.length > 0">
+    <div *ngIf="collisionEvents && collisionEvents.length > 0; else multi">
         <ion-label>Courses at the same time : </ion-label>
         <ion-list>
             <ion-item *ngFor="let evt of collisionEvents; let i = index">
@@ -68,6 +76,56 @@
             </ion-item>
         </ion-list>
     </div>
+
+    <ng-template #multi>
+    <div *ngIf="multiCollisions">
+        <ion-label>Collisions per day : </ion-label>
+        <ion-list *ngFor="let day of multiCollisions; let i = index">
+            <!-- <ion-text>size : {{day.size |async}}</ion-text> -->
+            <!-- <ion-item *ngIf="day.size |async"> -->
+            <ion-item>
+                <ion-label>
+                    {{day.day.date|date:"dd.MM.YY"}} 
+                    <!-- <ion-icon color="danger" name="close-circle-outline" (click)="removeDay(i)"> </ion-icon> -->
+                </ion-label>
+                <ion-list>
+                    <ion-item lines="none" *ngFor="let coll of (day.collision|async)"> {{coll['title']}} from {{coll['timeStart']|date:"HH:mm"}} to {{coll['timeEnd']|date:"HH:mm"}} in room {{coll['room_id']}}</ion-item>
+                </ion-list>
+            </ion-item>
+
+            <!-- {{day.collision|async|json}} -->
+            
+            <!-- <ng-template *ngIf="(day.collision | async) as collisionsList">
+                <ion-label>
+                    {{day.day.date|date:"dd.MM.YY"}} 
+                    <ion-icon color="danger" name="close-circle-outline" (click)="removeDay(i)">
+                    </ion-icon>
+                </ion-label>
+                <ion-list>
+                    <ion-item lines="none" *ngFor="let coll of collisionsList"> {{coll['title']}} from {{coll['timeStart']|date:"HH:mm"}} to {{coll['timeEnd']|date:"HH:mm"}} in room {{coll['room_id']}}</ion-item>
+                </ion-list>
+            </ng-template> -->
+
+
+            <!-- <ion-item *ngFor="let evt of collisions; let i = index">
+                <ion-label *ngIf="i == collisionIndex ;else normal" color="danger">
+                    <h2>{{evt['title']}}</h2>
+                    <p>Room : {{evt['room_id']}}</p>
+                    <p>From {{evt['timeStart']| date: "HH:mm"}} to {{evt['timeEnd']| date: "HH:mm"}}</p>
+                </ion-label>
+                <ng-template #normal>
+                <ion-label>
+                    <h2>{{evt['title']}}</h2>
+                    <p>Room : {{evt['room_id']}}</p>
+                    <p>From {{evt['timeStart']| date: "HH:mm"}} to {{evt['timeEnd']| date: "HH:mm"}}</p>
+                </ion-label>
+                </ng-template>
+            </ion-item> -->
+
+        </ion-list>
+    </div>
+    </ng-template>
+    
     </form>
 </ion-content>
 

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { compareAsc, isSameDay, isSameMonth } from 'date-fns';
 import { WeekDay, MonthView, MonthViewDay } from 'calendar-utils';
 import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
@@ -16,27 +16,8 @@ import { WeekViewHourColumn } from 'calendar-utils';
 
 import { formatTime, getNowDate } from 'src/app/shared/service/hour-management.service';
 
-export interface CalendarMonthViewEventTimesChangedEvent<
-  EventMetaType = any,
-  DayMetaType = any
-> extends CalendarEventTimesChangedEvent<EventMetaType> {
-  day: MonthViewDay<DayMetaType>;
-}
-
-const colors: Record<string, EventColor> = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3',
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF',
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA',
-  },
-};
+export interface CalendarMonthViewEventTimesChangedEvent< EventMetaType = any, DayMetaType = any > 
+  extends CalendarEventTimesChangedEvent<EventMetaType> { day: MonthViewDay<DayMetaType>; }
 
 @Component({
   selector: 'app-schedulepage',
@@ -61,27 +42,26 @@ export class SchedulepageComponent {
   selectedDays: any = [];
 
   // Schedulepage
-  adjustedDate: dayjs.Dayjs = dayjs(this.viewDate);
   isTeacher:BehaviorSubject<boolean> = this._user.isLoggedAsTeacher;
   isAdmin:BehaviorSubject<boolean> = this._user.isLoggedAsAdmin;
   isBanned = this._user.isUserBanned;
-  newEvent:{title:string,time:string,room:number,max_participants:number} = {title:"",time:"",room:-1,max_participants:0};
   extractedData!:Observable<DocumentData[]>;
   filterAscTitle = true;
   filterAscTime = true;
   now = getNowDate();
-
+  subscribtion !: any;
 
   constructor(
     private readonly _route: ActivatedRoute,
     private readonly _user: UsermanagementService,
-    private readonly modalController: ModalController
+    private readonly modalController: ModalController,
+    private cd: ChangeDetectorRef,
     ) {
     this.extractedData = this._route.snapshot.data["scheduleData"];
   }
 
   async ngOnInit(){
-    this.extractedData.subscribe((newValues) => {
+    this.subscribtion = this.extractedData.subscribe((newValues) => {
       this.events = [];
       newValues.forEach(async e =>{
         this.events.push({
@@ -103,6 +83,10 @@ export class SchedulepageComponent {
         })
       })
     });
+  }
+
+  ngOnDestroy(){
+    this.subscribtion.unsubscribe();
   }
 
   actions: CalendarEventAction[] = [
@@ -167,12 +151,10 @@ export class SchedulepageComponent {
       this.viewDate = day.date;
     }
 
-    if(dayjs(day.date).isBefore(dayjs(this.now)))
+    if(dayjs(day.date).isBefore(dayjs(this.now).subtract(1,"day")))
       return;
 
-    this.adjustedDate = dayjs(day.date).add(13,'hour');
-    this.newEvent.time = formatTime(this.adjustedDate);
-
+    
     this.selectedMonthViewDay = day;
     const selectedDateTime = this.selectedMonthViewDay.date.getTime();
     const dateIndex = this.selectedDays.findIndex(
@@ -238,18 +220,32 @@ export class SchedulepageComponent {
       return
     }
 
+    this.selectedDays = this.selectedDays.sort( (a:any,b:any) => dayjs(a['date']).utc().isAfter(dayjs(b['date']).utc(),"hour") ? 1 : -1 );
+
     const modal = await this.modalController.create({
       component:  TeacherCreateEventModalComponent,
       componentProps: {
-        timeStart: this.adjustedDate.local().format(),
-        timeEnd: dayjs(this.adjustedDate).add(1,'hour').local().format(),
-        selectedDays : this.selectedDays
+        selectedDays : this.selectedDays,
+        timeStart : dayjs(this.selectedDays[0].date.toString()).add(15,"hour").toISOString(),
+        timeEnd : dayjs(this.selectedDays[0].date.toString()).add(16,"hour").toISOString(),
       },
     });
     modal.present();
+
+    const { role } = await modal.onWillDismiss();
+
+    if(role === 'confirm'){
+      this.selectedDays = [];
+    }
+    this.cd.markForCheck();
+    // // Choose behavior
+    // if(role === "cancel"){
+    //   this.selectedDays = [];
+    // }
+    
   }
 
-  sortByTitle(){
+  sortCoursesByTitle(){
     let result;
     if(this.filterAscTitle)
       result = this.extractedData.pipe(map((e:any)=> [...e].sort( (a,b) => a['title'].toLowerCase() > b['title'].toLowerCase() ? 1 : -1)))
@@ -261,7 +257,7 @@ export class SchedulepageComponent {
     this.filterAscTime = true;
   }
 
-  sortByTime(){
+  sortCoursesByTime(){
     let result;
     if(this.filterAscTime){
       result = this.extractedData.pipe(map((e:any)=> [...e].sort( (a,b) => dayjs(a['timeStart']).utc().isAfter(dayjs(b['timeStart']).utc(),"minute") ? 1 : -1 )))

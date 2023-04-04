@@ -10,7 +10,7 @@
     <ion-grid class="ion-no-margin">
         <ion-row class="ion-text-center">
             <ion-col>
-                <ion-buttons class="ion-justify-content-center">
+                <ion-buttons class="ion-justify-content-center topButtons">
                 <ion-button
                     class="btn btn-primary"
                     mwlCalendarPreviousView
@@ -42,7 +42,7 @@
                 <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
             </ion-col>
             <ion-col>
-                <ion-buttons class="ion-justify-content-center">
+                <ion-buttons class="ion-justify-content-center topButtons">
                     <ion-button (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">Month</ion-button>
                     <ion-button (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">Week</ion-button>
                     <ion-button (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">Day</ion-button>
@@ -101,9 +101,13 @@
             </h3>
         </ion-col>
         <ion-col *ngIf="(isTeacher|async) || (isAdmin|async)">
-            <ion-buttons class="ion-justify-content-center">
+            <ion-buttons class="ion-justify-content-center bottomButtons">
                 <!-- <ion-button id="open-modal" (click)="createEvent()">Create course</ion-button> -->
-                <ion-button id="open-modal" fill="solid" [disabled]="isBanned|async" style="color:white;" (click)="createEvent()">Create course<span *ngIf="selectedDays.length > 1">s</span></ion-button>
+                <ion-button 
+                    id="open-modal" 
+                    fill="solid" 
+                    [disabled]="(selectedDays.length == 0) || (isBanned|async)" 
+                    (click)="createEvent()">Create course<span *ngIf="selectedDays.length > 1">s</span></ion-button>
             </ion-buttons>
         </ion-col>
     </ion-row>
@@ -112,10 +116,10 @@
 <div id="eventsSecTable" class="events_grid" *ngIf="extractedData | async as eventsList">
     <ion-grid class="eventsTable ion-no-padding">
         <ion-row>
-            <ion-col (click)="sortByTitle()">
+            <ion-col (click)="sortCoursesByTitle()">
                 <b>Title</b>
             </ion-col>
-            <ion-col (click)="sortByTime()">
+            <ion-col (click)="sortCoursesByTime()">
                 <b>Time</b>
             </ion-col>
             <ion-col>

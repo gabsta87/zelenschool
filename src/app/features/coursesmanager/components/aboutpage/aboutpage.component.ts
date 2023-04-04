@@ -7,9 +7,22 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./aboutpage.component.scss']
 })
 export class AboutpageComponent {
-  @ViewChild('myDiv') myDiv!: ElementRef;
+  @ViewChild('aboutIonContent') myDiv!: ElementRef;
   element!: HTMLElement;
-  constructor(private readonly _router : Router,private readonly _route: ActivatedRoute){}
+  constructor(private readonly _router : Router,private readonly _route: ActivatedRoute){
+    this._route.fragment.subscribe(fragment => { 
+      console.log("updating fragment : ",fragment);
+      
+      this.fragment = fragment; 
+
+      this.myAnchor = document.querySelector('#' + this.fragment);
+      
+      if(this.myAnchor && this.fragment){
+        console.log("subscribe : scrolling to");
+        this.scrollToElement(this.myAnchor);
+      }
+    });
+  }
   members = [
     {
       name:"Nadiia Olarean",
@@ -104,29 +117,46 @@ export class AboutpageComponent {
     ]
 
   scrollToElement(element:any): void {
+    console.log("scrollToElement : ",element);
+    
     element.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
   }
 
   ionViewWillEnter(){
     console.log("Ion View Will Enter");
-    
+    try {
+      if(document){
+        this.myAnchor = document.querySelector('#' + this.fragment);
+        console.log("anchor : ",this.myAnchor);
+        console.log("fragment : ",this.fragment);
+        
+        if(this.myAnchor && this.fragment){
+          console.log("ViewWillEnter : scrolling to");
+          
+          this.scrollToElement(this.myAnchor);
+        }
+      }
+    } catch (e) { }
   }
 
   ngAfterViewInit(){
     console.log("After view init");
+    if(this.myAnchor){
+      console.log("After view : scrolling to");
+      this.scrollToElement(this.myAnchor);
+    }
   }
 
   ionViewDidEnter(){
-    console.log("Ion view entered");
-    let elem = this._route.snapshot.fragment;
-
-    if(!elem)
-      return; 
-    console.log(elem);
-    // console.log(this.myDiv.nativeElement.innerHTML);
-    this.element = document.getElementById(elem) as HTMLElement;
-    console.log("elem : ",this.element);
-    
-    this.scrollToElement(this.element);
+    console.log("Ion view did enter");
+    if(this.myAnchor){
+      console.log("DidEnter : scrolling to");
+      this.scrollToElement(this.myAnchor);
+    }
   }
+
+  fragment!:any;
+  myAnchor!:any;
+
+
 }

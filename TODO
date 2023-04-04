@@ -10,6 +10,12 @@ Questions:
     ✘ send email when course is canceled ? @cancelled(23-03-30 17:25)
         https://firebase.google.com/docs/extensions/official/firestore-send-email?hl=fr
     ✘ admins can change the 3 missed courses limit ? @cancelled(23-03-30 17:24)
+    ☐ Schedule : Clear selection button ???
+
+observable en HTML, bug sur le tableau contenu dans l'objet . Impossible d'itérer dessus
+Ancres, aller sur une page, puis aller vers l'ancre souhaitée. Si sur la page, aller vers l'ancre. 
+    ion-nav-bar, trouver comment recharger la page à chaque fois qu'on y va
+Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 Misc : 
     ☐ admin can modify courses
@@ -24,9 +30,11 @@ Misc :
     ☐ Popup to confirm registration to a course for students
     ☐ Can see a teacher's courses per month (monthly hours)
     ☐ Generate teachers' hours sheet per month (date-hour duration title)
-    
+    ☐ Settle bug when removing days in teacher-create-modal and then cancel creation
 
 URGENT :
+    ☐ Make impossible to change date in "teacher create modal", otherwise, it will bug
+    ☐ Check when impossible to read email from user -> impossible to go under Account page. Evt reload page from angular with try/catch or display error message
     ☐ automatic unban for absences after 30 days (on login of user)
     ☐ Verify if banning doesnt remove from past courses
     ✔ Fix hours properly @done(23-03-30 17:11)
