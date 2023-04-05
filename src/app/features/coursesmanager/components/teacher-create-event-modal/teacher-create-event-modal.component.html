@@ -27,8 +27,8 @@
     <ion-item>
         <ion-label>Duration :</ion-label>
         <ion-input type="number" value="1" required name="duration" [(ngModel)]="duration" (ionChange)="updateDuration($event)"></ion-input>
-        <ion-select interface="popover" name="durationUnit" [(ngModel)]="durationUnit">
-            <ion-select-option value="hour" (ionChange)="updateDurationUnit($event)">hours</ion-select-option>
+        <ion-select interface="popover" (ionChange)="updateDurationUnit($event)" name="durationUnit" [(ngModel)]="durationUnit">
+            <ion-select-option value="hour">hours</ion-select-option>
             <ion-select-option value="minute">minutes</ion-select-option>
         </ion-select>
     </ion-item>
@@ -52,40 +52,14 @@
         <ion-textarea [(ngModel)]="description" [autoGrow]="true" required name="descr"> </ion-textarea>
     </ion-item>
 
-    <!-- <div *ngIf="collisionEvents && collisionEvents.length > 0; else multi">
-        <ion-label>Courses at the same time : </ion-label>
-        <ion-list>
-            <ion-item *ngFor="let evt of collisionEvents; let i = index">
-                <ion-label *ngIf="i == collisionIndex ;else normal" color="danger">
-                    <h2>{{evt['title']}}</h2>
-                    <p>Room : {{evt['room_id']}}</p>
-                    <p>From {{evt['timeStart']| date: "HH:mm"}} to {{evt['timeEnd']| date: "HH:mm"}}</p>
-                </ion-label>
-                <ng-template #normal>
-                <ion-label>
-                    <h2>{{evt['title']}}</h2>
-                    <p>Room : {{evt['room_id']}}</p>
-                    <p>From {{evt['timeStart']| date: "HH:mm"}} to {{evt['timeEnd']| date: "HH:mm"}}</p>
-                </ion-label>
-                </ng-template>
-            </ion-item>
-        </ion-list>
-    </div> -->
-
-    <!-- <ng-template #multi> -->
-    <!-- <div *ngIf="multiCollisions"> -->
     <div *ngIf="multiCollisions">
-        <ion-label>Collisions per day : </ion-label>
+        <ion-label>Conflicts for each day : </ion-label>
         <ion-list *ngFor="let day of multiCollisions; let dayIndex = index">
-            <!-- <ion-text>size : {{day.size |async}}</ion-text> -->
-            <!-- <ion-item *ngIf="day.size |async"> -->
             <ion-item>
                 <ion-label>
                     {{day.date|date:"dd.MM.YY"}}
-                    <!-- <ion-icon color="danger" name="close-circle-outline" (click)="removeDay(i)"> </ion-icon> -->
                 </ion-label>
                 <ion-list>
-                    <!-- <ion-item lines="none" *ngFor="let coll of (day.collision|async)"> {{coll['title']}} from {{coll['timeStart']|date:"HH:mm"}} to {{coll['timeEnd']|date:"HH:mm"}} in room {{coll['room_id']}}</ion-item> -->
                     <ion-item lines="none" *ngFor="let coll of (day.collisions); let collisionIndex = index"> 
                         <ion-text *ngIf="collisionIndexes[dayIndex] == collisionIndex; else normal" color="danger">
                             {{coll['title']}} from {{coll['timeStart']|date:"HH:mm"}} to {{coll['timeEnd']|date:"HH:mm"}} in room {{coll['room_id']}}
@@ -100,40 +74,6 @@
             </ion-item>
         </ion-list>
     </div>
-    <!-- </ng-template> -->
-            <!-- {{day.collision|async|json}} -->
-            
-            <!-- <ng-template *ngIf="(day.collision | async) as collisionsList">
-                <ion-label>
-                    {{day.day.date|date:"dd.MM.YY"}} 
-                    <ion-icon color="danger" name="close-circle-outline" (click)="removeDay(i)">
-                    </ion-icon>
-                </ion-label>
-                <ion-list>
-                    <ion-item lines="none" *ngFor="let coll of collisionsList"> {{coll['title']}} from {{coll['timeStart']|date:"HH:mm"}} to {{coll['timeEnd']|date:"HH:mm"}} in room {{coll['room_id']}}</ion-item>
-                </ion-list>
-            </ng-template> -->
-
-
-            <!-- <ion-item *ngFor="let evt of collisions; let i = index">
-                <ion-label *ngIf="i == collisionIndex ;else normal" color="danger">
-                    <h2>{{evt['title']}}</h2>
-                    <p>Room : {{evt['room_id']}}</p>
-                    <p>From {{evt['timeStart']| date: "HH:mm"}} to {{evt['timeEnd']| date: "HH:mm"}}</p>
-                </ion-label>
-                <ng-template #normal>
-                <ion-label>
-                    <h2>{{evt['title']}}</h2>
-                    <p>Room : {{evt['room_id']}}</p>
-                    <p>From {{evt['timeStart']| date: "HH:mm"}} to {{evt['timeEnd']| date: "HH:mm"}}</p>
-                </ion-label>
-                </ng-template>
-            </ion-item> -->
-
-        <!-- </ion-list>
-    </div>
-    </ng-template> -->
-    
     </form>
 </ion-content>
 
@@ -143,11 +83,17 @@
         <ion-buttons slot="start">
         <ion-button (click)="cancel()">Cancel</ion-button>
         </ion-buttons>
-        <ion-buttons slot="end">
-        <!-- <ion-button (click)="confirm()" [strong]="true" [disabled]="!isValid.value">Confirm</ion-button> -->
-        <!-- <ion-button (click)="confirm()" [strong]="true" type="submit" [disabled]="!isValid.value && !evtCreation.valid">Confirm</ion-button> -->
+
+        
+        <ion-buttons *ngIf="!isLoading.value;else loading" slot="end">
         <ion-button (click)="confirm()" [strong]="true" [disabled]="!isValid.value || !evtCreation.valid">Confirm</ion-button>
-        <!-- <ion-button (click)="evtCreation.ngSubmit.emit()" [strong]="true" [disabled]="!isValid.value && !evtCreation.valid">Confirm</ion-button> -->
         </ion-buttons>
+        <ng-template #loading>
+            <ion-item>
+                <ion-spinner></ion-spinner>
+                <p>Loading conflicts...</p>
+            </ion-item>
+        </ng-template>
+
     </ion-toolbar>
 </ion-footer>

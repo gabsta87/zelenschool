@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import * as dayjs from 'dayjs';
-import { DocumentData } from 'firebase/firestore';
-import { BehaviorSubject, firstValueFrom, map, Observable } from 'rxjs';
+import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
-import { formatForDB, formatTime, getNowDate } from 'src/app/shared/service/hour-management.service';
+import { formatTime, getNowDate } from 'src/app/shared/service/hour-management.service';
 
 @Component({
   selector: 'app-teacher-create-event-modal',
@@ -28,6 +27,7 @@ export class TeacherCreateEventModalComponent {
   now = getNowDate();
 
   isValid = new BehaviorSubject<Boolean>(false);
+  isLoading = new BehaviorSubject<Boolean>(false);
 
   collisionIndexes = [] as number[];
   defaultHour!:number;
@@ -38,7 +38,7 @@ export class TeacherCreateEventModalComponent {
   ionViewDidEnter(){
     this.defaultHour = dayjs(this.timeStart).hour();
     this.defaultMinute = dayjs(this.timeStart).minute();
-    this.updateTime();
+    this.updateCollisions();
   }
 
   cancel(){
@@ -71,16 +71,20 @@ export class TeacherCreateEventModalComponent {
   multiCollisions = [] as any[];
   // multiCollisions = [] as {date:string,collisions:DocumentData}[];
 
-  async updateTime(){
-
+  async updateCollisions(){
+    this.isLoading.next(true);
     this.multiCollisions = await Promise.all( this.selectedDays.map(async (day:any) => {
       const entryTimeStart = dayjs(day.date).hour(dayjs(this.timeStart).hour()).minute(dayjs(this.timeStart).minute());
       const entryTimeEnd = dayjs(day.date).hour(dayjs(this.timeEnd).hour()).minute(dayjs(this.timeEnd).minute());
-
+      
       const resultingCollision = await firstValueFrom(this._db.getCalendarEntriesCollisions(formatTime(entryTimeStart),formatTime(entryTimeEnd)));
 
       return {date : day.date, collisions : resultingCollision}
     }))
+
+    this.isValid.next(this.isRoomAvailable());
+    this.isLoading.next(false);
+    return this.multiCollisions;
   }
 
   updateStartingHour($event:any){
@@ -91,7 +95,7 @@ export class TeacherCreateEventModalComponent {
 
     this.isValid.next(dayjs(this.timeStart).isAfter(this.now) && this.isRoomAvailable(this.room_id));
 
-    this.updateTime();
+    this.updateCollisions();
   }
 
   updateStartingMinute($event:any){
@@ -102,30 +106,34 @@ export class TeacherCreateEventModalComponent {
     
     this.isValid.next(dayjs(this.timeStart).isAfter(this.now) && this.isRoomAvailable(this.room_id));
     
-    this.updateTime();
+    this.updateCollisions();
   }
   
   updateDuration($event:any){
     this.duration = $event.detail.value;
-    this.timeEnd = formatTime(dayjs(this.timeStart).add($event.detail.value,this.durationUnit));
+    this.timeEnd = dayjs(this.timeStart).add($event.detail.value,this.durationUnit).toString();
 
-    return this.updateTime();
+    this.isValid.next(this.isRoomAvailable());
+
+    this.updateCollisions();
   }
 
   updateDurationUnit($event:any){
     this.durationUnit = $event.detail.value;
-    this.timeEnd = formatTime(dayjs(this.timeStart).add(this.duration,$event.detail.value));
+    this.timeEnd = dayjs(this.timeStart).add(this.duration,$event.detail.value).toString();
     
-    return this.updateTime();
+    this.isValid.next(this.isRoomAvailable());
+
+    this.updateCollisions();
   }
 
   updateRoom($event:any){
     this.isValid.next(this.isRoomAvailable($event.detail.value));
     
-    return this.updateTime();
+    this.updateCollisions();
   }
 
-  isRoomAvailable(room_id:string){
+  isRoomAvailable(room_id:string=this.room_id){
 
     this.collisionIndexes = this.multiCollisions.map((e:any) => {
       return e.collisions.findIndex((coll:any) => coll['room_id'] == room_id);
@@ -139,7 +147,7 @@ export class TeacherCreateEventModalComponent {
     if(this.selectedDays.length > 1){
       this.selectedDays.splice(index,1);
       this.isValid.next(this.selectedDays.length > 0);
-      this.updateTime()
+      this.updateCollisions()
       this.dayRemoved.emit();
     }
     // TODO remove from calendar
