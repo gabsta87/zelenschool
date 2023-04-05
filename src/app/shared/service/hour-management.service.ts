@@ -31,13 +31,13 @@ export function formatTime(timeToFormat:string|dayjs.Dayjs):string{
 }
 
 export function formatForIonDateTime(timeToFormat:string|dayjs.Dayjs):string{
-  console.log("time to format : ",timeToFormat);
-  console.log("to iso : ",dayjs(timeToFormat).toISOString());
-  console.log("to local iso : ",dayjs(timeToFormat).local().toISOString());
-  console.log("to local : ",dayjs(timeToFormat).local().toString());
-  console.log("simple : ",dayjs(timeToFormat).toString());
-  console.log("to date : ",dayjs(timeToFormat).toDate().toString());
-  console.log("to date ISO : ",dayjs(timeToFormat).toDate().toISOString());
+  // console.log("time to format : ",timeToFormat);
+  // console.log("to iso : ",dayjs(timeToFormat).toISOString());
+  // console.log("to local iso : ",dayjs(timeToFormat).local().toISOString());
+  // console.log("to local : ",dayjs(timeToFormat).local().toString());
+  // console.log("simple : ",dayjs(timeToFormat).toString());
+  // console.log("to date : ",dayjs(timeToFormat).toDate().toString());
+  // console.log("to date ISO : ",dayjs(timeToFormat).toDate().toISOString());
   
   
   return dayjs(timeToFormat).toDate().toISOString();

@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { compareAsc, isSameDay, isSameMonth } from 'date-fns';
 import { WeekDay, MonthView, MonthViewDay } from 'calendar-utils';
-import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, filter, map, Observable, Subject } from 'rxjs';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarMonthViewDay, CalendarNativeDateFormatter, CalendarView, CalendarWeekViewBeforeRenderEvent, DateFormatterParams, DAYS_OF_WEEK, } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import * as dayjs from 'dayjs';
@@ -50,6 +50,7 @@ export class SchedulepageComponent {
   filterAscTime = true;
   now = getNowDate();
   subscribtion !: any;
+  futureCourses !: Observable<DocumentData[]>;
 
   constructor(
     private readonly _route: ActivatedRoute,
@@ -58,6 +59,8 @@ export class SchedulepageComponent {
     private cd: ChangeDetectorRef,
     ) {
     this.extractedData = this._route.snapshot.data["scheduleData"];
+    this.futureCourses = this.extractedData.pipe(filter((course:any) => dayjs(course.timeStart).isAfter(dayjs(getNowDate())) ))
+
   }
 
   async ngOnInit(){

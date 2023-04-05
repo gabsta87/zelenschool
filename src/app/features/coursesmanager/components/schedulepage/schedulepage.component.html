@@ -113,7 +113,7 @@
     </ion-row>
 </ion-grid>
 
-<div id="eventsSecTable" class="events_grid" *ngIf="extractedData | async as eventsList">
+<div id="eventsSecTable" class="events_grid" *ngIf="futureCourses | async as eventsList">
     <ion-grid class="eventsTable ion-no-padding">
         <ion-row>
             <ion-col (click)="sortCoursesByTitle()">

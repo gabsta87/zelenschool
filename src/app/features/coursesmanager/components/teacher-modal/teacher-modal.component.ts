@@ -26,6 +26,8 @@ export class TeacherModalComponent{
   now = getNowDate();
   duration = 1;
   durationUnit = 'hour' as dayjs.ManipulateType;
+  defaultHour !: number;
+  defaultMinute !: number;
 
   presentingElement = undefined;
   dataObs!:Observable<DocumentData|undefined>;
@@ -79,6 +81,9 @@ export class TeacherModalComponent{
     this.timeEnd = formatForIonDateTime(this.meta.timeEnd);
     this.max_participants = this.meta.max_participants;
     this.description = this.meta.description;
+
+    this.defaultHour = dayjs(this.timeStart).hour();
+    this.defaultMinute = dayjs(this.timeStart).minute();
 
     this.duration = dayjs(this.timeEnd).diff(this.timeStart,"minute");
     if(this.duration < 60 || this.duration % 60 != 0){

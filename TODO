@@ -20,12 +20,12 @@ Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManag
 
 Misc :
     ☐ members management
-    ☐ Form must be valid only when course modification/creation has correct hours
+    ✔ Form must be valid only when course modification/creation has correct hours @done(23-04-05 18:09)
     ☐ admin can modify courses
-    ☐ Possibility to remove a day from the list of days (recursive course) (same hour for all courses)(test conflicts for all courses )
-    ☐ Allow longer course description
-    ☐ Possibilité de créer un cour le jour même 
-    ☐ partners not a page, but an anchor on the "about us" page
+    ✔ Possibility to remove a day from the list of days (recursive course) (same hour for all courses)(test conflicts for all courses ) @done(23-04-05 18:10)
+    ✔ Allow longer course description @done(23-04-05 18:10)
+    ✔ Possibilité de créer un cour le jour même @done(23-04-05 18:10)
+    ✔ partners not a page, but an anchor on the "about us" page @done(23-04-05 18:10)
     ☐ Projects -> activities
     ☐ gallery -> folders
     ☐ activities -> goes to anchor, not component
