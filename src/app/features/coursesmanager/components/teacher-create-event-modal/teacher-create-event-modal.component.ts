@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import * as dayjs from 'dayjs';
 import { DocumentData } from 'firebase/firestore';
@@ -12,6 +12,8 @@ import { formatForDB, formatTime, getNowDate } from 'src/app/shared/service/hour
   styleUrls: ['./teacher-create-event-modal.component.scss']
 })
 export class TeacherCreateEventModalComponent {
+  @Output() dayRemoved = new EventEmitter<string>();
+  
   selectedDays!:any[];
 
   timeStart!:string;
@@ -26,13 +28,16 @@ export class TeacherCreateEventModalComponent {
   now = getNowDate();
 
   isValid = new BehaviorSubject<Boolean>(false);
-  collisionEvents!:DocumentData[]|undefined;
 
-  collisionIndex !: number;
+  collisionIndexes = [] as number[];
+  defaultHour!:number;
+  defaultMinute!:number;
 
   constructor(private readonly modalCtrl:ModalController,private readonly _db: AngularfireService){ }
 
   ionViewDidEnter(){
+    this.defaultHour = dayjs(this.timeStart).hour();
+    this.defaultMinute = dayjs(this.timeStart).minute();
     this.updateTime();
   }
 
@@ -63,55 +68,40 @@ export class TeacherCreateEventModalComponent {
     return this.modalCtrl.dismiss(null, 'confirm');
   }
 
-  multiCollisions!:any;
+  multiCollisions = [] as any[];
+  // multiCollisions = [] as {date:string,collisions:DocumentData}[];
 
   async updateTime(){
-    
-    if(this.selectedDays.length > 1){
-      this.multiCollisions = this.selectedDays.map( (e:any) => {
-        let entryTimeStart = dayjs(e.date).hour(dayjs(this.timeStart).hour()).minute(dayjs(this.timeStart).minute());
-        let entryTimeEnd = dayjs(e.date).hour(dayjs(this.timeEnd).hour()).minute(dayjs(this.timeEnd).minute());
 
-        let resultingCollisions = this._db.getCalendarEntriesCollisions(formatTime(entryTimeStart),formatTime(entryTimeEnd));
-        
-        resultingCollisions.pipe(map((collision:any) => {
-          console.log("collision : ",collision);
-          return;
-        }))
+    this.multiCollisions = await Promise.all( this.selectedDays.map(async (day:any) => {
+      const entryTimeStart = dayjs(day.date).hour(dayjs(this.timeStart).hour()).minute(dayjs(this.timeStart).minute());
+      const entryTimeEnd = dayjs(day.date).hour(dayjs(this.timeEnd).hour()).minute(dayjs(this.timeEnd).minute());
 
-        return {day : e, collision : resultingCollisions as Observable<DocumentData[]>};
-      }) 
-    }else{
-      // Check possibility to do it with observable 
-      this.collisionEvents = await firstValueFrom(this._db.getCalendarEntriesCollisions(this.timeStart,this.timeEnd));
+      const resultingCollision = await firstValueFrom(this._db.getCalendarEntriesCollisions(formatTime(entryTimeStart),formatTime(entryTimeEnd)));
 
-      if(this.collisionEvents){
-        this.collisionIndex = this.collisionEvents.findIndex(e => e['room_id'] == this.room_id);
-        this.isValid.next(this.collisionIndex == -1)
-      }else{
-        this.isValid.next(true);
-      }
-    }
+      return {date : day.date, collisions : resultingCollision}
+    }))
   }
 
   updateStartingHour($event:any){
     let newValue = $event.detail.value;
-    
-    this.isValid.next(newValue < 24 && newValue >= 0);
 
     this.timeStart = dayjs(this.timeStart).hour(newValue).toString();
     this.timeEnd = dayjs(this.timeStart).add(this.duration,this.durationUnit).toString();
+
+    this.isValid.next(dayjs(this.timeStart).isAfter(this.now) && this.isRoomAvailable(this.room_id));
+
     this.updateTime();
   }
 
   updateStartingMinute($event:any){
-    
     let newValue = $event.detail.value;
-    
-    this.isValid.next(newValue < 60 && newValue >= 0);
     
     this.timeStart = dayjs(this.timeStart).minute(newValue).toString();
     this.timeEnd = dayjs(this.timeStart).add(this.duration,this.durationUnit).toString();
+    
+    this.isValid.next(dayjs(this.timeStart).isAfter(this.now) && this.isRoomAvailable(this.room_id));
+    
     this.updateTime();
   }
   
@@ -130,22 +120,29 @@ export class TeacherCreateEventModalComponent {
   }
 
   updateRoom($event:any){
-    // If there are no events at the same time, no validation required
-    if(!this.collisionEvents){
-      this.isValid.next(this.room_id != undefined)
-      return
-    }
+    this.isValid.next(this.isRoomAvailable($event.detail.value));
     
-    this.collisionIndex = this.collisionEvents.findIndex(e => e['room_id'] == $event.detail.value);
-    this.isValid.next(this.collisionIndex == -1)
+    return this.updateTime();
   }
+
+  isRoomAvailable(room_id:string){
+
+    this.collisionIndexes = this.multiCollisions.map((e:any) => {
+      return e.collisions.findIndex((coll:any) => coll['room_id'] == room_id);
+    })
+    
+    return !this.collisionIndexes.some(positive);
+  }
+
 
   removeDay(index:number){
     if(this.selectedDays.length > 1){
       this.selectedDays.splice(index,1);
       this.isValid.next(this.selectedDays.length > 0);
       this.updateTime()
+      this.dayRemoved.emit();
     }
     // TODO remove from calendar
   }
 }
+const positive = (element:number) => element >= 0;

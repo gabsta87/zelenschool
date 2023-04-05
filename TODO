@@ -17,7 +17,10 @@ Ancres, aller sur une page, puis aller vers l'ancre souhaitée. Si sur la page, 
     ion-nav-bar, trouver comment recharger la page à chaque fois qu'on y va
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
-Misc : 
+
+Misc :
+    ☐ members management
+    ☐ Form must be valid only when course modification/creation has correct hours
     ☐ admin can modify courses
     ☐ Possibility to remove a day from the list of days (recursive course) (same hour for all courses)(test conflicts for all courses )
     ☐ Allow longer course description
@@ -33,8 +36,9 @@ Misc :
     ☐ Settle bug when removing days in teacher-create-modal and then cancel creation
 
 URGENT :
-    ☐ Make impossible to change date in "teacher create modal", otherwise, it will bug
-    ☐ Check when impossible to read email from user -> impossible to go under Account page. Evt reload page from angular with try/catch or display error message
+    ☐ impossible to create courses if there is a collision (multi course)
+    ✔ Make impossible to change date in "teacher create modal", otherwise, it will bug @done(23-04-05 01:20)
+    ✔ Check when impossible to read email from user -> impossible to go under Account page. Evt reload page from angular with try/catch or display error message @done(23-04-05 01:20)
     ☐ automatic unban for absences after 30 days (on login of user)
     ☐ Verify if banning doesnt remove from past courses
     ✔ Fix hours properly @done(23-03-30 17:11)
@@ -51,7 +55,7 @@ Features:
     ☐ Admin page : actions allowed @high @started(23-03-30 17:06)
     ✔ request admin approval for teachers (on users list of admin, put badge for waiting approval users) @done(23-03-30 17:02)
     ✔ restrict hours for daily/weekly display in schedule @done(23-03-30 17:22)
-    ✔ admins can access to teacher modal through admin page @done(23-03-30 17:03)
+    ✔ admins can access to teacher modal through admin page @done(23-04-05 01:20)
     ✔ Uploading images to cloud @done(23-03-30 17:06)
     ☐ admins can manage assoc members/upload image files
         https://blog.angular-university.io/angular-file-upload/
@@ -123,7 +127,7 @@ Refactoring:
     ☐ create Doc
     ☐ Move components in sub-folders
     ✔ added description to courses @done(23-03-30 17:16)
-    ✔ click on bottom table to create modal @done(23-03-30 17:16)
+    ✔ click on bottom table to create modal @done(23-04-05 01:20)
     ✔ Force comment for banning @done(23-03-30 17:16)
     ✔ Banned user (variable into userManagement service to prevent subscription to courses) @done(23-03-30 17:16)
     ✔ Manage forgotten password problem for email/pwd login @done(23-03-30 17:16)
@@ -133,7 +137,7 @@ Refactoring:
     ✔ prevent from creating a course in an occupied classroom (same time and same room id) @done(23-03-30 17:16)
     ✔ Teachers can see their course's students @done(23-03-30 17:16)
     ✔ debug teachers'names display on schedule page @done(23-03-30 17:16)
-    ✔ Corriger author : undefined dans meta du teacher-modal @done(23-03-30 17:16)
+    ✔ Corriger author : undefined dans meta du teacher-modal @done(23-04-05 01:20)
     ✔ Changer la page Account pour permettre de changer les infos de son compte @done(23-03-30 17:16)
     ✔ Mise à jour des informations du compte @done(23-03-30 17:16)
     ✔ Modal pour s'inscrire dans les cours @done(23-03-30 17:16)
