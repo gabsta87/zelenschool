@@ -58,7 +58,7 @@
                         <p *ngIf="usr['address']">Address : {{usr['address']}}</p>
                         <p *ngIf="usr['subscribeDate']">Subscribe date : {{usr['subscribeDate']}}</p>
                         <ion-text *ngIf="usr['ban']" color="danger">
-                        <p> Banned on : {{usr['ban'].date}} by {{usr['ban'].author.l_name}} {{usr['ban'].author.f_name}}<br>
+                        <p> Banned on : {{usr['ban'].date}} by {{usr['ban'].author?.l_name}} {{usr['ban'].author?.f_name}}<br>
                         Reason : {{usr['ban'].comment}}</p>
                         </ion-text>
                         <span>
@@ -90,7 +90,7 @@
             <ion-accordion-group [multiple]="true">
                 <ion-accordion [value]="course['title']">
                     <ion-item slot="header" color="light">
-                      <ion-label>{{course['title']}} {{course['eventDate']| date: "HH:mm d MMM, yy"}} {{course['author'].l_name}} {{course['author'].f_name}}</ion-label>
+                      <ion-label>{{course['title']}} {{course['timeStart']| date: "HH:mm d MMM, yy"}} {{course['author'].l_name}} {{course['author'].f_name}}</ion-label>
                     </ion-item>
                     <div class="ion-padding" slot="content" (click)="handleEvent(course)">
                         <p>Room : {{course['room_id']}}</p>
