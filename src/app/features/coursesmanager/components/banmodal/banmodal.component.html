@@ -1,3 +1,21 @@
+<form #banForm="ngForm" (ngSubmit)="confirm()" novalidate>
+    <ion-content>
+        <ion-textarea name="explanation" placeholder="Please explain why you are banning this user" [(ngModel)]="explanation" required></ion-textarea>
+    </ion-content>
+
+    <ion-footer>
+        <ion-toolbar>
+            <ion-buttons slot="start">
+                <ion-button (click)="cancel()">Cancel</ion-button>
+            </ion-buttons>
+            <ion-buttons slot="end">
+                <ion-button type="submit" [strong]="true" [disabled]="!banForm.form.valid">Confirm</ion-button>
+            </ion-buttons>
+        </ion-toolbar>
+    </ion-footer>
+</form>
+
+<!-- 
 <ion-content>
     <ion-textarea placeholder="Please explain why you are banning this user" [(ngModel)]="explanation"></ion-textarea>
 </ion-content>
@@ -11,4 +29,4 @@
             <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
         </ion-buttons>
     </ion-toolbar>
-</ion-footer>
+</ion-footer> -->
