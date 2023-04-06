@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Auth, User } from '@angular/fire/auth';
 import { collection, QueryConstraint, Firestore, addDoc, collectionData, doc, setDoc, DocumentData, arrayUnion, arrayRemove, getDocs, deleteField, where} from '@angular/fire/firestore';
 import { deleteDoc, getDoc, query, updateDoc } from '@firebase/firestore';
-import { firstValueFrom, map, Observable } from 'rxjs';
+import { filter, firstValueFrom, map, Observable } from 'rxjs';
 import * as dayjs from 'dayjs';
 import * as isBetween from 'dayjs/plugin/isBetween';
-import { HourManagementService, formatForDB, isColliding } from './hour-management.service';
+import { HourManagementService, formatForDB, getNowDate, isColliding } from './hour-management.service';
 dayjs.extend(isBetween);
 
 @Injectable({
@@ -111,13 +111,21 @@ export class AngularfireService{
   banUser(userId:string,message="SYSTEM : missed too many courses"){
     const docRef = doc(this._dbaccess,'users/'+userId);
     
-    this.removeUserFromCourses(userId);
-
-    return updateDoc(docRef,{ban:{
+    const result = updateDoc(docRef,{ban:{
       authorID:this._auth.currentUser?.uid,
       date: dayjs(new Date()).format('DD.MM.YYYY'),
       comment: message,
     }})
+
+    this.removeUserFromFutureCourses(userId);
+
+    return result;
+  }
+
+  async removeUserFromFutureCourses(userId:string){
+    let futureCourses = await firstValueFrom(this.getCalendarEntries().pipe(map( (courses:any) => courses = courses.filter((course:any) =>dayjs(course.timeStart).isAfter(dayjs(getNowDate()),"hour") ))) )
+    
+    futureCourses.forEach( (course:any)=> this.removeUserFromCourse(course['id'],userId))
   }
 
   removeUser(userId:string){
