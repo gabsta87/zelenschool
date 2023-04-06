@@ -20,27 +20,30 @@ Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManag
 
 Misc :
     ☐ members management
-    ✔ Form must be valid only when course modification/creation has correct hours @done(23-04-05 18:09)
+    ☐ activities management
+    ☐ activities -> goes to anchor, not component
     ☐ admin can modify courses
+    ☐ gallery -> folders
+    ☐ Can see a teacher's courses per month (monthly hours)
+    ☐ Generate teachers' hours sheet per month (date-hour duration title)
+    ☐ Settle bug when removing days in teacher-create-modal and then cancel creation
+    ☐ Popup to confirm registration to a course for students
+    ✔ Form must be valid only when course modification/creation has correct hours @done(23-04-05 18:09)
     ✔ Possibility to remove a day from the list of days (recursive course) (same hour for all courses)(test conflicts for all courses ) @done(23-04-05 18:10)
     ✔ Allow longer course description @done(23-04-05 18:10)
     ✔ Possibilité de créer un cour le jour même @done(23-04-05 18:10)
     ✔ partners not a page, but an anchor on the "about us" page @done(23-04-05 18:10)
-    ☐ Projects -> activities
-    ☐ gallery -> folders
-    ☐ activities -> goes to anchor, not component
+    ✔ Projects -> activities @done(23-04-05 19:48)
     ✘ Course creation needs approval @cancelled(23-03-31 12:38)
-    ☐ Popup to confirm registration to a course for students
-    ☐ Can see a teacher's courses per month (monthly hours)
-    ☐ Generate teachers' hours sheet per month (date-hour duration title)
-    ☐ Settle bug when removing days in teacher-create-modal and then cancel creation
 
-URGENT :
-    ☐ impossible to create courses if there is a collision (multi course)
+    URGENT :
+    ☐ automatic unban for absences after 30 days (on login of user)
+    ✔ Check display on admin page when user banned by system (banned by :) @done(23-04-06 09:16)
+    ✔ Ban only if comment written @done(23-04-06 09:16)
+    ✔ impossible to create courses if there is a collision (multi course) @done(23-04-05 19:50)
     ✔ Make impossible to change date in "teacher create modal", otherwise, it will bug @done(23-04-05 01:20)
     ✔ Check when impossible to read email from user -> impossible to go under Account page. Evt reload page from angular with try/catch or display error message @done(23-04-05 01:20)
-    ☐ automatic unban for absences after 30 days (on login of user)
-    ☐ Verify if banning doesnt remove from past courses
+    ✔ Verify if banning doesnt remove from past courses @done(23-04-06 08:56)
     ✔ Fix hours properly @done(23-03-30 17:11)
     ✔ Collision events not working @done(23-03-30 17:11)
     ✔ See why some users have no status @done(23-03-30 17:11)
