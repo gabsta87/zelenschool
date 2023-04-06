@@ -59,8 +59,7 @@ export class SchedulepageComponent {
     private cd: ChangeDetectorRef,
     ) {
     this.extractedData = this._route.snapshot.data["scheduleData"];
-    this.futureCourses = this.extractedData.pipe(filter((course:any) => dayjs(course.timeStart).isAfter(dayjs(getNowDate())) ))
-
+    this.futureCourses = this.extractedData.pipe(map( (courses:any) => courses = courses.filter((course:any) =>dayjs(course.timeStart).isAfter(dayjs(getNowDate()),"hour") )))
   }
 
   async ngOnInit(){
