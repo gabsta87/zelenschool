@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Auth, User } from '@angular/fire/auth';
 import { collection, QueryConstraint, Firestore, addDoc, collectionData, doc, setDoc, DocumentData, arrayUnion, arrayRemove, getDocs, deleteField, where} from '@angular/fire/firestore';
 import { deleteDoc, getDoc, query, updateDoc } from '@firebase/firestore';
-import { filter, firstValueFrom, map, Observable } from 'rxjs';
+import { filter, find, firstValueFrom, map, Observable } from 'rxjs';
 import * as dayjs from 'dayjs';
 import * as isBetween from 'dayjs/plugin/isBetween';
 import { HourManagementService, formatForDB, getNowDate, isColliding } from './hour-management.service';
@@ -12,6 +12,7 @@ dayjs.extend(isBetween);
   providedIn:'root'
 })
 export class AngularfireService{
+  
   constructor(
     private readonly _dbaccess:Firestore,
     private readonly _auth:Auth,
@@ -223,6 +224,40 @@ export class AngularfireService{
     
     // Otherwise, returns reference to doc created
     return doc(this._dbaccess,'users/'+userId);
+  }
+
+  async writeAssoMember(e: {name: string; photo: string; role: string; link: string; } | {name: string; photo: string; role: string; link?: undefined; }){
+    return addDoc(collection(this._dbaccess,"assoMembers"),{
+      ...e
+    })
+  }
+
+  deleteAssoMember(id:string){
+    const docRef = doc(this._dbaccess,'assoMembers/'+id);
+    deleteDoc(docRef);
+  }
+
+  getAssoMembers(){
+    return this.getElements("assoMembers");
+  }
+
+  getAssoMember(id:string){
+    return this.getAssoMembers().pipe(find((e:any) => e.id === id));
+  }
+
+  getPartners(){
+    return this.getElements("partners");
+  }
+
+  writePartner(newEntry : {logoName:string,link:string}){
+    return addDoc(collection(this._dbaccess,"partners"),{
+      ...newEntry
+    })
+  }
+
+  deletePartner(id:string){
+    const docRef = doc(this._dbaccess,'partners/'+id);
+    deleteDoc(docRef);
   }
 }
 
