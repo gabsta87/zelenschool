@@ -1,5 +1,6 @@
 
 Questions:
+    ☐ Members order is important ?
     ✘ Teacher can also be admin ? @cancelled(23-03-30 17:26)
     ✔ Phone numbers : swiss/ukrainian or whatever @done(23-03-30 17:26)
     ✔ Courses longer than 1 hour ? @done(23-03-30 17:26)
@@ -54,7 +55,6 @@ BUGS :
 
 Features:
     ☐ Rooms have a name/address instead of number ? Admins can add/remove rooms ? Rooms from database
-    ☐ automatic unban after 30 days (only for absences)
     ☐ Admin page : actions allowed @high @started(23-03-30 17:06)
     ✔ request admin approval for teachers (on users list of admin, put badge for waiting approval users) @done(23-03-30 17:02)
     ✔ restrict hours for daily/weekly display in schedule @done(23-03-30 17:22)
@@ -83,10 +83,9 @@ Features:
 
 Technical :
     New:
-        ☐ sort by upload date
-        ☐ create component for conflicting courses (used in both teachermodal and teachercreatemodal)
+        ✔ create component for conflicting courses (used in both teachermodal and teachercreatemodal) @done(23-04-06 20:08)
         ☐ fix CORS problem to upload files on server
-        ☐ Create service to manage course (modal creation) that can be launched from both schedule and admin page
+        ✔ Create service to manage course (modal creation) that can be launched from both schedule and admin page @done(23-04-06 20:08)
         ☐ test teacher/student account creation
         ☐ students can see their banning date (start and end) / Announce/show to user that he has been banned
         ☐ Secure firebase access
@@ -112,7 +111,7 @@ Cosmetics :
             https://mattlewis92.github.io/angular-calendar/#/show-dates-on-titles
             https://mattlewis92.github.io/angular-calendar/#/editable-deletable-events
         ✔ sort table by date @done(23-03-30 17:07)
-        ☐ Color selected day
+        ✔ Color selected day @done(23-04-06 20:09)
             https://mattlewis92.github.io/angular-calendar/#/selectable-period
         ☐ different colors for teacher's own events / students subscribed events
         ☐ show titles in each day 
