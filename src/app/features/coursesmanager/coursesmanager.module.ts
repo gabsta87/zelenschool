@@ -36,6 +36,7 @@ import { ChoiceModalComponent } from './components/choice-modal/choice-modal.com
 import { BanmodalComponent } from './components/banmodal/banmodal.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AboutPageResolver } from './resolvers/about-page.resolver';
 
 
 @NgModule({
@@ -83,7 +84,10 @@ import { HttpClientModule } from '@angular/common/http';
           component:LoginpageComponent
         },{
           path:"about",
-          component:AboutpageComponent
+          component:AboutpageComponent,
+          resolve:{
+            aboutData:AboutPageResolver
+          }
         },{
           path:"schedule",
           component:SchedulepageComponent,
