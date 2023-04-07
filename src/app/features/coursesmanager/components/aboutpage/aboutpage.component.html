@@ -1,5 +1,5 @@
-<ion-content id="aboutIonContent">
-    <div class="topImage" id="about" #about>
+<ion-content id="aboutIonContent" [scrollEvents]="true" (ionScroll)="onScroll($event)">
+    <div class="topImage" id="anchor_about" #anchor_>
         <h1>
             Created with love and care for Ukraine in Switzerland
         </h1>
@@ -45,7 +45,7 @@
         </div>
 
         <!-- Activities Section -->
-        <div class="activitiesPart" id="activities" #activities>
+        <div class="activitiesPart" id="anchor_activities" #anchor_>
             <div class="partContent">
                 <h2>Branch of activities</h2>
                 <ion-grid>
@@ -154,7 +154,7 @@
         </div>
 
         <!-- Partners Section -->
-        <div class="partnersSection" id="partners" #partners>
+        <div class="partnersSection" id="anchor_partners" #anchor_>
             <div class="partContent">
                 <h2>Partners</h2>
                 <ion-grid>
@@ -172,7 +172,7 @@
         </div>
 
         <!-- Contact Section -->
-        <div class="filledPart" id="contact" #contact>
+        <div class="filledPart" id="anchor_contact" #anchor_>
             <div class="partContent">
                 <ion-title>
                     <h2>Contact us</h2>
@@ -206,7 +206,7 @@
         </div>
 
         <!-- Donate Section -->
-        <div class="donatePart" id="donate" #donate>
+        <div class="donatePart" id="anchor_donate" #anchor_>
             <div class="partContent">
                 <h1>Donate now</h1>
                 <p>
