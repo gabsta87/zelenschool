@@ -2,8 +2,9 @@
     <ion-tab-bar slot="top">
         
         <!-- let i = index;" [tab]="item.page" [routerLink]="item.routerLink" [fragment]="item.fragment" (click)="goToAnchor(item.routerLink,item.fragment)"> -->
-        <ion-tab-button *ngFor="let item of navigationItems;
-        let i = index;"  (click)="goToAnchor(item.routerLink,item.fragment)">
+        <!-- let i = index;"  (click)="goToAnchor(i,item)"> -->
+        <!-- let i = index;" [routerLink]="item.routerLink" [fragment]="item.fragment" (click)="goToAnchor(i,item)"> -->
+        <ion-tab-button *ngFor="let item of navigationItems" (click)="goToAnchor(item)" [routerLink]="item.routerLink" [fragment]="item.fragment">
             <ion-label>{{item.title}}</ion-label>
         </ion-tab-button>
         
