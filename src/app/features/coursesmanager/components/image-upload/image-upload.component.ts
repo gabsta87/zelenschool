@@ -19,7 +19,6 @@ export class ImageUploadComponent {
 
   private readonly _apiUrl = 'http://localhost:3000/assets/';
 
-
   constructor(private storage: StorageService, private _db: AngularfireService,private readonly _http: HttpClient,private readonly _router:Router) { }
 
   imageFile!: File;

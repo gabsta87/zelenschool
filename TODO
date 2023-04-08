@@ -11,7 +11,6 @@ Questions:
     ✘ send email when course is canceled ? @cancelled(23-03-30 17:25)
         https://firebase.google.com/docs/extensions/official/firestore-send-email?hl=fr
     ✘ admins can change the 3 missed courses limit ? @cancelled(23-03-30 17:24)
-    ☐ Schedule : Clear selection button ???
 
 observable en HTML, bug sur le tableau contenu dans l'objet . Impossible d'itérer dessus
 Ancres, aller sur une page, puis aller vers l'ancre souhaitée. Si sur la page, aller vers l'ancre. 
@@ -20,9 +19,9 @@ Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManag
 
 
 Misc :
-    ☐ members management
+    ☐ members management @started(23-04-08 21:02)
     ☐ activities management
-    ☐ activities -> goes to anchor, not component
+    ✔ activities -> goes to anchor, not component @done(23-04-08 21:02)
     ☐ admin can modify courses
     ☐ gallery -> folders
     ☐ Can see a teacher's courses per month (monthly hours)
@@ -55,6 +54,7 @@ BUGS :
     ✔ error while deleting a course : reading attendantsID creates an error @done(23-03-30 17:11)
 
 Features:
+    ☐ Schedule : Clear selection button ???
     ☐ Rooms have a name/address instead of number ? Admins can add/remove rooms ? Rooms from database
     ☐ Admin page : actions allowed @high @started(23-03-30 17:06)
     ✔ request admin approval for teachers (on users list of admin, put badge for waiting approval users) @done(23-03-30 17:02)

@@ -1,4 +1,3 @@
-<ion-content>
 <form (ngSubmit)="saveImage()" #imageForm="ngForm">
     <!-- <ion-item> -->
     <!-- <ion-label position="stacked">Select Image</ion-label> -->
@@ -39,5 +38,4 @@
     <ion-button expand="block" (click)="saveImageOnServer()" [disabled]="!imageForm.valid || uploading">Save Image on server</ion-button>
     <ion-button (click)="returnToAdminPage()">Return</ion-button>
 </form>
-</ion-content>
   

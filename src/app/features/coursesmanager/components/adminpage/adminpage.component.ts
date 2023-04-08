@@ -39,6 +39,10 @@ export class AdminpageComponent {
   statusToFilter = "all";
   timeFilter = "all";
 
+  showUsers = new BehaviorSubject(false);
+  showCourses = new BehaviorSubject(false);
+  showAssoMembers = new BehaviorSubject(false);
+
   requestsCount = this.usersListObs.pipe(
     map(usersList =>usersList.filter((user:any) => user.status == 'request')),
     map(filteredUsers => filteredUsers.length)
@@ -213,6 +217,17 @@ export class AdminpageComponent {
     modal.present();
   }
 
+  // Display lists
+  toggleUsers(){
+    this.showUsers.next(!this.showUsers.value);
+  }
+  toggleCourses(){
+    this.showCourses.next(!this.showCourses.value);
+  }
+  toggleAsso(){
+    this.showAssoMembers.next(!this.showAssoMembers.value);
+  }
+
   // Asso Members management
   editingMember = new BehaviorSubject(false);
   memberId = "";
@@ -246,6 +261,12 @@ export class AdminpageComponent {
   }
 
   setImageLink(){
+    // TODO
+    console.log("TODO");
+  }
 
+  createMember(){
+    // TODO
+    console.log("TODO");
   }
 }
