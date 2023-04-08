@@ -8,6 +8,8 @@ interface AdminData{
   articles:any[],
   usersObs:Observable<DocumentData[]>,
   coursesObs:Observable<DocumentData[]>,
+  assoMembers:Observable<DocumentData[]>,
+  partners:Observable<DocumentData[]>,
 }
 
 @Injectable({
@@ -71,6 +73,10 @@ export class AdminpageresolveResolver implements Resolve<AdminData> {
         return courses;
       })
     );
+
+    result.assoMembers = this._db.getAssoMembers();
+
+    result.partners = this._db.getPartners();
     
     return result;
   }

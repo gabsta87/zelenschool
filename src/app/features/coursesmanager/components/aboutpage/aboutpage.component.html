@@ -131,6 +131,7 @@
                             <div class="memberCard">
                                 <a *ngIf="member.link; else withoutLink" href="{{member.link}}">
                                 <ion-thumbnail>
+                                    <!-- TODO load default image if null -->
                                     <img src="{{'/assets/members/'+member.photo}}"/>
                                 </ion-thumbnail>
                         

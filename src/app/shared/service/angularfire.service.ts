@@ -226,7 +226,7 @@ export class AngularfireService{
     return doc(this._dbaccess,'users/'+userId);
   }
 
-  async writeAssoMember(e: {name: string; photo: string; role: string; link: string; } | {name: string; photo: string; role: string; link?: undefined; }){
+  async addAssoMember(e: {name: string; photo: string; role: string; link: string; } | {name: string; photo: string; role: string; link?: undefined; }){
     return addDoc(collection(this._dbaccess,"assoMembers"),{
       ...e
     })
@@ -235,6 +235,11 @@ export class AngularfireService{
   deleteAssoMember(id:string){
     const docRef = doc(this._dbaccess,'assoMembers/'+id);
     deleteDoc(docRef);
+  }
+
+  updateAssoMember(newValue:{id:string,role?:string,name?:string,link?:string,photo?:string}){
+    const docRef = doc(this._dbaccess,'assoMembers/'+newValue.id);
+    return updateDoc(docRef,newValue);
   }
 
   getAssoMembers(){

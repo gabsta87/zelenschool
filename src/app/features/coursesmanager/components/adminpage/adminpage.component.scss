@@ -7,3 +7,17 @@
 ion-accordion-group {
     width: 100%;
 }
+
+ion-thumbnail{
+    --size: 100px;
+}
+
+ion-input{
+    border: solid lightgrey 1px;
+    border-radius: 10px;
+}
+
+ion-col{
+    align-items: center;
+    display: flex;
+}

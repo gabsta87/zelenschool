@@ -23,10 +23,18 @@ export class AdminpageComponent {
     private readonly actionSheetCtrl: ActionSheetController
   ) {}
 
+  async ionViewDidEnter(){
+    console.log("asso : ",this.assoMembers);
+    
+  }
+
   adminData = this._route.snapshot.data['adminData'];
   
   usersListObs:Observable<DocumentData[]> = this.adminData.usersObs;
   coursesObs:Observable<DocumentData[]> = this.adminData.coursesObs;
+  assoMembers = this._route.snapshot.data['adminData'].assoMembers;
+  partners = this._route.snapshot.data['adminData'].partners;
+
   searchString = "";
   statusToFilter = "all";
   timeFilter = "all";
@@ -203,5 +211,41 @@ export class AdminpageComponent {
     });
       
     modal.present();
+  }
+
+  // Asso Members management
+  editingMember = new BehaviorSubject(false);
+  memberId = "";
+  memberNewName = "";
+  memberNewRole = "";
+  memberNewLink = "";
+  memberNewPhoto = "";
+  currentMember!: {id:string,name:string,role:string,link:string,photo:string}; 
+
+  async editMember(id:string){
+    this.editingMember.next(true);
+    this.currentMember = await firstValueFrom(this.assoMembers.pipe(map( (e:any) => e.find( (member:any) => member.id == id))))
+    
+    this.memberId = id;
+    this.memberNewName = this.currentMember.name;
+    this.memberNewRole = this.currentMember.role;
+    this.memberNewLink = this.currentMember.link;
+    this.memberNewPhoto= this.currentMember.photo;
+  }
+
+  deleteMember(id:string){
+    this._db.deleteAssoMember(id);
+  }
+
+  cancelMemberEdit(){
+    this.editingMember.next(false);
+  }
+
+  updateMember(){
+    this._db.updateAssoMember({id : this.memberId, role : this.memberNewRole, name : this.memberNewName, photo : this.memberNewPhoto})
+  }
+
+  setImageLink(){
+
   }
 }

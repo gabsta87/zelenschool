@@ -40,4 +40,13 @@ export class NavbarComponent {
       aboutDoc?.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
     }
   }
+
+// tab-selected
+  // setButtonActive(index:number){
+  //   this.ionItems.map((e:any)=> e.el.className = e.el.className.replace("active",""));
+  //   // let selectedItem:IonItem|undefined = this.ionItems.find((e:any)=> e.el.id === "menu_button_"+index);
+  //   let selectedItem:any = this.ionItems.find((e:any)=> e.el.id === "menu_button_"+index);
+  //   if(selectedItem)
+  //     selectedItem.el.className += " active";
+  // }
 }
