@@ -21,3 +21,11 @@ ion-col{
     align-items: center;
     display: flex;
 }
+
+.activatedButton{
+    --background:transparent;
+    color: var(--ion-color-primary);
+    border: solid var(--ion-color-primary) 2px;
+    border-radius: 5px;
+    --box-shadow:none;
+  }

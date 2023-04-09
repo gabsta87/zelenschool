@@ -132,7 +132,7 @@
                                 <a *ngIf="member.link; else withoutLink" href="{{member.link}}">
                                 <ion-thumbnail>
                                     <!-- TODO load default image if null -->
-                                    <img src="{{'/assets/members/'+member.photo}}"/>
+                                    <img src="{{member.photo}}"/>
                                 </ion-thumbnail>
                         
                                 <ion-label>{{member.name}} </ion-label>
@@ -140,7 +140,7 @@
                                 </a>
                                 <ng-template #withoutLink>
                                     <ion-thumbnail>
-                                        <img src="{{'/assets/members/'+member.photo}}"/>
+                                        <img src="{{member.photo}}"/>
                                     </ion-thumbnail>
                             
                                     <ion-label>{{member.name}} </ion-label>

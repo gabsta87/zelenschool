@@ -5,7 +5,7 @@ import { deleteDoc, getDoc, query, updateDoc } from '@firebase/firestore';
 import { filter, find, firstValueFrom, map, Observable } from 'rxjs';
 import * as dayjs from 'dayjs';
 import * as isBetween from 'dayjs/plugin/isBetween';
-import { HourManagementService, formatForDB, getNowDate, isColliding } from './hour-management.service';
+import { formatForDB, getNowDate, isColliding } from './hour-management.service';
 dayjs.extend(isBetween);
 
 @Injectable({
@@ -16,7 +16,6 @@ export class AngularfireService{
   constructor(
     private readonly _dbaccess:Firestore,
     private readonly _auth:Auth,
-    private readonly _hourManagement : HourManagementService,
   ) { }
 
   private getElements(name:string,...constraint:QueryConstraint[]){
@@ -203,6 +202,7 @@ export class AngularfireService{
   }
 
   createImageEntry(newImage:any){
+    // TODO remove
     return addDoc(collection(this._dbaccess,"images"),{
       ...newImage,
       uploadedBy:this._auth.currentUser?.uid
@@ -226,7 +226,7 @@ export class AngularfireService{
     return doc(this._dbaccess,'users/'+userId);
   }
 
-  async addAssoMember(e: {name: string; photo: string; role: string; link: string; } | {name: string; photo: string; role: string; link?: undefined; }){
+  async addAssoMember(e: {name: string, photo: string, role: string, link?: undefined, }){
     return addDoc(collection(this._dbaccess,"assoMembers"),{
       ...e
     })
@@ -237,9 +237,11 @@ export class AngularfireService{
     deleteDoc(docRef);
   }
 
-  updateAssoMember(newValue:{id:string,role?:string,name?:string,link?:string,photo?:string}){
+  updateAssoMember(newValue:AssoMember){
+    console.log("member update : ",newValue);
+    
     const docRef = doc(this._dbaccess,'assoMembers/'+newValue.id);
-    return updateDoc(docRef,newValue);
+    return updateDoc(docRef,{name : newValue.name, role:newValue.role, photo : newValue.photo, link : newValue.link});
   }
 
   getAssoMembers(){
@@ -289,5 +291,13 @@ export interface CalendarEntry{
   attendantsId?:string[],
   author?:string,
   id?:string,
+}
+
+export interface AssoMember{
+  id?:string,
+  role:string,
+  name:string,
+  link?:string,
+  photo?:string
 }
 

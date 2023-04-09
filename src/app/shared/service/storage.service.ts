@@ -13,9 +13,9 @@ export class StorageService {
   storage = getStorage(this.firebaseApp, "gs://zelenschool-6981a.appspot.com");
   imagesRef = ref(this.storage,"images");
 
-  async storeImage(file: File, imageName: string, comment:string): Promise<string> {
+  async storeImage(file: File, imageName: string, collection:string): Promise<string> {
     // Créez une référence pour l'image
-    const imageRef = ref(this.imagesRef, imageName);
+    const imageRef = ref(this.imagesRef, collection+"/"+imageName);
 
     const uploadTask = uploadBytesResumable(imageRef, file);
 

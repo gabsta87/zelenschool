@@ -4,10 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import * as dayjs from 'dayjs';
 import { BehaviorSubject, combineLatest, count, filter, find, firstValueFrom, map, Observable } from 'rxjs';
-import { AngularfireService } from 'src/app/shared/service/angularfire.service';
+import { AngularfireService, AssoMember } from 'src/app/shared/service/angularfire.service';
 import { getNowDate } from 'src/app/shared/service/hour-management.service';
 import { BanmodalComponent } from '../banmodal/banmodal.component';
 import { TeacherModalComponent } from '../teacher-modal/teacher-modal.component';
+import { StorageService } from 'src/app/shared/service/storage.service';
 
 @Component({
   selector: 'app-adminpage',
@@ -20,13 +21,9 @@ export class AdminpageComponent {
     private readonly _route: ActivatedRoute,
     private readonly _router: Router,
     private readonly _modal: ModalController,
-    private readonly actionSheetCtrl: ActionSheetController
+    private readonly actionSheetCtrl: ActionSheetController,
+    private readonly storage: StorageService,
   ) {}
-
-  async ionViewDidEnter(){
-    console.log("asso : ",this.assoMembers);
-    
-  }
 
   adminData = this._route.snapshot.data['adminData'];
   
@@ -241,6 +238,8 @@ export class AdminpageComponent {
     this.editingMember.next(true);
     this.currentMember = await firstValueFrom(this.assoMembers.pipe(map( (e:any) => e.find( (member:any) => member.id == id))))
     
+    this.photoChanged = false;
+
     this.memberId = id;
     this.memberNewName = this.currentMember.name;
     this.memberNewRole = this.currentMember.role;
@@ -256,8 +255,35 @@ export class AdminpageComponent {
     this.editingMember.next(false);
   }
 
-  updateMember(){
-    this._db.updateAssoMember({id : this.memberId, role : this.memberNewRole, name : this.memberNewName, photo : this.memberNewPhoto})
+  async updateMember(){
+    let data = {id : this.memberId, name : this.memberNewName, role : this.memberNewRole, link : this.memberNewLink} as AssoMember;
+    if(this.photoChanged){
+      this.memberNewPhoto = await this.saveAssoMemberImage();
+      data.photo = this.memberNewPhoto;
+    }
+
+    this._db.updateAssoMember(data);
+  }
+
+  // Image management
+  imageFile !: File;
+  uploadingImage = false;
+  photoChanged = false;
+
+  async saveAssoMemberImage() {
+    const filePath = `${this.imageFile.name}`;
+    
+    this.uploadingImage = true;
+    const downloadUrl = await this.storage.storeImage(this.imageFile,filePath,"assoMembers");
+
+    this.uploadingImage = false;
+    return downloadUrl;
+  }
+
+  onFileSelected(event: any): void {
+    this.photoChanged = true;
+    const file: File = event.target.files[0];
+    this.imageFile = file;
   }
 
   setImageLink(){

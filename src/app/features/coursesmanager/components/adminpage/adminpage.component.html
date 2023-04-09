@@ -7,6 +7,19 @@
         Teachers requests 
         <ion-badge color="danger" slot="end">{{count}}</ion-badge>
     </ion-button>
+    <ion-button class="activatedButton" *ngIf="showUsers.value; else hideUsers" (click)="toggleUsers()"><ion-icon name="caret-up-outline"></ion-icon>Users</ion-button>
+    <ng-template #hideUsers>
+        <ion-button (click)="toggleUsers()"><ion-icon name="caret-down-outline"></ion-icon>Users</ion-button>
+    </ng-template>
+    <ion-button class="activatedButton" *ngIf="showCourses.value; else hideCourses" (click)="toggleCourses()"><ion-icon name="caret-up-outline"></ion-icon>Courses</ion-button>
+    <ng-template #hideCourses>
+        <ion-button (click)="toggleCourses()"><ion-icon name="caret-down-outline"></ion-icon>Courses</ion-button>
+    </ng-template>
+    <ion-button class="activatedButton" *ngIf="showAssoMembers.value; else hideAsso" (click)="toggleAsso()"><ion-icon name="caret-up-outline"></ion-icon>Association members</ion-button>
+    <ng-template #hideAsso>
+        <ion-button (click)="toggleAsso()"><ion-icon name="caret-down-outline"></ion-icon>Association members</ion-button>
+    </ng-template>
+
     <ion-button (click)="addPartner()">
         Partners
     </ion-button>
@@ -17,19 +30,15 @@
         Projects
     </ion-button>
     <ion-button>
-        Articles
-    </ion-button>
-    <ion-button>
         Rooms
     </ion-button>
 
     <ion-searchbar placeholder="Search" [(ngModel)]="searchString" (ionChange)="updateSearchValue()"></ion-searchbar>
 
     <ng-container *ngIf="filteredDataObs | async as filteredData">
-
-    <div *ngIf="showUsers.value;else hideUsers">
-    <ion-button (click)="toggleUsers()"><ion-icon name="caret-up-outline"></ion-icon>Users</ion-button>
-    
+    <div *ngIf="showUsers.value">
+            <!-- <ion-button (click)="toggleUsers()"><ion-icon name="caret-up-outline"></ion-icon>Users</ion-button> -->
+    <h1>Users</h1>
     <ion-item lines="none">
         <ion-select interface="action-sheet" [(ngModel)]="statusToFilter" (ionChange)="filterUsersList()" value="all">
             <ion-select-option value="all">All</ion-select-option>
@@ -74,13 +83,10 @@
         </ion-accordion-group>
     </ion-list>
     </div>
-    <ng-template #hideUsers>
-        <ion-button (click)="toggleUsers()"><ion-icon name="caret-down-outline"></ion-icon>Users</ion-button>
-    </ng-template>
 
-    <div *ngIf="showCourses.value; else hideCourses">
-    <ion-button (click)="toggleCourses()"><ion-icon name="caret-up-outline"></ion-icon>Courses</ion-button>
-
+    <div *ngIf="showCourses.value">
+    <!-- <ion-button (click)="toggleCourses()"><ion-icon name="caret-up-outline"></ion-icon>Courses</ion-button> -->
+    <h1>Courses</h1>
     <ion-item lines="none">
         <ion-select interface="action-sheet" [(ngModel)]="timeFilter" (ionChange)="filterCoursesList()" value="all">
             <ion-select-option value="all">All</ion-select-option>
@@ -113,15 +119,16 @@
         </ion-accordion-group>
     </ion-list>
     </div>
-    <ng-template #hideCourses>
+    <!-- <ng-template #hideCourses>
         <ion-button (click)="toggleCourses()"><ion-icon name="caret-down-outline"></ion-icon>Courses</ion-button>
-    </ng-template>
+    </ng-template> -->
 
     </ng-container>
 
-    <div *ngIf="showAssoMembers.value; else hideAsso">
-        <ion-button (click)="toggleAsso()"><ion-icon name="caret-up-outline"></ion-icon>Association members</ion-button>
-        <ion-button (click)="createMember()"> <ion-icon name="add-circle-outline"></ion-icon> Add new</ion-button>
+    <div *ngIf="showAssoMembers.value">
+        <h1>Association members</h1>
+        <!-- <ion-button (click)="toggleAsso()"><ion-icon name="caret-up-outline"></ion-icon>Association members</ion-button> -->
+        <ion-button (click)="createMember()" color="success"> <ion-icon name="add-circle-outline"></ion-icon> Add new</ion-button>
         <ion-list lines="none">
             <ion-accordion-group>
                 <ion-item *ngFor="let usr of (assoMembers|async)">
@@ -160,7 +167,10 @@
                                 </ion-grid>
 
                                 <ion-thumbnail>
-                                    <ion-img [src]="'/assets/members/'+usr['photo']" alt="Profile view" (click)="setImageLink()"></ion-img>
+                                    <input type="file" (change)="onFileSelected($event)" accept="*" required style="display: none;" #fileUpload>
+                                    <ion-item (click)="fileUpload.click()">
+                                        <ion-img [src]="usr['photo']" alt="Profile view"></ion-img>
+                                    </ion-item>
                                 </ion-thumbnail>
                                 
                                 <span>
@@ -175,7 +185,7 @@
                                 <p>Role : {{usr['role']}}</p>
                                 <p>Link : {{usr['link']}}</p>
                                 <ion-thumbnail>
-                                    <ion-img [src]="'/assets/members/'+usr['photo']" alt="Profile view"></ion-img>
+                                    <ion-img [src]="usr['photo']" alt="Profile view"></ion-img>
                                 </ion-thumbnail>
                                 <span>
                                     <ion-button color="danger" (click)="deleteMember(usr['id'])">Delete</ion-button>
@@ -189,9 +199,6 @@
             </ion-accordion-group>
         </ion-list>
     </div>
-    <ng-template #hideAsso>
-        <ion-button (click)="toggleAsso()"><ion-icon name="caret-down-outline"></ion-icon>Association members</ion-button>
-    </ng-template>
 
 </div>
 </ion-content>

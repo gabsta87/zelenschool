@@ -102,6 +102,7 @@ Technical :
         ✔ Faster search using combinelatest @done(23-03-30 16:56)
 
 Cosmetics :
+    ☐ Admin page : better hide/show buttons arrangement
     ☐ Better errors management for forms
     ☐ background linear-gradient
         https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Images/Using_CSS_gradients
