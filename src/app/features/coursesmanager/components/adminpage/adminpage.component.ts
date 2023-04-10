@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ActionSheetController, ModalController } from '@ionic/angular';
@@ -32,6 +32,7 @@ export class AdminpageComponent {
   assoMembers = this._route.snapshot.data['adminData'].assoMembers;
   partners = this._route.snapshot.data['adminData'].partners;
   partnersData = this._route.snapshot.data['adminData'].partnersData;
+  roomsData = this._route.snapshot.data['adminData'].roomsData;
 
   searchString = "";
   statusToFilter = "all";
@@ -42,7 +43,7 @@ export class AdminpageComponent {
   showAssoMembers = new BehaviorSubject(false);
 
   requestsCount = this.usersListObs.pipe(
-    map(usersList =>usersList.filter((user:any) => user.status == 'request')),
+    map(usersList => usersList.filter((user:any) => user.status == 'request')),
     map(filteredUsers => filteredUsers.length)
   )
   
@@ -175,24 +176,10 @@ export class AdminpageComponent {
     this._db.unbanUser(id);
   }
 
-  addPartner(){
-    this._router.navigate(['/imageUpload/']);
-  }
-
-  addMember(){
-    this._router.navigate(['/imageUpload/']);
-  }
-
-  addPhotoToGallery(){
-    this._router.navigate(['/imageUpload/']);
-  }
-
   async handleEvent(event:DocumentData){
-    console.log("event : ",event);
     
     const result = await firstValueFrom(this.coursesObs.pipe(
       map( (courses:any) => courses.find((e:any)=> e.id == event['id'] ) ) ));
-    console.log("result = ",result);
     
     if(result == undefined)
       return
@@ -216,19 +203,9 @@ export class AdminpageComponent {
   }
 
   // Display lists
-  toggleUsers(){
-    this.showUsers.next(!this.showUsers.value);
+  toggle(param:BehaviorSubject<boolean>){
+    param.next(!param.value);
   }
-  toggleCourses(){
-    this.showCourses.next(!this.showCourses.value);
-  }
-  toggleAsso(){
-    this.showAssoMembers.next(!this.showAssoMembers.value);
-  }
-  togglePartners(){
-    this.showPartners.next(!this.showPartners.value);
-  }
-
 
   // Asso Members management
   editingMember = new BehaviorSubject(false);
@@ -269,16 +246,11 @@ export class AdminpageComponent {
     this.photoChanged.next(false);
     this._db.updateAssoMember(data);
   }
-  
-    setImageLink(){
-      // TODO
-      console.log("TODO");
-    }
-  
-    createMember(){
-      // TODO
-      console.log("TODO");
-    }
+
+  createMember(){
+    // TODO
+    console.log("TODO");
+  }
 
   // Image management
   imageFile !: File;
@@ -338,5 +310,28 @@ export class AdminpageComponent {
 
     this.tempImagePartner = URL.createObjectURL(this.imageFilePartner);
   }
-  
+
+  // Rooms management
+  showRooms = new BehaviorSubject(false);
+
+  createRoom(){
+    (this.roomsData as {}[]).unshift({name:"",maxStudents:""})
+  }
+
+  deleteRoom(id:string){
+    this._db.deleteRoom(id);
+  }
+
+  updateRoom(index:number){
+    this._db.updateRoom({id:this.roomsData[index].id, name:this.roomsData[index].name, maxStudents:this.roomsData[index].maxStudents});
+    
+    this.showRoomConfirmation = true;
+    setTimeout(() => {
+      this.showRoomConfirmation = false;  
+    }, 2000);
+  }
+
+  @ViewChild('roomUpdatePopOver') popover!:any;
+  showRoomConfirmation = false;
+
 }

@@ -6,6 +6,7 @@ import { filter, find, firstValueFrom, map, Observable } from 'rxjs';
 import * as dayjs from 'dayjs';
 import * as isBetween from 'dayjs/plugin/isBetween';
 import { formatForDB, getNowDate, isColliding } from './hour-management.service';
+import { LoginpageComponent } from 'src/app/features/coursesmanager/components/loginpage/loginpage.component';
 dayjs.extend(isBetween);
 
 @Injectable({
@@ -265,9 +266,27 @@ export class AngularfireService{
     deleteDoc(docRef);
   }
 
-  updatePartner(partner: { id: any; link: any; logoName: any; }) {
+  updatePartner(partner: { id: string; link: string; logoName: string }) {
     const docRef = doc(this._dbaccess,'partners/'+partner.id);
     return updateDoc(docRef,{link : partner.link, logoName : partner.logoName});
+  }
+
+  getRooms(){
+    return this.getElements("rooms");
+  }
+
+  updateRoom(room : {id: string, name: string, maxStudents: number}){
+    if(!room.id){
+      return addDoc(collection(this._dbaccess,"rooms"),{ name: room.name, maxStudents: room.maxStudents })
+    }else{
+      const docRef = doc(this._dbaccess,'rooms/'+room.id);
+      return updateDoc(docRef,{name : room.name, maxStudents : room.maxStudents});
+    }
+  }
+
+  deleteRoom(id:string){
+    const docRef = doc(this._dbaccess,'rooms/'+id);
+    deleteDoc(docRef);
   }
 }
 
