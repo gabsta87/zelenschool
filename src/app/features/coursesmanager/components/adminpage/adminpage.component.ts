@@ -3,7 +3,7 @@ import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import * as dayjs from 'dayjs';
-import { BehaviorSubject, combineLatest, count, filter, find, firstValueFrom, map, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, firstValueFrom, map, Observable } from 'rxjs';
 import { AngularfireService, AssoMember } from 'src/app/shared/service/angularfire.service';
 import { getNowDate } from 'src/app/shared/service/hour-management.service';
 import { BanmodalComponent } from '../banmodal/banmodal.component';
@@ -31,6 +31,7 @@ export class AdminpageComponent {
   coursesObs:Observable<DocumentData[]> = this.adminData.coursesObs;
   assoMembers = this._route.snapshot.data['adminData'].assoMembers;
   partners = this._route.snapshot.data['adminData'].partners;
+  partnersData = this._route.snapshot.data['adminData'].partnersData;
 
   searchString = "";
   statusToFilter = "all";
@@ -224,6 +225,10 @@ export class AdminpageComponent {
   toggleAsso(){
     this.showAssoMembers.next(!this.showAssoMembers.value);
   }
+  togglePartners(){
+    this.showPartners.next(!this.showPartners.value);
+  }
+
 
   // Asso Members management
   editingMember = new BehaviorSubject(false);
@@ -238,7 +243,7 @@ export class AdminpageComponent {
     this.editingMember.next(true);
     this.currentMember = await firstValueFrom(this.assoMembers.pipe(map( (e:any) => e.find( (member:any) => member.id == id))))
     
-    this.photoChanged = false;
+    this.photoChanged.next(false);
 
     this.memberId = id;
     this.memberNewName = this.currentMember.name;
@@ -261,14 +266,25 @@ export class AdminpageComponent {
       this.memberNewPhoto = await this.saveAssoMemberImage();
       data.photo = this.memberNewPhoto;
     }
-
+    this.photoChanged.next(false);
     this._db.updateAssoMember(data);
   }
+  
+    setImageLink(){
+      // TODO
+      console.log("TODO");
+    }
+  
+    createMember(){
+      // TODO
+      console.log("TODO");
+    }
 
   // Image management
   imageFile !: File;
   uploadingImage = false;
-  photoChanged = false;
+  photoChanged = new BehaviorSubject(false);
+  tempImage !: any;
 
   async saveAssoMemberImage() {
     const filePath = `${this.imageFile.name}`;
@@ -281,18 +297,46 @@ export class AdminpageComponent {
   }
 
   onFileSelected(event: any): void {
-    this.photoChanged = true;
+    this.photoChanged.next(true);
     const file: File = event.target.files[0];
     this.imageFile = file;
+
+    this.tempImage = URL.createObjectURL(file);
   }
 
-  setImageLink(){
-    // TODO
-    console.log("TODO");
+  // Partners management
+  showPartners = new BehaviorSubject(false);
+  partnerNewLink = "";
+  tempImagePartner !: any;
+  imageFilePartner !: File;
+
+
+  createPartner(){
+      // TODO
+      console.log("TODO");
+  }
+  
+  deletePartner(id:string){
+    this._db.deletePartner(id);
+  }
+  
+  async restorePartner(index:number){
+    this.partnersData[index].photoChanged = false;
+    let partner = await firstValueFrom(this.partners);
+    this.partnersData[index] = (partner as [])[index];
   }
 
-  createMember(){
-    // TODO
-    console.log("TODO");
+  updatePartner(index:number){
+    this._db.updatePartner({id:this.partnersData[index].id, link:this.partnersData[index].link, logoName:this.partnersData[index].logoName})
+    this.partnersData[index].photoChanged = false;
   }
+
+  onFileSelectedPartners(event: any,index : number): void {
+    this.partnersData[index].photoChanged = true;
+    const filePartner: File = event.target.files[0];
+    this.imageFilePartner = filePartner;
+
+    this.tempImagePartner = URL.createObjectURL(this.imageFilePartner);
+  }
+  
 }

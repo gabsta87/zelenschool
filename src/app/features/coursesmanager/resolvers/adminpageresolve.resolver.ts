@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DocumentData } from '@angular/fire/firestore';
 import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot, ActivationEnd } from '@angular/router';
-import { Observable, switchMap } from 'rxjs';
+import { Observable, firstValueFrom, switchMap } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 
 interface AdminData{
@@ -10,6 +10,7 @@ interface AdminData{
   coursesObs:Observable<DocumentData[]>,
   assoMembers:Observable<DocumentData[]>,
   partners:Observable<DocumentData[]>,
+  partnersData : {id:string,link:string,logoName:string,photoChanged:boolean}[];
 }
 
 @Injectable({
@@ -77,6 +78,16 @@ export class AdminpageresolveResolver implements Resolve<AdminData> {
     result.assoMembers = this._db.getAssoMembers();
 
     result.partners = this._db.getPartners();
+
+    let temp = await firstValueFrom(result.partners);
+
+    result.partnersData = [];
+    temp.forEach((e:any)=> result.partnersData.push({
+      id:e['id'],
+      link:e['link'],
+      logoName:e['logoName'],
+      photoChanged:false,
+    }))
     
     return result;
   }

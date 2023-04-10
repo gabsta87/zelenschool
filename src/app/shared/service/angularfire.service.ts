@@ -238,8 +238,6 @@ export class AngularfireService{
   }
 
   updateAssoMember(newValue:AssoMember){
-    console.log("member update : ",newValue);
-    
     const docRef = doc(this._dbaccess,'assoMembers/'+newValue.id);
     return updateDoc(docRef,{name : newValue.name, role:newValue.role, photo : newValue.photo, link : newValue.link});
   }
@@ -265,6 +263,11 @@ export class AngularfireService{
   deletePartner(id:string){
     const docRef = doc(this._dbaccess,'partners/'+id);
     deleteDoc(docRef);
+  }
+
+  updatePartner(partner: { id: any; link: any; logoName: any; }) {
+    const docRef = doc(this._dbaccess,'partners/'+partner.id);
+    return updateDoc(docRef,{link : partner.link, logoName : partner.logoName});
   }
 }
 
