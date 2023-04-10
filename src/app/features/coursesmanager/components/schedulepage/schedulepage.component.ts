@@ -1,8 +1,8 @@
 import { Component, ChangeDetectionStrategy, ViewChild, ChangeDetectorRef, EventEmitter } from '@angular/core';
-import { compareAsc, isSameDay, isSameMonth } from 'date-fns';
-import { WeekDay, MonthView, MonthViewDay } from 'calendar-utils';
-import { BehaviorSubject, filter, map, Observable, Subject } from 'rxjs';
-import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarMonthViewDay, CalendarNativeDateFormatter, CalendarView, CalendarWeekViewBeforeRenderEvent, DateFormatterParams, DAYS_OF_WEEK, } from 'angular-calendar';
+import { isSameDay, isSameMonth } from 'date-fns';
+import { MonthViewDay } from 'calendar-utils';
+import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
+import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarMonthViewDay, CalendarView, CalendarWeekViewBeforeRenderEvent, DAYS_OF_WEEK, } from 'angular-calendar';
 import * as dayjs from 'dayjs';
 import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
@@ -60,13 +60,12 @@ export class SchedulepageComponent {
     private cd: ChangeDetectorRef,
     ) {
     this.futureCourses = this.extractedData.pipe(map( (courses:any) => courses = courses.filter((course:any) =>dayjs(course.timeStart).isAfter(dayjs(getNowDate()),"hour") )))
-
   }
 
   async ngOnInit(){
     this.coursesSubscribtion = this.extractedData.subscribe((newValues) => {
       this.events = [];
-      newValues.forEach(async e =>{
+      newValues.forEach( e =>{
         this.events.push({
           title : e['title'],
           start : new Date(e['timeStart']),
@@ -87,7 +86,7 @@ export class SchedulepageComponent {
       })
     });
 
-    this.selectedDaySubscribtion = this.selectedDayRemove.subscribe(res=>{
+    this.selectedDaySubscribtion = this.selectedDayRemove.subscribe(_=>{
       this.refresh.next();
     });
   }
@@ -247,11 +246,6 @@ export class SchedulepageComponent {
       this.selectedDays = [];
     }
     this.cd.markForCheck();
-    // // Choose behavior
-    // if(role === "cancel"){
-    //   this.selectedDays = [];
-    // }
-    
   }
 
   sortCoursesByTitle(){

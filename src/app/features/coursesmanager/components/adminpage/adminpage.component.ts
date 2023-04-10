@@ -282,14 +282,16 @@ export class AdminpageComponent {
   tempImagePartner !: any;
   imageFilePartner !: File;
 
-
   createPartner(){
-      // TODO
-      console.log("TODO");
+    (this.partnersData as {}[]).unshift({id:undefined,link:"",logoName:""})
   }
   
-  deletePartner(id:string){
-    this._db.deletePartner(id);
+  deletePartner(index:number){
+    if(this.partnersData[index].id == undefined){
+      this.partnersData.splice(index,1)
+    }else{
+      this._db.deletePartner(this.partnersData[index].id);
+    }
   }
   
   async restorePartner(index:number){
@@ -313,25 +315,28 @@ export class AdminpageComponent {
 
   // Rooms management
   showRooms = new BehaviorSubject(false);
+  @ViewChild('roomUpdatePopOver') popover!:any;
+  showRoomConfirmation = false;
 
   createRoom(){
-    (this.roomsData as {}[]).unshift({name:"",maxStudents:""})
+    (this.roomsData as {}[]).unshift({id:undefined, name:"",maxStudents:""})
   }
 
-  deleteRoom(id:string){
-    this._db.deleteRoom(id);
+  deleteRoom(index:number){
+    if(this.roomsData[index].id == undefined){
+      this.roomsData.splice(index,1);
+    }else{
+      this._db.deleteRoom(this.roomsData[index].id);
+    }
   }
 
   updateRoom(index:number){
     this._db.updateRoom({id:this.roomsData[index].id, name:this.roomsData[index].name, maxStudents:this.roomsData[index].maxStudents});
-    
+
     this.showRoomConfirmation = true;
     setTimeout(() => {
       this.showRoomConfirmation = false;  
     }, 2000);
   }
-
-  @ViewChild('roomUpdatePopOver') popover!:any;
-  showRoomConfirmation = false;
 
 }
