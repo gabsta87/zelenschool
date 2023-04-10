@@ -27,7 +27,7 @@ Misc :
     ☐ gallery -> folders
     ☐ Can see a teacher's courses per month (monthly hours)
     ☐ Generate teachers' hours sheet per month (date-hour duration title)
-    ☐ Settle bug when removing days in teacher-create-modal and then cancel creation
+    ✔ Settle bug when removing days in teacher-create-modal and then cancel creation @done(23-04-10 14:04)
     ☐ Popup to confirm registration to a course for students
     ✔ Form must be valid only when course modification/creation has correct hours @done(23-04-05 18:09)
     ✔ Possibility to remove a day from the list of days (recursive course) (same hour for all courses)(test conflicts for all courses ) @done(23-04-05 18:10)

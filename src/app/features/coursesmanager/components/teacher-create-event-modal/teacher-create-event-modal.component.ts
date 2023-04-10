@@ -11,7 +11,7 @@ import { formatTime, getNowDate } from 'src/app/shared/service/hour-management.s
   styleUrls: ['./teacher-create-event-modal.component.scss']
 })
 export class TeacherCreateEventModalComponent {
-  @Output() dayRemoved = new EventEmitter<string>();
+  dayRemoveEvent!:any;
   
   selectedDays!:any[];
 
@@ -148,9 +148,8 @@ export class TeacherCreateEventModalComponent {
       this.selectedDays.splice(index,1);
       this.isValid.next(this.selectedDays.length > 0);
       this.updateCollisions()
-      this.dayRemoved.emit();
+      this.dayRemoveEvent.emit(index);
     }
-    // TODO remove from calendar
   }
 }
 const positive = (element:number) => element >= 0;

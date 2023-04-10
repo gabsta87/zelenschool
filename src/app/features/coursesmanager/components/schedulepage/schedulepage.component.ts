@@ -1,9 +1,8 @@
-import { Component, ChangeDetectionStrategy, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild, ChangeDetectorRef, EventEmitter } from '@angular/core';
 import { compareAsc, isSameDay, isSameMonth } from 'date-fns';
 import { WeekDay, MonthView, MonthViewDay } from 'calendar-utils';
 import { BehaviorSubject, filter, map, Observable, Subject } from 'rxjs';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarMonthViewDay, CalendarNativeDateFormatter, CalendarView, CalendarWeekViewBeforeRenderEvent, DateFormatterParams, DAYS_OF_WEEK, } from 'angular-calendar';
-import { EventColor } from 'calendar-utils';
 import * as dayjs from 'dayjs';
 import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
@@ -45,12 +44,14 @@ export class SchedulepageComponent {
   isTeacher:BehaviorSubject<boolean> = this._user.isLoggedAsTeacher;
   isAdmin:BehaviorSubject<boolean> = this._user.isLoggedAsAdmin;
   isBanned = this._user.isUserBanned;
-  extractedData!:Observable<DocumentData[]>;
+  extractedData :Observable<DocumentData[]> =  this._route.snapshot.data["scheduleData"];
   filterAscTitle = true;
   filterAscTime = true;
   now = getNowDate();
-  subscribtion !: any;
+  coursesSubscribtion !: any;
   futureCourses !: Observable<DocumentData[]>;
+  selectedDayRemove= new EventEmitter();
+  selectedDaySubscribtion !: any;
 
   constructor(
     private readonly _route: ActivatedRoute,
@@ -58,12 +59,12 @@ export class SchedulepageComponent {
     private readonly modalController: ModalController,
     private cd: ChangeDetectorRef,
     ) {
-    this.extractedData = this._route.snapshot.data["scheduleData"];
     this.futureCourses = this.extractedData.pipe(map( (courses:any) => courses = courses.filter((course:any) =>dayjs(course.timeStart).isAfter(dayjs(getNowDate()),"hour") )))
+
   }
 
   async ngOnInit(){
-    this.subscribtion = this.extractedData.subscribe((newValues) => {
+    this.coursesSubscribtion = this.extractedData.subscribe((newValues) => {
       this.events = [];
       newValues.forEach(async e =>{
         this.events.push({
@@ -85,10 +86,15 @@ export class SchedulepageComponent {
         })
       })
     });
+
+    this.selectedDaySubscribtion = this.selectedDayRemove.subscribe(res=>{
+      this.refresh.next();
+    });
   }
 
   ngOnDestroy(){
-    this.subscribtion.unsubscribe();
+    this.coursesSubscribtion.unsubscribe();
+    this.selectedDaySubscribtion.unsubscribe();
   }
 
   actions: CalendarEventAction[] = [
@@ -230,6 +236,7 @@ export class SchedulepageComponent {
         selectedDays : this.selectedDays,
         timeStart : dayjs(this.selectedDays[0].date.toString()).add(15,"hour").toISOString(),
         timeEnd : dayjs(this.selectedDays[0].date.toString()).add(16,"hour").toISOString(),
+        dayRemoveEvent : this.selectedDayRemove,
       },
     });
     modal.present();
@@ -271,4 +278,5 @@ export class SchedulepageComponent {
     this.filterAscTime = !this.filterAscTime;
     this.filterAscTitle = true;
   }
+
 }
