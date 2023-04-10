@@ -23,7 +23,7 @@
         <ion-button (click)="toggleAsso()"><ion-icon name="caret-down-outline"></ion-icon>Association members</ion-button>
     </ng-template>
     
-    <ion-button class="activatedButton" *ngIf="showPartners.value; else hidePartners" (click)="togglePartners()"><ion-icon name="caret-up-outline"></ion-icon>Association members</ion-button>
+    <ion-button class="activatedButton" *ngIf="showPartners.value; else hidePartners" (click)="togglePartners()"><ion-icon name="caret-up-outline"></ion-icon>Partners</ion-button>
     <ng-template #hidePartners>
         <ion-button (click)="togglePartners()"><ion-icon name="caret-down-outline"></ion-icon>Partners</ion-button>
     </ng-template>
@@ -32,7 +32,7 @@
         Photos gallery
     </ion-button>
     <ion-button>
-        Projects
+        Activities
     </ion-button>
     <ion-button>
         Rooms
@@ -205,9 +205,9 @@
             <ion-item *ngFor="let partner of partnersData; let i = index" lines="none">
                 <ion-grid>
                     <ion-row>
-                        <ion-col size="1">
+                        <ion-col size="3">
+                            <input type="file" (change)="onFileSelectedPartners($event,i)" accept="*" required style="display: none;" #fileUpload>
                             <ion-thumbnail style="cursor: pointer;">
-                                <input type="file" (change)="onFileSelectedPartners($event,i)" accept="*" required style="display: none;" #fileUpload>
                                 <ion-item (click)="fileUpload.click()" lines="none">
                                     <ion-img *ngIf="partner.photoChanged;else dbPhotoPartner" [src]="tempImagePartner" alt="Profile view"></ion-img>
                                     <ng-template #dbPhotoPartner>
