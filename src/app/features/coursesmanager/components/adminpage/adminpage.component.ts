@@ -19,7 +19,6 @@ export class AdminpageComponent {
   constructor(
     private readonly _db:AngularfireService,
     private readonly _route: ActivatedRoute,
-    private readonly _router: Router,
     private readonly _modal: ModalController,
     private readonly actionSheetCtrl: ActionSheetController,
     private readonly storage: StorageService,

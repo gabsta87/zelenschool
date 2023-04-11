@@ -6,7 +6,6 @@ import { filter, find, firstValueFrom, map, Observable } from 'rxjs';
 import * as dayjs from 'dayjs';
 import * as isBetween from 'dayjs/plugin/isBetween';
 import { formatForDB, getNowDate, isColliding } from './hour-management.service';
-import { LoginpageComponent } from 'src/app/features/coursesmanager/components/loginpage/loginpage.component';
 dayjs.extend(isBetween);
 
 @Injectable({
@@ -114,7 +113,7 @@ export class AngularfireService{
     
     const result = updateDoc(docRef,{ban:{
       authorID:this._auth.currentUser?.uid,
-      date: dayjs(new Date()).format('DD.MM.YYYY'),
+      date: formatForDB(dayjs(new Date())),
       comment: message,
     }})
 

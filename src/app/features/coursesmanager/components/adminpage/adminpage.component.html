@@ -132,7 +132,7 @@
             <ion-item *ngFor="let usr of (assoMembers|async)" lines="none">
                 <ion-accordion [value]="usr['name']">
                     <ion-item slot="header" color="light">
-                    <ion-label>{{usr['name']}} {{usr['role']}}</ion-label>
+                    <ion-label> <b>{{usr['name']}}</b> {{usr['role']}}</ion-label>
                     </ion-item>
                     <div class="ion-padding" slot="content">
                         
@@ -181,8 +181,8 @@
                         </div>
 
                         <ng-template #displayMember>
-                            <p>Name : {{usr['name']}}</p>
-                            <p>Role : {{usr['role']}}</p>
+                            <!-- <p>Name : {{usr['name']}}</p>
+                            <p>Role : {{usr['role']}}</p> -->
                             <p>Link : {{usr['link']}}</p>
                             <ion-thumbnail>
                                 <ion-img [src]="usr['photo']" alt="Profile view"></ion-img>
