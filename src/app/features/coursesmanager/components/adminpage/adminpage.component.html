@@ -131,7 +131,7 @@
         <ion-accordion-group>
             <ion-item *ngFor="let usr of (assoMembers|async)" lines="none">
                 <ion-accordion [value]="usr['name']">
-                    <ion-item slot="header" color="light">
+                    <ion-item slot="header" color="light" (click)="cancelMemberEdit()">
                     <ion-label> <b>{{usr['name']}}</b> {{usr['role']}}</ion-label>
                     </ion-item>
                     <div class="ion-padding" slot="content">

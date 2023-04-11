@@ -19,7 +19,7 @@ Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManag
 
 
 Misc :
-    ☐ Prevent admin editing two asso members at the same time
+    ✔ Prevent admin editing two asso members at the same time @done(23-04-11 12:31)
     ✔ members management @started(23-04-08 21:02) @done(23-04-10 11:40) @lasted(1d14h38m14s)
     ✔ partners management @done(23-04-10 11:40)
     ☐ activities management
