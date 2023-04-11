@@ -37,6 +37,7 @@ import { BanmodalComponent } from './components/banmodal/banmodal.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AboutPageResolver } from './resolvers/about-page.resolver';
+import { NewAssoMemberModalComponent } from './components/new-asso-member-modal/new-asso-member-modal.component';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { AboutPageResolver } from './resolvers/about-page.resolver';
     TeacherCreateEventModalComponent,
     ChoiceModalComponent,
     BanmodalComponent,
+    NewAssoMemberModalComponent,
   ],
   imports: [
     SwiperModule,

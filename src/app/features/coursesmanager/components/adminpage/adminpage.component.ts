@@ -9,6 +9,7 @@ import { getNowDate } from 'src/app/shared/service/hour-management.service';
 import { BanmodalComponent } from '../banmodal/banmodal.component';
 import { TeacherModalComponent } from '../teacher-modal/teacher-modal.component';
 import { StorageService } from 'src/app/shared/service/storage.service';
+import { NewAssoMemberModalComponent } from '../new-asso-member-modal/new-asso-member-modal.component';
 
 @Component({
   selector: 'app-adminpage',
@@ -22,6 +23,7 @@ export class AdminpageComponent {
     private readonly _modal: ModalController,
     private readonly actionSheetCtrl: ActionSheetController,
     private readonly storage: StorageService,
+    private readonly modalCtrl: ModalController,
   ) {}
 
   adminData = this._route.snapshot.data['adminData'];
@@ -239,16 +241,28 @@ export class AdminpageComponent {
   async updateMember(){
     let data = {id : this.memberId, name : this.memberNewName, role : this.memberNewRole, link : this.memberNewLink} as AssoMember;
     if(this.photoChanged){
-      this.memberNewPhoto = await this.saveAssoMemberImage();
+      this.memberNewPhoto = await this.saveAssoMemberImage(this.imageFile);
       data.photo = this.memberNewPhoto;
     }
     this.photoChanged.next(false);
+    
     this._db.updateAssoMember(data);
   }
 
-  createMember(){
-    // TODO
-    console.log("TODO");
+  async createMember(){
+
+    const modal = await this.modalCtrl.create({
+      component:  NewAssoMemberModalComponent
+    });
+    modal.present();
+
+    const { data,role } = await modal.onWillDismiss();
+
+    if(role === 'confirm'){
+      const photoAddress = await this.saveAssoMemberImage(data.photo);
+      data.photo = photoAddress;
+      this._db.addAssoMember(data);
+    }
   }
 
   // Image management
@@ -257,11 +271,11 @@ export class AdminpageComponent {
   photoChanged = new BehaviorSubject(false);
   tempImage !: any;
 
-  async saveAssoMemberImage() {
-    const filePath = `${this.imageFile.name}`;
+  async saveAssoMemberImage(imageFile : File) {
+    const filePath = `${imageFile.name}`;
     
     this.uploadingImage = true;
-    const downloadUrl = await this.storage.storeImage(this.imageFile,filePath,"assoMembers");
+    const downloadUrl = await this.storage.storeImage(imageFile,filePath,"assoMembers");
 
     this.uploadingImage = false;
     return downloadUrl;

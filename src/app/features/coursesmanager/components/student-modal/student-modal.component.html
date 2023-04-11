@@ -5,6 +5,12 @@
     </ion-toolbar>
 </ion-header>
 <ion-content (keydown.enter)="confirm()">
+    <ion-popover #banPopOver [isOpen]="showBanInfo" (didDismiss)="showBanInfo = false">
+    <ng-template>
+        <ion-content class="ion-padding">You cannot subscribe. You were banned on {{ban.date|date:"dd.MM.YY"}} <br> Reason : <ion-text color="danger">{{ban.comment}}</ion-text></ion-content>
+    </ng-template>
+    </ion-popover>
+
     <div *ngIf="dataObs |async as currentEvent">
     <ion-item *ngIf="creator">
         <ion-text>Author : {{creator['f_name']}} {{creator['l_name']}}</ion-text>

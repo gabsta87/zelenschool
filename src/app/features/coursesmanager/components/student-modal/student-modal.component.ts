@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import * as dayjs from 'dayjs';
 import { DocumentData } from 'firebase/firestore';
@@ -22,6 +22,10 @@ export class StudentModalComponent {
   isAttending!:boolean;
   isCourseFull!:boolean;
   isSubscribtionBlocked!:boolean;
+  ban = this._user.getUserData().ban;
+  showBanInfo = false;
+
+  @ViewChild('roomUpdatePopOver') popover!:any;
 
   duration = 1;
   durationUnit!:dayjs.ManipulateType;
@@ -60,6 +64,12 @@ export class StudentModalComponent {
 
         // Date is already passed
         dayjs(courseActualValues['timeStart']).isBefore(new Date()) ;
+    }
+  }
+
+  ionViewDidEnter(){
+    if(this.ban){
+      this.showBanInfo = true;
     }
   }
 

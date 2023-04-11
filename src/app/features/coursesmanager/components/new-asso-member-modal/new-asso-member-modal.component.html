@@ -1,0 +1,53 @@
+<ion-header>
+    <ion-title>Adding a new member</ion-title>
+</ion-header>
+  
+<ion-content>
+    <ion-item>
+        <ion-label position="stacked">Name</ion-label>
+        <ion-input type="text" [(ngModel)]="assoMemberName" required></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label position="stacked">Link</ion-label>
+        <ion-input type="text" [(ngModel)]="assoMemberLink"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label position="stacked">Role</ion-label>
+        <ion-input type="text" [(ngModel)]="assoMemberRole" required></ion-input>
+    </ion-item>
+    <!-- <ion-item>
+        <input type="file" (change)="onFileSelected($event)" accept="*" required style="display: none;" #fileUpload>
+        <ion-thumbnail style="cursor: pointer;">
+            <ion-item (click)="fileUpload.click()" lines="none">
+                <ion-img *ngIf="photoChanged;else dbPhotoPartner" [src]="tempImagePartner" alt="Profile view"></ion-img>
+                <ng-template #dbPhotoPartner>
+                    <ion-img [src]="partner.logoName" alt="Profile view"></ion-img>
+                </ng-template>
+            </ion-item>
+        </ion-thumbnail>
+    </ion-item> -->
+    <ion-item>
+        <ion-thumbnail style="cursor: pointer;">
+            <input type="file" (change)="onFileSelected($event)" accept="*" required style="display: none;" #fileUpload>
+            <ion-item (click)="fileUpload.click()" lines="none">
+                <ion-img *ngIf="photoChanged.value;else dbPhoto" [src]="tempImage" alt="Profile view"></ion-img>
+                <ng-template #dbPhoto>
+                    <ion-img [src]="tempImage" alt="Profile view"></ion-img>
+                </ng-template>
+            </ion-item>
+        </ion-thumbnail>
+    </ion-item>
+</ion-content>
+  
+<ion-footer>
+    <ion-toolbar>
+        <ion-buttons slot="end">
+          <ion-button (click)="cancel()">
+            Cancel
+          </ion-button>
+          <ion-button (click)="confirm()" [disabled]="!assoMemberName || !assoMemberLink">
+            Confirm
+          </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>
