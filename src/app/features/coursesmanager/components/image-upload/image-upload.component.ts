@@ -61,7 +61,10 @@ export class ImageUploadComponent {
     const filePath = `${this.imageFile.name}`;
     
     this.uploading = true;
-    const downloadUrl = await this.storage.storeImage(this.imageFile,this.imageName,this.imageFunction);
+    const downloadUrl = "";
+    // const downloadUrl = await this.storage.storeImage(this.imageFile,this.imageName,this.imageFunction);
+    console.log("removed url ");
+    
     
     const data = {
       name: this.imageName,

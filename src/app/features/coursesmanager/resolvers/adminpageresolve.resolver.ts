@@ -13,6 +13,7 @@ interface AdminData{
   partnersData : {id:string,link:string,logoName:string,photoChanged:boolean}[],
   rooms : Observable<DocumentData[]>,
   roomsData : {id:string,name:string,maxStudents:number}[],
+  galleries : Observable<DocumentData[]>;
 }
 
 @Injectable({
@@ -100,6 +101,8 @@ export class AdminpageresolveResolver implements Resolve<AdminData> {
       maxStudents : e['maxStudents'],
       name : e['name'],
     }))
+
+    result.galleries = this._db.getGalleries();
 
     return result;
   }

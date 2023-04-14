@@ -17,7 +17,7 @@ export class AboutpageComponent {
   myAnchor!:any;
 
   private _positions : any[] = [];
-  constructor(private readonly _route: ActivatedRoute){
+  constructor(private readonly _route: ActivatedRoute,private readonly _db: AngularfireService){
 
     this._route.fragment.subscribe(fragment => { 
       this.fragment = fragment;
@@ -65,6 +65,11 @@ export class AboutpageComponent {
       return;
 
     this._positions = this.divs.filter((e:any) => e.nativeElement.id.includes("anchor_"))
+  }
+
+  contactButtonEvt(){
+    //TODO
+    console.log("TODO");
   }
 
 }

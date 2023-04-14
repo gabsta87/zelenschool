@@ -17,19 +17,16 @@ Ancres, aller sur une page, puis aller vers l'ancre souhaitée. Si sur la page, 
     ion-nav-bar, trouver comment recharger la page à chaque fois qu'on y va
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
-
 Misc :
+    ☐ load rooms from DB, and check rooms conflict from DB
+    ✔ gallery -> folders @done(23-04-12 15:29)
+    ☐ galleries management
+    ☐ Can see a teacher's courses per month (monthly hours)
     ✔ Prevent admin editing two asso members at the same time @done(23-04-11 12:31)
     ✔ members management @started(23-04-08 21:02) @done(23-04-10 11:40) @lasted(1d14h38m14s)
     ✔ partners management @done(23-04-10 11:40)
-    ☐ activities management
     ✔ activities -> goes to anchor, not component @done(23-04-08 21:02)
-    ☐ admin can modify courses
-    ☐ gallery -> folders
-    ☐ Can see a teacher's courses per month (monthly hours)
-    ☐ Generate teachers' hours sheet per month (date-hour duration title)
     ✔ Settle bug when removing days in teacher-create-modal and then cancel creation @done(23-04-10 14:04)
-    ☐ Popup to confirm registration to a course for students
     ✔ Form must be valid only when course modification/creation has correct hours @done(23-04-05 18:09)
     ✔ Possibility to remove a day from the list of days (recursive course) (same hour for all courses)(test conflicts for all courses ) @done(23-04-05 18:10)
     ✔ Allow longer course description @done(23-04-05 18:10)
@@ -37,6 +34,10 @@ Misc :
     ✔ partners not a page, but an anchor on the "about us" page @done(23-04-05 18:10)
     ✔ Projects -> activities @done(23-04-05 19:48)
     ✘ Course creation needs approval @cancelled(23-03-31 12:38)
+    ☐ Generate teachers' hours sheet per month (date-hour duration title)
+    ☐ activities management
+    ☐ admin can modify courses
+    ☐ Popup to confirm registration to a course for students
 
     URGENT :
     ✔ automatic unban for absences after 30 days (on login of user) @done(23-04-11 10:54)
@@ -57,7 +58,6 @@ BUGS :
     ✔ error while deleting a course : reading attendantsID creates an error @done(23-03-30 17:11)
 
 Features:
-    ☐ Schedule : Clear selection button ???
     ✔ Rooms have a name/address instead of number ? Admins can add/remove rooms ? Rooms from database @done(23-04-11 10:56)
     ✔ Admin page : actions allowed @high @started(23-03-30 17:06) @done(23-04-11 10:57) @lasted(1w4d17h51m5s)
     ✔ request admin approval for teachers (on users list of admin, put badge for waiting approval users) @done(23-03-30 17:02)
@@ -74,7 +74,6 @@ Features:
     ☐ Multilingual system
     Schedule : 
         ☐ filter available courses, filter by teacher, search tool
-        ☐ search bar for events
     Admin Page :
         ✔ add search tool @done(23-03-30 17:04)
         ✔ load teachers names @done(23-03-30 17:04)
@@ -86,28 +85,26 @@ Features:
         ✘ Admin : color banned users @cancelled(23-03-30 16:59)
 
 Technical :
-    New:
-        ✔ create component for conflicting courses (used in both teachermodal and teachercreatemodal) @done(23-04-06 20:08)
-        ✘ fix CORS problem to upload files on server @cancelled(23-04-11 11:22)
-        ✔ Create service to manage course (modal creation) that can be launched from both schedule and admin page @done(23-04-06 20:08)
-        ☐ test teacher/student account creation
-        ✔ students can see their banning date (start and end) / Announce/show to user that he has been banned @done(23-04-11 11:22)
-        ☐ Secure firebase access
-            https://firebase.blog/posts/2021/01/code-review-security-rules
-            https://firebase.google.com/docs/reference/rules/rules.firestore.Request?hl=fr#auth
-    Done:
-        ✔ prevent to create courses in the past @done(23-03-30 16:56)
-        ✔ banned teacher cannot create courses @done(23-03-30 16:56)
-        ✔ Use Angular Forms to validate modals @done(23-03-30 16:56)
-        ✔ teacher : mark student as absent in past courses @done(23-03-30 16:56)
-        ✔ prevent modifying past courses for teachers/students @done(23-03-30 16:56)
-        ✔ Impossible to subscribe to past dates @done(23-03-30 16:56)
-        ✔ Faster search using combinelatest @done(23-03-30 16:56)
+    ✔ create component for conflicting courses (used in both teachermodal and teachercreatemodal) @done(23-04-06 20:08)
+    ✘ fix CORS problem to upload files on server @cancelled(23-04-11 11:22)
+    ✔ Create service to manage course (modal creation) that can be launched from both schedule and admin page @done(23-04-06 20:08)
+    ✔ students can see their banning date (start and end) / Announce/show to user that he has been banned @done(23-04-11 11:22)
+    ☐ Secure firebase access
+        https://firebase.blog/posts/2021/01/code-review-security-rules
+        https://firebase.google.com/docs/reference/rules/rules.firestore.Request?hl=fr#auth
+    ✔ prevent to create courses in the past @done(23-03-30 16:56)
+    ✔ banned teacher cannot create courses @done(23-03-30 16:56)
+    ✔ Use Angular Forms to validate modals @done(23-03-30 16:56)
+    ✔ teacher : mark student as absent in past courses @done(23-03-30 16:56)
+    ✔ prevent modifying past courses for teachers/students @done(23-03-30 16:56)
+    ✔ Impossible to subscribe to past dates @done(23-03-30 16:56)
+    ✔ Faster search using combinelatest @done(23-03-30 16:56)
 
 Cosmetics :
-    ☐ Admin page : better hide/show buttons arrangement
+    ☐ Navbar : Fix tab selection while scrolling 
+    ✔ Admin page : better hide/show buttons arrangement @done(23-04-11 18:44)
     ☐ Better errors management for forms
-    ☐ background linear-gradient
+    ✘ background linear-gradient @cancelled(23-04-12 15:30)
         https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Images/Using_CSS_gradients
     ✔ fix all account pages on same style @done(23-03-30 17:07)
     Schedule : 
@@ -123,7 +120,6 @@ Cosmetics :
             https://mattlewis92.github.io/angular-calendar/#/custom-templates
         ☐ change to 24h format for day and week display in schedule
             https://github.com/mattlewis92/angular-calendar/issues/78
-        ☐ show course author names
     Admin page : 
         ✔ better display for courses @done(23-03-30 17:10)
 
@@ -133,6 +129,7 @@ File Transfer on Angular
 Refactoring:
     ☐ create Doc
     ☐ Move components in sub-folders
+    ☐ Renaming photo galleries : use firestore IDs as folders'names in Storage, and store/load name in firestore
     ✔ added description to courses @done(23-03-30 17:16)
     ✔ click on bottom table to create modal @done(23-04-05 01:20)
     ✔ Force comment for banning @done(23-03-30 17:16)

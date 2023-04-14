@@ -1,15 +1,16 @@
 import { Component, ViewChild } from '@angular/core';
 import { DocumentData } from '@angular/fire/firestore';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import * as dayjs from 'dayjs';
-import { BehaviorSubject, combineLatest, firstValueFrom, map, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, firstValueFrom, map, Observable, of } from 'rxjs';
 import { AngularfireService, AssoMember } from 'src/app/shared/service/angularfire.service';
 import { getNowDate } from 'src/app/shared/service/hour-management.service';
 import { BanmodalComponent } from '../banmodal/banmodal.component';
 import { TeacherModalComponent } from '../teacher-modal/teacher-modal.component';
 import { StorageService } from 'src/app/shared/service/storage.service';
 import { NewAssoMemberModalComponent } from '../new-asso-member-modal/new-asso-member-modal.component';
+import { GalleryNameModalComponent } from '../gallery-name-modal/gallery-name-modal.component';
 
 @Component({
   selector: 'app-adminpage',
@@ -24,7 +25,13 @@ export class AdminpageComponent {
     private readonly actionSheetCtrl: ActionSheetController,
     private readonly storage: StorageService,
     private readonly modalCtrl: ModalController,
-  ) {}
+  ) {
+    this.galleries.subscribe((e:any) => { 
+      this.imagesCollections = [];
+      e.forEach((element:DocumentData) =>
+        this.imagesCollections.push({id:element['id'],name:element['name'],images:this.storage.getGalleryImages(element['id'])})
+    )})
+  }
 
   adminData = this._route.snapshot.data['adminData'];
   
@@ -34,6 +41,7 @@ export class AdminpageComponent {
   partners = this._route.snapshot.data['adminData'].partners;
   partnersData = this._route.snapshot.data['adminData'].partnersData;
   roomsData = this._route.snapshot.data['adminData'].roomsData;
+  galleries = this._route.snapshot.data['adminData'].galleries as Observable<DocumentData[]>;
 
   searchString = "";
   statusToFilter = "all";
@@ -267,17 +275,16 @@ export class AdminpageComponent {
 
   // Image management
   imageFile !: File;
-  uploadingImage = false;
+  uploadingImage = new BehaviorSubject(false);
   photoChanged = new BehaviorSubject(false);
   tempImage !: any;
 
   async saveAssoMemberImage(imageFile : File) {
-    const filePath = `${imageFile.name}`;
-    
-    this.uploadingImage = true;
-    const downloadUrl = await this.storage.storeImage(imageFile,filePath,"assoMembers");
 
-    this.uploadingImage = false;
+    this.uploadingImage.next(true);
+    const downloadUrl = await this.storage.addMemberImage(imageFile);
+
+    this.uploadingImage.next(false);
     return downloadUrl;
   }
 
@@ -320,10 +327,66 @@ export class AdminpageComponent {
 
   onFileSelectedPartners(event: any,index : number): void {
     this.partnersData[index].photoChanged = true;
-    const filePartner: File = event.target.files[0];
-    this.imageFilePartner = filePartner;
+    this.imageFilePartner = event.target.files[0];
 
     this.tempImagePartner = URL.createObjectURL(this.imageFilePartner);
+  }
+
+  // Galleries management
+  showGalleriesManager = new BehaviorSubject(false);
+  selectedGallery = -1;
+  imagesCollections : {id:string,name:string,images:any}[] = [];
+  images!:Observable<DocumentData[]>;
+
+
+  async addGallery(){
+
+    const modal = await this.modalCtrl.create({
+      component:  GalleryNameModalComponent
+    });
+    modal.present();
+
+    const { data,role } = await modal.onWillDismiss();
+
+    if(role === 'confirm'){
+      this.storage.createGallery(data);
+    }
+  }
+
+  openGallery(galleryId:string,index:number){
+
+    if(this.selectedGallery == index){
+      // Closing the selected folder
+      this.selectedGallery = -1;
+      this.images = of();
+      return
+    }
+
+    this.selectedGallery = index;
+    
+    if(!this.imagesCollections[index].images){
+      this.imagesCollections[index].images = this.storage.getGalleryImages(galleryId);
+    }
+
+    this.images = this.imagesCollections[index].images;
+  }
+
+  deleteImageFromGallery(file:any){
+    this.storage.deleteImageFromGallery(file);
+  }
+  
+  addImageToGallery(event:any){
+    
+    let data = {} as any;
+    data.file = event.target.files[0];
+    data.name = data.file.name;
+    data.collectionId = this.imagesCollections[this.selectedGallery].id;
+
+    this.storage.addImageToGallery(data);
+  }
+
+  deleteGallery(id:string){
+    this.storage.deleteGallery(id);
   }
 
   // Rooms management

@@ -1,32 +1,55 @@
 <ion-content>
-<div class="gallery-container">
-    
-    <div class="swiper-container">
-    <swiper
-        #swiper
-        [config]="config"
-        class="banner-slides"
-        >
-        <ng-template swiperSlide *ngFor="let img of images">
-            <img src="/assets/images/{{img}}"/>
-        </ng-template>
 
-    </swiper>
+    <div class="imgFolders">
+        <ion-grid>
+            <ion-row>
+                <ion-col *ngFor="let coll of imagesCollections; let index = index">
+                    <ion-item  (click)="openGallery(coll.id,index)" lines="none">
+                        <ion-thumbnail>
+                            <ion-icon *ngIf="index == openFolderIndex; else closeFolder" name="folder-open-outline"></ion-icon>
+                            <ng-template #closeFolder>
+                                <ion-icon name="folder-outline"></ion-icon>
+                            </ng-template>
+                            
+                            <ion-label>{{coll.name}}</ion-label>
+                        </ion-thumbnail>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
     </div>
 
-    <ion-button (click)="slidePrev()">Prev slide</ion-button>
-    <ion-button (click)="slideNext()">Next slide</ion-button>
+    <ng-container *ngIf="images | async as imagesData">
+    <div class="gallery-container">
+        
+        <div class="swiper-container">
+        <swiper
+            #swiper
+            [config]="config"
+            class="banner-slides"
+            >
+            <ng-template swiperSlide *ngFor="let img of imagesData">
+                <img [src]="img.link"/>
+            </ng-template>
 
-</div>
+        </swiper>
+        </div>
 
-<div class="photoGallery">
-    <ion-grid>
-        <ion-row>
-            <ion-thumbnail *ngFor="let img of images; let i = index" (click)="selectImage(i+1)">
-                <img src="/assets/images/{{img}}"/>
-            </ion-thumbnail>
-        </ion-row>
-    </ion-grid>
-</div>
+        <ion-button (click)="slidePrev()">Prev slide</ion-button>
+        <ion-button (click)="slideNext()">Next slide</ion-button>
+
+    </div>
+
+    <div class="photoGallery">
+        <ion-grid>
+            <ion-row>
+                <ion-thumbnail *ngFor="let img of imagesData; let i = index" (click)="selectImage(i+1)">
+                    <img [src]="img.link"/>
+                </ion-thumbnail>
+            </ion-row>
+        </ion-grid>
+    </div>
+    </ng-container>
+
 
 </ion-content>

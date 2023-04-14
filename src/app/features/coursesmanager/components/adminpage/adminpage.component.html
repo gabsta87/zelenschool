@@ -28,9 +28,11 @@
         <ion-button (click)="toggle(showPartners)"><ion-icon name="caret-down-outline"></ion-icon>Partners</ion-button>
     </ng-template>
     
-    <ion-button>
-        Photos gallery
-    </ion-button>
+    <ion-button class="activatedButton" *ngIf="showGalleriesManager.value; else hidePhotoGall" (click)="toggle(showGalleriesManager)"><ion-icon name="caret-up-outline"></ion-icon>Photos galleries</ion-button>
+    <ng-template #hidePhotoGall>
+        <ion-button (click)="toggle(showGalleriesManager)"><ion-icon name="caret-down-outline"></ion-icon>Photos galleries</ion-button>
+    </ng-template>
+
     <ion-button>
         Activities
     </ion-button>
@@ -233,6 +235,43 @@
                 </ion-grid>
             </ion-item>
         </ion-list>
+    </div>
+
+    <div *ngIf="showGalleriesManager.value" class="galleriesContainer">
+        <h1>Photo galleries</h1>
+        <div lines="none" class="addButtonContainer">
+            <ion-button (click)="addGallery()" color="success"> <ion-icon name="add-circle-outline"></ion-icon> Create album </ion-button>
+        </div>
+        <div *ngIf="galleries | async as galleriesData">
+            <ion-list>
+                <div *ngFor="let gall of galleriesData; let index = index">
+                    <ion-button *ngIf="selectedGallery!=index; else normalGallery" class="galleryNameButton" (click)="openGallery(gall['id'],index)"><ion-icon name="caret-down-outline"></ion-icon>{{gall['name']}}</ion-button>
+                    <ng-template #normalGallery>
+                        <ion-button class="activatedButton galleryNameButton" (click)="openGallery(gall['id'],index)"><ion-icon name="caret-up-outline"></ion-icon>{{gall['name']}}</ion-button>
+                    </ng-template>
+                    
+                    <ion-button color="danger" (click)="deleteGallery(gall['id'])">Delete</ion-button>
+                </div>
+                <div *ngIf="selectedGallery >= 0">
+                    <ion-grid>
+                        <ion-row *ngIf="images | async as imagesSnapshot">
+                            <ion-col *ngFor="let img of imagesSnapshot">
+                                <ion-thumbnail>
+                                    <img [src]="img['link']"/>
+                                    <ion-icon color="danger" class="removeIcon" name="close-circle" (click)="deleteImageFromGallery(img)"></ion-icon>
+                                </ion-thumbnail>
+                            </ion-col>
+                            <ion-col>
+                                <input type="file" (change)="addImageToGallery($event)" accept="*" required style="display: none;" #galleryPhotoUpload>
+                                <ion-thumbnail (click)="galleryPhotoUpload.click()">
+                                    <ion-icon class="addPhotoToGalleryIcon" name="add-circle-outline"></ion-icon>
+                                </ion-thumbnail>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </div>
+            </ion-list>
+        </div>
     </div>
 
     <div *ngIf="showRooms.value">

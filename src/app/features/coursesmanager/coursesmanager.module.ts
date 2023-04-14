@@ -38,6 +38,7 @@ import { ImageUploadComponent } from './components/image-upload/image-upload.com
 import { HttpClientModule } from '@angular/common/http';
 import { AboutPageResolver } from './resolvers/about-page.resolver';
 import { NewAssoMemberModalComponent } from './components/new-asso-member-modal/new-asso-member-modal.component';
+import { GalleryNameModalComponent } from './components/gallery-name-modal/gallery-name-modal.component';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import { NewAssoMemberModalComponent } from './components/new-asso-member-modal/
     ChoiceModalComponent,
     BanmodalComponent,
     NewAssoMemberModalComponent,
+    GalleryNameModalComponent,
   ],
   imports: [
     SwiperModule,

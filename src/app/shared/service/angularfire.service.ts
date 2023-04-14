@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth, User } from '@angular/fire/auth';
-import { collection, QueryConstraint, Firestore, addDoc, collectionData, doc, setDoc, DocumentData, arrayUnion, arrayRemove, getDocs, deleteField, where} from '@angular/fire/firestore';
+import { collection, QueryConstraint, Firestore, addDoc, collectionData, doc, setDoc, DocumentData, arrayUnion, arrayRemove, getDocs, deleteField, where, QuerySnapshot} from '@angular/fire/firestore';
 import { deleteDoc, getDoc, query, updateDoc } from '@firebase/firestore';
 import { filter, find, firstValueFrom, map, Observable } from 'rxjs';
 import * as dayjs from 'dayjs';
@@ -270,6 +270,7 @@ export class AngularfireService{
     return updateDoc(docRef,{link : partner.link, logoName : partner.logoName});
   }
 
+  // Rooms management
   getRooms(){
     return this.getElements("rooms");
   }
@@ -287,6 +288,87 @@ export class AngularfireService{
     const docRef = doc(this._dbaccess,'rooms/'+id);
     deleteDoc(docRef);
   }
+
+  // Galleries Management
+
+  getGalleries(){
+    return this.getElements("galleries");
+  }
+
+  createGallery(name:string){
+    return addDoc(collection(this._dbaccess,"galleries"),{name:name})
+  }
+
+  // async addAssoMember(e: {name: string, photo: string, role: string, link?: undefined, }){
+  addImage(data:{collection:string, link:string, name:string}){
+    const completedData = {...data, uploadDate : getNowDate(), uploaderId:this._auth.currentUser?.uid}
+
+    return addDoc(collection(this._dbaccess,"images"),{
+      ...completedData
+    })
+  }
+
+  async deleteGallery(id:string){
+
+    const imageCollection = collection(this._dbaccess, "images");
+    const imageQuery = query(imageCollection, where("collection", "==", id));
+    const imageDocs = await getDocs(imageQuery);
+    imageDocs.forEach(doc => deleteDoc(doc.ref));
+
+    const docRef = doc(this._dbaccess,'galleries/'+id);
+    deleteDoc(docRef);
+  }
+
+  deleteImage(id:string){
+    const docRef = doc(this._dbaccess,'images/'+id);
+    deleteDoc(docRef);
+  }
+
+  getGalleryImages(id:string){
+    const result = this.getElements("images",where("collection","==",id));
+    return result;
+  }
+
+  //  // Temporary Code
+  
+  // initGallery(){
+  //   this.originImages.forEach((e:string) => {
+  //     addDoc(collection(this._dbaccess,"images"),{
+  //       link:e,
+  //       collection:"c05cRgdx9rUSc8ZFOGnB",
+  //       uploaderId:"0ZT4oOgFtGch8ZSweijWrZp31PB3",
+  //       uploadDate:"12.04.2023",
+  //     })
+  //   })
+  // }
+
+  // originImages = [
+  //   "/assets/images/IMG-20220627-WA0016.jpg",
+  //   "/assets/images/IMG-20220729-WA0043.jpg",
+  //   "/assets/images/IMG-20220627-WA0045.jpg",
+  //   "/assets/images/IMG-20220730-WA0006.jpg",
+  //   "/assets/images/IMG-20220627-WA0049.jpg",
+  //   "/assets/images/IMG-20220628-WA0028.jpg",
+  //   "/assets/images/IMG-20220707-WA0014.jpg",
+  //   "/assets/images/IMG-20220712-WA0003.jpg",
+  //   "/assets/images/IMG-20220722-WA0003.jpg",
+  //   "/assets/images/IMG-20220729-WA0041.jpg",
+  //   "/assets/images/IMG-20220725-WA0018-1.jpg",
+  //   "/assets/images/IMG_20220811_120348_463.jpg",
+  //   "/assets/images/IMG_20220811_120319_583.jpg",
+  //   "/assets/images/IMG_20220607_113736_327.jpg",
+  //   "/assets/images/IMG_20220811_114818_117.jpg",
+  //   "/assets/images/IMG_20220811_120150_093.jpg",
+  //   "/assets/images/IMG_20220811_120158_143.jpg",
+  //   "/assets/images/IMG_20220811_120249_968.jpg",
+  //   "/assets/images/IMG_20220811_120328_275.jpg",
+  //   "/assets/images/photo_2022-08-25_09-09-24.jpg",
+  //   "/assets/images/WhatsApp-Image-2022-04-30-at-2.19.37-PM.jpeg",
+  //   "/assets/images/WhatsApp-Image-2022-04-30-at-3.11.32-PM.jpeg",
+  //   "/assets/images/WhatsApp-Image-2022-05-02-at-10.27.42-AM.jpeg",
+  //   "/assets/images/WhatsApp-Image-2022-08-14-at-11.46.56-AM.jpeg",
+  //   "/assets/images/WhatsApp-Image-2022-08-14-at-11.52.07-AM.jpeg",
+  // ]
 }
 
 export interface UserInfos {

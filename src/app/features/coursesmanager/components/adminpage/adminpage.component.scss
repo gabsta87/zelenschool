@@ -18,7 +18,7 @@ ion-input{
 }
 
 ion-col{
-    align-items: center;
+    justify-content: center;
     display: flex;
 }
 
@@ -33,4 +33,23 @@ ion-col{
 .addButtonContainer{
     padding-bottom: 5px;
     padding-left : 1em;
+}
+.galleriesContainer{
+    .galleryNameButton{
+        min-width: 250px;
+    }
+}
+
+.removeIcon{
+    cursor: pointer;
+    position: relative;
+    bottom: 10px;
+    background: white;
+    border-radius: 50%;
+}
+
+.addPhotoToGalleryIcon{
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
 }
