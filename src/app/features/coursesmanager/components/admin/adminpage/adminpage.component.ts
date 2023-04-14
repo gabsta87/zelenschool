@@ -7,7 +7,7 @@ import { BehaviorSubject, combineLatest, firstValueFrom, map, Observable, of } f
 import { AngularfireService, AssoMember } from 'src/app/shared/service/angularfire.service';
 import { getNowDate } from 'src/app/shared/service/hour-management.service';
 import { BanmodalComponent } from '../banmodal/banmodal.component';
-import { TeacherModalComponent } from '../teacher-modal/teacher-modal.component';
+import { TeacherModalComponent } from '../../schedule/teacher-modal/teacher-modal.component';
 import { StorageService } from 'src/app/shared/service/storage.service';
 import { NewAssoMemberModalComponent } from '../new-asso-member-modal/new-asso-member-modal.component';
 import { GalleryNameModalComponent } from '../gallery-name-modal/gallery-name-modal.component';

@@ -12,9 +12,6 @@ Questions:
         https://firebase.google.com/docs/extensions/official/firestore-send-email?hl=fr
     ✘ admins can change the 3 missed courses limit ? @cancelled(23-03-30 17:24)
 
-observable en HTML, bug sur le tableau contenu dans l'objet . Impossible d'itérer dessus
-Ancres, aller sur une page, puis aller vers l'ancre souhaitée. Si sur la page, aller vers l'ancre. 
-    ion-nav-bar, trouver comment recharger la page à chaque fois qu'on y va
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 Misc :
