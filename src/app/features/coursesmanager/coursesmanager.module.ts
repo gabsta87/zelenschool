@@ -10,7 +10,6 @@ import { GallerypageComponent } from './components/gallerypage/gallerypage.compo
 import { SwiperModule } from 'swiper/angular';
 import { AboutpageComponent } from './components/aboutpage/aboutpage.component';
 import { SchedulepageComponent } from './components/schedule/schedulepage/schedulepage.component';
-import { EditnewsComponent } from './components/editnews/editnews.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FlatpickrModule } from 'angularx-flatpickr';
@@ -49,7 +48,6 @@ import { GalleryNameModalComponent } from './components/admin/gallery-name-modal
     GallerypageComponent,
     AboutpageComponent,
     SchedulepageComponent,
-    EditnewsComponent,
     AdminpageComponent,
     AccountpageComponent,
     CreateAccountComponent,
