@@ -299,6 +299,11 @@ export class AngularfireService{
     return addDoc(collection(this._dbaccess,"galleries"),{name:name})
   }
 
+  updateGallery(id:string,newName:string){
+    const docRef = doc(this._dbaccess,'galleries/'+id);
+    return updateDoc(docRef,{name : newName});
+  }
+
   // async addAssoMember(e: {name: string, photo: string, role: string, link?: undefined, }){
   addImage(data:{collection:string, link:string, name:string}){
     const completedData = {...data, uploadDate : getNowDate(), uploaderId:this._auth.currentUser?.uid}

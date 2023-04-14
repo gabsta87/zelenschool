@@ -251,6 +251,7 @@
                     </ng-template>
                     
                     <ion-button color="danger" (click)="deleteGallery(gall['id'])">Delete</ion-button>
+                    <ion-button (click)="renameGallery(gall['id'])">Rename</ion-button>
                 </div>
                 <div *ngIf="selectedGallery >= 0">
                     <ion-grid>

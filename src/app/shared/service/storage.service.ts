@@ -57,6 +57,10 @@ export class StorageService {
     return this._db.createGallery(name);
   }
 
+  renameGallery(id:string,newName:string){
+    this._db.updateGallery(id,newName);
+  }
+
   async deleteGallery(id:string){
 
     const imagesList = await firstValueFrom(this._db.getGalleryImages(id));

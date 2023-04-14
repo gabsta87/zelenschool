@@ -374,6 +374,20 @@ export class AdminpageComponent {
   deleteImageFromGallery(file:any){
     this.storage.deleteImageFromGallery(file);
   }
+
+  async renameGallery(id:string){
+
+    const modal = await this.modalCtrl.create({
+      component:  GalleryNameModalComponent
+    });
+    modal.present();
+
+    const { data,role } = await modal.onWillDismiss();
+
+    if(role === 'confirm'){
+      this.storage.renameGallery(id,data);
+    }
+  }
   
   addImageToGallery(event:any){
     
@@ -387,6 +401,8 @@ export class AdminpageComponent {
 
   deleteGallery(id:string){
     this.storage.deleteGallery(id);
+    this.selectedGallery = -1;
+    this.images = of();
   }
 
   // Rooms management

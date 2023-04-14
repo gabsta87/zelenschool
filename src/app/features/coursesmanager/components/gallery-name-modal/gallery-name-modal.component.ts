@@ -18,4 +18,10 @@ export class GalleryNameModalComponent {
   confirm(){
     this.modalCtrl.dismiss(this.name,"confirm");
   }
+
+  onKeyUp(event: KeyboardEvent) {
+    if (event.key === "Enter") { // 13 correspond à la touche "Enter"
+        this.confirm();
+    }
+}
 }
