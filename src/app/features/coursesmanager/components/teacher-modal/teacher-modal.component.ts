@@ -4,7 +4,7 @@ import * as dayjs from 'dayjs';
 import { DocumentData } from 'firebase/firestore';
 import { BehaviorSubject, firstValueFrom, Observable, switchMap } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
-import { formatForIonDateTime, formatTime, getNowDate } from 'src/app/shared/service/hour-management.service';
+import { formatForIonDateTime, getNowDate } from 'src/app/shared/service/hour-management.service';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 
 @Component({
@@ -13,13 +13,12 @@ import { UsermanagementService } from 'src/app/shared/service/usermanagement.ser
   styleUrls: ['./teacher-modal.component.scss']
 })
 export class TeacherModalComponent{
-  id!:string;
+  meta!:any;
   title!:string;
   room_id!:string;
   timeStart!:string;
   timeEnd!:string;
   max_participants!:number;
-  meta!:any;
   creatorName:string = "";
   description:string = "";
 
@@ -31,6 +30,7 @@ export class TeacherModalComponent{
 
   presentingElement = undefined;
   dataObs!:Observable<DocumentData|undefined>;
+  rooms = this._db.getRooms();
   creator!:DocumentData|undefined;
 
   isAuthor!:boolean;
@@ -52,12 +52,12 @@ export class TeacherModalComponent{
 
     this.dataObs = this.dataObs.pipe(
       switchMap(async (entry:any) => {
-
+        
         if(!entry)
           return;
 
         // Getting users IDs
-        const usersIds = entry.attendantsId;
+        entry.room = await this._db.getRoom(entry.room_id);
 
         // Getting users infos
         const usersInfos = await Promise.all(entry.attendantsId.map((id:string) => this._db.getUser(id)));
@@ -75,8 +75,6 @@ export class TeacherModalComponent{
       })
     );
 
-    this.id = this.meta.id;
-    this.room_id = this.meta.room_id;
     this.timeStart = formatForIonDateTime(this.meta.timeStart);
     this.timeEnd = formatForIonDateTime(this.meta.timeEnd);
     this.max_participants = this.meta.max_participants;
@@ -108,6 +106,10 @@ export class TeacherModalComponent{
       if(this.creator)
         this.creatorName = this.creator['f_name']+" "+this.creator['l_name'];
     }
+  }
+
+  ionViewDidEnter(){
+    this.room_id = this.meta.room_id;
   }
 
   statusChanged($event:any){
@@ -156,7 +158,7 @@ export class TeacherModalComponent{
 
   confirm(){
     let entry = {
-      id:this.id,
+      id:this.meta.id,
       title:this.title,
       timeStart:this.timeStart,
       timeEnd:this.timeEnd,
@@ -175,7 +177,7 @@ export class TeacherModalComponent{
   collisionIndex !: number;
 
   async updateTime(){
-    this.collisionEvents = await firstValueFrom(this._db.getCalendarEntriesCollisions(this.timeStart,this.timeEnd,this.id));
+    this.collisionEvents = await firstValueFrom(this._db.getCalendarEntriesCollisions(this.timeStart,this.timeEnd,this.meta.id));
 
     if(this.collisionEvents){
       this.collisionIndex = this.collisionEvents.findIndex(e => e['room_id'] == this.room_id);
@@ -183,14 +185,11 @@ export class TeacherModalComponent{
     }else{
       this.isRoomAvailable.next(true);
     }
-   
   }
 
 
   updateStartingHour($event:any){
     let newValue = $event.detail.value;
-    
-    // this.isValid.next(newValue < 24 && newValue >= 0);
 
     this.timeStart = dayjs(this.timeStart).hour(newValue).toString();
     this.timeEnd = dayjs(this.timeStart).add(this.duration,this.durationUnit).toString();
@@ -198,29 +197,11 @@ export class TeacherModalComponent{
   }
 
   updateStartingMinute($event:any){
-    
     let newValue = $event.detail.value;
-    
-    // this.isValid.next(newValue < 60 && newValue >= 0);
     
     this.timeStart = dayjs(this.timeStart).minute(newValue).toString();
     this.timeEnd = dayjs(this.timeStart).add(this.duration,this.durationUnit).toString();
     this.updateTime();
-  }
-
-  updateTimeStart($event:any){
-    // console.log("event value : ",$event.detail.value);
-    // console.log("timeStart : ",this.timeStart);
-    // console.log("formatted event ",formatForIonDateTime($event.detail.value));
-    
-
-    this.timeStart = $event.detail.value;
-    this.timeEnd = dayjs(this.timeStart).add(this.duration,this.durationUnit).toString();
-
-    // console.log("end : ",dayjs(this.timeStart).add(this.duration,this.durationUnit).toString());
-    // console.log("end formatted ",formatForIonDateTime(dayjs(this.timeStart).add(this.duration,this.durationUnit).toString()));
-    
-    return this.updateTime();
   }
   
   updateDuration($event:any){
@@ -238,7 +219,7 @@ export class TeacherModalComponent{
   }
 
   setStudentAbsent($event:any,userId:string){
-    this._db.toggleUserAbsent($event.detail.checked,userId,this.id);
+    this._db.toggleUserAbsent($event.detail.checked,userId,this.meta.id);
   }
 
   updateRoom($event:any){

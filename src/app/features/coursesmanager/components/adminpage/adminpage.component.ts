@@ -399,7 +399,12 @@ export class AdminpageComponent {
     this.storage.addImageToGallery(data);
   }
 
-  deleteGallery(id:string){
+  async deleteGallery(id:string){
+
+    let response = await this.canDismiss();
+    if(!response)
+      return;
+
     this.storage.deleteGallery(id);
     this.selectedGallery = -1;
     this.images = of();

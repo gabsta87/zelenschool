@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, ViewChild, ChangeDetectorRef, EventEmitter } from '@angular/core';
 import { isSameDay, isSameMonth } from 'date-fns';
 import { MonthViewDay } from 'calendar-utils';
-import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, map, Observable, Subject } from 'rxjs';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarMonthViewDay, CalendarView, CalendarWeekViewBeforeRenderEvent, DAYS_OF_WEEK, } from 'angular-calendar';
 import * as dayjs from 'dayjs';
 import { DocumentData } from '@angular/fire/firestore';
@@ -60,6 +60,13 @@ export class SchedulepageComponent {
     private cd: ChangeDetectorRef,
     ) {
     this.futureCourses = this.extractedData.pipe(map( (courses:any) => courses = courses.filter((course:any) =>dayjs(course.timeStart).isAfter(dayjs(getNowDate()),"hour") )))
+    
+  }
+
+  async ngAfterViewInit(){
+    const temp = await firstValueFrom(this.futureCourses);
+    console.log("future courses : ",temp);
+    
   }
 
   async ngOnInit(){
@@ -78,6 +85,7 @@ export class SchedulepageComponent {
             timeEnd : formatTime(e['timeEnd']),
             author: e['author'],
             room_id: e['room_id'],
+            room : e['room'],
             attendantsId: e['attendantsId'],
             max_participants: e['max_participants'],
             description: e['description'],

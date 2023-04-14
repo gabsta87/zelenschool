@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import * as dayjs from 'dayjs';
-import { BehaviorSubject, firstValueFrom } from 'rxjs';
+import { DocumentData } from 'firebase/firestore';
+import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { formatTime, getNowDate } from 'src/app/shared/service/hour-management.service';
 
@@ -23,6 +24,7 @@ export class TeacherCreateEventModalComponent {
   description!:string;
   duration = 1;
   durationUnit = 'hour' as dayjs.ManipulateType;
+  rooms :Observable<DocumentData[]> = this._db.getRooms();
 
   now = getNowDate();
 

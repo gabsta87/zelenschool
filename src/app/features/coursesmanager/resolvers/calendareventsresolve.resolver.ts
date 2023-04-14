@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
-import { Observable, of, map, tap, switchMap, forkJoin, firstValueFrom } from 'rxjs';
+import { Observable, of, switchMap } from 'rxjs';
 import { DocumentData } from '@angular/fire/firestore';
 
 @Injectable({
@@ -20,6 +20,7 @@ export class CalendareventsresolveResolver implements Resolve<Observable<Observa
     this.eventsObs = this.eventsObs.pipe(
       switchMap(async (calendarEvent: any) => {
 
+        // USERS
         // Récupère les IDs des auteurs de chaque événement
         const authorIds = calendarEvent.map((evt: any) => evt.author);
 
@@ -28,7 +29,17 @@ export class CalendareventsresolveResolver implements Resolve<Observable<Observa
     
         // Remplace les IDs par les noms des utilisateurs
         calendarEvent.map((evt:any) => evt.author = authorInfos.find((e:any) => e ? e.id === evt.author : undefined))
-    
+        
+        // ROOMS
+        // Récupère les IDs des salles
+        const roomIds = calendarEvent.map((evt:any) => evt.room_id);
+
+        // Récupère les infos des salles
+        const roomsInfos = await Promise.all(roomIds.map((id:string) => this._db.getRoom(id)));
+
+        // Ajout de la valeur
+        calendarEvent.map((evt:any) => evt.room = roomsInfos.find((e:any) => e ? e.id == evt.room_id : undefined ))
+
         return calendarEvent;
       })
     );

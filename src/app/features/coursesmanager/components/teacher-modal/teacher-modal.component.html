@@ -14,9 +14,9 @@
     <ion-item>
         <ion-label>Room :</ion-label>
         <ion-select interface="popover" required placeholder="Select room" name="room_id" [(ngModel)]="room_id" [disabled]="cannotModify" (ionChange)="updateRoom($event)">
-            <ion-select-option value="1">1</ion-select-option>
-            <ion-select-option value="2">2</ion-select-option>
-            <ion-select-option value="3">3</ion-select-option>
+            <ng-container *ngIf="rooms | async as roomsList">
+                <ion-select-option *ngFor="let room of roomsList" [value]="room['id']">{{room['name']}}</ion-select-option>
+            </ng-container>
         </ion-select>
     </ion-item>
 
@@ -96,13 +96,14 @@
             <ion-item *ngFor="let evt of collisionEvents; let i = index">
                 <ion-label *ngIf="i == collisionIndex ;else normal" color="danger">
                     <h2>{{evt['title']}}</h2>
-                    <p>Room : {{evt['room_id']}}</p>
+                    <p>Room : {{evt['room'].name}}</p>
                     <p>From {{evt['timeStart']| date: "HH:mm"}} to {{evt['timeEnd']| date: "HH:mm"}}</p>
                 </ion-label>
                 <ng-template #normal>
                 <ion-label>
                     <h2>{{evt['title']}}</h2>
-                    <p>Room : {{evt['room_id']}}</p>
+                    <p>Room : {{evt['room'].name}}</p>
+                    <!-- <p>Room : {{evt['room'].name}}</p> -->
                     <p>From {{evt['timeStart']| date: "HH:mm"}} to {{evt['timeEnd']| date: "HH:mm"}}</p>
                 </ion-label>
                 </ng-template>

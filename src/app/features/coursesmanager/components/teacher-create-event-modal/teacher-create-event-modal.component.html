@@ -5,12 +5,12 @@
         <ion-input type="text" placeholder="Course title" name="title" required [(ngModel)]="title"></ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item *ngIf="rooms | async as roomsList">
         <ion-label>Room :</ion-label>
         <ion-select interface="popover" placeholder="Select room" name="room_id" required [(ngModel)]="room_id" (ionChange)="updateRoom($event)">
-            <ion-select-option value="1">1</ion-select-option>
-            <ion-select-option value="2">2</ion-select-option>
-            <ion-select-option value="3">3</ion-select-option>
+            <ng-container *ngFor="let elem of roomsList">
+                <ion-select-option [value]="elem['id']">{{elem['name']}}</ion-select-option>
+            </ng-container>
         </ion-select>
     </ion-item>
 
@@ -62,11 +62,11 @@
                 <ion-list>
                     <ion-item lines="none" *ngFor="let coll of (day.collisions); let collisionIndex = index"> 
                         <ion-text *ngIf="collisionIndexes[dayIndex] == collisionIndex; else normal" color="danger">
-                            {{coll['title']}} from {{coll['timeStart']|date:"HH:mm"}} to {{coll['timeEnd']|date:"HH:mm"}} in room {{coll['room_id']}}
+                            {{coll['title']}} from {{coll['timeStart']|date:"HH:mm"}} to {{coll['timeEnd']|date:"HH:mm"}} in room {{coll['room'].name}}
                         </ion-text>
                         <ng-template #normal>
                             <ion-text>
-                                {{coll['title']}} from {{coll['timeStart']|date:"HH:mm"}} to {{coll['timeEnd']|date:"HH:mm"}} in room {{coll['room_id']}}
+                                {{coll['title']}} from {{coll['timeStart']|date:"HH:mm"}} to {{coll['timeEnd']|date:"HH:mm"}} in room {{coll['room'].name}}
                             </ion-text>
                         </ng-template>
                     </ion-item>

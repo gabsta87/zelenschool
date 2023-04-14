@@ -18,7 +18,7 @@ Ancres, aller sur une page, puis aller vers l'ancre souhaitée. Si sur la page, 
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 Misc :
-    ☐ load rooms from DB, and check rooms conflict from DB
+    ✔ load rooms from DB, and check rooms conflict from DB @done(23-04-14 23:31)
     ✔ gallery -> folders @done(23-04-12 15:29)
     ✔ galleries management @done(23-04-14 18:12)
     ✔ gallery renaming @done(23-04-14 18:25)
