@@ -114,6 +114,7 @@ export class TeacherCreateEventModalComponent {
   updateDuration($event:any){
     this.duration = $event.detail.value;
     this.timeEnd = dayjs(this.timeStart).add($event.detail.value,this.durationUnit).toString();
+    console.log("time end : ",this.timeEnd);
 
     this.isValid.next(this.isRoomAvailable());
 
@@ -123,6 +124,7 @@ export class TeacherCreateEventModalComponent {
   updateDurationUnit($event:any){
     this.durationUnit = $event.detail.value;
     this.timeEnd = dayjs(this.timeStart).add(this.duration,$event.detail.value).toString();
+    console.log("time end : ",this.timeEnd);
     
     this.isValid.next(this.isRoomAvailable());
 

@@ -158,7 +158,12 @@ export class AdminpageComponent {
   async seeWorkingHours(id:string){
     let teacher = await this._db.getUser(id);
     
+    console.log("getting teacher courses ");
+    
     let courses = await this._db.getTeacherCourses(id);
+
+    console.log("courses : ",courses);
+    
 
     const modal = await this.modalCtrl.create({
       component: ModalWorkingHoursComponent,

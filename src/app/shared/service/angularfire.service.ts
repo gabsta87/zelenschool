@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Auth, User } from '@angular/fire/auth';
 import { collection, QueryConstraint, Firestore, addDoc, collectionData, doc, setDoc, DocumentData, arrayUnion, arrayRemove, getDocs, deleteField, where, QuerySnapshot} from '@angular/fire/firestore';
 import { deleteDoc, getDoc, query, updateDoc } from '@firebase/firestore';
-import { filter, find, firstValueFrom, map, Observable, switchMap } from 'rxjs';
+import { filter, find, firstValueFrom, groupBy, map, mergeMap, Observable, switchMap, tap, toArray } from 'rxjs';
 import * as dayjs from 'dayjs';
 import * as isBetween from 'dayjs/plugin/isBetween';
 import { formatForDB, getNowDate, isColliding } from './hour-management.service';
@@ -240,7 +240,52 @@ export class AngularfireService{
 
   async getTeacherCourses(teacherId:string){
     const courses = this.getElements("calendarEntries",where("author","==",teacherId));
-    let result = await firstValueFrom(courses);
+
+    console.log("courses taken");
+
+    const groupedCourses = courses.pipe(
+      // switchMap( (course:any) => course.month = dayjs(course['timeStart']).format("MM.YYYY") ),
+      map( (course:any) => {
+        console.log("course 1 : ",course);
+        
+        return {...course, month : dayjs(course['timeStart']).format("MM.YYYY")}
+      } ),
+      groupBy((course2:any) => {
+        console.log("course2 : ",course2);
+        
+        console.log(dayjs(course2['timeStart']).format("MM.YYYY"));
+        
+        return course2.month
+        // return dayjs(course['timeStart']).format("MM.YYYY")
+        }),
+      // return each item in group as array
+      mergeMap(group => group.pipe(toArray()))
+
+    );
+
+
+    // const groupedCourses = courses.pipe(
+    //   // switchMap( (course:any) => course.month = dayjs(course['timeStart']).format("MM.YYYY") ),
+    //   map( (course:any) => {
+    //     return {...course, month : dayjs(course['timeStart']).format("MM.YYYY")}
+    //   }),
+    //   map(courses => {
+    //     return courses.reduce((acc: { [x: string]: any[]; }, course: { month: any; }) => {
+    //       const month = course.month;
+    //       if (acc[month]) {
+    //         acc[month].push(course);
+    //       } else {
+    //         acc[month] = [course];
+    //       }
+    //       return acc;
+    //     }, {});
+    //   })
+    // );
+
+    let result = await firstValueFrom(groupedCourses);
+
+    console.log("results = ",result);
+    
     return result;
   }
   

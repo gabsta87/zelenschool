@@ -74,6 +74,13 @@ export class AdminpageresolveResolver implements Resolve<AdminData> {
           studentId = attendantsInfos.find((e:any) => e && e.id ? e.id == studentId : false)
         ));
 
+        // Récup des IDs des salles
+        const rooms = courses.flatMap( (course:any) => course.room_id)
+
+        const roomsInfos = await Promise.all(rooms.map((room:any) => this._db.getRoom(room)));
+
+        courses.map((course:any) => course.room = roomsInfos.find((e:any) => e.id == course.room_id))
+
         return courses;
       })
     );

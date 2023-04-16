@@ -39,6 +39,7 @@ Misc :
     ☐ Popover to confirm registration to a course for students
 
     URGENT :
+    ☐ Bug : when creating a course (next month), timeEnd was set before timeStart
     ✔ automatic unban for absences after 30 days (on login of user) @done(23-04-11 10:54)
     ✔ Admin page : When charge new photo, only for 1 asso member, not others @done(23-04-10 11:39)
     ✔ Links work correctly for nav-bar @done(23-04-08 11:26)

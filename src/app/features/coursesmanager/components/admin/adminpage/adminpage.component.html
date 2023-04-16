@@ -104,12 +104,12 @@
 
     <ion-accordion-group [multiple]="true">
         <ion-item *ngFor="let course of filteredData[1]" lines="none">
-            <ion-accordion [value]="course['title']">
+            <ion-accordion [value]="course['id']">
                 <ion-item slot="header" color="light">
                     <ion-label>{{course['title']}} {{course['timeStart']| date: "HH:mm d MMM, yy"}} {{course['author'].l_name}} {{course['author'].f_name}}</ion-label>
                 </ion-item>
                 <div class="ion-padding" slot="content" (click)="handleEvent(course)">
-                    <p>Room : {{course['room_id']}}</p>
+                    <p>Room : {{course['room'].name}}</p>
                     <p>Participants : {{course['attendantsId'].length}}/{{course['max_participants']}}</p>
                     <p *ngIf="course['description']">Description : {{course['description']}}</p>
                     <ion-list *ngIf="course['attendantsId'].length > 0" class="ion-no-padding">
