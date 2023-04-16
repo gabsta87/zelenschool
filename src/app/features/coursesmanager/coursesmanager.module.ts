@@ -37,6 +37,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AboutPageResolver } from './resolvers/about-page.resolver';
 import { NewAssoMemberModalComponent } from './components/admin/new-asso-member-modal/new-asso-member-modal.component';
 import { GalleryNameModalComponent } from './components/admin/gallery-name-modal/gallery-name-modal.component';
+import { ModalWorkingHoursComponent } from './components/admin/modal-working-hours/modal-working-hours.component';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { GalleryNameModalComponent } from './components/admin/gallery-name-modal
     BanmodalComponent,
     NewAssoMemberModalComponent,
     GalleryNameModalComponent,
+    ModalWorkingHoursComponent,
   ],
   imports: [
     SwiperModule,

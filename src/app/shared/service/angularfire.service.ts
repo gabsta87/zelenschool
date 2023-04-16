@@ -27,6 +27,21 @@ export class AngularfireService{
     return observableStream;
   }
 
+  async getSnapshot(collection:string,documentId:string){
+    const docRef = doc(this._dbaccess, collection, documentId);
+    const docSnap = await getDoc(docRef);
+    return docSnap.data();
+  }
+
+  // TODO : try
+  async getCollectionSnapshot(collection:string){
+    const docRef = doc(this._dbaccess, collection);
+    const docSnap = await getDoc(docRef);
+    return docSnap.data();
+  }
+
+  // Calendar Entries
+
   createCalendarEntry(newEntry: CalendarEntry){
     if(!this._auth.currentUser?.uid){
       console.log("User not logged, no event created");
@@ -114,11 +129,18 @@ export class AngularfireService{
     return result;
   }
 
+  // Users Management
+
   getUsers(){
     return this.getElements("users");
   }
 
   async getUser(userId:string):Promise<DocumentData|undefined>{
+    // const docRef = doc(this._dbaccess, "users", userId);
+    // const docSnap = await getDoc(docRef);
+    // return docSnap.data();
+    
+    //  // Old version
     let temp = await firstValueFrom(this.getUsers());
     return temp.find(e => e['id'] === userId);
   }
@@ -147,11 +169,6 @@ export class AngularfireService{
     this.removeUserFromCourses(userId);
     const docRef = doc(this._dbaccess,'users/'+userId);
     deleteDoc(docRef);
-  }
-
-  acceptRequest(userId:string){
-    const docRef = doc(this._dbaccess,'users/'+userId);
-    return updateDoc(docRef,{status:"teacher"});
   }
 
   async unbanUser(userId:string){
@@ -190,8 +207,6 @@ export class AngularfireService{
 
   async removeUserFromCourse(eventId:string,userId:string){
     const docRef = doc(this._dbaccess,'calendarEntries/'+eventId);
-    // TODO if (past course) return
-    // if(query(docRef.)
 
     await updateDoc(docRef, {
       attendantsId: arrayRemove(userId)
@@ -216,8 +231,20 @@ export class AngularfireService{
     return updateDoc(docRef,newValue);
   }
 
+  // Teachers specific functions
+
+  acceptRequest(userId:string){
+    const docRef = doc(this._dbaccess,'users/'+userId);
+    return updateDoc(docRef,{status:"teacher"});
+  }
+
+  async getTeacherCourses(teacherId:string){
+    const courses = this.getElements("calendarEntries",where("author","==",teacherId));
+    let result = await firstValueFrom(courses);
+    return result;
+  }
+  
   createImageEntry(newImage:any){
-    // TODO remove
     return addDoc(collection(this._dbaccess,"images"),{
       ...newImage,
       uploadedBy:this._auth.currentUser?.uid

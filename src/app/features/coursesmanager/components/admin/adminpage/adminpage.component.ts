@@ -11,6 +11,7 @@ import { TeacherModalComponent } from '../../schedule/teacher-modal/teacher-moda
 import { StorageService } from 'src/app/shared/service/storage.service';
 import { NewAssoMemberModalComponent } from '../new-asso-member-modal/new-asso-member-modal.component';
 import { GalleryNameModalComponent } from '../gallery-name-modal/gallery-name-modal.component';
+import { ModalWorkingHoursComponent } from '../modal-working-hours/modal-working-hours.component';
 
 @Component({
   selector: 'app-adminpage',
@@ -154,6 +155,20 @@ export class AdminpageComponent {
     return this._modal.dismiss(null, 'delete');
   }
 
+  async seeWorkingHours(id:string){
+    let teacher = await this._db.getUser(id);
+    
+    let courses = await this._db.getTeacherCourses(id);
+
+    const modal = await this.modalCtrl.create({
+      component: ModalWorkingHoursComponent,
+      componentProps: {
+        teacher: teacher,
+        courses: courses
+      }
+    });
+    await modal.present();
+  }
 
   canDismiss = async () => {
     const actionSheet = await this.actionSheetCtrl.create({

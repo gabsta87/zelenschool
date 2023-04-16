@@ -60,14 +60,14 @@ export class SchedulepageComponent {
     private cd: ChangeDetectorRef,
     ) {
     this.futureCourses = this.extractedData.pipe(map( (courses:any) => courses = courses.filter((course:any) =>dayjs(course.timeStart).isAfter(dayjs(getNowDate()),"hour") )))
-    
   }
 
-  async ngAfterViewInit(){
+  async ionViewDidEnter(){
     const temp = await firstValueFrom(this.futureCourses);
-    console.log("future courses : ",temp);
-    
   }
+  // async ngAfterViewInit(){
+  //   const temp = await firstValueFrom(this.futureCourses);
+  // }
 
   async ngOnInit(){
     this.coursesSubscribtion = this.extractedData.subscribe((newValues) => {
