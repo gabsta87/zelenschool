@@ -33,7 +33,7 @@ Misc :
     ✔ Projects -> activities @done(23-04-05 19:48)
     ✘ Course creation needs approval @cancelled(23-03-31 12:38)
     ☐ admin page : galleries management : fix spinner while loading
-    ☐ schedule page : students/visitors cannot select multiple days
+    ✔ schedule page : students/visitors cannot select multiple days @done(23-04-17 10:18)
     ☐ Generate teachers' hours sheet per month (date-hour duration title)
     ☐ activities management
     ☐ admin can modify courses
