@@ -37,7 +37,6 @@ export class AboutpageComponent {
     this.myAnchor = document.querySelector('anchor_' + this.fragment);
   }
 
-
   public scrollTo($event:string){
     const row:any = this.divs.find((e:any) => "anchor_"+$event === e.nativeElement.id);
     this.ionContent.scrollToPoint(0,row.nativeElement.offsetTop,250);

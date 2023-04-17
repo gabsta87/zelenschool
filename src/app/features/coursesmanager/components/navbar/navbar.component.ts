@@ -1,5 +1,5 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild, ViewChildren } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
+import { Router } from '@angular/router';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 // import {App} from ‘@ionic-angular’;
 
@@ -12,7 +12,20 @@ export class NavbarComponent {
   // @Output() itemChosen : EventEmitter<number> = new EventEmitter();
   @ViewChildren('aboutIonContent') content!: ElementRef<HTMLInputElement>;
 
+  @ViewChildren('navbar') navbar!: ElementRef<HTMLInputElement>;
+  @ViewChildren("aboutIonContent") divs!:QueryList<ElementRef>;
+  myAnchor !: any;
+
   constructor(private readonly _userS:UsermanagementService, private readonly _router:Router){ }
+
+  ngAfterViewInit(){
+    this.myAnchor = document.querySelector('aboutIonContent');
+    // console.log("my anchor : ",this.myAnchor);
+    
+    // console.log("content : ",this.content);
+    // console.log("navBar : ",this.navbar);
+    // console.log("divs : ",this.divs);
+  }
 
   isAdmin = this._userS.isLoggedAsAdmin;
   isTeacher = this._userS.isLoggedAsTeacher;

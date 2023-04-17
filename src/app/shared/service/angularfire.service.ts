@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Auth, User } from '@angular/fire/auth';
-import { collection, QueryConstraint, Firestore, addDoc, collectionData, doc, setDoc, DocumentData, arrayUnion, arrayRemove, getDocs, deleteField, where, QuerySnapshot} from '@angular/fire/firestore';
+import { DocumentData, Firestore, QueryConstraint, addDoc, arrayRemove, arrayUnion, collection, collectionData, deleteField, doc, getDocs, setDoc, where } from '@angular/fire/firestore';
 import { deleteDoc, getDoc, query, updateDoc } from '@firebase/firestore';
-import { filter, find, firstValueFrom, groupBy, map, mergeMap, Observable, switchMap, tap, toArray } from 'rxjs';
 import * as dayjs from 'dayjs';
 import * as isBetween from 'dayjs/plugin/isBetween';
+import { Observable, find, firstValueFrom, map, switchMap } from 'rxjs';
 import { formatForDB, getNowDate, isColliding } from './hour-management.service';
 dayjs.extend(isBetween);
 
@@ -30,14 +30,7 @@ export class AngularfireService{
   async getSnapshot(collection:string,documentId:string){
     const docRef = doc(this._dbaccess, collection, documentId);
     const docSnap = await getDoc(docRef);
-    return docSnap.data();
-  }
-
-  // TODO : try
-  async getCollectionSnapshot(collection:string){
-    const docRef = doc(this._dbaccess, collection);
-    const docSnap = await getDoc(docRef);
-    return docSnap.data();
+    return {...docSnap.data(),id:documentId};
   }
 
   // Calendar Entries
@@ -136,13 +129,13 @@ export class AngularfireService{
   }
 
   async getUser(userId:string):Promise<DocumentData|undefined>{
-    // const docRef = doc(this._dbaccess, "users", userId);
-    // const docSnap = await getDoc(docRef);
-    // return docSnap.data();
+    const docRef = doc(this._dbaccess, "users", userId);
+    const docSnap = await getDoc(docRef);
+    return {...docSnap.data(),id:userId};
     
     //  // Old version
-    let temp = await firstValueFrom(this.getUsers());
-    return temp.find(e => e['id'] === userId);
+    // let temp = await firstValueFrom(this.getUsers());
+    // return temp.find(e => e['id'] === userId);
   }
 
   banUser(userId:string,message="SYSTEM : missed too many courses"){

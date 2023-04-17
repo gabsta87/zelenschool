@@ -62,7 +62,6 @@ export class AdminpageresolveResolver implements Resolve<AdminData> {
         // Remplace les IDs par les données des utilisateurs
         courses.map((course:any) => course.author = authorInfos.find((e:any) => e.id === course.author));
 
-
         // Récupération des IDs des participants
         const attendants = courses.flatMap( (course:any) => course.attendantsId );
 

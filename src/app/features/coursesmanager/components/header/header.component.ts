@@ -17,10 +17,10 @@ export class HeaderComponent {
 
     this.myAnchor = document.querySelector('aboutIonContent');
 
-    console.log("content : ",this.content);
-    console.log("navBar : ",this.navbar);
-    console.log("my anchor : ",this.myAnchor);
-    console.log("divs : ",this.divs);
+    // console.log("content : ",this.content);
+    // console.log("navBar : ",this.navbar);
+    // console.log("my anchor : ",this.myAnchor);
+    // console.log("divs : ",this.divs);
     
   }
 }
