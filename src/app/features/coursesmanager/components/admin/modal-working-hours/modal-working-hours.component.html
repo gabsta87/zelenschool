@@ -1,0 +1,38 @@
+<ion-header>
+    <ion-title>
+        {{ teacher.f_name }} {{ teacher.l_name }}
+    </ion-title>
+</ion-header>
+  
+<ion-content>
+    <ion-list>
+        <ion-item>
+            <ion-label>Title</ion-label>
+            <ion-label>Date</ion-label>
+            <ion-label>Duration</ion-label>
+        </ion-item>
+        <ng-container *ngFor="let course of displayingCourses">
+        <ion-item>
+            <ion-label>{{ course.title }}</ion-label>
+            <ion-label>{{ course.timeStart | date: 'HH:mm dd/MM/yyyy' }}</ion-label>
+            <ion-label>{{ course.duration }} minutes</ion-label>
+        </ion-item>
+        </ng-container>
+        <ion-item>
+            Total : {{total/60}} hours
+            <!-- Total : {{total/60}} hours and {{total%60}} minutes -->
+        </ion-item>
+
+    </ion-list>
+</ion-content>
+  
+<ion-footer>
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-select aria-label="Month" interface="popover" placeholder="Select month" (ionChange)="selectMonth($event)">
+                <ion-select-option *ngFor="let month of availableMonths" [value]="month">{{month}}</ion-select-option>
+              </ion-select>
+        <ion-button (click)="dismissModal()"> Close </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>

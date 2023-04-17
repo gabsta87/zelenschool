@@ -112,9 +112,9 @@
                     <p>Room : {{course['room'].name}}</p>
                     <p>Participants : {{course['attendantsId'].length}}/{{course['max_participants']}}</p>
                     <p *ngIf="course['description']">Description : {{course['description']}}</p>
-                    <ion-list *ngIf="course['attendantsId'].length > 0" class="ion-no-padding">
+                    <ion-list *ngIf="course['attendants'].length > 0" class="ion-no-padding">
                         <ion-label>Students</ion-label>
-                        <ion-item *ngFor="let student of course['attendantsId']">
+                        <ion-item *ngFor="let student of course['attendants']">
                             <ion-label *ngIf="student; else unknown">{{student['l_name']}} {{student['f_name']}}</ion-label>
                             <ng-template #unknown><ion-label>Unknown</ion-label></ng-template>
                         </ion-item>

@@ -241,52 +241,21 @@ export class AngularfireService{
   async getTeacherCourses(teacherId:string){
     const courses = this.getElements("calendarEntries",where("author","==",teacherId));
 
-    console.log("courses taken");
+    const fixedCourses = await firstValueFrom(courses);
 
-    const groupedCourses = courses.pipe(
-      // switchMap( (course:any) => course.month = dayjs(course['timeStart']).format("MM.YYYY") ),
-      map( (course:any) => {
-        console.log("course 1 : ",course);
-        
-        return {...course, month : dayjs(course['timeStart']).format("MM.YYYY")}
-      } ),
-      groupBy((course2:any) => {
-        console.log("course2 : ",course2);
-        
-        console.log(dayjs(course2['timeStart']).format("MM.YYYY"));
-        
-        return course2.month
-        // return dayjs(course['timeStart']).format("MM.YYYY")
-        }),
-      // return each item in group as array
-      mergeMap(group => group.pipe(toArray()))
-
-    );
-
-
-    // const groupedCourses = courses.pipe(
-    //   // switchMap( (course:any) => course.month = dayjs(course['timeStart']).format("MM.YYYY") ),
-    //   map( (course:any) => {
-    //     return {...course, month : dayjs(course['timeStart']).format("MM.YYYY")}
-    //   }),
-    //   map(courses => {
-    //     return courses.reduce((acc: { [x: string]: any[]; }, course: { month: any; }) => {
-    //       const month = course.month;
-    //       if (acc[month]) {
-    //         acc[month].push(course);
-    //       } else {
-    //         acc[month] = [course];
-    //       }
-    //       return acc;
-    //     }, {});
-    //   })
-    // );
-
-    let result = await firstValueFrom(groupedCourses);
-
-    console.log("results = ",result);
-    
-    return result;
+    const groupedCourses = fixedCourses.reduce((acc, course) => {
+      const month = dayjs(course['timeStart']).format("YYYY.MM");
+  
+      if (!acc[month]) {
+        acc[month] = [];
+      }
+  
+      acc[month].push(course);
+  
+      return acc;
+    }, {});
+  
+    return groupedCourses;
   }
   
   createImageEntry(newImage:any){
