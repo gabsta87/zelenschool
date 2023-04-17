@@ -158,12 +158,7 @@ export class AdminpageComponent {
   async seeWorkingHours(id:string){
     let teacher = await this._db.getUser(id);
     
-    console.log("getting teacher courses ");
-    
-    let courses = await this._db.getTeacherCourses(id);
-
-    console.log("courses : ",courses);
-    
+    let courses = await this._db.getTeacherCoursesByMonth(id);
 
     const modal = await this.modalCtrl.create({
       component: ModalWorkingHoursComponent,
@@ -354,10 +349,10 @@ export class AdminpageComponent {
 
   // Galleries management
   showGalleriesManager = new BehaviorSubject(false);
+  isLoadingGallery = new BehaviorSubject(false);
   selectedGallery = -1;
   imagesCollections : {id:string,name:string,images:any}[] = [];
   images!:Observable<DocumentData[]>;
-
 
   async addGallery(){
 
@@ -409,14 +404,16 @@ export class AdminpageComponent {
     }
   }
   
-  addImageToGallery(event:any){
+  async addImageToGallery(event:any){
     
     let data = {} as any;
     data.file = event.target.files[0];
     data.name = data.file.name;
     data.collectionId = this.imagesCollections[this.selectedGallery].id;
 
-    this.storage.addImageToGallery(data);
+    this.isLoadingGallery.next(true);
+    await this.storage.addImageToGallery(data);
+    this.isLoadingGallery.next(false);
   }
 
   async deleteGallery(id:string){

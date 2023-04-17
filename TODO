@@ -32,15 +32,15 @@ Misc :
     ✔ partners not a page, but an anchor on the "about us" page @done(23-04-05 18:10)
     ✔ Projects -> activities @done(23-04-05 19:48)
     ✘ Course creation needs approval @cancelled(23-03-31 12:38)
-    ☐ admin page : galleries management : fix spinner while loading
+    ✔ admin page : galleries management : fix spinner while loading @done(23-04-17 10:46)
     ✔ schedule page : students/visitors cannot select multiple days @done(23-04-17 10:18)
     ☐ Generate teachers' hours sheet per month (date-hour duration title)
     ☐ activities management
-    ☐ admin can modify courses
+    ✔ admin can modify courses @done(23-04-17 10:46)
     ☐ Popover to confirm registration to a course for students
 
     URGENT :
-    ☐ Bug : when creating a course (next month), timeEnd was set before timeStart
+    ✘ Bug : when creating a course (next month), timeEnd was set before timeStart (cannot reproduce) @cancelled(23-04-17 10:45)
     ✔ automatic unban for absences after 30 days (on login of user) @done(23-04-11 10:54)
     ✔ Admin page : When charge new photo, only for 1 asso member, not others @done(23-04-10 11:39)
     ✔ Links work correctly for nav-bar @done(23-04-08 11:26)

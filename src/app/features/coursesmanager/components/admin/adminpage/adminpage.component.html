@@ -257,7 +257,7 @@
                     <ion-button (click)="renameGallery(gall['id'])">Rename</ion-button>
                 </div>
                 <div *ngIf="selectedGallery >= 0">
-                    <ion-grid>
+                    <ion-grid *ngIf="!isLoadingGallery.value; else loadingGallery">
                         <ion-row *ngIf="images | async as imagesSnapshot">
                             <ion-col *ngFor="let img of imagesSnapshot">
                                 <ion-thumbnail>
@@ -273,6 +273,9 @@
                             </ion-col>
                         </ion-row>
                     </ion-grid>
+                    <ng-template #loadingGallery>
+                        <ion-spinner>Loading</ion-spinner>
+                    </ng-template>
                 </div>
             </ion-list>
         </div>

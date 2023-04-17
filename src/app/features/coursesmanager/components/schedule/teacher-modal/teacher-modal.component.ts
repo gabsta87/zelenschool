@@ -96,10 +96,10 @@ export class TeacherModalComponent{
     this.isPassedEvent = dayjs(this.timeStart).isBefore(getNowDate()) ;
 
     // USE THIS VERSION FOR FINAL RELEASE
-    this.cannotModify = (!this.isAuthor || this.isPassedEvent ) && !this.isAdmin;
+    // this.cannotModify = (!this.isAuthor || this.isPassedEvent ) && !this.isAdmin;
 
     // TEMPORARY FOR TESTING : Admin cannot modify course which are not his own
-    // this.cannotModify = !this.isAuthor || this.isPassedEvent;
+    this.cannotModify = !this.isAuthor || this.isPassedEvent;
     
     if(actualValue){
       this.creator = await this._db.getUser(actualValue['author']);

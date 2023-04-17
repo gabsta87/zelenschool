@@ -238,7 +238,7 @@ export class AngularfireService{
     return updateDoc(docRef,{status:"teacher"});
   }
 
-  async getTeacherCourses(teacherId:string){
+  async getTeacherCoursesByMonth(teacherId:string){
     const courses = this.getElements("calendarEntries",where("author","==",teacherId));
 
     const fixedCourses = await firstValueFrom(courses);
