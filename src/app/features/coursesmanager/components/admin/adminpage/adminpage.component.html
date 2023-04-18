@@ -186,7 +186,7 @@
                         <ng-template #displayMember>
                             <!-- <p>Name : {{usr['name']}}</p>
                             <p>Role : {{usr['role']}}</p> -->
-                            <p>Link : {{usr['link']}}</p>
+                            <p>Link : <a [href]="usr['link']">{{usr['link']}}</a></p>
                             <ion-thumbnail>
                                 <ion-img [src]="usr['photo']" alt="Profile view"></ion-img>
                             </ion-thumbnail>

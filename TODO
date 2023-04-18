@@ -16,6 +16,11 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 Misc :
+    ☐ Galleries : when leaving a folder, empty temporary list
+    ☐ When emtpy folder, dont show buttons
+    ☐ S-permit not mandatory to register (display info : free course for s-permit)
+    ☐ redirect after creating teacher account or display popup
+    ☐ Admin page : when clicking on teacher's requests, open Users panel if closed
     ✔ load rooms from DB, and check rooms conflict from DB @done(23-04-14 23:31)
     ✔ gallery -> folders @done(23-04-12 15:29)
     ✔ galleries management @done(23-04-14 18:12)

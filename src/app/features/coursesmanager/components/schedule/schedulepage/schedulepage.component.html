@@ -161,6 +161,57 @@
 </div>
 </ion-content>
 
+
+<!-- [cellTemplate]="customCellTemplate" -->
+
+
+<!-- <ng-template #customCellTemplate let-day="day">
+    <div class="cal-cell-top">
+        <span class="cal-day-badge bg-{{day.dayPoints[0].meta.value >= 2 ? 'success' : 'warning'}}"
+              *ngIf="day.dayPoints.length">
+            {{ day.dayPoints[0].meta.value }}
+        </span>
+        <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber' }}</span>
+        <div class="cal-day-notes" *ngIf="day.dayPoints.length" [ngbPopover]="day.dayPoints[0].meta.notes">
+            {{day.dayPoints[0].meta.notes}}
+        </div>
+    </div>
+</ng-template> -->
+
+<ng-template #customCellTemplate let-day="day"
+             let-openDay="openDay"
+             let-locale="locale"
+             let-tooltipPlacement="tooltipPlacement"
+             let-highlightDay="highlightDay"
+             let-unhighlightDay="unhighlightDay"
+             let-eventClicked="eventClicked"
+             let-tooltipTemplate="tooltipTemplate"
+             let-tooltipAppendToBody="tooltipAppendToBody">
+    <div class="cal-cell-top">
+        <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+        <!-- <div class="cal-day-notes" *ngIf="day.dayPoints.length">
+            {{day.dayPoints[0].meta.notes}}
+        </div> -->
+    </div>
+    <div class="cal-events" *ngIf="day.events.length > 0">
+        <div class="cal-event"
+            *ngFor="let event of day.events"
+            [ngClass]="event?.cssClass"
+            (mouseenter)="highlightDay.emit({event: event})"
+            (mouseleave)="unhighlightDay.emit({event: event})"
+            [mwlCalendarTooltip]="event.title | calendarEventTitle:'monthTooltip':event"
+            [tooltipPlacement]="tooltipPlacement"
+            [tooltipEvent]="event"
+            [tooltipTemplate]="customToolTipTemplate"
+            [tooltipAppendToBody]="tooltipAppendToBody">
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #customToolTipTemplate>
+    <span>salut</span>
+</ng-template>
+
 <!-- <ng-template #customCellTemplate let-day="day"
              let-openDay="openDay"
              let-locale="locale"

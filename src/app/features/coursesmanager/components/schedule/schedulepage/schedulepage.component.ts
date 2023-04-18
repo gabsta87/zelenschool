@@ -169,7 +169,7 @@ export class SchedulepageComponent {
     if(dayjs(day.date).isBefore(dayjs(this.now).subtract(1,"day")))
       return;
 
-    if(!this.isTeacher.value || !this.isAdmin.value)
+    if(!this.isTeacher.value && !this.isAdmin.value)
       return;
 
     this.selectedMonthViewDay = day;
