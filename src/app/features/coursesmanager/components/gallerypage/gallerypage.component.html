@@ -43,9 +43,11 @@
     <div class="photoGallery">
         <ion-grid>
             <ion-row>
-                <ion-thumbnail *ngFor="let img of imagesData; let i = index" (click)="selectImage(i+1)">
-                    <img [src]="img.link"/>
-                </ion-thumbnail>
+                <ion-col *ngFor="let img of imagesData; let i = index">
+                    <ion-thumbnail (click)="selectImage(i+1)">
+                        <img [src]="img.link"/>
+                    </ion-thumbnail>
+                </ion-col>
             </ion-row>
         </ion-grid>
     </div>

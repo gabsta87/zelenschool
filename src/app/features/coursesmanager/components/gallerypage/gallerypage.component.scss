@@ -45,6 +45,10 @@
   ion-thumbnail:hover{
     opacity: 1;
   }
+  ion-grid *{
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .imgFolders{
