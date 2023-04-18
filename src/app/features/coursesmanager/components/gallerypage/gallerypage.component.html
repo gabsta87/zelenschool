@@ -19,8 +19,8 @@
         </ion-grid>
     </div>
 
-    <ng-container *ngIf="images | async as imagesData">
-    <div class="gallery-container">
+    <ng-container *ngIf="imagesToDisplay | async as imagesData">
+    <div *ngIf="imagesData.length > 0" class="gallery-container">
         
         <div class="swiper-container">
         <swiper

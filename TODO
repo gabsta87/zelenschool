@@ -1,7 +1,7 @@
 
 Questions:
     Credit card
-    ☐ Members order is important ?
+    ✘ Members order is important ? @cancelled(23-04-18 12:41)
     ✘ Teacher can also be admin ? @cancelled(23-03-30 17:26)
     ✔ Phone numbers : swiss/ukrainian or whatever @done(23-03-30 17:26)
     ✔ Courses longer than 1 hour ? @done(23-03-30 17:26)
@@ -16,11 +16,19 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 Misc :
-    ☐ Galleries : when leaving a folder, empty temporary list
-    ☐ When emtpy folder, dont show buttons
+    ☐ design for mobile version @high
     ☐ S-permit not mandatory to register (display info : free course for s-permit)
+    ☐ Prevent unsubscibtion right before the course (12h) (tell this when they subscribe)
+    ✔ Galleries : when leaving a folder, empty temporary list @done(23-04-18 13:58)
+    ✔ admin page : association members : align labels with inputs @done(23-04-18 13:50)
+    ✔ Gallery : folder is empty, dont show buttons (next-previous) @done(23-04-18 13:58)
+    ☐ about page : mail to instead of contact button
     ☐ redirect after creating teacher account or display popup
     ☐ Admin page : when clicking on teacher's requests, open Users panel if closed
+    ☐ Course creation : forbid negative numbers
+    ☐ activities management (link from activities to galleries)
+    ☐ Popover to confirm registration to a course for students
+    ☐ Multilingual system (ukrainian/français (deepl api ?))
     ✔ load rooms from DB, and check rooms conflict from DB @done(23-04-14 23:31)
     ✔ gallery -> folders @done(23-04-12 15:29)
     ✔ galleries management @done(23-04-14 18:12)
@@ -41,9 +49,7 @@ Misc :
     ✔ admin page : galleries management : fix spinner while loading @done(23-04-17 10:46)
     ✔ schedule page : students/visitors cannot select multiple days @done(23-04-17 10:18)
     ☐ Generate teachers' hours sheet per month (date-hour duration title)
-    ☐ activities management
     ✔ admin can modify courses @done(23-04-17 10:46)
-    ☐ Popover to confirm registration to a course for students
 
     URGENT :
     ✘ Bug : when creating a course (next month), timeEnd was set before timeStart (cannot reproduce) @cancelled(23-04-17 10:45)
@@ -78,13 +84,12 @@ Features:
         https://mattlewis92.github.io/angular-calendar/#/selectable-period
     ☐ Teachers can Mark a course as canceled / Mail sent to all participants @low
         https://firebase.google.com/docs/extensions/official/firestore-send-email?hl=fr
-    ☐ Multilingual system
     Schedule : 
         ☐ filter available courses, filter by teacher, search tool
     Admin Page :
         ✔ add search tool @done(23-03-30 17:04)
         ✔ load teachers names @done(23-03-30 17:04)
-        ☐ admins can upload gallery images
+        ✔ admins can upload gallery images @done(23-04-18 12:42)
         ✔ admins can manage association members @done(23-04-11 11:22)
     Canceled : 
         ✘ Admins can see each course a user is attending to @cancelled(23-03-30 16:59)

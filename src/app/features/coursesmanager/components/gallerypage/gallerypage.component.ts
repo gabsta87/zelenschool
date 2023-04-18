@@ -1,7 +1,7 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DocumentData } from '@angular/fire/firestore';
 import { getDownloadURL } from 'firebase/storage';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { StorageService } from 'src/app/shared/service/storage.service';
 
 // import Swiper core and required modules
@@ -20,11 +20,16 @@ SwiperCore.use([Pagination,Navigation]);
 export class GallerypageComponent {
   @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
 
-  images !:Observable<any>;
+  imagesToDisplay !:Observable<any>;
   
   galleries = this._storage.getGalleries();
   imagesCollections : {id:string,name:string,images:any}[] = [];
   openFolderIndex = -1;
+
+  ionViewDidEnter(){
+    this.openFolderIndex = -1;
+    this.imagesToDisplay = of([]);
+  }
 
   constructor(private readonly _storage : StorageService){
     this.galleries.subscribe((e:any) => { 
@@ -41,7 +46,7 @@ export class GallerypageComponent {
       this.imagesCollections[index].images = this._storage.getGalleryImages(galleryId);
     }
 
-    this.images = this.imagesCollections[index].images;
+    this.imagesToDisplay = this.imagesCollections[index].images;
   }
 
 
