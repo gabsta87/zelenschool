@@ -15,7 +15,7 @@ export class CreateAccountComponent {
 
   profileForm!:FormGroup<{
     email:FormControl<string|null>,
-    permitId:FormControl<string|null>,
+    // permitId:FormControl<string|null>,
     b_day:FormControl<string|null>,
     address:FormControl<string|null>,
     lastName:FormControl<string|null>,
@@ -35,10 +35,10 @@ export class CreateAccountComponent {
         Validators.required
       ])),
 
-      permitId: new FormControl('',Validators.compose([
-        permitValidator(),
-        Validators.required
-      ])),
+      // permitId: new FormControl('',Validators.compose([
+      //   permitValidator(),
+      //   Validators.required
+      // ])),
 
       b_day: new FormControl('',Validators.compose([
         bdValidator(),
@@ -88,7 +88,7 @@ export class CreateAccountComponent {
           l_name : tmpLName,
           email : tmpMail,
           status:"student",
-          s_permit_id : this.profileForm.get('permitId')?.value,
+          // s_permit_id : this.profileForm.get('permitId')?.value,
           birthday : this.profileForm.get('b_day')?.value,
           phone : this.profileForm.get('phone')?.value,
           address : this.profileForm.get('address')?.value,
