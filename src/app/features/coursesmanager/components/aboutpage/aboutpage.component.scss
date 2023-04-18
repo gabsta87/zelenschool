@@ -82,11 +82,11 @@
 }
 
 .donatePart{
-    background-image: url("https://www.ukraine-reborn.ch/wp-content/uploads/2017/11/intro-bg2_02.jpg");
+    // background-image: url("https://www.ukraine-reborn.ch/wp-content/uploads/2017/11/intro-bg2_02.jpg");
     background-repeat: no-repeat;
     background-position: center,center;
     background-size: cover;
-    // background-image: url("/assets/background/background_2.jpeg");
+    background-image: url("/../../assets/background/background_2.jpeg");
     text-align: center;
     ion-button{
         min-height: 80px;
@@ -107,8 +107,8 @@
 }
 
 .topImage{
-    background-image: url("https://www.ukraine-reborn.ch/wp-content/uploads/2022/04/IMG_9141-1-scaled.jpg");
-    // background-image: url("/assets/backgroudn/background.jpeg");
+    // background-image: url("https://www.ukraine-reborn.ch/wp-content/uploads/2022/04/IMG_9141-1-scaled.jpg");
+    background-image: url("/../../assets/background/background.jpeg");
     background-repeat: no-repeat;
     background-position: center,center;
     background-size: cover;
@@ -117,24 +117,29 @@
     justify-content: center;
     display: flex;
 
-    h1{
-        color:white;
+    div{
         justify-content: center;
         display: flex;
-        font-size: xxx-large;
-        max-width: 60%;
-        font-family: 'Trebuchet MS', Helvetica, sans-serif;
-        text-align: center;
+        top:50%;
         position: absolute;
-        transform: translate(0,-50%);
-        top:40%;
     }
-    ion-button{
-        top:60%;
-        position: absolute;
-        color: var(--ion-color-primary-contrast);
-        --color : var(--ion-color-primary);
+    .topElements{
+        transform: translate(0,-100%);
+        h1{
+            color:white;
+            font-size: xxx-large;
+            max-width: 60%;
+            font-family: 'Trebuchet MS', Helvetica, sans-serif;
+            text-align: center;
+        }
     }
+    .topElements2{
+        a ion-button{
+            color: var(--ion-color-primary-contrast);
+            --color : var(--ion-color-primary);
+        }
+    }
+
 }
 
 ion-content{

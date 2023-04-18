@@ -22,7 +22,7 @@ Misc :
     ✔ Galleries : when leaving a folder, empty temporary list @done(23-04-18 13:58)
     ✔ admin page : association members : align labels with inputs @done(23-04-18 13:50)
     ✔ Gallery : folder is empty, dont show buttons (next-previous) @done(23-04-18 13:58)
-    ☐ about page : mail to instead of contact button
+    ✔ about page : mail to instead of contact button @done(23-04-18 19:50)
     ✔ redirect after creating teacher account or display popup @done(23-04-18 14:58)
     ✔ Admin page : when clicking on teacher's requests, open Users panel if closed @done(23-04-18 14:58)
     ✔ Course creation : forbid negative numbers @done(23-04-18 15:13)

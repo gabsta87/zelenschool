@@ -1,12 +1,16 @@
 <ion-content #aboutIonContent id="aboutIonContent" [scrollEvents]="true" (ionScroll)="onScroll($event)">
     <div class="topImage" id="anchor_about" #anchor_>
-        <h1>
-            Created with love and care for Ukraine in Switzerland
-        </h1>
-        <a mailto="ukrainereborn.ch@gmail.com">
-            <ion-button>Contact us</ion-button>
-            <!-- <ion-button (click)="contactButtonEvt()">Contact us</ion-button> -->
-        </a>
+        <div class="topElements">
+            <h1>
+                Created with love and care for Ukraine in Switzerland
+            </h1>
+            <br />
+        </div>
+        <div class="topElements2">
+            <a href="mailto:ukrainereborn.ch@gmail.com" target="_newtab">
+                <ion-button>Contact us</ion-button>
+            </a>
+        </div>
     </div>
 
     <div class="aboutContainer">
