@@ -20,7 +20,7 @@ export class AccountpageComponent {
     l_name : new FormControl(this.userData.user.l_name?this.userData.user.f_name:"",Validators.required),
     phone : new FormControl(this.userData.user.phone?this.userData.user.phone:"",phoneValidator()),
     address : new FormControl(this.userData.user.address?this.userData.user.address:"",Validators.required),
-    s_permit_number : new FormControl(this.userData.user.s_permit_id,permitValidator()),
+    // s_permit_number : new FormControl(this.userData.user.s_permit_id,permitValidator()),
     birthday : new FormControl(this.userData.user.birthday?this.userData.user.birthday:"",bdValidator()),
   });
 
@@ -42,7 +42,7 @@ export class AccountpageComponent {
       f_name : this.profileForm.get('f_name')?.value,
       phone : this.profileForm.get('phone')?.value,
       address : this.profileForm.get('address')?.value,
-      s_permit_id : this.profileForm.get('s_permit_number')?.value,
+      // s_permit_id : this.profileForm.get('s_permit_number')?.value,
       birthday : this.profileForm.get('birthday')?.value
     }
     this._user.updateUser(updateItem);
@@ -54,7 +54,7 @@ export class AccountpageComponent {
     this.profileForm.controls['l_name'].setValue(this.userData.user.l_name);
     this.profileForm.controls['phone'].setValue(this.userData.user.phone);
     this.profileForm.controls['address'].setValue(this.userData.user.address);
-    this.profileForm.controls['s_permit_number'].setValue(this.userData.user.s_permit_id);
+    // this.profileForm.controls['s_permit_number'].setValue(this.userData.user.s_permit_id);
     this.profileForm.controls['birthday'].setValue(this.userData.user.birthday);
   }
 
