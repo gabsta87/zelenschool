@@ -21,6 +21,9 @@ export class UsermanagementService{
         this.checkStatus("teacher").then(newVal=>{
           this.isLoggedAsTeacher.next(newVal);
         })
+        this.checkStatus("request").then(newVal=>{
+          this.isLoggedAsTeacher.next(newVal);
+        })
         this.checkBan().then(ban => {
           this.isUserBanned.next(ban);
         }).then(_ => {

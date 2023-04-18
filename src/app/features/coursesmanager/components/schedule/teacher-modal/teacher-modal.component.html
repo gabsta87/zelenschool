@@ -36,7 +36,7 @@
 
     <ion-item [disabled]="cannotModify">
         <ion-label>Duration</ion-label>
-        <ion-input type="number" value="1" required name="duration" [(ngModel)]="duration" (ionChange)="updateDuration($event)"></ion-input>
+        <ion-input type="number" value="1" [min]="0" required name="duration" [(ngModel)]="duration" (ionChange)="updateDuration($event)"></ion-input>
         <ion-select interface="popover" name="durationUnit" (ionChange)="updateDurationUnit($event)" [(ngModel)]="durationUnit">
             <ion-select-option value="hour">hours</ion-select-option>
             <ion-select-option value="minute">minutes</ion-select-option>
@@ -45,7 +45,7 @@
 
     <ion-item>
         <ion-label>Max participants</ion-label>
-        <ion-input type="number" placeholder="0" required name="max_participants" [(ngModel)]="max_participants" [disabled]="cannotModify"></ion-input>
+        <ion-input type="number" placeholder="0" [min]="0" required name="max_participants" [(ngModel)]="max_participants" [disabled]="cannotModify"></ion-input>
     </ion-item>
 
     <ion-item>

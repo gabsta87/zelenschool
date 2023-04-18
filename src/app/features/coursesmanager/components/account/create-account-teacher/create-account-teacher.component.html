@@ -71,3 +71,9 @@
         </form>
     </div>
 </ion-content>
+
+<ion-popover #popover [isOpen]="isOpen" (didDismiss)="isOpen = false">
+    <ng-template>
+      <ion-content class="ion-padding">Your request has been submitted and awaits for approval from an administrator</ion-content>
+    </ng-template>
+</ion-popover>

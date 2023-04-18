@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { createUserWithEmailAndPassword, getAuth } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -12,6 +12,8 @@ import { emailValidator, passwordValidator, phoneValidator } from 'src/app/share
 })
 export class CreateAccountTeacherComponent {
 
+  @ViewChild('popover') popover : any;
+
   profileForm!:FormGroup<{
     email:FormControl<string|null>,
     lastName:FormControl<string|null>,
@@ -21,6 +23,7 @@ export class CreateAccountTeacherComponent {
   }>;
 
   errorMessage = "";
+  isOpen = false;
 
   constructor(private readonly _db:AngularfireService,private readonly _router: Router){
 
@@ -71,7 +74,9 @@ export class CreateAccountTeacherComponent {
             phone : this.profileForm.get('phone')?.value,
             status : "request"
           });
-          this._router.navigate(['/accountTeacher/']);
+          this.presentPopover();
+          // TODO popup to confirm request
+          this._router.navigate(['/about/']);
         }
       })
       .catch((error) => {
@@ -83,9 +88,12 @@ export class CreateAccountTeacherComponent {
     else{
       console.log("Error: wrong email/password");
       console.log("email : ",email);
-      console.log("password : ",password);
       
     }
+  }
+
+  presentPopover() {
+    this.isOpen = true;
   }
 
   return(){

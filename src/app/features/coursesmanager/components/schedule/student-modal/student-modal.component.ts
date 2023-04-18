@@ -13,8 +13,11 @@ import { UsermanagementService } from 'src/app/shared/service/usermanagement.ser
   styleUrls: ['./student-modal.component.scss']
 })
 export class StudentModalComponent {
+  @ViewChild('popover') popover : any;
   meta!:any;
   dataObs!:Observable<DocumentData|undefined>;
+
+  isOpen = false;
 
   title!:string;
   creator!:DocumentData|undefined;
@@ -24,8 +27,6 @@ export class StudentModalComponent {
   isSubscribtionBlocked!:boolean;
   ban = this._user.getUserData().ban;
   showBanInfo = false;
-
-  @ViewChild('roomUpdatePopOver') popover!:any;
 
   duration = 1;
   durationUnit!:dayjs.ManipulateType;
@@ -77,9 +78,15 @@ export class StudentModalComponent {
     return this.modalCtrl.dismiss(null, 'confirm');
   }
 
+  presentPopover() {
+    this.isOpen = true;
+  }
+
   confirm(){
-    if(!this._user.isBanned())
+    if(!this._user.isBanned()){
       this._db.toggleSubscribtionToCalendarEntry(this.meta.id, this.isAttending);
+      this.presentPopover();
+    }
     return this.modalCtrl.dismiss(null, 'confirm');
   }
 }

@@ -119,8 +119,12 @@ export class AdminpageComponent {
     this.search.next(this.searchString);
   }
 
-  filterRequests(){
+  // Manage users
+
+  manageRequests(){
     this.statusToFilter = "request";
+    this.filterUsersList()
+    this.showUsers.next(true);
   }
 
   filterUsersList(){
@@ -199,6 +203,8 @@ export class AdminpageComponent {
   unbanUser(id:string){
     this._db.unbanUser(id);
   }
+
+  // Manage events
 
   async handleEvent(event:DocumentData){
     
