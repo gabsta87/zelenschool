@@ -98,14 +98,17 @@
     display: none;
 }
 .hideableIcon{
-    display: block;
+    display: contents;
 }
-@media only screen and (min-width: 768px) {
+.hideableImg{
+	display: block;
+}
+@media only screen and (min-width: 1100px) {
     .hideableLabel{
         display: block;
         font-size: 18px;
     }
-    .hideableIcon{
+    .hideableIcon,.hideableImg{
         display: none;
     }
 }

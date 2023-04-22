@@ -49,28 +49,28 @@
                 <ion-buttons class="ion-justify-content-center topButtons">
                     <ion-button (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">
                         <ng-container *ngIf="view === CalendarView.Month;else normalMonth">
-                            <ion-img src="../../assets/icons/calendar-month-contrast.png" class="hideableIcon"> </ion-img>                        
+                            <ion-img src="/../../assets/icons/calendar-month-contrast.png" class="hideableImg"> </ion-img>                        
                         </ng-container>
                         <ng-template #normalMonth>
-                            <ion-img src="../../assets/icons/calendar-month.png" class="hideableIcon"> </ion-img>                        
+                            <ion-img src="/../../assets/icons/calendar-month.png" class="hideableImg"> </ion-img>                        
                         </ng-template>
                         <ion-label class="hideableLabel"> Month </ion-label>
                     </ion-button>
                     <ion-button (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">
                         <ng-container *ngIf="view === CalendarView.Week;else normalWeek">
-                            <ion-img src="../../assets/icons/calendar-week-contrast.png" class="hideableIcon"> </ion-img> 
+                            <ion-img src="/../../assets/icons/calendar-week-contrast.png" class="hideableImg"> </ion-img> 
                         </ng-container>
                         <ng-template #normalWeek>
-                            <ion-img src="../../assets/icons/calendar-week.png" class="hideableIcon"> </ion-img> 
+                            <ion-img src="/../../assets/icons/calendar-week.png" class="hideableImg"> </ion-img> 
                         </ng-template>
                         <ion-label class="hideableLabel"> Week </ion-label>
                     </ion-button>
                     <ion-button (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
                         <ng-container *ngIf="view === CalendarView.Day; else normalDay">
-                            <ion-img  src="../../assets/icons/calendar-day-contrast.png" class="hideableIcon"> </ion-img>
+                            <ion-img  src="/../../assets/icons/calendar-day-contrast.png" class="hideableImg"> </ion-img>
                         </ng-container>
                         <ng-template #normalDay>
-                            <ion-img  src="../../assets/icons/calendar-day.png" class="hideableIcon"> </ion-img>
+                            <ion-img  src="/../../assets/icons/calendar-day.png" class="hideableImg"> </ion-img>
                         </ng-template>
                         <ion-label class="hideableLabel"> Day </ion-label>
                     </ion-button>
@@ -178,7 +178,7 @@
             <ion-col size="1">
                 <div *ngIf="event['attendantsId']">
                 <ion-text class="participantsCounter">
-                    ({{event['attendantsId'].length}}/{{event['max_participants']}})
+                    {{event['attendantsId'].length}}/{{event['max_participants']}}
                 </ion-text>
                 </div>
             </ion-col>

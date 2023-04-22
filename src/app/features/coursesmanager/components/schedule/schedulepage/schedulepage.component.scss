@@ -22,6 +22,7 @@ pre {
 .participantsCounter{
   display: flex; 
   justify-content: center;
+  overflow-wrap: anywhere;
 }
 
 .eventsTable :hover{
