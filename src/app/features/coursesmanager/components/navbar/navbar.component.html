@@ -1,35 +1,44 @@
 <ion-tabs>
     <ion-tab-bar slot="top">
          <ion-tab-button *ngFor="let item of navigationItems" (click)="goToAnchor(item)" [routerLink]="item.routerLink" [fragment]="item.fragment">
-            <ion-label>{{item.title}}</ion-label>
+            <ion-label class="hideableLabel">{{item.title}}</ion-label>
+            <ion-icon *ngIf="item.iconName" [name]="item.iconName" class="hideableIcon"></ion-icon>
+            <ion-icon *ngIf="item.iconSrc" [src]="item.iconSrc" class="hideableIcon"></ion-icon>
         </ion-tab-button>
         
         <ion-tab-button *ngFor="let item of simpleNavItems;
         let i = index;" [tab]="item.page">
-            <ion-label>{{item.title}}</ion-label>
+            <ion-label class="hideableLabel">{{item.title}}</ion-label>
+            <ion-icon [name]="item.iconName" class="hideableIcon"></ion-icon>
         </ion-tab-button>
 
         <ion-tab-button *ngIf="!(isLogged|async); else logged" tab="login">
-            <ion-label> Login </ion-label>
+            <ion-label class="hideableLabel"> Login </ion-label>
+            <ion-icon name="person-outline" class="hideableIcon"></ion-icon>
         </ion-tab-button>
 
         <!-- TODO replace with ngswitch -->
         <!-- <ng-template #logged [ngSwitch]=""> -->
         <ng-template #logged>
             <ion-tab-button *ngIf="isTeacher|async" tab="accountTeacher">
-                <ion-label> Account </ion-label>
+                <ion-label class="hideableLabel"> Account </ion-label>
+                <ion-icon name="person-outline" class="hideableIcon"></ion-icon>
             </ion-tab-button>
             
             <ion-tab-button *ngIf="isAdmin|async" tab="accountAdmin">
-                <ion-label> Account </ion-label>
+                <ion-label class="hideableLabel"> Account </ion-label>
+                <ion-icon name="person-outline" class="hideableIcon"></ion-icon>
             </ion-tab-button>
     
             <ion-tab-button *ngIf="!(isAdmin|async) && !(isTeacher|async)" tab="account">
-                <ion-label> Account </ion-label>
+                <ion-label class="hideableLabel"> Account </ion-label>
+                <ion-icon name="person-outline" class="hideableIcon"></ion-icon>
             </ion-tab-button>
             
             <ion-tab-button *ngIf="isAdmin|async" tab="admin">
-                <ion-label> Administration </ion-label>
+                <ion-label class="hideableLabel"> Administration </ion-label>
+                <!-- <ion-img src="../../assets/icons/admin.png" class="hideableIcon"></ion-img> -->
+                <ion-icon src="../../assets/icons/admin.svg" class="hideableIcon"></ion-icon>
             </ion-tab-button>
         </ng-template>
     </ion-tab-bar>

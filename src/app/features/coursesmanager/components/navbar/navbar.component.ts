@@ -32,16 +32,16 @@ export class NavbarComponent {
   isLogged = this._userS.isLogged;
 
   navigationItems = [
-    {title:"About us",page:"about",routerLink:"/about",fragment:"about"},
-    {title:"Activities",page:"about",routerLink:"/about",fragment:"activities"},
-    {title:"Partners",page:"about",routerLink:"/about",fragment:"partners"},
-    {title:"Contact",page:"about",routerLink:"/about",fragment:"contact"},
-    {title:"Donate",page:"about",routerLink:"/about",fragment:"donate"},
+    {title:"About us",page:"about",routerLink:"/about",fragment:"about",iconName:"information-circle-outline"},
+    {title:"Activities",page:"about",routerLink:"/about",fragment:"activities",iconSrc:"../../assets/icons/activities.svg"},
+    {title:"Partners",page:"about",routerLink:"/about",fragment:"partners",iconSrc:"../../assets/icons/partners.svg"},
+    {title:"Contact",page:"about",routerLink:"/about",fragment:"contact",iconSrc:"../../assets/icons/contact.svg"},
+    {title:"Donate",page:"about",routerLink:"/about",fragment:"donate",iconSrc:"../../assets/icons/donate.svg"},
   ]
 
   simpleNavItems = [
-    {title:"Gallery",page:"gallery"},
-    {title:"Schedule",page:"schedule"},
+    {title:"Gallery",page:"gallery",iconName:"images-outline"},
+    {title:"Schedule",page:"schedule",iconName:"calendar-number-outline"},
   ]
 
   goToAnchor(link : {title:string,routerLink:string,fragment:string}){

@@ -1,11 +1,11 @@
 ion-tab-button{
     --color : var(--ion-color-primary);
-    // --color-selected : var(--ion-color-tertiary);
+    font-size: 18px;
 }
 
 ion-tab-button:hover,.tab-selected{
     background-color: var(--ion-color-primary);
-    ion-label{
+    ion-label, ion-icon{
         color : white;
     }
 }
@@ -13,8 +13,8 @@ ion-tab-button:hover,.tab-selected{
 ion-tab-bar{
     border-bottom: solid 10px var(--ion-color-primary);
     --background:white;
+    ion-img{
+        max-width: 30px;
+    }
 }
 
-ion-label{
-    font-size: 18px;
-}

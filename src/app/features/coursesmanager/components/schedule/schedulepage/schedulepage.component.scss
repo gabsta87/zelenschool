@@ -11,10 +11,12 @@ pre {
   border:solid 1px lightgrey;
 }
 
-.scheduleContainer{
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-bottom: 5%;
+@media only screen and (min-width: 768px) {
+  .scheduleContainer{
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 5%;
+  }
 }
 
 .participantsCounter{
@@ -31,6 +33,7 @@ pre {
   color: var(--ion-color-primary);
   border: solid var(--ion-color-primary) 2px;
   border-radius: 5px;
+  min-width: 25px;
   &.active{
     background-color: var(--ion-color-primary);
     color:white;

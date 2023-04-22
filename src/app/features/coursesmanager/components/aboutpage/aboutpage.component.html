@@ -16,11 +16,9 @@
     <div class="aboutContainer">
         <div class="firstPart">
             <div class="partContent">
-                <ion-title>
-                    <h2>
-                        Ukraine Reborn association
-                    </h2>
-                </ion-title>
+                <h2>
+                    Ukraine Reborn association
+                </h2>
                 <ion-text>
                     <p>
                         We are an Independent Humanitarian Support Association that has started from a little collection point in Swiss Romande in the first week of war in Ukraine.  
@@ -37,11 +35,9 @@
 
         <div class="firstPart">
             <div class="partContent">
-                <ion-title>
-                    <h2>
-                        Our mission
-                    </h2>
-                </ion-title>
+                <h2>
+                    Our mission
+                </h2>
                 <ion-text>
                     <p>
                         We believe that everyone has a right to live in freedom and safety. That’s why we are on a mission to help Ukrainian refuges that have fled to Switzerland  restarting their lives and making the integration process as smooth as possible. Our primary focus is on most vulnerable population women and kids.
@@ -59,7 +55,7 @@
                         <ion-col>
                             <ion-card button="true">
                                 <ion-icon name="construct"></ion-icon>
-                                <ion-card-header><ion-title>Title</ion-title></ion-card-header>
+                                <ion-card-header><ion-title class="ion-no-padding">Title</ion-title></ion-card-header>
                                 <ion-card-content>Some description</ion-card-content>
                             </ion-card>
                         </ion-col>
@@ -107,9 +103,7 @@
 
         <div class="filledPart">
             <div class="partContent">
-                <ion-title>
-                    <h2>Want to support us ?</h2>
-                </ion-title>
+                <h2>Want to support us ?</h2>
             </div>
         </div>
 
@@ -162,13 +156,13 @@
 
         <!-- Partners Section -->
         <div class="partnersSection" id="anchor_partners" #anchor_>
-            <div class="partContent">
+            <div class="partnersContent">
                 <h2>Partners</h2>
                 <ion-grid>
                     <ion-row class="ion-align-items-center">
                         <ion-col *ngFor="let partner of partners_addresses">
                             <div class="partnerCard">
-                                <ion-button href={{partner.link}} fill="clear">
+                                <ion-button href={{partner.link}} fill="clear" class="ion-no-padding">
                                     <img src="{{partner.logoName}}"/>
                                 </ion-button>
                             </div>
@@ -181,9 +175,7 @@
         <!-- Contact Section -->
         <div class="filledPart" id="anchor_contact" #anchor_>
             <div class="partContent">
-                <ion-title>
-                    <h2>Contact us</h2>
-                </ion-title>
+                <h2>Contact us</h2>
             </div>
         </div>
         <div class="contactPageContainer">
@@ -235,8 +227,8 @@
                 <ion-grid>
                     <ion-row>
                         <ion-col>
-                            <ion-button href="https://www.paypal.com/donate/?hosted_button_id=R8KN2HWSJ3F9E" fill="clear">
-                                <img src="~/../assets/logos/paypal.png" style="height:100%"/>
+                            <ion-button href="https://www.paypal.com/donate/?hosted_button_id=R8KN2HWSJ3F9E" fill="clear" class="paypalButton">
+                                <!-- <img src="~/../assets/logos/paypal.png" style="height:100%"/> -->
                             </ion-button>
                         </ion-col>
                         <ion-col>

@@ -7,11 +7,28 @@
     }
 }
 
+.paypalButton{
+    min-width: 150px;
+    background-image: url("/../../assets/logos/paypal.png");
+    background-repeat: no-repeat;
+    background-position: center,center;
+    background-size: contain;
+}
+
 .partContent{
     padding-top: 20px;
     padding-bottom: 20px;
     margin-left:5%;
     margin-right:5%;
+}
+
+.partnersContent{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    @media only screen and (min-width: 768px) {
+        margin-left:5%;
+        margin-right:5%;
+    }
 }
 
 .filledPart{
@@ -90,6 +107,7 @@
     text-align: center;
     ion-button{
         min-height: 80px;
+        width: 100%;
     }
     .donateText{
         text-align: justify;
@@ -122,15 +140,21 @@
         display: flex;
         top:50%;
         position: absolute;
+        @media only screen and (max-width: 700px) {
+            top:60%;
+        }
     }
     .topElements{
         transform: translate(0,-100%);
         h1{
             color:white;
             font-size: xxx-large;
-            max-width: 60%;
+            max-width: 80%;
             font-family: 'Trebuchet MS', Helvetica, sans-serif;
             text-align: center;
+            @media only screen and (max-width: 700px) {
+                max-width: 100%;
+            }
         }
     }
     .topElements2{

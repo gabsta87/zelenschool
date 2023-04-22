@@ -11,41 +11,69 @@
         <ion-row class="ion-text-center">
             <ion-col>
                 <ion-buttons class="ion-justify-content-center topButtons">
-                <ion-button
-                    class="btn btn-primary"
-                    mwlCalendarPreviousView
-                    [view]="view"
-                    [(viewDate)]="viewDate"
-                    (viewDateChange)="closeOpenMonthViewDay()"
-                >
-                    Previous
-                </ion-button>
-                <ion-button
-                    class="btn btn-outline-secondary"
-                    mwlCalendarToday
-                    [(viewDate)]="viewDate"
-                >
-                    Today
-                </ion-button>
-                <ion-button
-                    class="btn btn-primary"
-                    mwlCalendarNextView
-                    [view]="view"
-                    [(viewDate)]="viewDate"
-                    (viewDateChange)="closeOpenMonthViewDay()"
-                >
-                    Next
-                </ion-button>
+                    <ion-button
+                        class="btn btn-primary"
+                        mwlCalendarPreviousView
+                        [view]="view"
+                        [(viewDate)]="viewDate"
+                        (viewDateChange)="closeOpenMonthViewDay()"
+                    >
+                        <ion-icon name="chevron-back-outline" class="hideableIcon"></ion-icon>
+                        <ion-label class="hideableLabel"> Previous </ion-label>
+                    </ion-button>
+                    <ion-button
+                        class="btn btn-outline-secondary"
+                        mwlCalendarToday
+                        [(viewDate)]="viewDate"
+                    >
+                    <ion-icon name="home-outline" class="hideableIcon"></ion-icon>
+                    <ion-label class="hideableLabel"> Today </ion-label>
+                    </ion-button>
+                    <ion-button
+                        class="btn btn-primary"
+                        mwlCalendarNextView
+                        [view]="view"
+                        [(viewDate)]="viewDate"
+                        (viewDateChange)="closeOpenMonthViewDay()"
+                    >
+                    <ion-icon name="chevron-forward-outline" class="hideableIcon"></ion-icon>
+                    <ion-label class="hideableLabel"> Next </ion-label>
+                    </ion-button>
                 </ion-buttons>
             </ion-col>
             <ion-col>
                 <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+                <!-- <h3>{{ viewDate | date:"dd.MM.YY" }}</h3> -->
             </ion-col>
             <ion-col>
                 <ion-buttons class="ion-justify-content-center topButtons">
-                    <ion-button (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">Month</ion-button>
-                    <ion-button (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">Week</ion-button>
-                    <ion-button (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">Day</ion-button>
+                    <ion-button (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">
+                        <ng-container *ngIf="view === CalendarView.Month;else normalMonth">
+                            <ion-img src="../../assets/icons/calendar-month-contrast.png" class="hideableIcon"> </ion-img>                        
+                        </ng-container>
+                        <ng-template #normalMonth>
+                            <ion-img src="../../assets/icons/calendar-month.png" class="hideableIcon"> </ion-img>                        
+                        </ng-template>
+                        <ion-label class="hideableLabel"> Month </ion-label>
+                    </ion-button>
+                    <ion-button (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">
+                        <ng-container *ngIf="view === CalendarView.Week;else normalWeek">
+                            <ion-img src="../../assets/icons/calendar-week-contrast.png" class="hideableIcon"> </ion-img> 
+                        </ng-container>
+                        <ng-template #normalWeek>
+                            <ion-img src="../../assets/icons/calendar-week.png" class="hideableIcon"> </ion-img> 
+                        </ng-template>
+                        <ion-label class="hideableLabel"> Week </ion-label>
+                    </ion-button>
+                    <ion-button (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
+                        <ng-container *ngIf="view === CalendarView.Day; else normalDay">
+                            <ion-img  src="../../assets/icons/calendar-day-contrast.png" class="hideableIcon"> </ion-img>
+                        </ng-container>
+                        <ng-template #normalDay>
+                            <ion-img  src="../../assets/icons/calendar-day.png" class="hideableIcon"> </ion-img>
+                        </ng-template>
+                        <ion-label class="hideableLabel"> Day </ion-label>
+                    </ion-button>
                 </ion-buttons>
             </ion-col>
         </ion-row>
@@ -126,10 +154,10 @@
                 <b>Teacher</b>
             </ion-col>
             <ion-col size="1">
-                <b>Classroom</b>
+                <b>Room</b>
             </ion-col>
             <ion-col size="1">
-                <b>Attendants</b>
+                <b>Students</b>
             </ion-col>
         </ion-row>
         <ion-row *ngFor="let event of eventsList; index as i" (click)="handleEvent(event)">
@@ -137,7 +165,7 @@
                 {{event['title']}}
             </ion-col>
             <ion-col>
-                {{event['timeStart']| date: "HH:mm d MMM, yy"}}
+                {{event['timeStart']| date: "HH:mm dd.MM"}}
             </ion-col>
             <ion-col>
                 {{event['author']?.l_name}} {{event['author']?.f_name}}
