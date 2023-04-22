@@ -4,6 +4,7 @@ import * as dayjs from 'dayjs';
 import { DocumentData } from 'firebase/firestore';
 import { firstValueFrom, Observable } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
+import { getNowDate } from 'src/app/shared/service/hour-management.service';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 
 
@@ -17,7 +18,7 @@ export class StudentModalComponent {
   meta!:any;
   dataObs!:Observable<DocumentData|undefined>;
 
-  isOpen = false;
+  isPopoverOpen = false;
 
   title!:string;
   creator!:DocumentData|undefined;
@@ -25,7 +26,7 @@ export class StudentModalComponent {
   isAttending!:boolean;
   isCourseFull!:boolean;
   isSubscribtionBlocked!:boolean;
-  ban = this._user.getUserData().ban;
+  ban = this._user.getUserData() ? this._user.getUserData().ban : null;
   showBanInfo = false;
 
   duration = 1;
@@ -64,7 +65,10 @@ export class StudentModalComponent {
         this._user.isBanned() ||
 
         // Date is already passed
-        dayjs(courseActualValues['timeStart']).isBefore(new Date()) ;
+        dayjs(courseActualValues['timeStart']).isBefore(getNowDate()) ||
+
+        // Subscribed and 12 hours before course
+        (this.isAttending && dayjs(courseActualValues['timeStart']).subtract(12,"hour").isBefore(getNowDate()))
     }
   }
 
@@ -79,13 +83,16 @@ export class StudentModalComponent {
   }
 
   presentPopover() {
-    this.isOpen = true;
+    this.isPopoverOpen = true;
   }
 
   confirm(){
     if(!this._user.isBanned()){
-      this._db.toggleSubscribtionToCalendarEntry(this.meta.id, this.isAttending);
-      this.presentPopover();
+      if(!(this.isAttending && dayjs(this.meta.timeStart).subtract(12,"hour").isBefore(getNowDate()))){
+        this._db.toggleSubscribtionToCalendarEntry(this.meta.id, this.isAttending);
+        if(this.isAttending)
+          this.presentPopover();
+      }
     }
     return this.modalCtrl.dismiss(null, 'confirm');
   }

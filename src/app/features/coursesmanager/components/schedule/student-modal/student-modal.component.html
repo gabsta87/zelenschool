@@ -48,10 +48,10 @@
     </ion-toolbar>
 </ion-footer>
 
-<ion-popover #popover [isOpen]="isOpen" (didDismiss)="isOpen = false">
+<ion-popover #popover [isOpen]="isPopoverOpen" (didDismiss)="isPopoverOpen = false">
     <ng-template>
         <ion-content class="ion-padding">
-            You have registered to the course.
+            You have registered to the course. <br>
             <ion-text color="danger">
                  Be warned that you cannot unsubscribe from course later than 12 hours before the course starts. 
             </ion-text>

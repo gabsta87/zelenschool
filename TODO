@@ -31,7 +31,7 @@ Misc :
             account : <ion-icon name="person-outline"></ion-icon>
             admin : <ion-icon name="construct-outline"></ion-icon>
     ✔ S-permit not mandatory to register (display info : free course for s-permit) @done(23-04-18 14:37)
-    ☐ Prevent unsubscibtion right before the course (12h) (tell this when they subscribe)
+    ✔ Prevent unsubscibtion right before the course (12h) (tell this when they subscribe) @done(23-04-22 20:48)
     ✔ Galleries : when leaving a folder, empty temporary list @done(23-04-18 13:58)
     ✔ admin page : association members : align labels with inputs @done(23-04-18 13:50)
     ✔ Gallery : folder is empty, dont show buttons (next-previous) @done(23-04-18 13:58)
