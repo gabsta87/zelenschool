@@ -20,11 +20,6 @@ export class NavbarComponent {
 
   ngAfterViewInit(){
     this.myAnchor = document.querySelector('aboutIonContent');
-    // console.log("my anchor : ",this.myAnchor);
-    
-    // console.log("content : ",this.content);
-    // console.log("navBar : ",this.navbar);
-    // console.log("divs : ",this.divs);
   }
 
   isAdmin = this._userS.isLoggedAsAdmin;
@@ -35,7 +30,7 @@ export class NavbarComponent {
     {title:"About us",page:"about",routerLink:"/about",fragment:"about",iconName:"information-circle-outline"},
     {title:"Activities",page:"about",routerLink:"/about",fragment:"activities",iconSrc:"../../assets/icons/activities.svg"},
     {title:"Partners",page:"about",routerLink:"/about",fragment:"partners",iconSrc:"../../assets/icons/partners.svg"},
-    {title:"Contact",page:"about",routerLink:"/about",fragment:"contact",iconSrc:"../../assets/icons/contact.svg"},
+    {title:"Contact",page:"about",routerLink:"/about",fragment:"contact",iconName:"call-outline"},
     {title:"Donate",page:"about",routerLink:"/about",fragment:"donate",iconSrc:"../../assets/icons/donate.svg"},
   ]
 
@@ -49,10 +44,12 @@ export class NavbarComponent {
  
     if(this._router.url.includes("about")){
       let aboutDoc = document.getElementById("anchor_"+link.fragment);
-
+      
       aboutDoc?.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
     }
   }
+}
+
 
 // tab-selected
   // setButtonActive(index:number){
@@ -62,4 +59,3 @@ export class NavbarComponent {
   //   if(selectedItem)
   //     selectedItem.el.className += " active";
   // }
-}

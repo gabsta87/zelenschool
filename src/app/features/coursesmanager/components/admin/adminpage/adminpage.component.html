@@ -41,89 +41,87 @@
     <ng-template #hideRooms>
         <ion-button (click)="toggle(showRooms)"><ion-icon name="caret-down-outline"></ion-icon>Rooms</ion-button>
     </ng-template>
-    
 
     <ion-searchbar *ngIf="showUsers.value || showCourses.value" placeholder="Search" [(ngModel)]="searchString" (ionChange)="updateSearchValue()"></ion-searchbar>
 
     <ng-container *ngIf="filteredDataObs | async as filteredData">
-    <div *ngIf="showUsers.value">
-    <h1>Users</h1>
-    <ion-item lines="none">
-        <ion-select interface="action-sheet" [(ngModel)]="statusToFilter" (ionChange)="filterUsersList()" value="all">
-            <ion-select-option value="all">All</ion-select-option>
-            <ion-select-option value="student">Students</ion-select-option>
-            <ion-select-option value="teacher">Teachers</ion-select-option>
-            <ion-select-option value="admin">Admins</ion-select-option>
-            <ion-select-option value="request">Teachers requests </ion-select-option>
-            <ion-select-option value="ban">Banned</ion-select-option>
-        </ion-select>
-    </ion-item>
-
-        <ion-accordion-group [multiple]="true">
-            <ion-item *ngFor="let usr of filteredData[0]" lines="none">
-                <ion-accordion [value]="usr['l_name']">
-                    <ion-item slot="header" color="light">
-                      <ion-label>{{usr['l_name']}} {{usr['f_name']}}</ion-label>
-                    </ion-item>
-                    <div class="ion-padding" slot="content">
-                        <p>email : {{usr['email']}}</p>
-                        <p>Status : {{usr['status']}}</p>
-                        <p *ngIf="usr['phone']">Phone : {{usr['phone']}}</p>
-                        <p *ngIf="usr['birthday']">Birthday : {{usr['birthday']}}</p>
-                        <p *ngIf="usr['s_permit_id']">S permit ID : {{usr['s_permit_id']}}</p>
-                        <p *ngIf="usr['address']">Address : {{usr['address']}}</p>
-                        <p *ngIf="usr['subscribeDate']">Subscribe date : {{usr['subscribeDate']}}</p>
-                        <ion-text *ngIf="usr['ban']" color="danger">
-                        <p> Banned on : {{usr['ban'].date}} by {{usr['ban'].author?.l_name}} {{usr['ban'].author?.f_name}}<br>
-                        Reason : {{usr['ban'].comment}}</p>
-                        </ion-text>
-                        <span>
-                        <ion-button *ngIf="usr['ban'] == undefined; else unban" (click)="banUser(usr['id'])">Ban</ion-button>
-                        <ng-template #unban>
-                            <ion-button (click)="unbanUser(usr['id'])">Unban</ion-button>
-                        </ng-template>
-                        <ion-button (click)="deleteUser(usr['id'])">Delete</ion-button>
-                        <ion-button *ngIf="usr['status']=='request'" (click)="acceptRequest(usr['id'])">Accept teacher</ion-button>
-                        <ion-button *ngIf="usr['status']=='teacher' || usr['status']=='admin'" (click)="seeWorkingHours(usr['id'])">Working hours</ion-button>
-                        </span>
-                    </div>
-                </ion-accordion>
+        <div *ngIf="showUsers.value">
+            <h1>Users</h1>
+            <ion-item lines="none">
+                <ion-select interface="action-sheet" [(ngModel)]="statusToFilter" (ionChange)="filterUsersList()" value="all">
+                    <ion-select-option value="all">All</ion-select-option>
+                    <ion-select-option value="student">Students</ion-select-option>
+                    <ion-select-option value="teacher">Teachers</ion-select-option>
+                    <ion-select-option value="admin">Admins</ion-select-option>
+                    <ion-select-option value="request">Teachers requests </ion-select-option>
+                    <ion-select-option value="ban">Banned</ion-select-option>
+                </ion-select>
             </ion-item>
-        </ion-accordion-group>
-    </div>
 
-    <div *ngIf="showCourses.value">
-    <h1>Courses</h1>
-    <ion-item lines="none">
-        <ion-select interface="action-sheet" [(ngModel)]="timeFilter" (ionChange)="filterCoursesList()" value="all">
-            <ion-select-option value="all">All</ion-select-option>
-            <ion-select-option value="future">Courses to come</ion-select-option>
-            <ion-select-option value="past">Past courses</ion-select-option>
-        </ion-select>
-    </ion-item>
-
-    <ion-accordion-group [multiple]="true">
-        <ion-item *ngFor="let course of filteredData[1]" lines="none">
-            <ion-accordion [value]="course['id']">
-                <ion-item slot="header" color="light">
-                    <ion-label>{{course['title']}} {{course['timeStart']| date: "HH:mm d MMM, yy"}} {{course['author'].l_name}} {{course['author'].f_name}}</ion-label>
-                </ion-item>
-                <div class="ion-padding" slot="content" (click)="handleEvent(course)">
-                    <p>Room : {{course['room'].name}}</p>
-                    <p>Participants : {{course['attendantsId'].length}}/{{course['max_participants']}}</p>
-                    <p *ngIf="course['description']">Description : {{course['description']}}</p>
-                    <ion-list *ngIf="course['attendants'].length > 0" class="ion-no-padding">
-                        <ion-label>Students</ion-label>
-                        <ion-item *ngFor="let student of course['attendants']">
-                            <ion-label *ngIf="student; else unknown">{{student['l_name']}} {{student['f_name']}}</ion-label>
-                            <ng-template #unknown><ion-label>Unknown</ion-label></ng-template>
+            <ion-accordion-group [multiple]="true">
+                <ion-item *ngFor="let usr of filteredData[0]" lines="none">
+                    <ion-accordion [value]="usr['l_name']">
+                        <ion-item slot="header" color="light">
+                        <ion-label>{{usr['l_name']}} {{usr['f_name']}}</ion-label>
                         </ion-item>
-                    </ion-list>
-                </div>
-            </ion-accordion>
-        </ion-item>
-    </ion-accordion-group>
-    </div>
+                        <div class="ion-padding" slot="content">
+                            <p>email : {{usr['email']}}</p>
+                            <p>Status : {{usr['status']}}</p>
+                            <p *ngIf="usr['phone']">Phone : {{usr['phone']}}</p>
+                            <p *ngIf="usr['birthday']">Birthday : {{usr['birthday']}}</p>
+                            <p *ngIf="usr['s_permit_id']">S permit ID : {{usr['s_permit_id']}}</p>
+                            <p *ngIf="usr['address']">Address : {{usr['address']}}</p>
+                            <p *ngIf="usr['subscribeDate']">Subscribe date : {{usr['subscribeDate']}}</p>
+                            <ion-text *ngIf="usr['ban']" color="danger">
+                            <p> Banned on : {{usr['ban'].date}} by {{usr['ban'].author?.l_name}} {{usr['ban'].author?.f_name}}<br>
+                            Reason : {{usr['ban'].comment}}</p>
+                            </ion-text>
+                            <span>
+                            <ion-button *ngIf="usr['ban'] == undefined; else unban" (click)="banUser(usr['id'])">Ban</ion-button>
+                            <ng-template #unban>
+                                <ion-button (click)="unbanUser(usr['id'])">Unban</ion-button>
+                            </ng-template>
+                            <ion-button (click)="deleteUser(usr['id'])">Delete</ion-button>
+                            <ion-button *ngIf="usr['status']=='request'" (click)="acceptRequest(usr['id'])">Accept teacher</ion-button>
+                            <ion-button *ngIf="usr['status']=='teacher' || usr['status']=='admin'" (click)="seeWorkingHours(usr['id'])">Working hours</ion-button>
+                            </span>
+                        </div>
+                    </ion-accordion>
+                </ion-item>
+            </ion-accordion-group>
+        </div>
+
+        <div *ngIf="showCourses.value">
+            <h1>Courses</h1>
+            <ion-item lines="none">
+                <ion-select interface="action-sheet" [(ngModel)]="timeFilter" (ionChange)="filterCoursesList()" value="all">
+                    <ion-select-option value="all">All</ion-select-option>
+                    <ion-select-option value="future">Courses to come</ion-select-option>
+                    <ion-select-option value="past">Past courses</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-accordion-group [multiple]="true">
+                <ion-item *ngFor="let course of filteredData[1]" lines="none">
+                    <ion-accordion [value]="course['id']">
+                        <ion-item slot="header" color="light">
+                            <ion-label>{{course['title']}} {{course['timeStart']| date: "HH:mm d MMM, yy"}} {{course['author'].l_name}} {{course['author'].f_name}}</ion-label>
+                        </ion-item>
+                        <div class="ion-padding" slot="content" (click)="handleEvent(course)">
+                            <p>Room : {{course['room'].name}}</p>
+                            <p>Participants : {{course['attendantsId'].length}}/{{course['max_participants']}}</p>
+                            <p *ngIf="course['description']">Description : {{course['description']}}</p>
+                            <ion-list *ngIf="course['attendants'].length > 0" class="ion-no-padding">
+                                <ion-label>Students</ion-label>
+                                <ion-item *ngFor="let student of course['attendants']">
+                                    <ion-label *ngIf="student; else unknown">{{student['l_name']}} {{student['f_name']}}</ion-label>
+                                    <ng-template #unknown><ion-label>Unknown</ion-label></ng-template>
+                                </ion-item>
+                            </ion-list>
+                        </div>
+                    </ion-accordion>
+                </ion-item>
+            </ion-accordion-group>
+        </div>
     </ng-container>
 
     <div *ngIf="showAssoMembers.value">
@@ -207,8 +205,8 @@
         <div lines="none" class="addButtonContainer">
             <ion-button (click)="createPartner()" color="success"> <ion-icon name="add-circle-outline"></ion-icon> Add new</ion-button>
         </div>
-        <ion-list lines="none">
-            <ion-item *ngFor="let partner of partnersData; let i = index" lines="none">
+        <ion-list>
+            <ion-item *ngFor="let partner of partnersData; let i = index">
                 <ion-grid>
                     <ion-row>
                         <ion-col size="3">

@@ -17,8 +17,6 @@
             <ion-icon name="person-outline" class="hideableIcon"></ion-icon>
         </ion-tab-button>
 
-        <!-- TODO replace with ngswitch -->
-        <!-- <ng-template #logged [ngSwitch]=""> -->
         <ng-template #logged>
             <ion-tab-button *ngIf="isTeacher|async" tab="accountTeacher">
                 <ion-label class="hideableLabel"> Account </ion-label>
@@ -37,8 +35,7 @@
             
             <ion-tab-button *ngIf="isAdmin|async" tab="admin">
                 <ion-label class="hideableLabel"> Administration </ion-label>
-                <!-- <ion-img src="../../assets/icons/admin.png" class="hideableIcon"></ion-img> -->
-                <ion-icon src="../../assets/icons/admin.svg" class="hideableIcon"></ion-icon>
+                <ion-icon name="build-outline" class="hideableIcon"></ion-icon>
             </ion-tab-button>
         </ng-template>
     </ion-tab-bar>
