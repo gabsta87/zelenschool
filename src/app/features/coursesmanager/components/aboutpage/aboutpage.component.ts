@@ -1,7 +1,6 @@
 import { Component, ElementRef, EventEmitter, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonContent } from '@ionic/angular';
-import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 
 @Component({
   selector: 'app-aboutpage',
@@ -17,7 +16,7 @@ export class AboutpageComponent {
   myAnchor!:any;
 
   private _positions : any[] = [];
-  constructor(private readonly _route: ActivatedRoute,private readonly _db: AngularfireService){
+  constructor(private readonly _route: ActivatedRoute,private readonly _router:Router){
 
     this._route.fragment.subscribe(fragment => { 
       this.fragment = fragment;
@@ -67,9 +66,8 @@ export class AboutpageComponent {
     this._positions = this.divs.filter((e:any) => e.nativeElement.id.includes("anchor_"))
   }
 
-  goToGallery(galleryName:string){
-    console.log("todo");
-    
+  goToGallery(galleryId:string){
+    this._router.navigate(["gallery"],{fragment:galleryId});
   }
 
 }

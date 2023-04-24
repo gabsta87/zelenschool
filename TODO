@@ -1,7 +1,6 @@
 
 Questions:
     Credit card
-    ☐ activity link to gallery : mandatory ? Must have the gallery before the activity ? 
     ✘ Members order is important ? @cancelled(23-04-18 12:41)
     ✘ Teacher can also be admin ? @cancelled(23-03-30 17:26)
     ✔ Phone numbers : swiss/ukrainian or whatever @done(23-03-30 17:26)
@@ -16,10 +15,11 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 Misc :
-    ✔ icon colors for nav bar @done(23-04-23 18:20)
+    ☐ Multilingual system (ukrainian/français (deepl api ?))
     ☐ better galleries management for mobile 
-    ☐ design for mobile version @high
     ☐ change schedule icons with svg instead of images
+    ✔ icon colors for nav bar @done(23-04-23 18:20)
+    ✔ design for mobile version @high @done(23-04-24 16:55)
     ✔ S-permit not mandatory to register (display info : free course for s-permit) @done(23-04-18 14:37)
     ✔ Prevent unsubscibtion right before the course (12h) (tell this when they subscribe) @done(23-04-22 20:48)
     ✔ Galleries : when leaving a folder, empty temporary list @done(23-04-18 13:58)
@@ -29,9 +29,8 @@ Misc :
     ✔ redirect after creating teacher account or display popup @done(23-04-18 14:58)
     ✔ Admin page : when clicking on teacher's requests, open Users panel if closed @done(23-04-18 14:58)
     ✔ Course creation : forbid negative numbers @done(23-04-18 15:13)
-    ☐ activities management (link from activities to galleries)
+    ✔ activities management (link from activities to galleries) @done(23-04-24 16:55)
     ✔ Popover to confirm registration to a course for students @done(23-04-18 15:06)
-    ☐ Multilingual system (ukrainian/français (deepl api ?))
     ✔ load rooms from DB, and check rooms conflict from DB @done(23-04-14 23:31)
     ✔ gallery -> folders @done(23-04-12 15:29)
     ✔ galleries management @done(23-04-14 18:12)

@@ -363,7 +363,9 @@
                             <ion-label>Gallery</ion-label> 
                         </ion-col>
                         <ion-col>
-                            <ion-input type="text" [(ngModel)]="activity.link"> </ion-input>
+                            <ion-select interface="action-sheet" [(ngModel)]="activity.link">
+                                <ion-select-option [value]="act['id']" *ngFor="let act of (galleries|async)">{{act['name']}}</ion-select-option>
+                            </ion-select>
                         </ion-col>
                     </ion-row>
                     <ion-row>

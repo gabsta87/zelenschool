@@ -1,7 +1,8 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DocumentData } from '@angular/fire/firestore';
+import { ActivatedRoute, Router } from '@angular/router';
 import { getDownloadURL } from 'firebase/storage';
-import { Observable, of } from 'rxjs';
+import { Observable, find, findIndex, firstValueFrom, map, of } from 'rxjs';
 import { StorageService } from 'src/app/shared/service/storage.service';
 
 // import Swiper core and required modules
@@ -25,21 +26,44 @@ export class GallerypageComponent {
   galleries = this._storage.getGalleries();
   imagesCollections : {id:string,name:string,images:any}[] = [];
   openFolderIndex = -1;
+  openingGalleryId :string|null = null;
 
   ionViewDidEnter(){
     this.openFolderIndex = -1;
     this.imagesToDisplay = of([]);
   }
 
-  constructor(private readonly _storage : StorageService){
+  async ionViewWillEnter(){
+    if(this.openingGalleryId){
+      let foundIndex = await firstValueFrom(this.galleries.pipe(map((galleriesList:any) =>
+        galleriesList.findIndex((gallery:any)=>gallery.id == this.openingGalleryId )
+      )));
+  
+      if(this.openingGalleryId)
+        this.openGallery(this.openingGalleryId,foundIndex);
+
+      this.openingGalleryId = null;
+      this._router.navigate([]);
+    }
+  }
+
+  constructor(private readonly _storage : StorageService,private readonly _route:ActivatedRoute, private readonly _router:Router){
+
     this.galleries.subscribe((e:any) => { 
       this.imagesCollections = [];
       e.forEach((element:DocumentData) =>
         this.imagesCollections.push({id:element['id'],name:element['name'],images:this._storage.getGalleryImages(element['id'])})
     )})
+
+    this._route.fragment.subscribe( fragment => { 
+      this.openingGalleryId = fragment;
+    })
   }
 
   async openGallery(galleryId:string,index:number){
+    if(index < 0)
+      return
+
     this.openFolderIndex = index;
     
     if(!this.imagesCollections[index].images){
