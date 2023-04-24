@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { getApp } from "firebase/app";
-import { deleteObject, getStorage, listAll, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
-import { getDownloadURL } from 'firebase/storage'; // Ajout de l'importation
-import { finalize, firstValueFrom, map } from 'rxjs';
-import { AngularfireService } from './angularfire.service';
 import { DocumentData } from 'firebase/firestore';
+import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
+import { firstValueFrom } from 'rxjs';
+import { AngularfireService } from './angularfire.service';
 
 @Injectable({
   providedIn: 'root'

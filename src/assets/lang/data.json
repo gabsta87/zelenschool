@@ -1,0 +1,179 @@
+{
+    "en":{
+        "email":"E-mail",
+        "partners":"Partners",
+        "navbar":{
+            "about":"About us",
+            "activities":"Activities",
+            "partners":"Partners",
+            "contact":"Contact",
+            "donate":"Donate",
+            "gallery":"Gallery",
+            "schedule":"Schedule",
+            "account":"Account",
+            "admin":"Administration"
+        },
+        "about":{
+            "aboutTitle":"Created with love and care for Ukraine in Switzerland",
+            "contactUs":"Contact us",
+            "assoTitle":"Ukraine Reborn association ",
+            "assoDescription":[
+                "We are an Independent Humanitarian Support Association that has started from a little collection point in Swiss Romande in the first week of war in Ukraine.",
+                "In just 3 weeks we have been able to collect more then 1000 boxes of humanitarian help that was sent to Ukraine and helped over 20 families fleeing to Switzerland. We have seen and personally were touched by how stressed and lost refugees are, and how our small actions are making a big difference.",
+                "Now, we are elevating our efforts uniting with our allies for the good cause." ],
+            "missionTitle":"Our mission",
+            "missionDescription":"We believe that everyone has a right to live in freedom and safety. That’s why we are on a mission to help Ukrainian refuges that have fled to Switzerland restarting their lives and making the integration process as smooth as possible. Our primary focus is on most vulnerable population women and kids. ",
+            "activitiesTitle":"Branch of activities ",
+            "supportBanner":"Want to support us ? ",
+            "teamTitle":"Our Team ",
+            "teamDescription":"Agile team of experienced professionals with: ",
+            "teamQualities":[
+                "Deep understanding of Ukrainian mentality and refugees integration needs in Switzerland",
+                "Proven experience in managing complex projects at the global scale, including education",
+                "Know-how in mobilizing people through social to create a movement and impact at scale"],
+            "contactDescription":"We are happy to get any help from any people who share our mission",
+            "donateTitle":"Donate now",
+            "donateDescription":"Our association supports well-being and integration of Ukrainian refugees seeking protection in Switzerland. Your donation is vital for people who have fled Ukraine. You could support our activities by making donations. ",
+            "beneficiaryTitle":"Beneficiary",
+            "donateMoreInfo":"Ukraine Reborn is non-profit association that is tax-exempt due to its public utility purpose. If you are an individual or corporate donor that pays taxes in Switzerland, you may deduct your donations from your taxable income. The maximum deduction amount varies depending on your canton of residence. We will be happy to send you an attestation for tax purposes upon request, for the donation amounts of minimum 100.- CHF per year. Please send us e-mail with your full name, address, contact details and amount of donation to "
+        },
+        "schedule":{
+            "previous":"Previous",
+            "today":"Today",
+            "next":"Next",
+            "month":"Month",
+            "week":"Week",
+            "day":"Day",
+            "futureEvents":"Future events",
+            "createCourse":"Create course",
+            "title":"Title",
+            "time":"Time",
+            "teacher":"Teacher",
+            "room":"Room",
+            "students":"Students"
+        },
+        "account":{
+            "firstName":"First name",
+            "lastName":"Last name",
+            "phone":"Phone number"
+        }
+    },
+    "fr":{
+        "email":"E-mail",
+        "partners":"Partenaires",
+        "navbar":{
+            "about":"À propos",
+            "activities":"Activités",
+            "partners":"Partenaires",
+            "contact":"Contact",
+            "donate":"Donation",
+            "gallery":"Gallerie",
+            "schedule":"Calendrier",
+            "account":"Compte",
+            "admin":"Administration"
+        },
+        "about":{
+            "aboutTitle":"Créé avec soin et amour en Suisse pour l'Ukraine",
+            "contactUs":"Contactez-nous",
+            "assoTitle":"Association Ukraine Reborn",
+            "assoDescription":[
+                "Nous sommes une association indépendante de soutien humanitaire qui a démarré à partir d'un petit point de collecte en Suisse romande au cours de la première semaine de guerre en Ukraine",
+                "En seulement 3 semaines, nous avons pu collecter plus de 1000 boîtes d'aide humanitaire qui ont été envoyées en Ukraine et ont aidé plus de 20 familles fuyant vers la Suisse. Nous avons vu et avons été personnellement touchés par le stress et la perte des réfugiés, et par le fait que nos petites actions font une grande différence",
+                "Maintenant, nous augmentons nos efforts en nous unissant à nos alliés pour la bonne cause."],
+            "missionTitle":"Notre mission",
+            "missionDescription":"Nous pensons que chacun a le droit de vivre dans la liberté et la sécurité. C'est pourquoi nous avons pour mission d'aider les réfugiés ukrainiens qui ont fui vers la Suisse à redémarrer leur vie et à rendre le processus d'intégration aussi facile que possible. Nous portons une attention particulière à la population la plus vulnérable, à savoir les femmes et les enfants.",
+            "activitiesTitle":"Branches d'activités ",
+            "supportBanner":"Vous voulez nous aider ? ",
+            "teamTitle":"Notre équipe",
+            "teamDescription":"Équipe agile de professionnels expérimentés avec : ",
+            "teamQualities":[
+                "Compréhension approfondie de la mentalité ukrainienne et des besoins d'intégration des réfugiés en Suisse",
+                "Expérience avérée de la gestion de projets complexes à l'échelle mondiale, y compris dans le domaine de l'éducation",
+                "Savoir-faire en matière de mobilisation sociale pour créer un mouvement et un impact à grande échelle"],
+            "contactDescription":"Nous sommes heureux de recevoir l'aide de toute personne qui partage notre mission.",
+            "donateTitle":"Donnez maintenat",
+            "donateDescription":"Notre association soutient le bien-être et l'intégration des réfugiés ukrainiens qui cherchent protection en Suisse. Votre don est vital pour les personnes qui ont fui l'Ukraine. Vous pouvez soutenir nos activités en faisant des dons.",
+            "beneficiaryTitle":"Bénéficiaire",
+            "donateMoreInfo":"Ukraine Reborn est une association à but non lucratif exonérée d'impôts en raison de son but d'utilité publique. Si vous êtes un particulier ou une entreprise donatrice qui paie des impôts en Suisse, vous pouvez déduire vos dons de votre revenu imposable. Le montant maximal de la déduction varie en fonction de votre canton de résidence. Sur demande, nous vous enverrons volontiers une attestation fiscale pour les dons d'un montant minimum de 100 CHF par an. Veuillez nous envoyer un e-mail avec votre nom complet, votre adresse, vos coordonnées et le montant de votre don à l'adresse suivante "
+        },
+        "schedule":{
+            "previous":"Précédant",
+            "today":"Maintenant",
+            "next":"Prochain",
+            "month":"Mois",
+            "week":"Semaine",
+            "day":"Jour",
+            "futureEvents":"Futurs événements",
+            "createCourse":"Créer un cours",
+            "title":"Titre",
+            "time":"Horaire",
+            "teacher":"Enseigant",
+            "room":"Salle",
+            "students":"Étudiants"
+        },
+        "account":{
+            "firstName":"Prénom",
+            "lastName":"Nom de famille",
+            "phone":"Numéro de tel."
+        }
+    },
+    "ua":{
+        "email": "Електронна пошта",
+        "partners": "Партнери",
+        "navbar":{
+            "about": "Про",
+            "activities": "Діяльність",
+            "partners": "Партнери",
+            "contact": "Контакт",
+            "donate": "Пожертвувати",
+            "gallery": "Галерея",
+            "schedule": "Календар",
+            "account": "Обліковий запис",
+            "admin": "Адміністрація"
+        },
+        "about":{ 
+            "aboutTitle": "Створено з турботою та любов'ю у Швейцарії для України",
+            "contactUs": "Зв'яжіться з нами",
+            "assoTitle": "Асоціація Україна Відроджена",
+            "assoDescription":[
+                "Ми - незалежна асоціація гуманітарної підтримки, яка почала свою діяльність з невеликого пункту збору допомоги у франкомовній Швейцарії в перший тиждень війни в Україні",
+                "Лише за 3 тижні ми змогли зібрати понад 1000 коробок гуманітарної допомоги, які були відправлені в Україну і допомогли більш ніж 20 сім'ям, що втекли до Швейцарії. Ми бачили і були особисто зворушені стресом і втратами біженців, а також тим фактом, що наші маленькі дії мають велике значення",
+                "Зараз ми збільшуємо наші зусилля, приєднуючись до наших союзників заради доброї справи."],
+            "missionTitle": "Наша місія",
+            "missionDescription": "Ми віримо, що кожна людина має право жити у свободі та безпеці. Саме тому наша місія - допомогти українським біженцям, які втекли до Швейцарії, розпочати нове життя та максимально полегшити процес інтеграції. Особливу увагу ми приділяємо найбільш вразливим верствам населення, а саме жінкам та дітям",
+            "activitiesTitle": "Напрямки діяльності",
+            "supportBanner": "Бажаєте нам допомогти? ",
+            "teamTitle": "Наша команда",
+            "teamDescription": "Гнучка команда досвідчених професіоналів з : ",
+            "teamQualities":[
+                "Глибоке розуміння українського менталітету та інтеграційних потреб біженців у Швейцарії",
+                "Підтверджений досвід управління складними проектами глобального масштабу, в тому числі у сфері освіти", "Експертиза у сфері соціальної мобілізації та інтеграції біженців у Швейцарії",
+                "Експертиза в соціальній мобілізації для створення руху та впливу в широких масштабах"],
+            "contactDescription": "Ми вітаємо допомогу від усіх, хто поділяє нашу місію",
+            "donateTitle": "Пожертвувати зараз",
+            "donateDescription": "Наша асоціація підтримує добробут та інтеграцію українських біженців, які шукають захисту в Швейцарії. Ваша пожертва є життєво важливою для людей, які втекли з України. Ви можете підтримати нашу діяльність, зробивши пожертву.",
+            "beneficiaryTitle": "Бенефіціар",
+            "donateMoreInfo": "Ukraine Reborn є неприбутковою організацією, звільненою від сплати податків через свою суспільну мету. Якщо ви є приватною особою або корпоративним донором, який сплачує податки у Швейцарії, ви можете вирахувати ваші пожертви з вашого оподатковуваного доходу. Максимальна сума відрахування залежить від кантону, в якому ви проживаєте. За запитом ми з радістю надішлемо вам податкову довідку для пожертв на суму не менше 100 швейцарських франків на рік. Будь ласка, надішліть нам електронного листа з вашим повним ім'ям, адресою, контактними даними та сумою вашої пожертви на адресу "
+        },
+        "schedule":{ 
+            "previous": "Попередній",
+            "today": "Зараз",
+            "next": "Наступний",
+            "month": "Місяць",
+            "week": "Тиждень",
+            "day": "День",
+            "futureEvents": "Майбутні події",
+            "createCourse": "Створити курс",
+            "title": "Назва",
+            "time": "Розклад",
+            "teacher": "Викладач",
+            "room": "Кімната",
+            "students": "Студенти"
+        },
+        "account":{
+            "firstName": "Ім'я",
+            "lastName": "Прізвище",
+            "phone": "Номер телефону"
+        }
+    }
+}

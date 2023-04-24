@@ -1,5 +1,6 @@
 import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
+import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 // import {App} from ‘@ionic-angular’;
 
@@ -16,10 +17,11 @@ export class NavbarComponent {
   @ViewChildren("aboutIonContent") divs!:QueryList<ElementRef>;
   myAnchor !: any;
 
-  constructor(private readonly _userS:UsermanagementService, private readonly _router:Router){ }
+  constructor(private readonly _userS:UsermanagementService, private readonly _router:Router, private readonly _lang:LanguageManagerService){ }
 
   ngAfterViewInit(){
     this.myAnchor = document.querySelector('aboutIonContent');
+    this._lang.showData();
   }
 
   isAdmin = this._userS.isLoggedAsAdmin;
