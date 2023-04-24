@@ -387,6 +387,37 @@ export class AngularfireService{
     return result;
   }
 
+  // Activities management
+
+  async getActivities():Promise<DocumentData[]>{
+    const act = await firstValueFrom(this.getElements("activities"));
+    return act;
+  }
+
+  createActivity(newValue : {title:string,link:string,iconName:string,description:string}){
+    return addDoc(collection(this._dbaccess,"activities"),{
+      title : newValue.title,
+      link : newValue.link,
+      iconName : newValue.iconName,
+      description : newValue.description,
+    })
+  }
+
+  updateActivity(newValue : {id:string,title?:string,link?:string,iconName?:string,description?:string}){
+    const docRef = doc(this._dbaccess,'activities/'+newValue.id);
+    return updateDoc(docRef,{
+      title : newValue.title,
+      link : newValue.link,
+      iconName : newValue.iconName,
+      description : newValue.description,
+    });
+  }
+
+  deleteActivity(id:string){
+    const docRef = doc(this._dbaccess,'activities/'+id);
+    deleteDoc(docRef);
+  }
+
 }
 
 export interface UserInfos {

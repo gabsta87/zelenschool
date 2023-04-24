@@ -3,6 +3,10 @@ ion-tab-button{
     font-size: 18px;
 }
 
+ion-label{
+    margin-bottom: 0px;
+}
+
 ion-tab-button:hover,.tab-selected{
     background-color: var(--ion-color-primary);
     ion-label, ion-icon{

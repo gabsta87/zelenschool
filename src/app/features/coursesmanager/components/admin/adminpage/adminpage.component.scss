@@ -8,8 +8,8 @@ ion-accordion-group {
     width: 100%;
 }
 
-ion-thumbnail{
-    --size: 100px;
+.partnersLogo{
+    min-width: 100px;
 }
 
 ion-input{
@@ -17,10 +17,6 @@ ion-input{
     border-radius: 10px;
 }
 
-ion-col{
-    justify-content: center;
-    display: flex;
-}
 
 .activatedButton{
     --background:transparent;
@@ -54,12 +50,24 @@ ion-col{
     cursor: pointer;
 }
 
+.galleryImage{
+    min-width: 100px;
+    min-height: 100px;
+}
+
 .parnterInputItem{
     width: 100%;
 }
 
-.assoMemberInputs{
+.assoMemberInputs, .activityInputs, .roomsInputs{
     ion-col{
         align-items: center;
+        display: flex;
     }
+}
+
+.activityIcon{
+    min-width: 40px;
+    min-height: 40px;
+    cursor: pointer;
 }

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { ActionSheetController, ModalController } from '@ionic/angular';
@@ -43,6 +43,7 @@ export class AdminpageComponent {
   partnersData = this._route.snapshot.data['adminData'].partnersData;
   roomsData = this._route.snapshot.data['adminData'].roomsData;
   galleries = this._route.snapshot.data['adminData'].galleries as Observable<DocumentData[]>;
+  @Input() activities = this._route.snapshot.data['adminData'].activities;
 
   searchString = "";
   statusToFilter = "all";
@@ -51,6 +52,7 @@ export class AdminpageComponent {
   showUsers = new BehaviorSubject(false);
   showCourses = new BehaviorSubject(false);
   showAssoMembers = new BehaviorSubject(false);
+  showActivities = new BehaviorSubject(false);
 
   requestsCount = this.usersListObs.pipe(
     map(usersList => usersList.filter((user:any) => user.status == 'request')),
@@ -459,4 +461,27 @@ export class AdminpageComponent {
     }, 2000);
   }
 
+  // Activities management
+
+  setIconName(activity:any,name:string){
+    activity.iconName = name;
+  }
+
+  createActivity(){
+    (this.activities as {}[]).unshift({id:undefined,link:"",title:"",iconName:"add-circle-outline",description:""})
+  }
+
+  deleteActivity(id:string,index:number){
+    this._db.deleteActivity(id);
+    (this.activities as {}[]).splice(index,1);
+  }
+
+  async updateActivity(activity:any){
+    if(activity.id == undefined){
+      const result = await this._db.createActivity(activity);
+      activity.id = result.id;
+    }else{
+      this._db.updateActivity(activity);
+    }
+  }
 }

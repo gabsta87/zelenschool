@@ -26,6 +26,7 @@ export class AboutpageComponent {
 
   members = this._route.snapshot.data['aboutData'].members;
   partners_addresses = this._route.snapshot.data['aboutData'].partners;
+  activities = this._route.snapshot.data['aboutData'].activities;
 
   ionViewWillEnter(){
     if(this.fragment)
@@ -66,9 +67,9 @@ export class AboutpageComponent {
     this._positions = this.divs.filter((e:any) => e.nativeElement.id.includes("anchor_"))
   }
 
-  contactButtonEvt(){
-    //TODO
-    console.log("TODO");
+  goToGallery(galleryName:string){
+    console.log("todo");
+    
   }
 
 }

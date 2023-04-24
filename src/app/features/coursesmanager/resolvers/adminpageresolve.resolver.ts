@@ -5,7 +5,6 @@ import { Observable, firstValueFrom, switchMap } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 
 interface AdminData{
-  articles:any[],
   usersObs:Observable<DocumentData[]>,
   coursesObs:Observable<DocumentData[]>,
   assoMembers:Observable<DocumentData[]>,
@@ -14,6 +13,7 @@ interface AdminData{
   rooms : Observable<DocumentData[]>,
   roomsData : {id:string,name:string,maxStudents:number}[],
   galleries : Observable<DocumentData[]>;
+  activities : DocumentData[];
 }
 
 @Injectable({
@@ -109,6 +109,8 @@ export class AdminpageresolveResolver implements Resolve<AdminData> {
     }))
 
     result.galleries = this._db.getGalleries();
+
+    result.activities = await this._db.getActivities();
 
     return result;
   }
