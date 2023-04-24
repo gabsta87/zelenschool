@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 import { emailValidator,phoneValidator,passwordValidator } from 'src/app/shared/service/validators-lib.service';
 
@@ -15,10 +16,13 @@ export class AccountteacherpageComponent {
   userData = this._route.snapshot.data['userData'];
   userObs!:Observable<any>;
 
+  words = this._lang.currentLanguage.account;
+  
   constructor(
     private readonly _user:UsermanagementService,
     private readonly _router:Router,
-    private readonly _route:ActivatedRoute
+    private readonly _route:ActivatedRoute,
+    private readonly _lang:LanguageManagerService
   ){ }
 
   profileForm = new FormGroup({

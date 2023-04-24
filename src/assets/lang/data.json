@@ -58,7 +58,29 @@
         "account":{
             "firstName":"First name",
             "lastName":"Last name",
-            "phone":"Phone number"
+            "phone":"Phone number",
+            "register":"Register",
+            "login":"Login",
+            "email":"E-mail",
+            "password":"Password",
+            "forgotPassword":"Password forgotten ?",
+            "registerTeacher":"Register as teacher",
+            "googleLogin":"Login with Google",
+            "facebookLogin":"Login with Facebook",
+            "spermit":"S-permit number",
+            "birthday":"Birthday",
+            "address":"Address",
+            "reload":"Reload",
+            "update":"Save",
+            "logout":"Logout",
+            "experience":"Experience",
+            "studentsAge":"Students age",
+            "teacher":"Teacher",
+            "student":"Student",
+            "explanation":[
+                "It's the first time you connect to this website. Which of the following are you ? ",
+                "Please complete your profile after choosing"
+            ]
         }
     },
     "fr":{
@@ -113,14 +135,36 @@
             "createCourse":"Créer un cours",
             "title":"Titre",
             "time":"Horaire",
-            "teacher":"Enseigant",
+            "teacher":"Enseignant",
             "room":"Salle",
             "students":"Étudiants"
         },
         "account":{
             "firstName":"Prénom",
             "lastName":"Nom de famille",
-            "phone":"Numéro de tel."
+            "phone":"Numéro de tel.",
+            "register":"S'inscrire",
+            "login":"Login",
+            "email":"E-mail",
+            "password":"Mot de passe",
+            "forgotPassword":"Mot de passe oublié ?",
+            "registerTeacher":"S'incrire en tant qu'enseignant",
+            "googleLogin":"Login avec Google",
+            "facebookLogin":"Login avec Facebook",
+            "spermit":"Numéro de permis S",
+            "birthday":"Date de naissance",
+            "address":"Adresse",
+            "reload":"Réinitialiser",
+            "update":"Sauvegarder",
+            "logout":"Se déconnecter",
+            "experience":"Expérience",
+            "studentsAge":"Âge des étudiants",
+            "teacher":"Enseignant",
+            "student":"Étudiant",
+            "explanation":[
+                "C'est la première fois que vous vous connectez à ce site. Lequel êtes-vous ?",
+                "Veuillez compléter votre profil après avoir choisi"
+            ]
         }
     },
     "ua":{
@@ -182,7 +226,29 @@
         "account":{
             "firstName": "Ім'я",
             "lastName": "Прізвище",
-            "phone": "Номер телефону"
+            "phone": "Номер телефону",
+            "register": "Зареєструватися",
+            "login": "Логін",
+            "email": "E-mail",
+            "password": "Пароль",
+            "forgotPassword": "Забули пароль?",
+            "registerTeacher": "Зареєструватися як вчитель",
+            "googleLogin": "Увійдіть за допомогою Google",
+            "facebookLogin": "Увійдіть за допомогою Facebook",
+            "spermit": "S-номер дозволу",
+            "birthday": "День народження",
+            "address": "Адреса",
+            "reload": "Перезавантажити",
+            "update": "Зберегти",
+            "logout": "Вихід",
+            "experience": "Досвід",
+            "studentsAge": "Вік студентів",
+            "teacher": "Вчитель",
+            "student": "Студент",
+            "explanation":[
+                "Ви вперше підключаєтеся до цього сайту. Ким ви є? ",
+                "Будь ласка, заповніть свій профіль після вибору"
+            ]
         }
     }
 }
