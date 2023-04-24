@@ -11,7 +11,8 @@
             "gallery":"Gallery",
             "schedule":"Schedule",
             "account":"Account",
-            "admin":"Administration"
+            "admin":"Administration",
+            "login":"Login"
         },
         "about":{
             "aboutTitle":"Created with love and care for Ukraine in Switzerland",
@@ -70,7 +71,8 @@
             "gallery":"Gallerie",
             "schedule":"Calendrier",
             "account":"Compte",
-            "admin":"Administration"
+            "admin":"Administration",
+            "login":"Login"
         },
         "about":{
             "aboutTitle":"Créé avec soin et amour en Suisse pour l'Ukraine",
@@ -129,7 +131,8 @@
             "gallery": "Галерея",
             "schedule": "Календар",
             "account": "Обліковий запис",
-            "admin": "Адміністрація"
+            "admin": "Адміністрація",
+            "login":"Логін"
         },
         "about":{ 
             "aboutTitle": "Створено з турботою та любов'ю у Швейцарії для України",

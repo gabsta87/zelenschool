@@ -13,28 +13,28 @@
         </ion-tab-button>
 
         <ion-tab-button *ngIf="!(isLogged|async); else logged" tab="login">
-            <ion-label class="hideableLabel"> Login </ion-label>
+            <ion-label class="hideableLabel"> {{words.login}} </ion-label>
             <ion-icon name="person-outline" class="hideableIcon"></ion-icon>
         </ion-tab-button>
 
         <ng-template #logged>
             <ion-tab-button *ngIf="isTeacher|async" tab="accountTeacher">
-                <ion-label class="hideableLabel"> Account </ion-label>
+                <ion-label class="hideableLabel"> {{words.account}} </ion-label>
                 <ion-icon name="person-outline" class="hideableIcon"></ion-icon>
             </ion-tab-button>
             
             <ion-tab-button *ngIf="isAdmin|async" tab="accountAdmin">
-                <ion-label class="hideableLabel"> Account </ion-label>
+                <ion-label class="hideableLabel"> {{words.account}} </ion-label>
                 <ion-icon name="person-outline" class="hideableIcon"></ion-icon>
             </ion-tab-button>
     
             <ion-tab-button *ngIf="!(isAdmin|async) && !(isTeacher|async)" tab="account">
-                <ion-label class="hideableLabel"> Account </ion-label>
+                <ion-label class="hideableLabel"> {{words.account}} </ion-label>
                 <ion-icon name="person-outline" class="hideableIcon"></ion-icon>
             </ion-tab-button>
             
             <ion-tab-button *ngIf="isAdmin|async" tab="admin">
-                <ion-label class="hideableLabel"> Administration </ion-label>
+                <ion-label class="hideableLabel"> {{words.admin}} </ion-label>
                 <ion-icon name="build-outline" class="hideableIcon"></ion-icon>
             </ion-tab-button>
         </ng-template>

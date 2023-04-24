@@ -21,24 +21,25 @@ export class NavbarComponent {
 
   ngAfterViewInit(){
     this.myAnchor = document.querySelector('aboutIonContent');
-    this._lang.showData();
   }
 
   isAdmin = this._userS.isLoggedAsAdmin;
   isTeacher = this._userS.isLoggedAsTeacher;
   isLogged = this._userS.isLogged;
 
+  words = this._lang.currentLanguage.navbar;
+
   navigationItems = [
-    {title:"About us",page:"about",routerLink:"/about",fragment:"about",iconName:"information-circle-outline"},
-    {title:"Activities",page:"about",routerLink:"/about",fragment:"activities",iconSrc:"../../assets/icons/activities.svg"},
-    {title:"Partners",page:"about",routerLink:"/about",fragment:"partners",iconSrc:"../../assets/icons/partners.svg"},
-    {title:"Contact",page:"about",routerLink:"/about",fragment:"contact",iconName:"call-outline"},
-    {title:"Donate",page:"about",routerLink:"/about",fragment:"donate",iconSrc:"../../assets/icons/donate.svg"},
+    {title:this.words.about,page:"about",routerLink:"/about",fragment:"about",iconName:"information-circle-outline"},
+    {title:this.words.activities,page:"about",routerLink:"/about",fragment:"activities",iconSrc:"../../assets/icons/activities.svg"},
+    {title:this.words.partners,page:"about",routerLink:"/about",fragment:"partners",iconSrc:"../../assets/icons/partners.svg"},
+    {title:this.words.contact,page:"about",routerLink:"/about",fragment:"contact",iconName:"call-outline"},
+    {title:this.words.donate,page:"about",routerLink:"/about",fragment:"donate",iconSrc:"../../assets/icons/donate.svg"},
   ]
 
   simpleNavItems = [
-    {title:"Gallery",page:"gallery",iconName:"images-outline"},
-    {title:"Schedule",page:"schedule",iconName:"calendar-number-outline"},
+    {title:this.words.gallery,page:"gallery",iconName:"images-outline"},
+    {title:this.words.schedule,page:"schedule",iconName:"calendar-number-outline"},
   ]
 
   goToAnchor(link : {title:string,routerLink:string,fragment:string}){
