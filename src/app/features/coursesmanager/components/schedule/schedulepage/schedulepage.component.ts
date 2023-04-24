@@ -3,7 +3,7 @@ import { isSameDay, isSameMonth } from 'date-fns';
 import { MonthViewDay } from 'calendar-utils';
 import { BehaviorSubject, firstValueFrom, map, Observable, Subject } from 'rxjs';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarMonthViewDay, CalendarView, CalendarWeekViewBeforeRenderEvent, DAYS_OF_WEEK, } from 'angular-calendar';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { IonModal, ModalController } from '@ionic/angular';

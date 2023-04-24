@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { DocumentData } from 'firebase/firestore';
 import { firstValueFrom, Observable } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';

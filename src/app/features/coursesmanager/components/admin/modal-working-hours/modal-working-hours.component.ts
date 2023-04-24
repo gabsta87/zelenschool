@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import * as dayjs from 'dayjs';
-import { Observable, firstValueFrom, groupBy, map, of, switchMap } from 'rxjs';
+import dayjs from 'dayjs';
 
 @Component({
   selector: 'app-modal-working-hours',

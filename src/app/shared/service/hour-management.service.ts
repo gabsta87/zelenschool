@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import * as dayjs from 'dayjs';
-import * as isBetween from 'dayjs/plugin/isBetween';
-import * as utc from 'dayjs/plugin/utc';
-import * as timezone from 'dayjs/plugin/timezone';
-import * as minMax from 'dayjs/plugin/minMax';
+import dayjs from 'dayjs';
+import isBetween from 'dayjs/plugin/isBetween';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+import minMax from 'dayjs/plugin/minMax';
 
 dayjs.extend(utc)
 dayjs.extend(isBetween);

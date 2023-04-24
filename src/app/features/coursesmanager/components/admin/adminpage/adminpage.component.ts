@@ -2,7 +2,7 @@ import { Component, Input, ViewChild } from '@angular/core';
 import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { ActionSheetController, ModalController } from '@ionic/angular';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { BehaviorSubject, combineLatest, firstValueFrom, map, Observable, of } from 'rxjs';
 import { AngularfireService, AssoMember } from 'src/app/shared/service/angularfire.service';
 import { getNowDate } from 'src/app/shared/service/hour-management.service';

@@ -3,7 +3,7 @@ import { Auth } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
 import { AngularfireService } from './angularfire.service';
 import { getNowDate } from './hour-management.service';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 
 @Injectable({
   providedIn: 'root'

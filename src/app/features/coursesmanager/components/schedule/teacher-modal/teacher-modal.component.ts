@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActionSheetController, ModalController } from '@ionic/angular';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { DocumentData } from 'firebase/firestore';
 import { BehaviorSubject, firstValueFrom, Observable, switchMap } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
