@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import languageData from '../../../assets/lang/data.json';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -11,7 +10,7 @@ export class LanguageManagerService {
 
   constructor() { }
 
-  loadLanguage(lang:Language){
+  changeLanguageTo(lang:Language){
     switch(lang){
       case Language.UA:
         this.currentLanguage = languageData.ua;

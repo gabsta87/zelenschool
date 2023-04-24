@@ -2,13 +2,13 @@
     <div class="topImage" id="anchor_about" #anchor_>
         <div class="topElements">
             <h1>
-                Created with love and care for Ukraine in Switzerland
+                {{words.aboutTitle}}
             </h1>
             <br />
         </div>
         <div class="topElements2">
             <a href="mailto:ukrainereborn.ch@gmail.com" target="_newtab">
-                <ion-button>Contact us</ion-button>
+                <ion-button>{{words.contactUs}}</ion-button>
             </a>
         </div>
     </div>
@@ -17,39 +17,35 @@
         <div class="firstPart">
             <div class="partContent">
                 <h2>
-                    Ukraine Reborn association
+                    {{words.assoTitle}}
                 </h2>
-                <ion-text>
-                    <p>
-                        We are an Independent Humanitarian Support Association that has started from a little collection point in Swiss Romande in the first week of war in Ukraine.  
-                    </p>
-                    <p>
-                        In just 3 weeks we have been able to collect more then 1000 boxes of humanitarian help that was sent to Ukraine and helped over 20 families  fleeing to Switzerland. 
-                    </p>
-                    <p>
-                        We have seen and personally were touched by how stressed and lost refugees are,  and how our small actions are making a big difference. Now, we are elevating our efforts uniting with our allies for the good cause. 
-                    </p>
-                </ion-text>
+                <p>
+                    {{words.assoDescription[0]}}
+                </p>
+                <p>
+                    {{words.assoDescription[1]}}
+                </p>
+                <p>
+                    {{words.assoDescription[2]}}
+                </p>
             </div>
         </div>
 
         <div class="firstPart">
             <div class="partContent">
                 <h2>
-                    Our mission
+                    {{words.missionTitle}}
                 </h2>
-                <ion-text>
-                    <p>
-                        We believe that everyone has a right to live in freedom and safety. That’s why we are on a mission to help Ukrainian refuges that have fled to Switzerland  restarting their lives and making the integration process as smooth as possible. Our primary focus is on most vulnerable population women and kids.
-                    </p>
-                </ion-text>
+                <p>
+                    {{words.missionDescription}}
+                </p>
             </div>
         </div>
 
         <!-- Activities Section -->
         <div class="activitiesPart" id="anchor_activities" #anchor_>
             <div class="partContent">
-                <h2>Branch of activities</h2>
+                <h2>{{words.activitiesTitle}}</h2>
                 <ion-grid>
                     <ion-row>
                         <ion-col *ngFor="let activity of activities">
@@ -66,7 +62,7 @@
 
         <div class="filledPart">
             <div class="partContent">
-                <h2>Want to support us ?</h2>
+                <h2>{{words.supportBanner}}</h2>
             </div>
         </div>
 
@@ -74,18 +70,18 @@
         <div class="membersPart">
             <div class="partContent">
                 <h2>
-                    Our Team
+                    {{words.teamTitle}}
                 </h2>
-                Agile team of experienced professionals with:
+                {{words.teamDescription}}
                 <ul>
                     <li>
-                        Deep understanding of Ukrainian mentality and refugees integration needs in Switzerland
+                        {{words.teamQualities[0]}}
                     </li>
                     <li>
-                        Proven experience in managing complex projects at the global scale, including education
+                        {{words.teamQualities[1]}}
                     </li>
                     <li>
-                        Know-how in mobilizing people through social to create a movement and impact at scale
+                        {{words.teamQualities[2]}}
                     </li>
                 </ul>
 
@@ -120,7 +116,7 @@
         <!-- Partners Section -->
         <div class="partnersSection" id="anchor_partners" #anchor_>
             <div class="partnersContent">
-                <h2>Partners</h2>
+                <h2>{{words.partners}}</h2>
                 <ion-grid>
                     <ion-row class="ion-align-items-center">
                         <ion-col *ngFor="let partner of partners_addresses">
@@ -138,14 +134,14 @@
         <!-- Contact Section -->
         <div class="filledPart" id="anchor_contact" #anchor_>
             <div class="partContent">
-                <h2>Contact us</h2>
+                <h2>{{words.contactUs}}</h2>
             </div>
         </div>
         <div class="contactPageContainer">
             <div class="partContent">
                 <ion-text>
                     <p>
-                        We are happy to get any help form indifferent people who share our mission
+                        {{words.contactDescription}}
                     </p>
                     <p>
                         ukrainereborn.ch@gmail.com
@@ -173,9 +169,9 @@
         <!-- Donate Section -->
         <div class="donatePart" id="anchor_donate" #anchor_>
             <div class="partContent">
-                <h1>Donate now</h1>
+                <h1>{{words.donateTitle}}</h1>
                 <p>
-                    Our association supports well-being and integration of Ukrainian refugees seeking protection in Switzerland. Your donation is vital for people who have fled Ukraine. You could support our activities by making donations.
+                    {{words.donateDescription}}
                 </p>
                 <p>
                     IBAN: CH05 0900 0000 1592 7366 8
@@ -184,7 +180,7 @@
                     BIC: POFICHBEXXX
                 </p>
                 <p>
-                    Beneficiary: Ukraine Reborn, 1290 Versoix, Switzerland
+                    {{words.beneficiaryTitle}} : Ukraine Reborn, 1290 Versoix, Switzerland
                 </p>
         
                 <ion-grid>
@@ -202,9 +198,7 @@
             
                 <ion-text>
                     <p class="donateText">
-                        Ukraine Reborn is non-profit association that is tax-exempt due to its public utility purpose. If you are an individual or corporate donor that pays taxes in Switzerland, you may deduct your donations from your taxable income. The maximum deduction amount varies depending on your canton of residence.
-            
-                        We will be happy to send you an attestation for tax purposes upon request, for the donation amounts of minimum 100.- CHF per year. Please send us e-mail with your full name, address, contact details and amount of donation to <a href="mailto: UkraineRebornDonations@gmail.com">e-mail</a>.
+                        {{words.donateMoreInfo}} <a href="mailto: UkraineRebornDonations@gmail.com">{{words.email}}</a>.
                     </p>
                 </ion-text>
             </div>

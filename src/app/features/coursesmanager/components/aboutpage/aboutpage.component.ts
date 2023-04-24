@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonContent } from '@ionic/angular';
+import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
 
 @Component({
   selector: 'app-aboutpage',
@@ -15,8 +16,11 @@ export class AboutpageComponent {
   fragment!:any;
   myAnchor!:any;
 
+  words = this._lang.currentLanguage.about;
+
   private _positions : any[] = [];
-  constructor(private readonly _route: ActivatedRoute,private readonly _router:Router){
+  
+  constructor(private readonly _route: ActivatedRoute,private readonly _router:Router, private readonly _lang : LanguageManagerService){
 
     this._route.fragment.subscribe(fragment => { 
       this.fragment = fragment;
