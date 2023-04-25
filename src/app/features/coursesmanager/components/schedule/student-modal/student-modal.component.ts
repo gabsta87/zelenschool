@@ -5,6 +5,7 @@ import { DocumentData } from 'firebase/firestore';
 import { firstValueFrom, Observable } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { getNowDate } from 'src/app/shared/service/hour-management.service';
+import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 
 
@@ -32,7 +33,13 @@ export class StudentModalComponent {
   duration = 1;
   durationUnit!:dayjs.ManipulateType;
 
-  constructor(private modalCtrl: ModalController,private readonly _db: AngularfireService,private readonly _user:UsermanagementService) { }
+  words = this._lang.currentLanguage.schedule;
+
+  constructor(private modalCtrl: ModalController,
+    private readonly _db: AngularfireService,
+    private readonly _user:UsermanagementService,
+    private readonly _lang:LanguageManagerService
+    ) { }
   
   async ionViewWillEnter(){
     this.dataObs = this._db.getCalendarEntry(this.meta.id);

@@ -5,6 +5,7 @@ import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { createUserWithEmailAndPassword, getAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { bdValidator, emailValidator, passwordValidator, permitValidator, phoneValidator } from 'src/app/shared/service/validators-lib.service';
+import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
 
 @Component({
   selector: 'app-create-account',
@@ -12,6 +13,8 @@ import { bdValidator, emailValidator, passwordValidator, permitValidator, phoneV
   styleUrls: ['./create-account.component.scss']
 })
 export class CreateAccountComponent {
+
+  words = this._lang.currentLanguage.account;
 
   profileForm!:FormGroup<{
     email:FormControl<string|null>,
@@ -28,7 +31,7 @@ export class CreateAccountComponent {
   isTeacher = new BehaviorSubject(false);
   errorMessage = "";
 
-  constructor(private readonly _db:AngularfireService,private readonly _router: Router){
+  constructor(private readonly _db:AngularfireService,private readonly _router: Router,private readonly _lang:LanguageManagerService){
     this.profileForm = new FormGroup({
       email: new FormControl('',Validators.compose([
         emailValidator(),

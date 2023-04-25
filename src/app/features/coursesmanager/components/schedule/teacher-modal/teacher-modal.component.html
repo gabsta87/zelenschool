@@ -7,12 +7,12 @@
 <ion-content class="ion-padding" (keydown.enter)="confirm()">
     <form (ngSubmit)="confirm()" #courseForm="ngForm">
     <ion-item>
-        <ion-label>Title : </ion-label>
+        <ion-label>{{words.title}} : </ion-label>
         <ion-input type="text" required placeholder="Course title" name="title" [(ngModel)]="title" [disabled]="cannotModify"></ion-input>
     </ion-item>
 
     <ion-item>
-        <ion-label>Room :</ion-label>
+        <ion-label>{{words.room}} :</ion-label>
         <ion-select interface="popover" required placeholder="Select room" name="room_id" [(ngModel)]="room_id" [disabled]="cannotModify" (ionChange)="updateRoom($event)">
             <ng-container *ngIf="rooms | async as roomsList">
                 <ion-select-option *ngFor="let room of roomsList" [value]="room['id']">{{room['name']}}</ion-select-option>
@@ -21,11 +21,11 @@
     </ion-item>
 
     <ion-item [disabled]="cannotModify">
-        <ion-text>Author : {{creatorName}}</ion-text>
+        <ion-text>{{words.teacher}} : {{creatorName}}</ion-text>
     </ion-item>
 
     <ion-item class="hours" [disabled]="cannotModify" >
-        <ion-label>Time :</ion-label>
+        <ion-label>{{words.time}} :</ion-label>
         <ion-select interface="popover" aria-label="hour" placeholder="Select hour" [value]="defaultHour" (ionChange)="updateStartingHour($event)">
             <ion-select-option *ngFor="let number of [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22]" [value]="number">{{number}}</ion-select-option>
         </ion-select>
@@ -35,32 +35,32 @@
     </ion-item>
 
     <ion-item [disabled]="cannotModify">
-        <ion-label>Duration</ion-label>
+        <ion-label>{{words.duration}}</ion-label>
         <ion-input type="number" value="1" [min]="0" required name="duration" [(ngModel)]="duration" (ionChange)="updateDuration($event)"></ion-input>
         <ion-select interface="popover" name="durationUnit" (ionChange)="updateDurationUnit($event)" [(ngModel)]="durationUnit">
-            <ion-select-option value="hour">hours</ion-select-option>
-            <ion-select-option value="minute">minutes</ion-select-option>
+            <ion-select-option value="hour">{{words.hours}}</ion-select-option>
+            <ion-select-option value="minute">{{words.minutes}}</ion-select-option>
         </ion-select>
     </ion-item>
 
     <ion-item>
-        <ion-label>Max participants</ion-label>
+        <ion-label>{{words.maxParticipants}}</ion-label>
         <ion-input type="number" placeholder="0" [min]="0" required name="max_participants" [(ngModel)]="max_participants" [disabled]="cannotModify"></ion-input>
     </ion-item>
 
     <ion-item>
-        <ion-label>Description</ion-label>
+        <ion-label>{{words.description}}</ion-label>
         <ion-textarea [(ngModel)]="description" [autoGrow]="true" required name="description" [disabled]="cannotModify"> </ion-textarea>
     </ion-item>
 
     <ion-accordion-group *ngIf="dataObs|async as event">
     <ion-accordion value="students">
         <ion-item slot="header" color="light">
-          <ion-label>Students ({{event['attendantsId'].length}}/{{max_participants}})</ion-label>
+          <ion-label>{{words.students}} ({{event['attendantsId'].length}}/{{max_participants}})</ion-label>
         </ion-item>
 
         <div class="ion-no-padding" slot="content" *ngFor="let stud of event['attendantsId']">
-            <ng-container *ngIf="stud; else unknown">
+            <ng-container *ngIf="stud">
                 <ion-grid>
                     <ion-row>
                         <ion-col>
@@ -70,41 +70,31 @@
                         </ion-col>
                         <ion-col *ngIf="isPassedEvent">
                             <ion-item lines="none">
-                                <ion-label>Absent</ion-label>
+                                <ion-label>{{words.absent}}</ion-label>
                                 <ion-toggle slot="end" [checked]="stud.isAbsent" (ionChange)="setStudentAbsent($event,stud.id)"></ion-toggle>
                             </ion-item>
                         </ion-col>
                     </ion-row>
                 </ion-grid>
             </ng-container>
-            <ng-template #unknown>
-                <ion-grid>
-                    <ion-row>
-                        <ion-col>
-                            <ion-item lines="none"><ion-label>Unknown</ion-label></ion-item>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </ng-template>
         </div>
     </ion-accordion>
     </ion-accordion-group>
 
     <div *ngIf="collisionEvents && collisionEvents.length > 0">
-        <ion-label>Courses at the same time : </ion-label>
+        <ion-label>{{words.courseSameTime}} : </ion-label>
         <ion-list>
             <ion-item *ngFor="let evt of collisionEvents; let i = index">
                 <ion-label *ngIf="i == collisionIndex ;else normal" color="danger">
                     <h2>{{evt['title']}}</h2>
-                    <p>Room : {{evt['room'].name}}</p>
-                    <p>From {{evt['timeStart']| date: "HH:mm"}} to {{evt['timeEnd']| date: "HH:mm"}}</p>
+                    <p>{{words.room}} : {{evt['room'].name}}</p>
+                    <p>{{words.from}} {{evt['timeStart']| date: "HH:mm"}} to {{evt['timeEnd']| date: "HH:mm"}}</p>
                 </ion-label>
                 <ng-template #normal>
                 <ion-label>
                     <h2>{{evt['title']}}</h2>
-                    <p>Room : {{evt['room'].name}}</p>
-                    <!-- <p>Room : {{evt['room'].name}}</p> -->
-                    <p>From {{evt['timeStart']| date: "HH:mm"}} to {{evt['timeEnd']| date: "HH:mm"}}</p>
+                    <p>{{words.room}} : {{evt['room'].name}}</p>
+                    <p>{{words.from}} {{evt['timeStart']| date: "HH:mm"}} {{words.to}} {{evt['timeEnd']| date: "HH:mm"}}</p>
                 </ion-label>
                 </ng-template>
             </ion-item>
@@ -117,13 +107,13 @@
 <ion-footer>
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-button (click)="cancel()">Cancel</ion-button>
+            <ion-button (click)="cancel()">{{words.cancel}}</ion-button>
         </ion-buttons>
         <ion-buttons slot="end" *ngIf="isAuthor || isAdmin">
-            <ion-button (click)="deleteEntry()" color="danger" [strong]="true" >Delete</ion-button>
+            <ion-button (click)="deleteEntry()" color="danger" [strong]="true" >{{words.delete}}</ion-button>
         </ion-buttons>
         <ion-buttons slot="end">
-            <ion-button (click)="confirm()" [strong]="true" [disabled]="!isRoomAvailable.value || !courseForm.valid">Confirm</ion-button>
+            <ion-button (click)="confirm()" [strong]="true" [disabled]="!isRoomAvailable.value || !courseForm.valid">{{words.confirm}}</ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-footer>

@@ -3,6 +3,7 @@ import { createUserWithEmailAndPassword, getAuth } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
+import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
 import { emailValidator, passwordValidator, phoneValidator } from 'src/app/shared/service/validators-lib.service';
 
 @Component({
@@ -22,10 +23,12 @@ export class CreateAccountTeacherComponent {
     passData:FormGroup,
   }>;
 
+  words = this._lang.currentLanguage.account;
+
   errorMessage = "";
   isOpen = false;
 
-  constructor(private readonly _db:AngularfireService,private readonly _router: Router){
+  constructor(private readonly _db:AngularfireService,private readonly _router: Router, private readonly _lang:LanguageManagerService){
 
     this.profileForm = new FormGroup({
       email: new FormControl('',Validators.compose([

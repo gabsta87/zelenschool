@@ -7,32 +7,32 @@
 <ion-content (keydown.enter)="confirm()">
     <ion-popover #banPopOver [isOpen]="showBanInfo" (didDismiss)="showBanInfo = false">
     <ng-template>
-        <ion-content class="ion-padding">You cannot subscribe. You were banned on {{ban.date|date:"dd.MM.YY"}} <br> Reason : <ion-text color="danger">{{ban.comment}}</ion-text></ion-content>
+        <ion-content class="ion-padding">{{words.banDetail}} {{ban.date|date:"dd.MM.YY"}} <br> {{words.banReason}} : <ion-text color="danger">{{ban.comment}}</ion-text></ion-content>
     </ng-template>
     </ion-popover>
 
     <div *ngIf="dataObs |async as currentEvent">
     <ion-item *ngIf="creator">
-        <ion-text>Author : {{creator['f_name']}} {{creator['l_name']}}</ion-text>
+        <ion-text>{{words.teacher}} : {{creator['f_name']}} {{creator['l_name']}}</ion-text>
     </ion-item>
     <ion-item>
-        <ion-text>Time : {{currentEvent['timeStart'] | date: "HH:mm"}}</ion-text>
+        <ion-text>{{words.time}} : {{currentEvent['timeStart'] | date: "HH:mm"}}</ion-text>
     </ion-item>
     <ion-item>
-        <ion-text>Duration : {{duration}} {{durationUnit}}<span *ngIf="duration > 1">s</span></ion-text>
+        <ion-text>{{words.duration}} : {{duration}} {{durationUnit}}<span *ngIf="duration > 1">s</span></ion-text>
     </ion-item>
     <ion-item>
-        <ion-text>Room : {{meta.room.name}}</ion-text>
+        <ion-text>{{words.room}} : {{meta.room.name}}</ion-text>
     </ion-item>
     <ion-item>
-        <ion-text>Description : {{currentEvent['description']}}</ion-text>
+        <ion-text>{{words.description}} : {{currentEvent['description']}}</ion-text>
     </ion-item>
     <ion-item>
-        <ion-text>Participants : {{currentEvent['attendantsId'].length}}/{{currentEvent['max_participants']}}</ion-text>
+        <ion-text>{{words.participants}} : {{currentEvent['attendantsId'].length}}/{{currentEvent['max_participants']}}</ion-text>
     </ion-item>
     <ion-item lines="none">
         <ion-checkbox slot="start" [(ngModel)]="isAttending" [disabled]="isSubscribtionBlocked"></ion-checkbox>
-        <ion-label>Participate</ion-label>
+        <ion-label>{{words.participate}}</ion-label>
     </ion-item>
     </div>
 </ion-content>
@@ -40,10 +40,10 @@
 <ion-footer>
     <ion-toolbar>
     <ion-buttons slot="end">
-        <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+        <ion-button (click)="confirm()" [strong]="true">{{words.confirm}}</ion-button>
     </ion-buttons>
     <ion-buttons slot="start">
-        <ion-button (click)="cancel()" [strong]="true">Cancel</ion-button>
+        <ion-button (click)="cancel()" [strong]="true">{{words.cancel}}</ion-button>
     </ion-buttons>
     </ion-toolbar>
 </ion-footer>
@@ -51,9 +51,9 @@
 <ion-popover #popover [isOpen]="isPopoverOpen" (didDismiss)="isPopoverOpen = false">
     <ng-template>
         <ion-content class="ion-padding">
-            You have registered to the course. <br>
+            {{words.registerConfirmation}} <br>
             <ion-text color="danger">
-                 Be warned that you cannot unsubscribe from course later than 12 hours before the course starts. 
+                {{words.registerWarning}}
             </ion-text>
         </ion-content>
     </ng-template>

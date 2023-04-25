@@ -3,7 +3,7 @@
 
     <ion-popover #popover [isOpen]="isBanned.value">
         <ng-template>
-            <ion-content class="ion-padding">You have been banned, and hence cannot participate</ion-content>
+            <ion-content class="ion-padding">{{words.banInfo}}</ion-content>
         </ng-template>
     </ion-popover>
 
@@ -19,7 +19,7 @@
                         (viewDateChange)="closeOpenMonthViewDay()"
                     >
                         <ion-icon name="chevron-back-outline" class="hideableIcon"></ion-icon>
-                        <ion-label class="hideableLabel"> Previous </ion-label>
+                        <ion-label class="hideableLabel"> {{words.previous}} </ion-label>
                     </ion-button>
                     <ion-button
                         class="btn btn-outline-secondary"
@@ -27,7 +27,7 @@
                         [(viewDate)]="viewDate"
                     >
                     <ion-icon name="home-outline" class="hideableIcon"></ion-icon>
-                    <ion-label class="hideableLabel"> Today </ion-label>
+                    <ion-label class="hideableLabel"> {{words.today}} </ion-label>
                     </ion-button>
                     <ion-button
                         class="btn btn-primary"
@@ -37,7 +37,7 @@
                         (viewDateChange)="closeOpenMonthViewDay()"
                     >
                     <ion-icon name="chevron-forward-outline" class="hideableIcon"></ion-icon>
-                    <ion-label class="hideableLabel"> Next </ion-label>
+                    <ion-label class="hideableLabel"> {{words.next}} </ion-label>
                     </ion-button>
                 </ion-buttons>
             </ion-col>
@@ -54,7 +54,7 @@
                         <ng-template #normalMonth>
                             <ion-img src="/../../assets/icons/calendar-month.png" class="hideableImg"> </ion-img>                        
                         </ng-template>
-                        <ion-label class="hideableLabel"> Month </ion-label>
+                        <ion-label class="hideableLabel"> {{words.month}} </ion-label>
                     </ion-button>
                     <ion-button (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">
                         <ng-container *ngIf="view === CalendarView.Week;else normalWeek">
@@ -63,7 +63,7 @@
                         <ng-template #normalWeek>
                             <ion-img src="/../../assets/icons/calendar-week.png" class="hideableImg"> </ion-img> 
                         </ng-template>
-                        <ion-label class="hideableLabel"> Week </ion-label>
+                        <ion-label class="hideableLabel"> {{words.week}} </ion-label>
                     </ion-button>
                     <ion-button (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
                         <ng-container *ngIf="view === CalendarView.Day; else normalDay">
@@ -72,7 +72,7 @@
                         <ng-template #normalDay>
                             <ion-img  src="/../../assets/icons/calendar-day.png" class="hideableImg"> </ion-img>
                         </ng-template>
-                        <ion-label class="hideableLabel"> Day </ion-label>
+                        <ion-label class="hideableLabel"> {{words.day}} </ion-label>
                     </ion-button>
                 </ion-buttons>
             </ion-col>
@@ -125,17 +125,17 @@
     <ion-row class="ion-text-center">
         <ion-col>
             <h3>
-                Future events
+                {{words.futureEvents}}
             </h3>
         </ion-col>
         <ion-col *ngIf="(isTeacher|async) || (isAdmin|async)">
             <ion-buttons class="ion-justify-content-center bottomButtons">
-                <!-- <ion-button id="open-modal" (click)="createEvent()">Create course</ion-button> -->
                 <ion-button 
                     id="open-modal" 
                     fill="solid" 
                     [disabled]="(selectedDays.length == 0) || (isBanned|async)" 
-                    (click)="createEvent()">Create course<span *ngIf="selectedDays.length > 1">s</span></ion-button>
+                    (click)="createEvent()">{{words.createCourse}}</ion-button>
+                    <!-- (click)="createEvent()">{{words.createCourse}}<span *ngIf="selectedDays.length > 1">s</span></ion-button> -->
             </ion-buttons>
         </ion-col>
     </ion-row>
@@ -145,19 +145,19 @@
     <ion-grid class="eventsTable ion-no-padding">
         <ion-row>
             <ion-col (click)="sortCoursesByTitle()">
-                <b>Title</b>
+                <b>{{words.title}}</b>
             </ion-col>
             <ion-col (click)="sortCoursesByTime()">
-                <b>Time</b>
+                <b>{{words.time}}</b>
             </ion-col>
             <ion-col>
-                <b>Teacher</b>
+                <b>{{words.teacher}}</b>
             </ion-col>
             <ion-col size="1">
-                <b>Room</b>
+                <b>{{words.room}}</b>
             </ion-col>
             <ion-col size="1">
-                <b>Students</b>
+                <b>{{words.students}}</b>
             </ion-col>
         </ion-row>
         <ion-row *ngFor="let event of eventsList; index as i" (click)="handleEvent(event)">
@@ -230,15 +230,14 @@
             [mwlCalendarTooltip]="event.title | calendarEventTitle:'monthTooltip':event"
             [tooltipPlacement]="tooltipPlacement"
             [tooltipEvent]="event"
-            [tooltipTemplate]="customToolTipTemplate"
             [tooltipAppendToBody]="tooltipAppendToBody">
         </div>
     </div>
 </ng-template>
 
-<ng-template #customToolTipTemplate>
+<!-- <ng-template #customToolTipTemplate>
     <span>salut</span>
-</ng-template>
+</ng-template> -->
 
 <!-- <ng-template #customCellTemplate let-day="day"
              let-openDay="openDay"

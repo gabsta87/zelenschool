@@ -5,6 +5,7 @@ import { DocumentData } from 'firebase/firestore';
 import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { formatTime, getNowDate } from 'src/app/shared/service/hour-management.service';
+import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
 
 @Component({
   selector: 'app-teacher-create-event-modal',
@@ -35,7 +36,12 @@ export class TeacherCreateEventModalComponent {
   defaultHour!:number;
   defaultMinute!:number;
 
-  constructor(private readonly modalCtrl:ModalController,private readonly _db: AngularfireService){ }
+  words = this._lang.currentLanguage.schedule;
+
+  constructor(private readonly modalCtrl:ModalController,
+    private readonly _db: AngularfireService,
+    private readonly _lang: LanguageManagerService
+    ){ }
 
   ionViewDidEnter(){
     this.defaultHour = dayjs(this.timeStart).hour();

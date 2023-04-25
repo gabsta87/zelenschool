@@ -14,6 +14,7 @@ import { TeacherCreateEventModalComponent } from '../teacher-create-event-modal/
 import { WeekViewHourColumn } from 'calendar-utils';
 
 import { formatTime, getNowDate } from 'src/app/shared/service/hour-management.service';
+import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
 
 export interface CalendarMonthViewEventTimesChangedEvent< EventMetaType = any, DayMetaType = any > 
   extends CalendarEventTimesChangedEvent<EventMetaType> { day: MonthViewDay<DayMetaType>; }
@@ -53,11 +54,14 @@ export class SchedulepageComponent {
   selectedDayRemove= new EventEmitter();
   selectedDaySubscribtion !: any;
 
+  words = this._lang.currentLanguage.schedule;
+
   constructor(
     private readonly _route: ActivatedRoute,
     private readonly _user: UsermanagementService,
     private readonly modalController: ModalController,
     private cd: ChangeDetectorRef,
+    private readonly _lang:LanguageManagerService,
     ) {
     this.futureCourses = this.extractedData.pipe(map( (courses:any) => courses = courses.filter((course:any) =>dayjs(course.timeStart).isAfter(dayjs(getNowDate()),"hour") )))
   }

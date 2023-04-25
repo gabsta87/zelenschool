@@ -5,6 +5,7 @@ import { DocumentData } from 'firebase/firestore';
 import { BehaviorSubject, firstValueFrom, Observable, switchMap } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { formatForIonDateTime, getNowDate } from 'src/app/shared/service/hour-management.service';
+import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 
 @Component({
@@ -38,11 +39,14 @@ export class TeacherModalComponent{
   cannotModify!:boolean;
   isPassedEvent!:boolean;
 
+  words = this._lang.currentLanguage.schedule;
+
   constructor(
     private readonly modalCtrl: ModalController,
     private readonly _db: AngularfireService,
     private readonly _user:UsermanagementService,
     private readonly actionSheetCtrl: ActionSheetController,
+    private readonly _lang:LanguageManagerService,
   ) { }
   
   async ionViewWillEnter(){
