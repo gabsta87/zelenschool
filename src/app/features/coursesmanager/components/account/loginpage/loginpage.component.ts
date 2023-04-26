@@ -69,10 +69,10 @@ export class LoginpageComponent {
       choiceModal.present();
       const {data, role} = await choiceModal.onWillDismiss();
       if(role === "student"){
-        this._dbAccess.updateUser({status:"student"})
+        this._dbAccess.updateCurrentUser({status:"student"})
         this._router.navigate(['/account/']);
       }else if(role === "teacher"){
-        this._dbAccess.updateUser({status:"teacher"})
+        this._dbAccess.updateCurrentUser({status:"teacher"})
         this._router.navigate(['/accountTeacher/']);
       }
     }else{

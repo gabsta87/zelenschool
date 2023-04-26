@@ -91,7 +91,7 @@ export class UsermanagementService{
   }
 
   async updateUser(newValue:any){
-    this._db.updateUser(newValue);
+    this._db.updateCurrentUser(newValue);
   }
 
   getId(){

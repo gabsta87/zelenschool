@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import { Observable, find, firstValueFrom, map, switchMap } from 'rxjs';
 import { formatForDB, getNowDate, isColliding } from './hour-management.service';
+import { ta } from 'date-fns/locale';
 dayjs.extend(isBetween);
 
 @Injectable({
@@ -211,15 +212,13 @@ export class AngularfireService{
     return tempObs.pipe(map(datas => datas.find(e => e['id'] === userId)));
   }
 
-  // Modifies current user infos
-  setUser(param:UserInfos) {
-    const docRef = doc(this._dbaccess,'users/'+this._auth.currentUser?.uid);
-    return setDoc(docRef,{...param});
-    // return setDoc(docRef,{f_name:param.f_name,l_name:param.l_name,birthday:param.birthday,email:param.email,phone:param.phone,s_permit_id:param.s_permit_id,address:param.address});
+  setUser(id:string,data:any){
+    const docRef = doc(this._dbaccess,'users/'+id);
+    return updateDoc(docRef,{...data});
   }
 
   // Updates current user infos
-  updateUser(newValue:any){
+  updateCurrentUser(newValue:any){
     const docRef = doc(this._dbaccess,'users/'+this._auth.currentUser?.uid);
     return updateDoc(docRef,newValue);
   }
@@ -431,6 +430,7 @@ export interface UserInfos {
   address?:string|undefined|null,
   ban?:{author:string,comment:string,date:string}|undefined|null,
   missedCourses?:{courseId:string}|undefined|null,
+  id?:string,
 }
 
 export interface CalendarEntry{

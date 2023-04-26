@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import dayjs from 'dayjs';
 import { BehaviorSubject, combineLatest, firstValueFrom, map, Observable, of } from 'rxjs';
-import { AngularfireService, AssoMember } from 'src/app/shared/service/angularfire.service';
+import { AngularfireService, AssoMember, UserInfos } from 'src/app/shared/service/angularfire.service';
 import { getNowDate } from 'src/app/shared/service/hour-management.service';
 import { BanmodalComponent } from '../banmodal/banmodal.component';
 import { TeacherModalComponent } from '../../schedule/teacher-modal/teacher-modal.component';
@@ -12,6 +12,7 @@ import { StorageService } from 'src/app/shared/service/storage.service';
 import { NewAssoMemberModalComponent } from '../new-asso-member-modal/new-asso-member-modal.component';
 import { GalleryNameModalComponent } from '../gallery-name-modal/gallery-name-modal.component';
 import { ModalWorkingHoursComponent } from '../modal-working-hours/modal-working-hours.component';
+import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 
 @Component({
   selector: 'app-adminpage',
@@ -26,6 +27,7 @@ export class AdminpageComponent {
     private readonly actionSheetCtrl: ActionSheetController,
     private readonly storage: StorageService,
     private readonly modalCtrl: ModalController,
+    private readonly _user : UsermanagementService,
   ) {
     this.galleries.subscribe((e:any) => { 
       this.imagesCollections = [];
@@ -53,6 +55,8 @@ export class AdminpageComponent {
   showCourses = new BehaviorSubject(false);
   showAssoMembers = new BehaviorSubject(false);
   showActivities = new BehaviorSubject(false);
+
+  isSuperAdmin = this._user.isLoggedAsSuperAdmin;
 
   requestsCount = this.usersListObs.pipe(
     map(usersList => usersList.filter((user:any) => user.status == 'request')),
@@ -82,7 +86,7 @@ export class AdminpageComponent {
           users = users.filter ((e:any) => e.ban != undefined)
           break;
         default:
-          users = users.filter( (user:any) => user.status == usersFilter )
+          users = users.filter( (user:any) => user.status.includes(usersFilter) )
           break;
       }
 
@@ -204,6 +208,19 @@ export class AdminpageComponent {
 
   unbanUser(id:string){
     this._db.unbanUser(id);
+  }
+
+  async promoteAdmin(id:string){
+    this.modifyAdmin(id,"admin");
+  }
+
+  private async modifyAdmin(id:string,newStatus:string){
+    let newValue = { status:newStatus,}
+    this._db.setUser(id,newValue);
+  }
+
+  async revokeAdmin(id:string){
+    this.modifyAdmin(id,"teacher")
   }
 
   // Manage events

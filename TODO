@@ -15,7 +15,7 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 Misc :
-    ☐ create superAdmin able to create/delte other admins
+    ✔ create superAdmin able to create/delte other admins @done(23-04-27 01:06)
     ✔ make different colors (green) or badge for courses where user has subcribed @done(23-04-26 23:19)
     ✔ correct hover for mobile @done(23-04-26 19:57)
     ✔ change schedule custom templates @done(23-04-26 22:35)
@@ -23,7 +23,7 @@ Misc :
     ✔ Multilingual system (ukrainian/français (deepl api ?)) @done(23-04-26 20:01)
     ☐ better galleries management for mobile 
     ☐ change schedule icons with svg instead of images
-    ☐ support banner scrolls down to support
+    ✔ support banner scrolls down to support @done(23-04-27 01:06)
     ✔ icon colors for nav bar @done(23-04-23 18:20)
     ✔ design for mobile version @high @done(23-04-24 16:55)
     ✔ S-permit not mandatory to register (display info : free course for s-permit) @done(23-04-18 14:37)

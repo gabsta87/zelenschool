@@ -86,7 +86,7 @@ export class CreateAccountComponent {
         let tmpMail = this.profileForm.get('email')?.value;
 
         if(tmpFName && tmpLName && tmpMail){
-        this._db.setUser({
+        this._db.updateCurrentUser({
           f_name : tmpFName,
           l_name : tmpLName,
           email : tmpMail,
