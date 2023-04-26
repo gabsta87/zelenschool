@@ -55,6 +55,7 @@ export class SchedulepageComponent {
   selectedDaySubscribtion !: any;
 
   words = this._lang.currentLanguage.schedule;
+  showAll = false;
 
   constructor(
     private readonly _route: ActivatedRoute,
@@ -81,7 +82,7 @@ export class SchedulepageComponent {
           title : e['title'],
           start : new Date(e['timeStart']),
           end : new Date(e['timeEnd']),
-          actions : this.actions, 
+          // actions : this.actions, 
           allDay : false,
           meta : {
             id : e['id'],
@@ -108,25 +109,25 @@ export class SchedulepageComponent {
     this.selectedDaySubscribtion.unsubscribe();
   }
 
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-      a11yLabel: 'Edit',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        console.log('Edit event', event);
-        // this.handleCalendarEntry('Edited', event);
-      },
-    },
-    {
-      label: '<i class="fas fa-fw fa-trash-alt"></i>',
-      a11yLabel: 'Delete',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        console.log('Delete event', event);
-        //     this.events = this.events.filter((iEvent) => iEvent !== event);
-        //     this.handleCalendarEntry('Deleted', event);
-      },
-    },
-  ];
+  // actions: CalendarEventAction[] = [
+  //   {
+  //     label: '<i class="fas fa-fw fa-pencil-alt"></i>',
+  //     a11yLabel: 'Edit',
+  //     onClick: ({ event }: { event: CalendarEvent }): void => {
+  //       console.log('Edit event', event);
+  //       // this.handleCalendarEntry('Edited', event);
+  //     },
+  //   },
+  //   {
+  //     label: '<i class="fas fa-fw fa-trash-alt"></i>',
+  //     a11yLabel: 'Delete',
+  //     onClick: ({ event }: { event: CalendarEvent }): void => {
+  //       console.log('Delete event', event);
+  //       //     this.events = this.events.filter((iEvent) => iEvent !== event);
+  //       //     this.handleCalendarEntry('Deleted', event);
+  //     },
+  //   },
+  // ];
 
   async handleCalendarEntry(action: string, event: CalendarEvent) {
     const modal = await this.modalController.create({
@@ -265,11 +266,11 @@ export class SchedulepageComponent {
   sortCoursesByTitle(){
     let result;
     if(this.filterAscTitle)
-      result = this.extractedData.pipe(map((e:any)=> [...e].sort( (a,b) => a['title'].toLowerCase() > b['title'].toLowerCase() ? 1 : -1)))
+      result = this.futureCourses.pipe(map((e:any)=> [...e].sort( (a,b) => a['title'].toLowerCase() > b['title'].toLowerCase() ? 1 : -1)))
     else
-      result = this.extractedData.pipe(map((e:any)=> [...e].sort( (a,b) => a['title'].toLowerCase() < b['title'].toLowerCase() ? 1 : -1)))
+      result = this.futureCourses.pipe(map((e:any)=> [...e].sort( (a,b) => a['title'].toLowerCase() < b['title'].toLowerCase() ? 1 : -1)))
       
-    this.extractedData = result;
+    this.futureCourses = result;
     this.filterAscTitle = !this.filterAscTitle;
     this.filterAscTime = true;
   }
@@ -277,12 +278,12 @@ export class SchedulepageComponent {
   sortCoursesByTime(){
     let result;
     if(this.filterAscTime){
-      result = this.extractedData.pipe(map((e:any)=> [...e].sort( (a,b) => dayjs(a['timeStart']).utc().isAfter(dayjs(b['timeStart']).utc(),"minute") ? 1 : -1 )))
+      result = this.futureCourses.pipe(map((e:any)=> [...e].sort( (a,b) => dayjs(a['timeStart']).utc().isAfter(dayjs(b['timeStart']).utc(),"minute") ? 1 : -1 )))
     }else{
-      result = this.extractedData.pipe(map((e:any)=> [...e].sort( (a,b) => dayjs(a['timeStart']).utc().isBefore(dayjs(b['timeStart']).utc(),"minute") ? 1 : -1)))
+      result = this.futureCourses.pipe(map((e:any)=> [...e].sort( (a,b) => dayjs(a['timeStart']).utc().isBefore(dayjs(b['timeStart']).utc(),"minute") ? 1 : -1)))
     }
       
-    this.extractedData = result;
+    this.futureCourses = result;
     this.filterAscTime = !this.filterAscTime;
     this.filterAscTitle = true;
   }

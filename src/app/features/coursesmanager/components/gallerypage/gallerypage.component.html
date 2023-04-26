@@ -4,7 +4,7 @@
         <ion-grid>
             <ion-row>
                 <ion-col *ngFor="let coll of imagesCollections; let index = index">
-                    <ion-item  (click)="openGallery(coll.id,index)" lines="none">
+                    <ion-item (click)="openGallery(coll.id,index)" lines="none">
                         <ion-thumbnail>
                             <ion-icon *ngIf="index == openFolderIndex; else closeFolder" name="folder-open-outline"></ion-icon>
                             <ng-template #closeFolder>

@@ -15,9 +15,14 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 Misc :
-    ☐ Multilingual system (ukrainian/français (deepl api ?))
+    ☐ créer superAdmin capable de créer/supprimer autres admins
+    ✔ correct hover for mobile @done(23-04-26 19:57)
+    ☐ change schedule custom templates
+    ☐ Galleries have a presentation image, a description, and half screen before the gallery is big image
+    ✔ Multilingual system (ukrainian/français (deepl api ?)) @done(23-04-26 20:01)
     ☐ better galleries management for mobile 
     ☐ change schedule icons with svg instead of images
+    ☐ support banner scrolls down to support
     ✔ icon colors for nav bar @done(23-04-23 18:20)
     ✔ design for mobile version @high @done(23-04-24 16:55)
     ✔ S-permit not mandatory to register (display info : free course for s-permit) @done(23-04-18 14:37)
@@ -67,6 +72,9 @@ Misc :
     ✔ Fix hours properly @done(23-03-30 17:11)
     ✔ Collision events not working @done(23-03-30 17:11)
     ✔ See why some users have no status @done(23-03-30 17:11)
+
+OPTIONAL : 
+    ☐ schedule : limit future courses to current month/week/day
 
 BUGS :
     ☐ Check methods here https://angular.io/guide/testing

@@ -91,6 +91,7 @@
         (eventClicked)="handleCalendarEntry('Clicked', $event.event)"
         (beforeViewRender)="beforeMonthViewRender($event)"
         (dayClicked)="dayClicked($event.day)"
+        [cellTemplate]="customCellTemplate"
     >
     </mwl-calendar-month-view>
     <mwl-calendar-week-view
@@ -190,86 +191,107 @@
 </ion-content>
 
 
-<!-- [cellTemplate]="customCellTemplate" -->
-
-
-<!-- <ng-template #customCellTemplate let-day="day">
-    <div class="cal-cell-top">
-        <span class="cal-day-badge bg-{{day.dayPoints[0].meta.value >= 2 ? 'success' : 'warning'}}"
-              *ngIf="day.dayPoints.length">
-            {{ day.dayPoints[0].meta.value }}
-        </span>
-        <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber' }}</span>
-        <div class="cal-day-notes" *ngIf="day.dayPoints.length" [ngbPopover]="day.dayPoints[0].meta.notes">
-            {{day.dayPoints[0].meta.notes}}
-        </div>
-    </div>
-</ng-template> -->
-
-<ng-template #customCellTemplate let-day="day"
-             let-openDay="openDay"
-             let-locale="locale"
-             let-tooltipPlacement="tooltipPlacement"
-             let-highlightDay="highlightDay"
-             let-unhighlightDay="unhighlightDay"
-             let-eventClicked="eventClicked"
-             let-tooltipTemplate="tooltipTemplate"
-             let-tooltipAppendToBody="tooltipAppendToBody">
-    <div class="cal-cell-top">
-        <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
-        <!-- <div class="cal-day-notes" *ngIf="day.dayPoints.length">
-            {{day.dayPoints[0].meta.notes}}
-        </div> -->
-    </div>
-    <div class="cal-events" *ngIf="day.events.length > 0">
-        <div class="cal-event"
-            *ngFor="let event of day.events"
-            [ngClass]="event?.cssClass"
-            (mouseenter)="highlightDay.emit({event: event})"
-            (mouseleave)="unhighlightDay.emit({event: event})"
-            [mwlCalendarTooltip]="event.title | calendarEventTitle:'monthTooltip':event"
-            [tooltipPlacement]="tooltipPlacement"
-            [tooltipEvent]="event"
-            [tooltipAppendToBody]="tooltipAppendToBody">
-        </div>
-    </div>
+<ng-template
+#customCellTemplate
+let-day="day"
+let-openDay="openDay"
+let-locale="locale"
+let-tooltipPlacement="tooltipPlacement"
+let-highlightDay="highlightDay"
+let-unhighlightDay="unhighlightDay"
+let-eventClicked="eventClicked"
+let-tooltipTemplate="tooltipTemplate"
+let-tooltipAppendToBody="tooltipAppendToBody"
+let-tooltipDelay="tooltipDelay"
+let-trackByEventId="trackByEventId"
+let-validateDrag="validateDrag"
+>
+<div class="cal-cell-top">
+  <span class="cal-day-number">{{
+    day.date | calendarDate: 'monthViewDayNumber':locale
+  }}</span>
+</div>
+<div class="cal-events" *ngIf="day.events.length > 0">
+    <!-- <span *ngFor="let evt of day.events|slice:3" -->
+    <span *ngFor="let evt of day.events"
+    class="calendarEventBanner"
+    (mwlClick)="eventClicked.emit({ event: evt })"
+    ><b>{{evt.title}}</b> by {{evt.meta.author.f_name}} {{evt.meta.author.l_name}} at {{evt.start|date:"HH:mm"}}</span>
+</div>
 </ng-template>
 
-<!-- <ng-template #customToolTipTemplate>
-    <span>salut</span>
-</ng-template> -->
-
-<!-- <ng-template #customCellTemplate let-day="day"
-             let-openDay="openDay"
-             let-locale="locale"
-             let-tooltipPlacement="tooltipPlacement"
-             let-highlightDay="highlightDay"
-             let-unhighlightDay="unhighlightDay"
-             let-eventClicked="eventClicked"
-             let-tooltipTemplate="tooltipTemplate"
-             let-tooltipAppendToBody="tooltipAppendToBody">
-    <div class="cal-cell-top">
-        <span class="cal-day-badge bg-{{day.dayPoints[0].meta.value >= 2 ? 'success' : 'warning'}}"
-              *ngIf="day.dayPoints.length">
-            {{ day.dayPoints[0].meta.value }}
-        </span>
-        <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
-        <div class="cal-day-notes" *ngIf="day.dayPoints.length" [ngbPopover]="day.dayPoints[0].meta.notes">
-            {{day.dayPoints[0].meta.notes}}
-        </div>
-    </div>
-    <div class="cal-events" *ngIf="day.events.length > 0">
-        <div class="cal-event"
-            *ngFor="let event of day.events"
-            [style.backgroundColor]="event.color.primary"
-            [ngClass]="event?.cssClass"
-            (mouseenter)="highlightDay.emit({event: event})"
-            (mouseleave)="unhighlightDay.emit({event: event})"
-            [mwlCalendarTooltip]="event.title | calendarEventTitle:'monthTooltip':event"
-            [tooltipPlacement]="tooltipPlacement"
-            [tooltipEvent]="event"
-            [tooltipTemplate]="tooltipTemplate"
-            [tooltipAppendToBody]="tooltipAppendToBody">
-        </div>
-    </div>
-</ng-template> -->
+<!-- 
+<ng-template
+#customCellTemplate
+let-day="day"
+let-openDay="openDay"
+let-locale="locale"
+let-tooltipPlacement="tooltipPlacement"
+let-highlightDay="highlightDay"
+let-unhighlightDay="unhighlightDay"
+let-eventClicked="eventClicked"
+let-tooltipTemplate="tooltipTemplate"
+let-tooltipAppendToBody="tooltipAppendToBody"
+let-tooltipDelay="tooltipDelay"
+let-trackByEventId="trackByEventId"
+let-validateDrag="validateDrag"
+>
+<div class="cal-cell-top">
+  <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{
+    day.badgeTotal
+  }}</span>
+  <span class="cal-day-number">{{
+    day.date | calendarDate: 'monthViewDayNumber':locale
+  }}</span>
+</div>
+<div class="cal-events" *ngIf="day.events.length > 0">
+  <div
+    class="cal-event"
+    *ngFor="let event of day.events | slice:0:showAll ? undefined :3; trackBy: trackByEventId"
+    [ngStyle]="{ backgroundColor: event.color?.primary }"
+    [ngClass]="event?.cssClass"
+    (mouseenter)="highlightDay.emit({ event: event })"
+    (mouseleave)="unhighlightDay.emit({ event: event })"
+    [mwlCalendarTooltip]="
+      event.title | calendarEventTitle: 'monthTooltip':event
+    "
+    [tooltipPlacement]="tooltipPlacement"
+    [tooltipEvent]="event"
+    [tooltipTemplate]="tooltipTemplate"
+    [tooltipAppendToBody]="tooltipAppendToBody"
+    [tooltipDelay]="tooltipDelay"
+    mwlDraggable
+    [class.cal-draggable]="event.draggable"
+    dragActiveClass="cal-drag-active"
+    [dropData]="{ event: event, draggedFrom: day }"
+    [dragAxis]="{ x: event.draggable, y: event.draggable }"
+    [validateDrag]="validateDrag"
+    (mwlClick)="eventClicked.emit({ event: event })"
+  ></div>
+  <span (click)="showAll = !showAll">
+    Show {{ day.events.length - 3 }} {{ showAll ? 'less' : 'more' }}
+  </span>
+</div>
+</ng-template>
+    
+<div [ngSwitch]="view">
+<mwl-calendar-month-view
+*ngSwitchCase="'month'"
+[viewDate]="viewDate"
+[events]="events"
+[cellTemplate]="customCellTemplate"
+>
+</mwl-calendar-month-view>
+<mwl-calendar-week-view
+*ngSwitchCase="'week'"
+[viewDate]="viewDate"
+[events]="events"
+>
+</mwl-calendar-week-view>
+<mwl-calendar-day-view
+*ngSwitchCase="'day'"
+[viewDate]="viewDate"
+[events]="events"
+>
+</mwl-calendar-day-view>
+</div> -->

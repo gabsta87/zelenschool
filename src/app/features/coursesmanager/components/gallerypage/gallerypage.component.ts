@@ -61,6 +61,8 @@ export class GallerypageComponent {
   }
 
   async openGallery(galleryId:string,index:number){
+    console.log("basic opening");
+    
     if(index < 0)
       return
 
@@ -71,6 +73,11 @@ export class GallerypageComponent {
     }
 
     this.imagesToDisplay = this.imagesCollections[index].images;
+  }
+
+  open2(){
+    console.log("phone opening");
+    
   }
 
 
