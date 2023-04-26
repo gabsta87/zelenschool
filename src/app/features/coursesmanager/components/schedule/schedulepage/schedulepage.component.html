@@ -162,8 +162,8 @@
             </ion-col>
         </ion-row>
         <ion-row *ngFor="let event of eventsList; index as i" (click)="handleEvent(event)"
-        [ngClass]="{'calendarEventBannerSubscribed' : auth.currentUser && event['attendantsId'].includes(auth.currentUser.uid)}"
-
+            [ngClass]="{'calendarEventBannerSubscribed' : auth.currentUser && event['attendantsId'].includes(auth.currentUser.uid)}"
+            [ngClass]="{'calendarEventBannerSubscribed' : auth.currentUser && event['author'].id == auth.currentUser.uid}"
         >
             <ion-col>
                 {{event['title']}}
@@ -221,6 +221,7 @@
         <span *ngFor="let evt of day.events"
         class="calendarEventBanner"
         [ngClass]="auth.currentUser && evt.meta.attendantsId.includes(auth.currentUser.uid) ? 'calendarEventBannerSubscribed' : 'calendarEventBannerUnsubscribed'"
+        [ngClass]="auth.currentUser && evt.meta.author.id == auth.currentUser.uid ? 'calendarEventBannerSubscribed' : 'calendarEventBannerUnsubscribed'"
         (mwlClick)="eventClicked.emit({ event: evt })"
         >
             <b>{{evt.title}}</b> by <b>{{evt.meta.author.f_name}} {{evt.meta.author.l_name}}</b> at {{evt.start|date:"HH:mm"}}
