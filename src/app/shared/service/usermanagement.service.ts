@@ -15,6 +15,9 @@ export class UsermanagementService{
     _auth.onAuthStateChanged(user=>{
       if(user){
         this.isLogged.next(true);
+        this.checkStatus("superadmin").then(newVal=>{
+            this.isLoggedAsSuperAdmin.next(newVal);
+        })
         this.checkStatus("admin").then(newVal=>{
             this.isLoggedAsAdmin.next(newVal);
         })
@@ -44,6 +47,7 @@ export class UsermanagementService{
     })
   }
   
+  isLoggedAsSuperAdmin = new BehaviorSubject(false);
   isLoggedAsAdmin = new BehaviorSubject(false);
   isLoggedAsTeacher = new BehaviorSubject(false);
   isLogged = new BehaviorSubject(false);
@@ -66,7 +70,7 @@ export class UsermanagementService{
         if(this.userData == undefined)
           this.userData = await this._db.getUser(userId);
         
-        if(this.userData && this.userData['status'] == requestedStatus){
+        if(this.userData && this.userData['status'].includes(requestedStatus)){
           return true;
         }
       }

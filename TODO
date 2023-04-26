@@ -15,9 +15,10 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 Misc :
-    ☐ créer superAdmin capable de créer/supprimer autres admins
+    ☐ create superAdmin able to create/delte other admins
+    ✔ make different colors (green) or badge for courses where user has subcribed @done(23-04-26 23:19)
     ✔ correct hover for mobile @done(23-04-26 19:57)
-    ☐ change schedule custom templates
+    ✔ change schedule custom templates @done(23-04-26 22:35)
     ☐ Galleries have a presentation image, a description, and half screen before the gallery is big image
     ✔ Multilingual system (ukrainian/français (deepl api ?)) @done(23-04-26 20:01)
     ☐ better galleries management for mobile 

@@ -15,6 +15,7 @@ import { WeekViewHourColumn } from 'calendar-utils';
 
 import { formatTime, getNowDate } from 'src/app/shared/service/hour-management.service';
 import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
+import { Auth } from '@angular/fire/auth';
 
 export interface CalendarMonthViewEventTimesChangedEvent< EventMetaType = any, DayMetaType = any > 
   extends CalendarEventTimesChangedEvent<EventMetaType> { day: MonthViewDay<DayMetaType>; }
@@ -55,7 +56,6 @@ export class SchedulepageComponent {
   selectedDaySubscribtion !: any;
 
   words = this._lang.currentLanguage.schedule;
-  showAll = false;
 
   constructor(
     private readonly _route: ActivatedRoute,
@@ -63,6 +63,7 @@ export class SchedulepageComponent {
     private readonly modalController: ModalController,
     private cd: ChangeDetectorRef,
     private readonly _lang:LanguageManagerService,
+    readonly auth : Auth,
     ) {
     this.futureCourses = this.extractedData.pipe(map( (courses:any) => courses = courses.filter((course:any) =>dayjs(course.timeStart).isAfter(dayjs(getNowDate()),"hour") )))
   }
@@ -70,9 +71,6 @@ export class SchedulepageComponent {
   async ionViewDidEnter(){
     const temp = await firstValueFrom(this.futureCourses);
   }
-  // async ngAfterViewInit(){
-  //   const temp = await firstValueFrom(this.futureCourses);
-  // }
 
   async ngOnInit(){
     this.coursesSubscribtion = this.extractedData.subscribe((newValues) => {
