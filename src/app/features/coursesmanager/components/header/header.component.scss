@@ -1,0 +1,11 @@
+ion-footer{
+    justify-content: center;
+    display: flex;
+    position:sticky;
+    background-color: var(--ion-color-primary-contrast);
+}
+
+.footerElements{
+    margin-left: 10px;
+    margin-right: 10px;
+}
