@@ -1,8 +1,6 @@
 <ion-content>
 <div class="adminContent">
 
-    <h1>Manage</h1>
-
     <ion-button *ngIf="requestsCount|async as count" (click)="manageRequests()">
         Teachers requests 
         <ion-badge color="danger" slot="end">{{count}}</ion-badge>
