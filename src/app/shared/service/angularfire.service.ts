@@ -393,6 +393,10 @@ export class AngularfireService{
     return act;
   }
 
+  getActivitiesObs(){
+    return this.getElements("activities");
+  }
+
   createActivity(newValue : {title:string,link:string,iconName:string,description:string}){
     return addDoc(collection(this._dbaccess,"activities"),{
       title : newValue.title,
