@@ -91,7 +91,7 @@
         (eventClicked)="handleCalendarEntry('Clicked', $event.event)"
         (beforeViewRender)="beforeMonthViewRender($event)"
         (dayClicked)="dayClicked($event.day)"
-        [cellTemplate]="customCellTemplate"
+        [cellTemplate]="cellTemplMonthFullText"
     >
     </mwl-calendar-month-view>
     <mwl-calendar-week-view
@@ -105,6 +105,7 @@
         (beforeViewRender)="beforeWeekOrDayViewRender($event)"
         (eventClicked)="handleCalendarEntry('Clicked', $event.event)"
         (hourSegmentClicked)="hourSegmentClicked($event.date)"
+        [cellTemplate]="cellTemplWeekFullText"
     >
     </mwl-calendar-week-view>
     <mwl-calendar-day-view
@@ -134,7 +135,7 @@
                 <ion-button 
                     id="open-modal" 
                     fill="solid" 
-                    [disabled]="(selectedDays.length == 0) || (isBanned|async)" 
+                    [disabled]="(selectedDays.length == 0 && !selectedDayViewDate) || (isBanned|async)" 
                     (click)="createEvent()">{{words.createCourse}}</ion-button>
                     <!-- (click)="createEvent()">{{words.createCourse}}<span *ngIf="selectedDays.length > 1">s</span></ion-button> -->
             </ion-buttons>
@@ -195,7 +196,36 @@
 
 
 <ng-template
-    #customCellTemplate
+    #cellTemplMonthFullText
+    let-day="day"
+    let-locale="locale"
+    let-eventClicked="eventClicked"
+    
+    >
+    <div class="cal-cell-top">
+    <span class="cal-day-badge" *ngIf="day.badgeTotal > 3"
+        >{{ day.badgeTotal }}</span
+        >
+    <span class="cal-day-number">{{
+        day.date | calendarDate: 'monthViewDayNumber':locale
+    }}</span>
+    </div>
+    <div class="cal-events" *ngIf="day.events.length > 0">
+        <!-- {{day.events|json}} -->
+        <!-- To limit the number of events displayed -->
+        <span *ngFor="let evt of day.events.slice(0,3)"
+        class="calendarEventBanner"
+        [ngClass]="auth.currentUser && evt.meta.attendantsId.includes(auth.currentUser.uid) ? 'calendarEventBannerSubscribed' : 'calendarEventBannerUnsubscribed'"
+        [ngClass]="auth.currentUser && evt.meta.author.id == auth.currentUser.uid ? 'calendarEventBannerSubscribed' : 'calendarEventBannerUnsubscribed'"
+        (mwlClick)="eventClicked.emit({ event: evt })"
+        >
+            <b>{{evt.title}}</b> by <b>{{evt.meta.author.f_name}} {{evt.meta.author.l_name}}</b> at {{evt.start|date:"HH:mm"}}
+        </span>
+    </div>
+</ng-template>
+
+<ng-template
+    #cellTemplWeekFullText
     let-day="day"
     let-openDay="openDay"
     let-locale="locale"
@@ -209,99 +239,5 @@
     let-trackByEventId="trackByEventId"
     let-validateDrag="validateDrag"
     >
-    <div class="cal-cell-top">
-    <span class="cal-day-number">{{
-        day.date | calendarDate: 'monthViewDayNumber':locale
-    }}</span>
-    </div>
-    <div class="cal-events" *ngIf="day.events.length > 0">
-        <!-- {{day.events|json}} -->
-        <!-- To limit the number of events displayed -->
-        <!-- <span *ngFor="let evt of day.events|slice:3" -->
-        <span *ngFor="let evt of day.events"
-        class="calendarEventBanner"
-        [ngClass]="auth.currentUser && evt.meta.attendantsId.includes(auth.currentUser.uid) ? 'calendarEventBannerSubscribed' : 'calendarEventBannerUnsubscribed'"
-        [ngClass]="auth.currentUser && evt.meta.author.id == auth.currentUser.uid ? 'calendarEventBannerSubscribed' : 'calendarEventBannerUnsubscribed'"
-        (mwlClick)="eventClicked.emit({ event: evt })"
-        >
-            <b>{{evt.title}}</b> by <b>{{evt.meta.author.f_name}} {{evt.meta.author.l_name}}</b> at {{evt.start|date:"HH:mm"}}
-            <ion-badge class="subscribedBadge" color="danger" *ngIf="auth.currentUser && evt.meta.attendantsId.includes(auth.currentUser?.uid)">x</ion-badge>
-        </span>
-    </div>
+    {{day|json}}
 </ng-template>
-
-<!-- 
-<ng-template
-#customCellTemplate
-let-day="day"
-let-openDay="openDay"
-let-locale="locale"
-let-tooltipPlacement="tooltipPlacement"
-let-highlightDay="highlightDay"
-let-unhighlightDay="unhighlightDay"
-let-eventClicked="eventClicked"
-let-tooltipTemplate="tooltipTemplate"
-let-tooltipAppendToBody="tooltipAppendToBody"
-let-tooltipDelay="tooltipDelay"
-let-trackByEventId="trackByEventId"
-let-validateDrag="validateDrag"
->
-<div class="cal-cell-top">
-  <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{
-    day.badgeTotal
-  }}</span>
-  <span class="cal-day-number">{{
-    day.date | calendarDate: 'monthViewDayNumber':locale
-  }}</span>
-</div>
-<div class="cal-events" *ngIf="day.events.length > 0">
-  <div
-    class="cal-event"
-    *ngFor="let event of day.events | slice:0:showAll ? undefined :3; trackBy: trackByEventId"
-    [ngStyle]="{ backgroundColor: event.color?.primary }"
-    [ngClass]="event?.cssClass"
-    (mouseenter)="highlightDay.emit({ event: event })"
-    (mouseleave)="unhighlightDay.emit({ event: event })"
-    [mwlCalendarTooltip]="
-      event.title | calendarEventTitle: 'monthTooltip':event
-    "
-    [tooltipPlacement]="tooltipPlacement"
-    [tooltipEvent]="event"
-    [tooltipTemplate]="tooltipTemplate"
-    [tooltipAppendToBody]="tooltipAppendToBody"
-    [tooltipDelay]="tooltipDelay"
-    mwlDraggable
-    [class.cal-draggable]="event.draggable"
-    dragActiveClass="cal-drag-active"
-    [dropData]="{ event: event, draggedFrom: day }"
-    [dragAxis]="{ x: event.draggable, y: event.draggable }"
-    [validateDrag]="validateDrag"
-    (mwlClick)="eventClicked.emit({ event: event })"
-  ></div>
-  <span (click)="showAll = !showAll">
-    Show {{ day.events.length - 3 }} {{ showAll ? 'less' : 'more' }}
-  </span>
-</div>
-</ng-template>
-    
-<div [ngSwitch]="view">
-<mwl-calendar-month-view
-*ngSwitchCase="'month'"
-[viewDate]="viewDate"
-[events]="events"
-[cellTemplate]="customCellTemplate"
->
-</mwl-calendar-month-view>
-<mwl-calendar-week-view
-*ngSwitchCase="'week'"
-[viewDate]="viewDate"
-[events]="events"
->
-</mwl-calendar-week-view>
-<mwl-calendar-day-view
-*ngSwitchCase="'day'"
-[viewDate]="viewDate"
-[events]="events"
->
-</mwl-calendar-day-view>
-</div> -->

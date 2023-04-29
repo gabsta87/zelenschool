@@ -1,21 +1,19 @@
-import { Component, ChangeDetectionStrategy, ViewChild, ChangeDetectorRef, EventEmitter } from '@angular/core';
-import { isSameDay, isSameMonth } from 'date-fns';
-import { MonthViewDay } from 'calendar-utils';
-import { BehaviorSubject, firstValueFrom, map, Observable, Subject } from 'rxjs';
-import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarMonthViewDay, CalendarView, CalendarWeekViewBeforeRenderEvent, DAYS_OF_WEEK, } from 'angular-calendar';
-import dayjs from 'dayjs';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, ViewChild } from '@angular/core';
 import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { IonModal, ModalController } from '@ionic/angular';
+import { CalendarEvent, CalendarEventTimesChangedEvent, CalendarMonthViewDay, CalendarView, CalendarWeekViewBeforeRenderEvent, DAYS_OF_WEEK } from 'angular-calendar';
+import { MonthViewDay, WeekViewHourColumn } from 'calendar-utils';
+import { isSameDay, isSameMonth } from 'date-fns';
+import dayjs from 'dayjs';
+import { BehaviorSubject, Observable, Subject, firstValueFrom, map } from 'rxjs';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 import { StudentModalComponent } from '../student-modal/student-modal.component';
-import { TeacherModalComponent } from '../teacher-modal/teacher-modal.component';
 import { TeacherCreateEventModalComponent } from '../teacher-create-event-modal/teacher-create-event-modal.component';
-import { WeekViewHourColumn } from 'calendar-utils';
-
+import { TeacherModalComponent } from '../teacher-modal/teacher-modal.component';
+import { Auth } from '@angular/fire/auth';
 import { formatTime, getNowDate } from 'src/app/shared/service/hour-management.service';
 import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
-import { Auth } from '@angular/fire/auth';
 
 export interface CalendarMonthViewEventTimesChangedEvent< EventMetaType = any, DayMetaType = any > 
   extends CalendarEventTimesChangedEvent<EventMetaType> { day: MonthViewDay<DayMetaType>; }
@@ -135,7 +133,6 @@ export class SchedulepageComponent {
         title: event.title,
       },
     });
-    
     modal.present();
   }
 
@@ -149,6 +146,8 @@ export class SchedulepageComponent {
 
   setView(view: CalendarView) {
     this.view = view;
+    this.selectedDays = [];
+    this.selectedDayViewDate = undefined as any;
   }
 
   closeOpenMonthViewDay() {
@@ -204,6 +203,12 @@ export class SchedulepageComponent {
   }
 
   hourSegmentClicked(date: Date) {
+    if(dayjs(date).isBefore(dayjs(this.now,"hour")))
+      return;
+
+    if(!this.isTeacher.value && !this.isAdmin.value)
+      return;
+
     this.selectedDayViewDate = date;
     this.addSelectedDayViewClass();
   }
@@ -240,23 +245,42 @@ export class SchedulepageComponent {
       return
     }
 
-    this.selectedDays = this.selectedDays.sort( (a:any,b:any) => dayjs(a['date']).utc().isAfter(dayjs(b['date']).utc(),"hour") ? 1 : -1 );
-
-    const modal = await this.modalController.create({
-      component:  TeacherCreateEventModalComponent,
-      componentProps: {
-        selectedDays : this.selectedDays,
-        timeStart : dayjs(this.selectedDays[0].date.toString()).add(15,"hour").toISOString(),
-        timeEnd : dayjs(this.selectedDays[0].date.toString()).add(16,"hour").toISOString(),
-        dayRemoveEvent : this.selectedDayRemove,
-      },
-    });
-    modal.present();
-
-    const { role } = await modal.onWillDismiss();
-
-    if(role === 'confirm'){
-      this.selectedDays = [];
+    if(this.selectedDays.length > 0){
+      this.selectedDays = this.selectedDays.sort( (a:any,b:any) => dayjs(a['date']).utc().isAfter(dayjs(b['date']).utc(),"hour") ? 1 : -1 );
+  
+      const modal = await this.modalController.create({
+        component:  TeacherCreateEventModalComponent,
+        componentProps: {
+          selectedDays : this.selectedDays,
+          timeStart : dayjs(this.selectedDays[0].date.toString()).add(15,"hour").toISOString(),
+          timeEnd : dayjs(this.selectedDays[0].date.toString()).add(16,"hour").toISOString(),
+          dayRemoveEvent : this.selectedDayRemove,
+        },
+      });
+      modal.present();
+  
+      const { role } = await modal.onWillDismiss();
+  
+      if(role === 'confirm'){
+        this.selectedDays = [];
+      }
+    }else if(this.selectedDayViewDate){
+      const modal = await this.modalController.create({
+        component:  TeacherCreateEventModalComponent,
+        componentProps: {
+          selectedDays : [{date:this.selectedDayViewDate}],
+          timeStart : dayjs(this.selectedDayViewDate.toString()),
+          timeEnd : dayjs(this.selectedDayViewDate.toString()).add(1,"hour").toISOString(),
+          dayRemoveEvent : this.selectedDayRemove,
+        },
+      });
+      modal.present();
+  
+      const { role } = await modal.onWillDismiss();
+  
+      if(role === 'confirm'){
+        this.selectedDayViewDate = undefined as any;
+      }
     }
     this.cd.markForCheck();
   }
