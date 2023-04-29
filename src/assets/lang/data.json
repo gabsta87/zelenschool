@@ -75,7 +75,8 @@
             "loading":"Loading",
             "delete":"Delete",
             "absent":"Absent",
-            "courseSameTime":"Courses at the same time"
+            "courseSameTime":"Courses at the same time",
+            "visitorInfo":"You cannot subscribe to courses as a visitor. You must subscribe from the Login section"
         },
         "account":{
             "firstName":"First name",
@@ -188,7 +189,8 @@
             "loading" : "Chargement",
             "delete":"Supprimer",
             "absent":"Absent",
-            "courseSameTime":"Cours au même moment"
+            "courseSameTime":"Cours au même moment",
+            "visitorInfo":"Vous ne pouvez pas vous inscrire à des cours en tant que visiteur. Vous devez vous inscrire à partir de la section Login"
         },
         "account":{
             "firstName":"Prénom",
@@ -301,7 +303,8 @@
             "loading": "Завантаження",
             "delete": "Видалити",
             "absent": "Відсутній",
-            "courseSameTime": "Одночасно"
+            "courseSameTime": "Одночасно",
+            "visitorInfo": "Ви не можете підписатися на курси як відвідувач. Ви повинні підписатися з розділу 'Вхід'"
         },
         "account":{
             "firstName": "Ім'я",

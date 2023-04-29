@@ -43,7 +43,8 @@ export class SchedulepageComponent {
   // Schedulepage
   isTeacher:BehaviorSubject<boolean> = this._user.isLoggedAsTeacher;
   isAdmin:BehaviorSubject<boolean> = this._user.isLoggedAsAdmin;
-  isBanned = this._user.isUserBanned;
+  isBanned:BehaviorSubject<boolean> = this._user.isUserBanned;
+  isLogged:BehaviorSubject<boolean> = this._user.isLogged;
   extractedData :Observable<DocumentData[]> =  this._route.snapshot.data["scheduleData"];
   filterAscTitle = true;
   filterAscTime = true;

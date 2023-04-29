@@ -6,6 +6,12 @@
             <ion-content class="ion-padding">{{words.banInfo}}</ion-content>
         </ng-template>
     </ion-popover>
+    
+    <ion-popover #popover [isOpen]="!isLogged.value">
+        <ng-template>
+            <ion-content class="ion-padding">{{words.visitorInfo}}</ion-content>
+        </ng-template>
+    </ion-popover>
 
     <ion-grid class="ion-no-margin">
         <ion-row class="ion-text-center">
