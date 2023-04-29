@@ -247,6 +247,7 @@ export class SchedulepageComponent {
     }
 
     if(this.selectedDays.length > 0){
+
       this.selectedDays = this.selectedDays.sort( (a:any,b:any) => dayjs(a['date']).utc().isAfter(dayjs(b['date']).utc(),"hour") ? 1 : -1 );
   
       const modal = await this.modalController.create({
@@ -266,6 +267,7 @@ export class SchedulepageComponent {
         this.selectedDays = [];
       }
     }else if(this.selectedDayViewDate){
+
       const modal = await this.modalController.create({
         component:  TeacherCreateEventModalComponent,
         componentProps: {
@@ -283,6 +285,7 @@ export class SchedulepageComponent {
         this.selectedDayViewDate = undefined as any;
       }
     }
+    
     this.cd.markForCheck();
   }
 
