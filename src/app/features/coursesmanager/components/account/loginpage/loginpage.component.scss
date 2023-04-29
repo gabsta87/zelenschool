@@ -1,12 +1,13 @@
 
-
-.loginPageElements{
-    width: 80%;
-    margin: auto;
+@media only screen and (min-width: 1100px) {
+    .loginPageElements{
+        width: 80%;
+        margin: auto;
+    }
 }
 
 .buttonsGrid{
-    max-width: 260px;
+    max-width: 380px;
 
     ion-button{
         width: 100%;

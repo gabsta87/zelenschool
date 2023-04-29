@@ -4,6 +4,7 @@ import { Auth, getAuth, GoogleAuthProvider, FacebookAuthProvider ,sendPasswordRe
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { AlertController, ModalController } from '@ionic/angular';
 import { ChoiceModalComponent } from '../choice-modal/choice-modal.component';
+import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
 
 @Component({
   selector: 'app-loginpage',
@@ -22,6 +23,7 @@ export class LoginpageComponent {
   providerFB = new FacebookAuthProvider();
   auth = getAuth();
 
+  words = this._lang.currentLanguage.account;
 
   constructor(
     private readonly _auth: Auth,
@@ -29,6 +31,7 @@ export class LoginpageComponent {
     private readonly _router: Router,
     private readonly _modalCtrl: ModalController,
     private readonly _alertController: AlertController,
+    private readonly _lang : LanguageManagerService,
     ) {
   }
 

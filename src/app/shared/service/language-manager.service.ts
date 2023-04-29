@@ -6,7 +6,7 @@ import languageData from '../../../assets/lang/data.json';
 })
 export class LanguageManagerService {
 
-  currentLanguage = languageData.en;
+  currentLanguage = languageData.fr;
 
   constructor() { }
 
