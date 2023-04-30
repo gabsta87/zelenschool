@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import localeFr from '@angular/common/locales/fr';
+import localeRu from '@angular/common/locales/ru';
+import { registerLocaleData } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IonicModule } from '@ionic/angular';
@@ -11,6 +13,10 @@ import { environment } from '../environments/environment';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+
+registerLocaleData(localeFr);
+registerLocaleData(localeRu);
+
 
 // import { ExtraOptions, RouterModule } from '@angular/router';
 // const routerOptions: ExtraOptions = {

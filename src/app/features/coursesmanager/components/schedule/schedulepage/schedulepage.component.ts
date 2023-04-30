@@ -1,19 +1,21 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, ViewChild } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { IonModal, ModalController } from '@ionic/angular';
-import { CalendarEvent, CalendarEventTimesChangedEvent, CalendarMonthViewDay, CalendarView, CalendarWeekViewBeforeRenderEvent, DAYS_OF_WEEK } from 'angular-calendar';
+import { CalendarDateFormatter, CalendarEvent, CalendarEventTimesChangedEvent, CalendarMonthViewDay, CalendarView, CalendarWeekViewBeforeRenderEvent, DAYS_OF_WEEK } from 'angular-calendar';
 import { MonthViewDay, WeekViewHourColumn } from 'calendar-utils';
 import { isSameDay, isSameMonth } from 'date-fns';
 import dayjs from 'dayjs';
 import { BehaviorSubject, Observable, Subject, firstValueFrom, map } from 'rxjs';
+import { formatTime, getNowDate } from 'src/app/shared/service/hour-management.service';
+import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 import { StudentModalComponent } from '../student-modal/student-modal.component';
 import { TeacherCreateEventModalComponent } from '../teacher-create-event-modal/teacher-create-event-modal.component';
+import { CustomDateFormatter } from './custom-date-formatter.provider';
 import { TeacherModalComponent } from '../teacher-modal/teacher-modal.component';
-import { Auth } from '@angular/fire/auth';
-import { formatTime, getNowDate } from 'src/app/shared/service/hour-management.service';
-import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
+
 
 export interface CalendarMonthViewEventTimesChangedEvent< EventMetaType = any, DayMetaType = any > 
   extends CalendarEventTimesChangedEvent<EventMetaType> { day: MonthViewDay<DayMetaType>; }
@@ -22,7 +24,13 @@ export interface CalendarMonthViewEventTimesChangedEvent< EventMetaType = any, D
   selector: 'app-schedulepage',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './schedulepage.component.html',
-  styleUrls: ['./schedulepage.component.scss']
+  styleUrls: ['./schedulepage.component.scss'],
+  providers: [
+    {
+      provide: CalendarDateFormatter,
+      useClass: CustomDateFormatter,
+    },
+  ],
 })
 export class SchedulepageComponent {
   @ViewChild(IonModal) studentModal!: IonModal;
@@ -39,6 +47,7 @@ export class SchedulepageComponent {
   selectedDayViewDate!: Date;
   hourColumns!: WeekViewHourColumn[];
   selectedDays: any = [];
+  locale: string = this._lang.getCurrentCode();
 
   // Schedulepage
   isTeacher:BehaviorSubject<boolean> = this._user.isLoggedAsTeacher;
@@ -285,7 +294,7 @@ export class SchedulepageComponent {
         this.selectedDayViewDate = undefined as any;
       }
     }
-    
+
     this.cd.markForCheck();
   }
 

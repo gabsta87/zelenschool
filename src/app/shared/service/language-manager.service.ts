@@ -6,20 +6,30 @@ import languageData from '../../../assets/lang/data.json';
 })
 export class LanguageManagerService {
 
-  currentLanguage = languageData.fr;
+  currentLanguage!:any;
+  currentCode!:string;
 
-  constructor() { }
+  constructor() {
+    this.changeLanguageTo(Language.UA)
+  }
+
+  getCurrentCode(){
+    return this.currentCode;
+  }
 
   changeLanguageTo(lang:Language){
     switch(lang){
       case Language.UA:
         this.currentLanguage = languageData.ua;
+        this.currentCode = "ru";
         break;
       case Language.FR:
         this.currentLanguage = languageData.fr;
+        this.currentCode = "fr";
         break;
       default:
         this.currentLanguage = languageData.en;
+        this.currentCode = "en";
         break;
     }
   }
