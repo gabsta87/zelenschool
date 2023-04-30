@@ -48,8 +48,7 @@
                 </ion-buttons>
             </ion-col>
             <ion-col>
-                <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
-                <!-- <h3>{{ viewDate | date:"dd.MM.YY" }}</h3> -->
+                <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):locale }}</h3>
             </ion-col>
             <ion-col>
                 <ion-buttons class="ion-justify-content-center topButtons">
