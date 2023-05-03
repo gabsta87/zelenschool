@@ -6,22 +6,24 @@ import { UsermanagementService } from 'src/app/shared/service/usermanagement.ser
 
 interface UserData{
   userObs:Observable<DocumentData|undefined>|undefined,
-  user:DocumentData,
+  user:DocumentData|undefined,
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserpageResolver implements Resolve<UserData> {
-  constructor(private readonly _usr:UsermanagementService){
+  constructor(private readonly _usr:UsermanagementService){ }
 
-  }
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): UserData {
 
     let result = {
       userObs : this._usr.getUserObs(),
       user : this._usr.getUserData()
     }
+
+    console.log("result : ",result);
+    
 
     return result;
   }

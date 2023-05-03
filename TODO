@@ -15,19 +15,29 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 Misc :
-    ☐ schedule : Custom cell template for day/week view
+    ☐ admin page : when deleting user, remove from auth
+    ☐ fix account creation
+    ☐ past courses : dont display conflicts
+    ☐ button to change languages
+    ☐ teachers need to see banned people (where?)
+    ☐ student account creation bug
+    ✔ User can see his future courses @done(23-05-02 19:10)
+    ☐ Children management for parents
+    ☐ account bug : includes
+    ☐ screenshot to explain how it works
     ☐ schedule : filter future events for week/day
     ☐ search (teacher/title)
+    ☐ Galleries have a presentation image, a description, and half screen before the gallery is big image
+    ☐ better galleries management for mobile 
+    ☐ change schedule icons with svg instead of images
+    ✔ schedule : Custom cell template for day/week view @done(23-05-02 15:56)
     ✔ Schedule : information for visitors @done(23-04-29 12:18)
     ✔ course creation from week and day view @done(23-04-29 11:59)
     ✔ create superAdmin able to create/delte other admins @done(23-04-27 01:06)
     ✔ make different colors (green) or badge for courses where user has subcribed @done(23-04-26 23:19)
     ✔ correct hover for mobile @done(23-04-26 19:57)
     ✔ change schedule custom templates @done(23-04-26 22:35)
-    ☐ Galleries have a presentation image, a description, and half screen before the gallery is big image
     ✔ Multilingual system (ukrainian/français (deepl api ?)) @done(23-04-26 20:01)
-    ☐ better galleries management for mobile 
-    ☐ change schedule icons with svg instead of images
     ✔ support banner scrolls down to support @done(23-04-27 01:06)
     ✔ icon colors for nav bar @done(23-04-23 18:20)
     ✔ design for mobile version @high @done(23-04-24 16:55)

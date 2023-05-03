@@ -75,7 +75,10 @@ export class StudentModalComponent {
         dayjs(courseActualValues['timeStart']).isBefore(getNowDate()) ||
 
         // Subscribed and 12 hours before course
-        (this.isAttending && dayjs(courseActualValues['timeStart']).subtract(12,"hour").isBefore(getNowDate()))
+        (this.isAttending && dayjs(courseActualValues['timeStart']).subtract(12,"hour").isBefore(getNowDate())) ||
+
+        // Still possible to subscribe 12 hours after the course
+        (!this.isAttending && dayjs(courseActualValues['timeStart']).add(12,"hour").isBefore(getNowDate()))
     }
   }
 
@@ -94,13 +97,20 @@ export class StudentModalComponent {
   }
 
   confirm(){
-    if(!this._user.isBanned()){
-      if(!(this.isAttending && dayjs(this.meta.timeStart).subtract(12,"hour").isBefore(getNowDate()))){
-        this._db.toggleSubscribtionToCalendarEntry(this.meta.id, this.isAttending);
-        if(this.isAttending)
-          this.presentPopover();
+    if(!this.isSubscribtionBlocked){
+      this._db.toggleSubscribtionToCalendarEntry(this.meta.id, this.isAttending);
+      if(this.isAttending){
+        this.presentPopover();
       }
     }
+
+    // if(!this._user.isBanned()){
+    //   if(!(this.isAttending && dayjs(this.meta.timeStart).subtract(12,"hour").isBefore(getNowDate()))){
+    //     this._db.toggleSubscribtionToCalendarEntry(this.meta.id, this.isAttending);
+    //     if(this.isAttending)
+    //       this.presentPopover();
+    //   }
+    // }
     return this.modalCtrl.dismiss(null, 'confirm');
   }
 }

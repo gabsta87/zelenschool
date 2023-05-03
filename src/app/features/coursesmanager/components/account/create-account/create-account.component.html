@@ -8,8 +8,6 @@
                     </ion-col>
                     <ion-col>
                         <ion-input formControlName="email" placeholder="name@domain.com" type="email"></ion-input>
-                        <!-- <ion-input [(ngModel)]="user.email" formControlName="email" placeholder="name@domain.com" pattern="[\w-\.]+\@([\w-]+\.)+[\w-]{2,4}" type="email"></ion-input> -->
-                        <!-- <ion-input [(ngModel)]="user.email" formControlName="email" placeholder="name@domain.com" pattern=".+@.+\.\w{2,4}" type="email"></ion-input> -->
                     </ion-col>
                 </ion-row>
 
@@ -29,7 +27,7 @@
                             <ion-label>{{words.passwordConfirm}}</ion-label>
                         </ion-col>
                         <ion-col>
-                            <ion-input formControlName="password2" type="password"></ion-input>
+                            <ion-input formControlName="password2" type="password" placeholder="Password repeat"></ion-input>
                         </ion-col>
                     </ion-row>
                     <!-- <label *ngIf="!profileForm.get('passData')?.valid && profileForm.get('passData')?.touched" [ngClass]="'error'">Password error</label> -->
@@ -66,7 +64,7 @@
                         <ion-label>{{words.birthday}}</ion-label>
                     </ion-col>
                     <ion-col>
-                        <ion-input formControlName="b_day" placeholder="dd/mm/yyyy"></ion-input>
+                        <ion-input formControlName="b_day" placeholder="dd.mm.yyyy"></ion-input>
                     </ion-col>
                 </ion-row>
                 <ion-row>
@@ -74,8 +72,8 @@
                         <ion-label>{{words.spermit}}</ion-label>
                     </ion-col>
                     <ion-col>
-                        <!-- <ion-input formControlName="permitId" placeholder="XX0000000"></ion-input> -->
-                        <ion-input placeholder="XX0000000"></ion-input>
+                        <ion-input formControlName="permitId" placeholder="XX0000000"></ion-input>
+                        <!-- <ion-input placeholder="XX0000000"></ion-input> -->
                     </ion-col>
                 </ion-row>
                 <ion-row>
@@ -94,6 +92,12 @@
                 <ion-row style="justify-content: center;">
                     <ion-button (click)="return()">{{words.return}}</ion-button>
                     <ion-button [disabled]="!profileForm.valid" type="submit">{{words.register}}</ion-button>
+                </ion-row>
+                <ion-row *ngIf="loading.value">
+                    <ion-col style="justify-content: center;">
+                        <ion-text>{{words.loading}}</ion-text>
+                        <ion-spinner></ion-spinner>
+                    </ion-col>
                 </ion-row>
             </ion-grid>
             

@@ -40,7 +40,7 @@ export function passwordValidator(): ValidatorFn {
 export function permitValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
 
-    let expression = RegExp("^[A-Za-z]{2}\\d{7}$");
+    let expression = RegExp("^([A-Za-z]{2}\\d{7})?$");
 
     if (!expression.test(control.value))
       return { 'invalidPermitFormat': true };
@@ -64,7 +64,7 @@ export function emailValidator(): ValidatorFn {
 export function bdValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
 
-    const expression = RegExp("^((0?[1-9]|[12][0-9]|3[01])[- /.]){2}\\d{2,4}$");
+    const expression = RegExp("^((0?[1-9]|[12][0-9]|3[01])[- /.]){2}(?:\\d{2}){1,2}$");
 
     if (!expression.test(control.value))
       return { 'invalidDate': true };

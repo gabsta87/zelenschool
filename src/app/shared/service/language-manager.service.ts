@@ -10,7 +10,7 @@ export class LanguageManagerService {
   currentCode!:string;
 
   constructor() {
-    this.changeLanguageTo(Language.UA)
+    this.changeLanguageTo(Language.EN)
   }
 
   getCurrentCode(){

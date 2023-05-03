@@ -31,7 +31,7 @@ export class AngularfireService{
   async getSnapshot(collection:string,documentId:string){
     const docRef = doc(this._dbaccess, collection, documentId);
     const docSnap = await getDoc(docRef);
-    return {...docSnap.data(),id:documentId};
+    return docSnap.data() ? {...docSnap.data(),id:documentId}: undefined;
   }
 
   // Calendar Entries
@@ -130,9 +130,13 @@ export class AngularfireService{
   }
 
   async getUser(userId:string):Promise<DocumentData|undefined>{
-    const docRef = doc(this._dbaccess, "users", userId);
-    const docSnap = await getDoc(docRef);
-    return {...docSnap.data(),id:userId};
+    // const docRef = doc(this._dbaccess, "users", userId);
+    // const docSnap = await getDoc(docRef);
+    // console.log("user found : ",docSnap.data());
+    
+    // return docSnap.data() ? {...docSnap.data(),id:userId} : undefined;
+
+    return this.getSnapshot("users",userId);
     
     //  // Old version
     // let temp = await firstValueFrom(this.getUsers());
@@ -220,7 +224,7 @@ export class AngularfireService{
   // Updates current user infos
   updateCurrentUser(newValue:any){
     const docRef = doc(this._dbaccess,'users/'+this._auth.currentUser?.uid);
-    return updateDoc(docRef,newValue);
+    return updateDoc(docRef,{...newValue});
   }
 
   // Teachers specific functions
@@ -262,16 +266,25 @@ export class AngularfireService{
   }
 
   async createUser(newUser:User){
+    console.log("creating : ",newUser);
+    
     let userId = newUser.uid;
     let userStored = await this.getUser(userId);
 
+    console.log("user stored value : ",userStored);
+
     // If the user already exists, return undefined : nothing created
     if(userStored){
+      console.log("user stored, then return");
+      
       return undefined;
     }
     
+    console.log("new User : ",newUser);
+    setDoc(doc(this._dbaccess,'users/',userId),{});
+    
     // Otherwise, returns reference to doc created
-    return doc(this._dbaccess,'users/'+userId);
+    return doc(this._dbaccess,'users/',userId);
   }
 
   async addAssoMember(e: {name: string, photo: string, role: string, link?: undefined, }){

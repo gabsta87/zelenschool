@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth } from '@angular/fire/auth';
+import { Auth, user } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
 import { AngularfireService } from './angularfire.service';
 import { getNowDate } from './hour-management.service';
@@ -67,10 +67,13 @@ export class UsermanagementService{
       if(userId){
         
         // ALERT: no dynamic status changing. Need to login to update status
-        if(this.userData == undefined)
+        if(this.userData == undefined){
           this.userData = await this._db.getUser(userId);
+        }
         
-        if(this.userData && this.userData['status'].includes(requestedStatus)){
+        if(this.userData && this.userData['status'] && this.userData['status'].includes(requestedStatus)){
+          console.log("requested status : ",requestedStatus," is true");
+          
           return true;
         }
       }
@@ -106,7 +109,12 @@ export class UsermanagementService{
   }
 
   getUserData(){
-    return this.userData;
+    if(this.userData)
+      return this.userData
+    if(!this.userData && this._auth.currentUser)
+        return this._db.getUser(this._auth.currentUser?.uid);
+    else
+      return undefined
   }
   
   isBanned():boolean{
