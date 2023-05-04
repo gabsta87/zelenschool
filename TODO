@@ -24,8 +24,6 @@ Misc :
     ☐ Children management for parents
     ✔ account bug : includes @done(23-05-03 17:38)
     ☐ screenshot to explain how it works
-    ☐ schedule : filter future events for week/day
-    ☐ search (teacher/title)
     ☐ Galleries have a presentation image, a description, and half screen before the gallery is big image
     ☐ better galleries management for mobile 
     ✔ change schedule icons with svg instead of images @done(23-05-04 18:46)
@@ -90,6 +88,8 @@ Misc :
 
 OPTIONAL : 
     ☐ schedule : limit future courses to current month/week/day
+    ☐ schedule : filter future events for week/day
+    ☐ search (teacher/title)
 
 BUGS :
     ☐ Check methods here https://angular.io/guide/testing
