@@ -66,14 +66,11 @@ export class UsermanagementService{
 
       if(userId){
         
-        // ALERT: no dynamic status changing. Need to login to update status
         if(this.userData == undefined){
           this.userData = await this._db.getUser(userId);
         }
         
         if(this.userData && this.userData['status'] && this.userData['status'].includes(requestedStatus)){
-          console.log("requested status : ",requestedStatus," is true");
-          
           return true;
         }
       }
