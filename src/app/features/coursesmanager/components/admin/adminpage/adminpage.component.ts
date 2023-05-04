@@ -3,16 +3,16 @@ import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import dayjs from 'dayjs';
-import { BehaviorSubject, combineLatest, firstValueFrom, map, Observable, of } from 'rxjs';
-import { AngularfireService, AssoMember, UserInfos } from 'src/app/shared/service/angularfire.service';
+import { BehaviorSubject, Observable, combineLatest, firstValueFrom, map, of } from 'rxjs';
+import { AngularfireService, AssoMember } from 'src/app/shared/service/angularfire.service';
 import { getNowDate } from 'src/app/shared/service/hour-management.service';
-import { BanmodalComponent } from '../banmodal/banmodal.component';
-import { TeacherModalComponent } from '../../schedule/teacher-modal/teacher-modal.component';
 import { StorageService } from 'src/app/shared/service/storage.service';
-import { NewAssoMemberModalComponent } from '../new-asso-member-modal/new-asso-member-modal.component';
+import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
+import { TeacherModalComponent } from '../../schedule/teacher-modal/teacher-modal.component';
+import { BanmodalComponent } from '../banmodal/banmodal.component';
 import { GalleryNameModalComponent } from '../gallery-name-modal/gallery-name-modal.component';
 import { ModalWorkingHoursComponent } from '../modal-working-hours/modal-working-hours.component';
-import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
+import { NewAssoMemberModalComponent } from '../new-asso-member-modal/new-asso-member-modal.component';
 
 @Component({
   selector: 'app-adminpage',
@@ -21,31 +21,32 @@ import { UsermanagementService } from 'src/app/shared/service/usermanagement.ser
 })
 export class AdminpageComponent {
   constructor(
-    private readonly _db:AngularfireService,
+    private readonly _db: AngularfireService,
     private readonly _route: ActivatedRoute,
     private readonly _modal: ModalController,
     private readonly actionSheetCtrl: ActionSheetController,
     private readonly storage: StorageService,
     private readonly modalCtrl: ModalController,
-    private readonly _user : UsermanagementService,
+    private readonly _user: UsermanagementService,
   ) {
-    this.galleries.subscribe((e:any) => { 
+    this.galleries.subscribe((e: any) => {
       this.imagesCollections = [];
-      e.forEach((element:DocumentData) =>
-        this.imagesCollections.push({id:element['id'],name:element['name'],images:this.storage.getGalleryImages(element['id'])})
-    )})
+      e.forEach((element: DocumentData) =>
+        this.imagesCollections.push({ id: element['id'], name: element['name'], images: this.storage.getGalleryImages(element['id']) })
+      )
+    })
   }
 
   adminData = this._route.snapshot.data['adminData'];
-  
-  usersListObs:Observable<DocumentData[]> = this.adminData.usersObs;
-  coursesObs:Observable<DocumentData[]> = this.adminData.coursesObs;
-  assoMembers = this._route.snapshot.data['adminData'].assoMembers;
-  partners = this._route.snapshot.data['adminData'].partners;
-  partnersData = this._route.snapshot.data['adminData'].partnersData;
-  roomsData = this._route.snapshot.data['adminData'].roomsData;
-  galleries = this._route.snapshot.data['adminData'].galleries as Observable<DocumentData[]>;
-  @Input() activities = this._route.snapshot.data['adminData'].activities;
+
+  usersListObs: Observable<DocumentData[]> = this.adminData.usersObs;
+  coursesObs: Observable<DocumentData[]> = this.adminData.coursesObs;
+  assoMembers = this.adminData.assoMembers;
+  partners = this.adminData.partners;
+  partnersData = this.adminData.partnersData;
+  roomsData = this.adminData.roomsData;
+  galleries = this.adminData.galleries as Observable<DocumentData[]>;
+  @Input() activities = this.adminData.activities;
 
   searchString = "";
   statusToFilter = "all";
@@ -59,10 +60,10 @@ export class AdminpageComponent {
   isSuperAdmin = this._user.isLoggedAsSuperAdmin;
 
   requestsCount = this.usersListObs.pipe(
-    map(usersList => usersList.filter((user:any) => user.status == 'request')),
+    map(usersList => usersList.filter((user: any) => user.status == 'request')),
     map(filteredUsers => filteredUsers.length)
   )
-  
+
   search = new BehaviorSubject("");
   filterUsersActivated = new BehaviorSubject("all");
   filterCoursesActivated = new BehaviorSubject("all");
@@ -76,43 +77,43 @@ export class AdminpageComponent {
   ]).pipe(
     map(([searchString, users, courses, usersFilter, coursesFilter]) => {
 
-      if(searchString == "" && usersFilter == "all" && coursesFilter == "all")
-          return [users,courses];
+      if (searchString == "" && usersFilter == "all" && coursesFilter == "all")
+        return [users, courses];
 
-      switch(usersFilter){
+      switch (usersFilter) {
         case "all":
           break;
         case "ban":
-          users = users.filter ((e:any) => e.ban != undefined)
+          users = users.filter((e: any) => e.ban != undefined)
           break;
         default:
-          users = users.filter( (user:any) => user.status.includes(usersFilter) )
+          users = users.filter((user: any) => user.status.includes(usersFilter))
           break;
       }
 
-      switch(coursesFilter){
+      switch (coursesFilter) {
         case "all":
           break;
         case "future":
-          courses = courses.filter((course:any) => dayjs(course.timeStart).isAfter(dayjs(getNowDate())) )
+          courses = courses.filter((course: any) => dayjs(course.timeStart).isAfter(dayjs(getNowDate())))
           break;
         case "past":
-          courses = courses.filter((course:any) => dayjs(course.timeStart).isBefore(dayjs(getNowDate())) )
+          courses = courses.filter((course: any) => dayjs(course.timeStart).isBefore(dayjs(getNowDate())))
           break;
         default:
           break;
       }
 
-      const filteredUsers = users.filter((user:any) => 
+      const filteredUsers = users.filter((user: any) =>
         user.f_name.toLowerCase().includes(searchString.toLowerCase()) ||
         user.l_name.toLowerCase().includes(searchString.toLowerCase())
       );
-      const filteredCourses = courses.filter((course:any) =>
+      const filteredCourses = courses.filter((course: any) =>
         course.description?.toLowerCase().includes(searchString.toLowerCase()) ||
         course.title.toLowerCase().includes(searchString.toLowerCase()) ||
         course.author.l_name.toLowerCase().includes(searchString.toLocaleLowerCase()) ||
         course.author.f_name.toLowerCase().includes(searchString.toLocaleLowerCase()) ||
-        course.attendantsId.find((e:any) => 
+        course.attendantsId.find((e: any) =>
           e.l_name.toLowerCase().includes(searchString.toLowerCase()) ||
           e.f_name.toLowerCase().includes(searchString.toLowerCase())
         )
@@ -121,53 +122,53 @@ export class AdminpageComponent {
     })
   );
 
-  updateSearchValue(){
+  updateSearchValue() {
     this.search.next(this.searchString);
   }
 
   // Manage users
 
-  manageRequests(){
+  manageRequests() {
     this.statusToFilter = "request";
     this.filterUsersList()
     this.showUsers.next(true);
   }
 
-  filterUsersList(){
+  filterUsersList() {
     this.filterUsersActivated.next(this.statusToFilter);
   }
 
-  filterCoursesList(){
+  filterCoursesList() {
     this.filterCoursesActivated.next(this.timeFilter);
   }
 
-  async banUser(id:string){
+  async banUser(id: string) {
 
     const modal = await this._modal.create({
-      component:BanmodalComponent
+      component: BanmodalComponent
     })
     modal.present();
 
-    const { data,role } = await modal.onWillDismiss();
+    const { data, role } = await modal.onWillDismiss();
 
-    if(role == "confirm")
-      this._db.banUser(id,data);
+    if (role == "confirm")
+      this._db.banUser(id, data);
 
   }
 
-  async deleteUser(id:string){
+  async deleteUser(id: string) {
 
     let response = await this.canDismiss();
-    if(!response)
+    if (!response)
       return;
 
     this._db.removeUser(id);
     return this._modal.dismiss(null, 'delete');
   }
 
-  async seeWorkingHours(id:string){
+  async seeWorkingHours(id: string) {
     let teacher = await this._db.getUser(id);
-    
+
     let courses = await this._db.getTeacherCoursesByMonth(id);
 
     const modal = await this.modalCtrl.create({
@@ -202,57 +203,57 @@ export class AdminpageComponent {
     return role === 'confirm';
   };
 
-  acceptRequest(id:string){
+  acceptRequest(id: string) {
     this._db.acceptRequest(id);
   }
 
-  unbanUser(id:string){
+  unbanUser(id: string) {
     this._db.unbanUser(id);
   }
 
-  async promoteAdmin(id:string){
-    this.modifyAdmin(id,"admin");
+  async promoteAdmin(id: string) {
+    this.modifyAdmin(id, "admin");
   }
 
-  private async modifyAdmin(id:string,newStatus:string){
-    let newValue = { status:newStatus,}
-    this._db.setUser(id,newValue);
+  private async modifyAdmin(id: string, newStatus: string) {
+    let newValue = { status: newStatus, }
+    this._db.setUser(id, newValue);
   }
 
-  async revokeAdmin(id:string){
-    this.modifyAdmin(id,"teacher")
+  async revokeAdmin(id: string) {
+    this.modifyAdmin(id, "teacher")
   }
 
   // Manage events
 
-  async handleEvent(event:DocumentData){
-    
+  async handleEvent(event: DocumentData) {
+
     const result = await firstValueFrom(this.coursesObs.pipe(
-      map( (courses:any) => courses.find((e:any)=> e.id == event['id'] ) ) ));
-    
-    if(result == undefined)
+      map((courses: any) => courses.find((e: any) => e.id == event['id']))));
+
+    if (result == undefined)
       return
-    
+
     const modal = await this._modal.create({
       component: TeacherModalComponent,
       componentProps: {
-        meta : {
-          id : result.id,
-          room_id : result.room_id,
-          timeStart : result.timeStart,
-          timeEnd : result.timeEnd,
-          max_participants : result.max_participants,
-          description : result.description,
+        meta: {
+          id: result.id,
+          room_id: result.room_id,
+          timeStart: result.timeStart,
+          timeEnd: result.timeEnd,
+          max_participants: result.max_participants,
+          description: result.description,
         },
         title: result.title,
       },
     });
-      
+
     modal.present();
   }
 
   // Display lists
-  toggle(param:BehaviorSubject<boolean>){
+  toggle(param: BehaviorSubject<boolean>) {
     param.next(!param.value);
   }
 
@@ -263,50 +264,50 @@ export class AdminpageComponent {
   memberNewRole = "";
   memberNewLink = "";
   memberNewPhoto = "";
-  currentMember!: {id:string,name:string,role:string,link:string,photo:string}; 
+  currentMember!: { id: string, name: string, role: string, link: string, photo: string };
 
-  async editMember(id:string){
+  async editMember(id: string) {
     this.editingMember.next(true);
-    this.currentMember = await firstValueFrom(this.assoMembers.pipe(map( (e:any) => e.find( (member:any) => member.id == id))))
-    
+    this.currentMember = await firstValueFrom(this.assoMembers.pipe(map((e: any) => e.find((member: any) => member.id == id))))
+
     this.photoChanged.next(false);
 
     this.memberId = id;
     this.memberNewName = this.currentMember.name;
     this.memberNewRole = this.currentMember.role;
     this.memberNewLink = this.currentMember.link;
-    this.memberNewPhoto= this.currentMember.photo;
+    this.memberNewPhoto = this.currentMember.photo;
   }
 
-  deleteMember(id:string){
+  deleteMember(id: string) {
     this._db.deleteAssoMember(id);
   }
 
-  cancelMemberEdit(){
+  cancelMemberEdit() {
     this.editingMember.next(false);
   }
 
-  async updateMember(){
-    let data = {id : this.memberId, name : this.memberNewName, role : this.memberNewRole, link : this.memberNewLink} as AssoMember;
-    if(this.photoChanged){
+  async updateMember() {
+    let data = { id: this.memberId, name: this.memberNewName, role: this.memberNewRole, link: this.memberNewLink } as AssoMember;
+    if (this.photoChanged) {
       this.memberNewPhoto = await this.saveAssoMemberImage(this.imageFile);
       data.photo = this.memberNewPhoto;
     }
     this.photoChanged.next(false);
-    
+
     this._db.updateAssoMember(data);
   }
 
-  async createMember(){
+  async createMember() {
 
     const modal = await this.modalCtrl.create({
-      component:  NewAssoMemberModalComponent
+      component: NewAssoMemberModalComponent
     });
     modal.present();
 
-    const { data,role } = await modal.onWillDismiss();
+    const { data, role } = await modal.onWillDismiss();
 
-    if(role === 'confirm'){
+    if (role === 'confirm') {
       const photoAddress = await this.saveAssoMemberImage(data.photo);
       data.photo = photoAddress;
       this._db.addAssoMember(data);
@@ -319,7 +320,7 @@ export class AdminpageComponent {
   photoChanged = new BehaviorSubject(false);
   tempImage !: any;
 
-  async saveAssoMemberImage(imageFile : File) {
+  async saveAssoMemberImage(imageFile: File) {
 
     this.uploadingImage.next(true);
     const downloadUrl = await this.storage.addMemberImage(imageFile);
@@ -342,30 +343,30 @@ export class AdminpageComponent {
   tempImagePartner !: any;
   imageFilePartner !: File;
 
-  createPartner(){
-    (this.partnersData as {}[]).unshift({id:undefined,link:"",logoName:""})
+  createPartner() {
+    (this.partnersData as {}[]).unshift({ id: undefined, link: "", logoName: "" })
   }
-  
-  deletePartner(index:number){
-    if(this.partnersData[index].id == undefined){
-      this.partnersData.splice(index,1)
-    }else{
+
+  deletePartner(index: number) {
+    if (this.partnersData[index].id == undefined) {
+      this.partnersData.splice(index, 1)
+    } else {
       this._db.deletePartner(this.partnersData[index].id);
     }
   }
-  
-  async restorePartner(index:number){
+
+  async restorePartner(index: number) {
     this.partnersData[index].photoChanged = false;
     let partner = await firstValueFrom(this.partners);
     this.partnersData[index] = (partner as [])[index];
   }
 
-  updatePartner(index:number){
-    this._db.updatePartner({id:this.partnersData[index].id, link:this.partnersData[index].link, logoName:this.partnersData[index].logoName})
+  updatePartner(index: number) {
+    this._db.updatePartner({ id: this.partnersData[index].id, link: this.partnersData[index].link, logoName: this.partnersData[index].logoName })
     this.partnersData[index].photoChanged = false;
   }
 
-  onFileSelectedPartners(event: any,index : number): void {
+  onFileSelectedPartners(event: any, index: number): void {
     this.partnersData[index].photoChanged = true;
     this.imageFilePartner = event.target.files[0];
 
@@ -376,26 +377,26 @@ export class AdminpageComponent {
   showGalleriesManager = new BehaviorSubject(false);
   isLoadingGallery = new BehaviorSubject(false);
   selectedGallery = -1;
-  imagesCollections : {id:string,name:string,images:any}[] = [];
-  images!:Observable<DocumentData[]>;
+  imagesCollections: { id: string, name: string, images: any }[] = [];
+  images!: Observable<DocumentData[]>;
 
-  async addGallery(){
+  async addGallery() {
 
     const modal = await this.modalCtrl.create({
-      component:  GalleryNameModalComponent
+      component: GalleryNameModalComponent
     });
     modal.present();
 
-    const { data,role } = await modal.onWillDismiss();
+    const { data, role } = await modal.onWillDismiss();
 
-    if(role === 'confirm'){
+    if (role === 'confirm') {
       this.storage.createGallery(data);
     }
   }
 
-  openGallery(galleryId:string,index:number){
+  openGallery(galleryId: string, index: number) {
 
-    if(this.selectedGallery == index){
+    if (this.selectedGallery == index) {
       // Closing the selected folder
       this.selectedGallery = -1;
       this.images = of();
@@ -403,34 +404,34 @@ export class AdminpageComponent {
     }
 
     this.selectedGallery = index;
-    
-    if(!this.imagesCollections[index].images){
+
+    if (!this.imagesCollections[index].images) {
       this.imagesCollections[index].images = this.storage.getGalleryImages(galleryId);
     }
 
     this.images = this.imagesCollections[index].images;
   }
 
-  deleteImageFromGallery(file:any){
+  deleteImageFromGallery(file: any) {
     this.storage.deleteImageFromGallery(file);
   }
 
-  async renameGallery(id:string){
+  async renameGallery(id: string) {
 
     const modal = await this.modalCtrl.create({
-      component:  GalleryNameModalComponent
+      component: GalleryNameModalComponent
     });
     modal.present();
 
-    const { data,role } = await modal.onWillDismiss();
+    const { data, role } = await modal.onWillDismiss();
 
-    if(role === 'confirm'){
-      this.storage.renameGallery(id,data);
+    if (role === 'confirm') {
+      this.storage.renameGallery(id, data);
     }
   }
-  
-  async addImageToGallery(event:any){
-    
+
+  async addImageToGallery(event: any) {
+
     let data = {} as any;
     data.file = event.target.files[0];
     data.name = data.file.name;
@@ -441,10 +442,10 @@ export class AdminpageComponent {
     this.isLoadingGallery.next(false);
   }
 
-  async deleteGallery(id:string){
+  async deleteGallery(id: string) {
 
     let response = await this.canDismiss();
-    if(!response)
+    if (!response)
       return;
 
     this.storage.deleteGallery(id);
@@ -454,50 +455,50 @@ export class AdminpageComponent {
 
   // Rooms management
   showRooms = new BehaviorSubject(false);
-  @ViewChild('roomUpdatePopOver') popover!:any;
+  @ViewChild('roomUpdatePopOver') popover!: any;
   showRoomConfirmation = false;
 
-  createRoom(){
-    (this.roomsData as {}[]).unshift({id:undefined, name:"",maxStudents:""})
+  createRoom() {
+    (this.roomsData as {}[]).unshift({ id: undefined, name: "", maxStudents: "" })
   }
 
-  deleteRoom(index:number){
-    if(this.roomsData[index].id == undefined){
-      this.roomsData.splice(index,1);
-    }else{
+  deleteRoom(index: number) {
+    if (this.roomsData[index].id == undefined) {
+      this.roomsData.splice(index, 1);
+    } else {
       this._db.deleteRoom(this.roomsData[index].id);
     }
   }
 
-  updateRoom(index:number){
-    this._db.updateRoom({id:this.roomsData[index].id, name:this.roomsData[index].name, maxStudents:this.roomsData[index].maxStudents});
+  updateRoom(index: number) {
+    this._db.updateRoom({ id: this.roomsData[index].id, name: this.roomsData[index].name, maxStudents: this.roomsData[index].maxStudents });
 
     this.showRoomConfirmation = true;
     setTimeout(() => {
-      this.showRoomConfirmation = false;  
+      this.showRoomConfirmation = false;
     }, 2000);
   }
 
   // Activities management
 
-  setIconName(activity:any,name:string){
+  setIconName(activity: any, name: string) {
     activity.iconName = name;
   }
 
-  createActivity(){
-    (this.activities as {}[]).unshift({id:undefined,link:"",title:"",iconName:"add-circle-outline",description:""})
+  createActivity() {
+    (this.activities as {}[]).unshift({ id: undefined, link: "", title: "", iconName: "add-circle-outline", description: "" })
   }
 
-  deleteActivity(id:string,index:number){
+  deleteActivity(id: string, index: number) {
     this._db.deleteActivity(id);
-    (this.activities as {}[]).splice(index,1);
+    (this.activities as {}[]).splice(index, 1);
   }
 
-  async updateActivity(activity:any){
-    if(activity.id == undefined){
+  async updateActivity(activity: any) {
+    if (activity.id == undefined) {
       const result = await this._db.createActivity(activity);
       activity.id = result.id;
-    }else{
+    } else {
       this._db.updateActivity(activity);
     }
   }
