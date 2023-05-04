@@ -4,7 +4,7 @@
 
 <svg xmlns="http://www.w3.org/2000/svg"
      viewBox="0 0 500 500">
-  <path fill="none" stroke="currentcolor" stroke-width="22"
+  <path fill="none" stroke="currentcolor" stroke-width="22" stroke-linecap="round" stroke-linejoin="round" 
         d="M 98.55,120.91
            C 100.39,119.11 102.88,119.22 105.09,120.09
              105.23,120.17 155.02,150.95 155.09,151.00

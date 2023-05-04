@@ -53,30 +53,15 @@
             <ion-col>
                 <ion-buttons class="ion-justify-content-center topButtons">
                     <ion-button (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">
-                        <ng-container *ngIf="view === CalendarView.Month;else normalMonth">
-                            <ion-img src="/../../assets/icons/calendar-month-contrast.png" class="hideableImg"> </ion-img>                        
-                        </ng-container>
-                        <ng-template #normalMonth>
-                            <ion-img src="/../../assets/icons/calendar-month.png" class="hideableImg"> </ion-img>                        
-                        </ng-template>
+                        <ion-icon src="/../../assets/icons/calendar-month.svg" class="hideableIcon"></ion-icon>
                         <ion-label class="hideableLabel"> {{words.month}} </ion-label>
                     </ion-button>
                     <ion-button (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">
-                        <ng-container *ngIf="view === CalendarView.Week;else normalWeek">
-                            <ion-img src="/../../assets/icons/calendar-week-contrast.png" class="hideableImg"> </ion-img> 
-                        </ng-container>
-                        <ng-template #normalWeek>
-                            <ion-img src="/../../assets/icons/calendar-week.png" class="hideableImg"> </ion-img> 
-                        </ng-template>
+                        <ion-icon src="/../../assets/icons/calendar-week.svg" class="hideableIcon"></ion-icon>
                         <ion-label class="hideableLabel"> {{words.week}} </ion-label>
                     </ion-button>
                     <ion-button (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
-                        <ng-container *ngIf="view === CalendarView.Day; else normalDay">
-                            <ion-img  src="/../../assets/icons/calendar-day-contrast.png" class="hideableImg"> </ion-img>
-                        </ng-container>
-                        <ng-template #normalDay>
-                            <ion-img  src="/../../assets/icons/calendar-day.png" class="hideableImg"> </ion-img>
-                        </ng-template>
+                        <ion-icon src="/../../assets/icons/calendar-day.svg" class="hideableIcon"></ion-icon>
                         <ion-label class="hideableLabel"> {{words.day}} </ion-label>
                     </ion-button>
                 </ion-buttons>

@@ -16,20 +16,19 @@ Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManag
 
 Misc :
     ☐ admin page : when deleting user, remove from auth
-    ☐ fix account creation
-    ☐ past courses : dont display conflicts
+    ✔ fix account creation @done(23-05-04 17:51)
+    ✔ past courses : dont display conflicts @done(23-05-04 17:51)
     ☐ button to change languages
     ☐ teachers need to see banned people (where?)
-    ☐ student account creation bug
     ✔ User can see his future courses @done(23-05-02 19:10)
     ☐ Children management for parents
-    ☐ account bug : includes
+    ✔ account bug : includes @done(23-05-03 17:38)
     ☐ screenshot to explain how it works
     ☐ schedule : filter future events for week/day
     ☐ search (teacher/title)
     ☐ Galleries have a presentation image, a description, and half screen before the gallery is big image
     ☐ better galleries management for mobile 
-    ☐ change schedule icons with svg instead of images
+    ✔ change schedule icons with svg instead of images @done(23-05-04 18:46)
     ✔ schedule : Custom cell template for day/week view @done(23-05-02 15:56)
     ✔ Schedule : information for visitors @done(23-04-29 12:18)
     ✔ course creation from week and day view @done(23-04-29 11:59)

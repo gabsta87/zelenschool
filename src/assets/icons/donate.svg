@@ -3,8 +3,8 @@
               "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
 
 <svg xmlns="http://www.w3.org/2000/svg"
-     viewBox="0 0 500 500" class="ionicon">
-  <path stroke-width="20" stroke="currentColor" fill="none" 
+     viewBox="0 0 500 500">
+  <path stroke-width="20" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" 
         d="M 25.67,28.33
            C 25.67,28.33 125.33,75.67 125.33,75.67
              125.33,75.67 250.33,71.00 261.67,75.67
