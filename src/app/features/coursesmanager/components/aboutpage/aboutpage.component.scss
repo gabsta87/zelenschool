@@ -51,7 +51,16 @@
         display: flex;
         margin: auto;
     }
+    .activityItem{
+        width: 240px;
+    }
+
+    .activityCol{
+        justify-content: center;
+        display: flex;
+    }
 }
+
 
 .memberCard{
     opacity: 0.8;
@@ -74,10 +83,6 @@
 }
 .memberCard:hover{
     opacity: 1;
-    // background-color: var(--ion-color-primary);
-    // a{
-    //     color : var(--ion-color-primary-contrast);
-    // }
 }
 
 .partnerCard{
@@ -103,7 +108,6 @@
 }
 
 .donatePart{
-    // background-image: url("https://www.ukraine-reborn.ch/wp-content/uploads/2017/11/intro-bg2_02.jpg");
     background-repeat: no-repeat;
     background-position: center,center;
     background-size: cover;
@@ -129,7 +133,6 @@
 }
 
 .topImage{
-    // background-image: url("https://www.ukraine-reborn.ch/wp-content/uploads/2022/04/IMG_9141-1-scaled.jpg");
     background-image: url("/../../assets/background/background.jpeg");
     background-repeat: no-repeat;
     background-position: center,center;
@@ -183,5 +186,3 @@ ion-content{
     margin-top: 10px;
     margin-bottom: 10px;
 }
-// --background : url('https://www.ukraine-reborn.ch/wp-content/uploads/2022/04/IMG_9141-1-scaled.jpg') no-repeat;
-// --background : url('./assets/backgroud/backgroud.jpeg') 0 0/100% 100% no-repeat;

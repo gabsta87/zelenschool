@@ -15,10 +15,13 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 Misc :
+    ☐ "Contact us" banner -> no behavior
     ☐ admin page : when deleting user, remove from auth
     ✔ fix account creation @done(23-05-04 17:51)
     ✔ past courses : dont display conflicts @done(23-05-04 17:51)
-    ☐ button to change languages
+    ☐ button to change languages (account/navBar)
+        Cookies to remember users' language
+        https://www.npmjs.com/package/ngx-cookie-service
     ☐ teachers need to see banned people (where?)
     ✔ User can see his future courses @done(23-05-02 19:10)
     ☐ Children management for parents

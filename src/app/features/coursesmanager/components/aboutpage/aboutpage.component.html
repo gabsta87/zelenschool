@@ -48,8 +48,8 @@
                 <h2>{{words.activitiesTitle}}</h2>
                 <ion-grid>
                     <ion-row>
-                        <ion-col *ngFor="let activity of activities|async">
-                            <ion-card button="true" (click)="goToGallery(activity.link)">
+                        <ion-col *ngFor="let activity of activities|async" class="activityCol">
+                            <ion-card button="true" (click)="goToGallery(activity.link)" class="activityItem">
                                 <ion-icon [name]="activity.iconName"></ion-icon>
                                 <ion-card-header><ion-title class="ion-no-padding">{{activity.title}}</ion-title></ion-card-header>
                                 <ion-card-content>{{activity.description}}</ion-card-content>
@@ -206,7 +206,7 @@
 
         <div class="authorsSection">
             <div class="authorsInfos">
-                Website : Gabriel Maret
+                Website : <a href="https://www.linkedin.com/in/gabriel-maret-57327bbb/">Gabriel Maret</a>
             </div>
             <div class="authorsInfos">
                 Design : Ninel Omelianenko

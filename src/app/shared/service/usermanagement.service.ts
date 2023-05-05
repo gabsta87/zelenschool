@@ -1,14 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Auth, user } from '@angular/fire/auth';
+import { Auth } from '@angular/fire/auth';
+import dayjs from 'dayjs';
 import { BehaviorSubject } from 'rxjs';
 import { AngularfireService } from './angularfire.service';
 import { getNowDate } from './hour-management.service';
-import dayjs from 'dayjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsermanagementService{
+
+  isLoggedAsSuperAdmin = new BehaviorSubject(false);
+  isLoggedAsAdmin = new BehaviorSubject(false);
+  isLoggedAsTeacher = new BehaviorSubject(false);
+  isLogged = new BehaviorSubject(false);
+  isUserBanned = new BehaviorSubject(false);
 
   constructor(private readonly _db:AngularfireService, private readonly _auth:Auth) {
     
@@ -46,12 +52,6 @@ export class UsermanagementService{
       }
     })
   }
-  
-  isLoggedAsSuperAdmin = new BehaviorSubject(false);
-  isLoggedAsAdmin = new BehaviorSubject(false);
-  isLoggedAsTeacher = new BehaviorSubject(false);
-  isLogged = new BehaviorSubject(false);
-  isUserBanned = new BehaviorSubject(false);
 
   getStatus(){
     if(this.userData && this.userData['status'])
