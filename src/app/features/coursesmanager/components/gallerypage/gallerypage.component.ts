@@ -3,6 +3,7 @@ import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 import { getDownloadURL } from 'firebase/storage';
 import { Observable, find, findIndex, firstValueFrom, map, of } from 'rxjs';
+import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { StorageService } from 'src/app/shared/service/storage.service';
 
 // import Swiper core and required modules
@@ -23,10 +24,29 @@ export class GallerypageComponent {
 
   imagesToDisplay !:Observable<any>;
   
+  activities = this._db.getActivitiesObs();
   galleries = this._storage.getGalleries();
   imagesCollections : {id:string,name:string,images:any}[] = [];
   openFolderIndex = -1;
   openingGalleryId :string|null = null;
+
+  constructor(
+    private readonly _storage : StorageService,
+    private readonly _route:ActivatedRoute, 
+    private readonly _router:Router,
+    private readonly _db : AngularfireService
+    ){
+
+    this.galleries.subscribe((e:any) => { 
+      this.imagesCollections = [];
+      e.forEach((element:DocumentData) =>
+        this.imagesCollections.push({id:element['id'],name:element['name'],images:this._storage.getGalleryImages(element['id'])})
+    )})
+
+    this._route.fragment.subscribe( fragment => { 
+      this.openingGalleryId = fragment;
+    })
+  }
 
   ionViewDidEnter(){
     this.openFolderIndex = -1;
@@ -47,21 +67,7 @@ export class GallerypageComponent {
     }
   }
 
-  constructor(private readonly _storage : StorageService,private readonly _route:ActivatedRoute, private readonly _router:Router){
-
-    this.galleries.subscribe((e:any) => { 
-      this.imagesCollections = [];
-      e.forEach((element:DocumentData) =>
-        this.imagesCollections.push({id:element['id'],name:element['name'],images:this._storage.getGalleryImages(element['id'])})
-    )})
-
-    this._route.fragment.subscribe( fragment => { 
-      this.openingGalleryId = fragment;
-    })
-  }
-
   async openGallery(galleryId:string,index:number){
-    console.log("basic opening");
     
     if(index < 0)
       return
@@ -74,12 +80,6 @@ export class GallerypageComponent {
 
     this.imagesToDisplay = this.imagesCollections[index].images;
   }
-
-  open2(){
-    console.log("phone opening");
-    
-  }
-
 
   ngAfterContentChecked(){
     if(this.swiper){

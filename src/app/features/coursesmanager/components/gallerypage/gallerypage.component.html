@@ -1,5 +1,28 @@
 <ion-content>
 
+    <div class="topImage galleryTopImage">
+        <div class="topElements">
+            <div class="activitiesPart" id="anchor_activities" #anchor_>
+                <div class="partContent">
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col *ngFor="let activity of activities|async" class="activityCol">
+                                <ion-text color="light">
+                                    {{activity|json}}
+                                </ion-text>
+                                <!-- <ion-card button="true" (click)="openGallery(activity.link)" class="activityItem">
+                                    <ion-icon [name]="activity.iconName"></ion-icon>
+                                    <ion-card-header><ion-title class="ion-no-padding">{{activity.title}}</ion-title></ion-card-header>
+                                    <ion-card-content>{{activity.description}}</ion-card-content>
+                                </ion-card> -->
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="imgFolders">
         <ion-grid>
             <ion-row>
