@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class StudentpageGuard implements CanActivate {
+export class StudentpageGuard  {
   constructor(private readonly userServ:UsermanagementService){}
   async canActivate(
     route: ActivatedRouteSnapshot,

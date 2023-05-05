@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { Observable, of, switchMap } from 'rxjs';
 import { DocumentData } from '@angular/fire/firestore';
@@ -7,7 +7,7 @@ import { DocumentData } from '@angular/fire/firestore';
 @Injectable({
   providedIn: 'root'
 })
-export class CalendareventsresolveResolver implements Resolve<Observable<Observable<DocumentData[]>>> {
+export class CalendareventsresolveResolver  {
 
   constructor(private readonly _db:AngularfireService){}
   

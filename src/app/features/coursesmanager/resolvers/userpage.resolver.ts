@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DocumentData } from '@angular/fire/firestore';
-import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 
@@ -12,7 +12,7 @@ interface UserData{
 @Injectable({
   providedIn: 'root'
 })
-export class UserpageResolver implements Resolve<UserData> {
+export class UserpageResolver  {
   constructor(private readonly _usr:UsermanagementService){ }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): UserData {

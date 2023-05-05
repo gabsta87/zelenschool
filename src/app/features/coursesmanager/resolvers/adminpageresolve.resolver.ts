@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DocumentData } from '@angular/fire/firestore';
-import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, firstValueFrom, switchMap } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 
@@ -19,7 +19,7 @@ interface AdminData{
 @Injectable({
   providedIn: 'root'
 })
-export class AdminpageresolveResolver implements Resolve<AdminData> {
+export class AdminpageresolveResolver  {
 
   constructor(private readonly _db: AngularfireService){}
   
