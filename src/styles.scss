@@ -114,47 +114,23 @@
 }
 
 
-.aboutTopImage{
-	background-image: url("/../../assets/background/background.jpeg");
-}
-.galleryTopImage{
-	background-image: url("/../../assets/background/galleries_background.jpeg");
-}
-.topImage{
-    background-repeat: no-repeat;
-    background-position: center,center;
-    background-size: cover;
-    min-height: 825px;
-
+.activitiesPart{
     justify-content: center;
-    display: flex;
+    ion-title,ion-card-content{
+        text-align: center;
+    }
+    ion-icon {
+        font-size: 64px;
+        color : var(--ion-color-primary);
+        display: flex;
+        margin: auto;
+    }
+    .activityItem{
+        width: 240px;
+    }
 
-    div{
+    .activityCol{
         justify-content: center;
         display: flex;
-        top:50%;
-        position: absolute;
-        @media only screen and (max-width: 700px) {
-            top:60%;
-        }
-    }
-    .topElements{
-        transform: translate(0,-100%);
-        h1{
-            color:white;
-            font-size: xxx-large;
-            max-width: 80%;
-            font-family: 'Trebuchet MS', Helvetica, sans-serif;
-            text-align: center;
-            @media only screen and (max-width: 700px) {
-                max-width: 100%;
-            }
-        }
-    }
-    .topElements2{
-        a ion-button{
-            color: var(--ion-color-primary-contrast);
-            --color : var(--ion-color-primary);
-        }
     }
 }

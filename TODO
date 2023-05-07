@@ -15,10 +15,14 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 Misc :
-    ☐ "Contact us" banner -> no behavior
+    ☐ Galleries have a presentation image, a description, and half screen before the gallery is big image
+    ☐ better galleries management for mobile 
+    ✘ "Contact us" banner -> no behavior @cancelled(23-05-05 15:44)
     ☐ admin page : when deleting user, remove from auth
     ✔ fix account creation @done(23-05-04 17:51)
     ✔ past courses : dont display conflicts @done(23-05-04 17:51)
+    ☐ remember user language
+        user management service
     ☐ button to change languages (account/navBar)
         Cookies to remember users' language
         https://www.npmjs.com/package/ngx-cookie-service
@@ -26,9 +30,7 @@ Misc :
     ✔ User can see his future courses @done(23-05-02 19:10)
     ☐ Children management for parents
     ✔ account bug : includes @done(23-05-03 17:38)
-    ☐ screenshot to explain how it works
-    ☐ Galleries have a presentation image, a description, and half screen before the gallery is big image
-    ☐ better galleries management for mobile 
+    ☐ Popover to explain how it works
     ✔ change schedule icons with svg instead of images @done(23-05-04 18:46)
     ✔ schedule : Custom cell template for day/week view @done(23-05-02 15:56)
     ✔ Schedule : information for visitors @done(23-04-29 12:18)
@@ -93,6 +95,9 @@ OPTIONAL :
     ☐ schedule : limit future courses to current month/week/day
     ☐ schedule : filter future events for week/day
     ☐ search (teacher/title)
+    ☐ Full screen image when clicking on it
+        https://codepen.io/rdelafuente/pen/xxqMXX
+
 
 BUGS :
     ☐ Check methods here https://angular.io/guide/testing

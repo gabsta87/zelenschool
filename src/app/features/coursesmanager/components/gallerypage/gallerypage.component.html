@@ -1,33 +1,26 @@
 <ion-content>
 
     <div class="topImage galleryTopImage">
-        <div class="topElements">
-            <div class="activitiesPart" id="anchor_activities" #anchor_>
-                <div class="partContent">
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col *ngFor="let activity of activities|async" class="activityCol">
-                                <ion-text color="light">
-                                    {{activity|json}}
-                                </ion-text>
-                                <!-- <ion-card button="true" (click)="openGallery(activity.link)" class="activityItem">
-                                    <ion-icon [name]="activity.iconName"></ion-icon>
-                                    <ion-card-header><ion-title class="ion-no-padding">{{activity.title}}</ion-title></ion-card-header>
-                                    <ion-card-content>{{activity.description}}</ion-card-content>
-                                </ion-card> -->
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </div>
-            </div>
+        <div class="topElementsGallery activitiesPart">
+            <ion-grid>
+                <ion-row>
+                    <ion-col *ngFor="let activity of activities|async" class="activityCol">
+                        <ion-card button="true" (click)="openGallery(activity['link'])" class="activityItem activityItemGallery">
+                            <ion-icon [name]="activity['iconName']"></ion-icon>
+                            <ion-card-header><ion-title class="ion-no-padding">{{activity['title']}}</ion-title></ion-card-header>
+                            <ion-card-content>{{activity['description']}}</ion-card-content>
+                        </ion-card>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
         </div>
     </div>
 
-    <div class="imgFolders">
+    <!-- <div class="imgFolders">
         <ion-grid>
             <ion-row>
                 <ion-col *ngFor="let coll of imagesCollections; let index = index">
-                    <ion-item (click)="openGallery(coll.id,index)" lines="none">
+                    <ion-item (click)="openGallery(coll.id)" lines="none">
                         <ion-thumbnail>
                             <ion-icon *ngIf="index == openFolderIndex; else closeFolder" name="folder-open-outline"></ion-icon>
                             <ng-template #closeFolder>
@@ -40,7 +33,7 @@
                 </ion-col>
             </ion-row>
         </ion-grid>
-    </div>
+    </div> -->
 
     <ng-container *ngIf="imagesToDisplay | async as imagesData">
     <div *ngIf="imagesData.length > 0" class="gallery-container">

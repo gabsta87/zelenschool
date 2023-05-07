@@ -6,7 +6,6 @@ import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import { Observable, find, firstValueFrom, map, switchMap } from 'rxjs';
 import { formatForDB, getNowDate, isColliding } from './hour-management.service';
-import { ta } from 'date-fns/locale';
 dayjs.extend(isBetween);
 
 @Injectable({
@@ -266,21 +265,15 @@ export class AngularfireService{
   }
 
   async createUser(newUser:User){
-    console.log("creating : ",newUser);
-    
     let userId = newUser.uid;
     let userStored = await this.getUser(userId);
 
-    console.log("user stored value : ",userStored);
 
     // If the user already exists, return undefined : nothing created
     if(userStored){
-      console.log("user stored, then return");
-      
       return undefined;
     }
     
-    console.log("new User : ",newUser);
     setDoc(doc(this._dbaccess,'users/',userId),{});
     
     // Otherwise, returns reference to doc created

@@ -34,8 +34,16 @@
   padding-bottom: 20px;
 }
 
-.photoGallery{
+.activityItemGallery{
+  opacity: 0.5;
+  cursor: pointer;
+}
 
+.openedGallery{
+  opacity: 1 !important;
+}
+
+.photoGallery{
   ion-thumbnail{
     margin:5px;
     --size:100px;
@@ -49,6 +57,24 @@
     display: flex;
     justify-content: center;
   }
+}
+
+.topImage{
+    background-repeat: no-repeat;
+    background-position: center,center;
+    background-size: cover;
+
+    justify-content: center;
+    display: flex;
+
+}
+
+.galleryTopImage{
+	background-image: url("/../../assets/background/galleries_background.jpeg");
+}
+
+.topElementsGallery{
+  top:10px;
 }
 
 .imgFolders{

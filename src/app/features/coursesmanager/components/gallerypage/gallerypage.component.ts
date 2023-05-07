@@ -55,30 +55,30 @@ export class GallerypageComponent {
 
   async ionViewWillEnter(){
     if(this.openingGalleryId){
-      let foundIndex = await firstValueFrom(this.galleries.pipe(map((galleriesList:any) =>
-        galleriesList.findIndex((gallery:any)=>gallery.id == this.openingGalleryId )
-      )));
-  
+      
       if(this.openingGalleryId)
-        this.openGallery(this.openingGalleryId,foundIndex);
+        this.openGallery(this.openingGalleryId);
 
       this.openingGalleryId = null;
       this._router.navigate([]);
     }
   }
 
-  async openGallery(galleryId:string,index:number){
-    
-    if(index < 0)
+  async openGallery(galleryId:string){
+    let foundIndex = await firstValueFrom(this.galleries.pipe(map((galleriesList:any) =>
+        galleriesList.findIndex((gallery:any)=>gallery.id == galleryId )
+      )));
+
+    if(foundIndex < 0)
       return
 
-    this.openFolderIndex = index;
+    this.openFolderIndex = foundIndex;
     
-    if(!this.imagesCollections[index].images){
-      this.imagesCollections[index].images = this._storage.getGalleryImages(galleryId);
+    if(!this.imagesCollections[foundIndex].images){
+      this.imagesCollections[foundIndex].images = this._storage.getGalleryImages(galleryId);
     }
 
-    this.imagesToDisplay = this.imagesCollections[index].images;
+    this.imagesToDisplay = this.imagesCollections[foundIndex].images;
   }
 
   ngAfterContentChecked(){
