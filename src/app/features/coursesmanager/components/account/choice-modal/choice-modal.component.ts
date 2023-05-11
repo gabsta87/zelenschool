@@ -10,7 +10,7 @@ import { LanguageManagerService } from 'src/app/shared/service/language-manager.
 export class ChoiceModalComponent {
   constructor(private readonly modalCtrl: ModalController,private readonly _lang:LanguageManagerService) { }
 
-  words = this._lang.currentLanguage.account;
+  words$ = this._lang.currentLanguage$;
 
   confirm(role : string){
     return this.modalCtrl.dismiss(null, role);

@@ -16,7 +16,7 @@ export class AccountteacherpageComponent {
   userData = this._route.snapshot.data['userData'];
   userObs!:Observable<any>;
 
-  words = this._lang.currentLanguage.account;
+  words$ = this._lang.currentLanguage$;
   
   constructor(
     private readonly _user:UsermanagementService,

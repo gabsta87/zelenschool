@@ -1,5 +1,4 @@
 import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
-import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 
 @Component({
   selector: 'app-header',

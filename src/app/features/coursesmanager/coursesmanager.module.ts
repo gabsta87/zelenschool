@@ -78,12 +78,11 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     FlatpickrModule.forRoot(),
     CalendarModule.forRoot({
       provide: DateAdapter,
-      // provide : CustomDateFormatter,
       useFactory : adapterFactory,
     }),
     RouterModule.forChild(
       [{path:'',
-      component:HeaderComponent,
+      component:HeaderComponent, 
       children:[
         {
           path:"login",
@@ -153,7 +152,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     { provide:"MyDatabaseService", useClass:AngularfireService },
     { provide:"MyStorageService", useClass:StorageService },
     { provide: 'dayjs', useValue: dayjs },
-    // { provide: "CalendarDateFormatter", useClass: CustomDateFormatter}
   ]
 })
 export class CoursesmanagerModule { }

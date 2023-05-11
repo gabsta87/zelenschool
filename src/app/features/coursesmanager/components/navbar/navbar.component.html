@@ -1,16 +1,58 @@
-<ion-tabs>
+<ion-tabs *ngIf="(words$|async).navbar as words">
     <ion-tab-bar slot="top">
-         <ion-tab-button *ngFor="let item of navigationItems" (click)="goToAnchor(item)" [routerLink]="item.routerLink" [fragment]="item.fragment">
-            <ion-label class="hideableLabel">{{item.title}}</ion-label>
+
+         <!-- <ion-tab-button *ngFor="let item of navigationItems" (click)="goToAnchor(item)" [routerLink]="item.routerLink" [fragment]="item.fragment">
+            <ion-label class="hideableLabel">{{words.title}}</ion-label>
             <ion-icon *ngIf="item.iconName" [name]="item.iconName" class="hideableIcon"></ion-icon>
             <ion-icon *ngIf="item.iconSrc" [src]="item.iconSrc" class="hideableIcon"></ion-icon>
         </ion-tab-button>
         
         <ion-tab-button *ngFor="let item of simpleNavItems;
         let i = index;" [tab]="item.page">
-            <ion-label class="hideableLabel">{{item.title}}</ion-label>
+            <ion-label class="hideableLabel">{{words.title}}</ion-label>
             <ion-icon [name]="item.iconName" class="hideableIcon"></ion-icon>
+        </ion-tab-button> -->
+
+        <ion-tab-button (click)="goToAnchor(navigationItems[0])" [routerLink]="navigationItems[0].routerLink" [fragment]="navigationItems[0].fragment">
+            <ion-label class="hideableLabel">{{words.about}}</ion-label>
+            <ion-icon *ngIf="navigationItems[0].iconName" [name]="navigationItems[0].iconName" class="hideableIcon"></ion-icon>
+            <ion-icon *ngIf="navigationItems[0].iconSrc" [src]="navigationItems[0].iconSrc" class="hideableIcon"></ion-icon>
         </ion-tab-button>
+        
+        <ion-tab-button (click)="goToAnchor(navigationItems[1])" [routerLink]="navigationItems[1].routerLink" [fragment]="navigationItems[1].fragment">
+            <ion-label class="hideableLabel">{{words.activities}}</ion-label>
+            <ion-icon *ngIf="navigationItems[1].iconName" [name]="navigationItems[1].iconName" class="hideableIcon"></ion-icon>
+            <ion-icon *ngIf="navigationItems[1].iconSrc" [src]="navigationItems[1].iconSrc" class="hideableIcon"></ion-icon>
+        </ion-tab-button>
+
+        <ion-tab-button (click)="goToAnchor(navigationItems[2])" [routerLink]="navigationItems[2].routerLink" [fragment]="navigationItems[2].fragment">
+            <ion-label class="hideableLabel">{{words.partners}}</ion-label>
+            <ion-icon *ngIf="navigationItems[2].iconName" [name]="navigationItems[2].iconName" class="hideableIcon"></ion-icon>
+            <ion-icon *ngIf="navigationItems[2].iconSrc" [src]="navigationItems[2].iconSrc" class="hideableIcon"></ion-icon>
+        </ion-tab-button>
+
+        <ion-tab-button (click)="goToAnchor(navigationItems[3])" [routerLink]="navigationItems[3].routerLink" [fragment]="navigationItems[3].fragment">
+            <ion-label class="hideableLabel">{{words.contact}}</ion-label>
+            <ion-icon *ngIf="navigationItems[3].iconName" [name]="navigationItems[3].iconName" class="hideableIcon"></ion-icon>
+            <ion-icon *ngIf="navigationItems[3].iconSrc" [src]="navigationItems[3].iconSrc" class="hideableIcon"></ion-icon>
+        </ion-tab-button>
+
+        <ion-tab-button (click)="goToAnchor(navigationItems[4])" [routerLink]="navigationItems[4].routerLink" [fragment]="navigationItems[4].fragment">
+            <ion-label class="hideableLabel">{{words.donate}}</ion-label>
+            <ion-icon *ngIf="navigationItems[4].iconName" [name]="navigationItems[4].iconName" class="hideableIcon"></ion-icon>
+            <ion-icon *ngIf="navigationItems[4].iconSrc" [src]="navigationItems[4].iconSrc" class="hideableIcon"></ion-icon>
+        </ion-tab-button>
+
+        <ion-tab-button [tab]="simpleNavItems[0].page">
+            <ion-label class="hideableLabel">{{words.gallery}}</ion-label>
+            <ion-icon [name]="simpleNavItems[0].iconName" class="hideableIcon"></ion-icon>
+        </ion-tab-button>
+
+        <ion-tab-button [tab]="simpleNavItems[1].page">
+            <ion-label class="hideableLabel">{{words.schedule}}</ion-label>
+            <ion-icon [name]="simpleNavItems[1].iconName" class="hideableIcon"></ion-icon>
+        </ion-tab-button>
+
 
         <ion-tab-button *ngIf="!(isLogged|async); else logged" tab="login">
             <ion-label class="hideableLabel"> {{words.login}} </ion-label>
@@ -38,5 +80,25 @@
                 <ion-icon name="build-outline" class="hideableIcon"></ion-icon>
             </ion-tab-button>
         </ng-template>
+
+        <ion-tab-button class="langButton">
+            <ion-img id="bannerClick" [src]="_lang.currentLanguageFlag"></ion-img>
+        </ion-tab-button>
+        <ion-popover trigger="bannerClick" triggerAction="click" size="cover">
+            <ng-template>
+                <ion-content>
+                        <ion-item (click)="changeLanguage('EN')" class="ion-no-padding" lines="none">
+                            <ion-img class="langButton" src="../../assets/flags/united-kingdom.png" alt="english flag"></ion-img>
+                        </ion-item>
+                        <ion-item (click)="changeLanguage('FR')" class="ion-no-padding" lines="none">
+                            <ion-img class="langButton" src="../../assets/flags/france.png" alt="drapeau français"></ion-img>
+                        </ion-item>
+                        <ion-item (click)="changeLanguage('UA')" class="ion-no-padding" lines="none">
+                            <ion-img class="langButton" src="../../assets/flags/ukraine.png" alt="ukrainian flag"></ion-img>
+                        </ion-item>
+                </ion-content>
+            </ng-template>
+        </ion-popover>
+
     </ion-tab-bar>
 </ion-tabs>

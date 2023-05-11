@@ -14,6 +14,22 @@ Questions:
 
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
+URGENT :
+    ☐ Fix calendar language change (refresh);
+    ✘ Bug : when creating a course (next month), timeEnd was set before timeStart (cannot reproduce) @cancelled(23-04-17 10:45)
+    ✔ automatic unban for absences after 30 days (on login of user) @done(23-04-11 10:54)
+    ✔ Admin page : When charge new photo, only for 1 asso member, not others @done(23-04-10 11:39)
+    ✔ Links work correctly for nav-bar @done(23-04-08 11:26)
+    ✔ Check display on admin page when user banned by system (banned by :) @done(23-04-06 09:16)
+    ✔ Ban only if comment written @done(23-04-06 09:16)
+    ✔ impossible to create courses if there is a collision (multi course) @done(23-04-05 19:50)
+    ✔ Make impossible to change date in "teacher create modal", otherwise, it will bug @done(23-04-05 01:20)
+    ✔ Check when impossible to read email from user -> impossible to go under Account page. Evt reload page from angular with try/catch or display error message @done(23-04-05 01:20)
+    ✔ Verify if banning doesnt remove from past courses @done(23-04-06 08:56)
+    ✔ Fix hours properly @done(23-03-30 17:11)
+    ✔ Collision events not working @done(23-03-30 17:11)
+    ✔ See why some users have no status @done(23-03-30 17:11)
+
 Misc :
     ☐ Galleries have a presentation image, a description, and half screen before the gallery is big image
     ☐ better galleries management for mobile 
@@ -76,27 +92,15 @@ Misc :
     ☐ Generate teachers' hours sheet per month (date-hour duration title)
     ✔ admin can modify courses @done(23-04-17 10:46)
 
-    URGENT :
-    ✘ Bug : when creating a course (next month), timeEnd was set before timeStart (cannot reproduce) @cancelled(23-04-17 10:45)
-    ✔ automatic unban for absences after 30 days (on login of user) @done(23-04-11 10:54)
-    ✔ Admin page : When charge new photo, only for 1 asso member, not others @done(23-04-10 11:39)
-    ✔ Links work correctly for nav-bar @done(23-04-08 11:26)
-    ✔ Check display on admin page when user banned by system (banned by :) @done(23-04-06 09:16)
-    ✔ Ban only if comment written @done(23-04-06 09:16)
-    ✔ impossible to create courses if there is a collision (multi course) @done(23-04-05 19:50)
-    ✔ Make impossible to change date in "teacher create modal", otherwise, it will bug @done(23-04-05 01:20)
-    ✔ Check when impossible to read email from user -> impossible to go under Account page. Evt reload page from angular with try/catch or display error message @done(23-04-05 01:20)
-    ✔ Verify if banning doesnt remove from past courses @done(23-04-06 08:56)
-    ✔ Fix hours properly @done(23-03-30 17:11)
-    ✔ Collision events not working @done(23-03-30 17:11)
-    ✔ See why some users have no status @done(23-03-30 17:11)
-
 OPTIONAL : 
     ☐ schedule : limit future courses to current month/week/day
     ☐ schedule : filter future events for week/day
     ☐ search (teacher/title)
     ☐ Full screen image when clicking on it
+        https://forum.ionicframework.com/t/advice-for-displaying-a-full-screen-image/5028
         https://codepen.io/rdelafuente/pen/xxqMXX
+    ☐ Random background on reload
+        https://stackblitz.com/edit/random-background-on-refresh?file=src%2Fapp%2Fapp.component.ts
 
 
 BUGS :

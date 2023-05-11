@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content *ngIf="(words$|async).account as words">
     <div class="modalContent">
     <ion-text>
         <p>{{words.explanation[0]}}</p>

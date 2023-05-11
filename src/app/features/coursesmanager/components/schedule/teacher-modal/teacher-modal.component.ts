@@ -39,7 +39,7 @@ export class TeacherModalComponent{
   cannotModify!:boolean;
   isPassedEvent!:boolean;
 
-  words = this._lang.currentLanguage.schedule;
+  words$ = this._lang.currentLanguage$;
 
   constructor(
     private readonly modalCtrl: ModalController,

@@ -1,4 +1,4 @@
-
+<ng-container *ngIf="(words$|async).account as words">
 <ion-header>
     <ion-toolbar>
         <ion-title>{{title}}</ion-title>
@@ -58,3 +58,4 @@
         </ion-content>
     </ng-template>
 </ion-popover>
+</ng-container>

@@ -33,7 +33,7 @@ export class StudentModalComponent {
   duration = 1;
   durationUnit!:dayjs.ManipulateType;
 
-  words = this._lang.currentLanguage.schedule;
+  words$ = this._lang.currentLanguage$;
 
   constructor(private modalCtrl: ModalController,
     private readonly _db: AngularfireService,

@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content *ngIf="(words$|async).account as words">
 <div class="loginPageContainer" (keydown.enter)="loginWithEmail()" >
 <form (ngSubmit)="loginWithEmail()" #loginForm="ngForm">
 

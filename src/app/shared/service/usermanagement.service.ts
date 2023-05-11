@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import { BehaviorSubject } from 'rxjs';
 import { AngularfireService } from './angularfire.service';
 import { getNowDate } from './hour-management.service';
+import { LanguageManagerService } from './language-manager.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class UsermanagementService{
   isLogged = new BehaviorSubject(false);
   isUserBanned = new BehaviorSubject(false);
 
-  constructor(private readonly _db:AngularfireService, private readonly _auth:Auth) {
+  constructor(private readonly _db:AngularfireService, private readonly _auth:Auth, private readonly _lang : LanguageManagerService) {
     
     _auth.onAuthStateChanged(user=>{
       if(user){
@@ -50,6 +51,7 @@ export class UsermanagementService{
           this.isLogged.next(false);
           this.isUserBanned.next(false);
       }
+      _lang.loadUserLanguage();
     })
   }
 
@@ -131,6 +133,16 @@ export class UsermanagementService{
   isStudent(){
     return this.isLogged.value;
     // return this.checkStatus("student")
+  }
+
+  setLanguage(lang:string){
+    this._db.updateCurrentUser({"language":lang});
+  }
+
+  private getLanguage(){
+    if(this.userData == undefined)
+      return undefined;
+    return this.userData["language"];
   }
 
   logout(){

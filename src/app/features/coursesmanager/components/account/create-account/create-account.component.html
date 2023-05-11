@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content *ngIf="(words$|async).account as words">
     <div class="accountItems" (keydown.enter)="register()">
         <form (ngSubmit)="register()" [formGroup]="profileForm">
             <ion-grid>

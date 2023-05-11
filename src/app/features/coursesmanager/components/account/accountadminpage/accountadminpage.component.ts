@@ -15,7 +15,7 @@ export class AccountadminpageComponent {
   userData = this._route.snapshot.data['userData'];
   userObs!:Observable<any>;
 
-  words = this._lang.currentLanguage.account;
+  words$ = this._lang.currentLanguage$;
 
   profileForm = new FormGroup({
       email : new FormControl(this.userData.user.email?this.userData.user.email:"",emailValidator()),

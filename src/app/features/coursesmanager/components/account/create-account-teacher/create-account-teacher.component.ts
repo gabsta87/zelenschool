@@ -23,7 +23,7 @@ export class CreateAccountTeacherComponent {
     passData:FormGroup,
   }>;
 
-  words = this._lang.currentLanguage.account;
+  words$ = this._lang.currentLanguage$;
 
   errorMessage = "";
   isOpen = false;

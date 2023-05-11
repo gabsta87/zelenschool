@@ -1,4 +1,4 @@
-<ion-content #aboutIonContent id="aboutIonContent" [scrollEvents]="true" (ionScroll)="onScroll($event)">
+<ion-content *ngIf="(words$|async).about as words" #aboutIonContent id="aboutIonContent" [scrollEvents]="true" (ionScroll)="onScroll($event)">
     <div class="topImage aboutTopImage" id="anchor_about" #anchor_>
         <div class="topElements">
             <h1>

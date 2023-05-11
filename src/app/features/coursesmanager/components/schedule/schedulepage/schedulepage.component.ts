@@ -7,7 +7,7 @@ import { CalendarDateFormatter, CalendarEvent, CalendarEventTimesChangedEvent, C
 import { MonthViewDay, WeekViewHourColumn } from 'calendar-utils';
 import { isSameDay, isSameMonth } from 'date-fns';
 import dayjs from 'dayjs';
-import { BehaviorSubject, Observable, Subject, firstValueFrom, map } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
 import { formatTime, getNowDate } from 'src/app/shared/service/hour-management.service';
 import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
@@ -15,7 +15,6 @@ import { StudentModalComponent } from '../student-modal/student-modal.component'
 import { TeacherCreateEventModalComponent } from '../teacher-create-event-modal/teacher-create-event-modal.component';
 import { CustomDateFormatter } from './custom-date-formatter.provider';
 import { TeacherModalComponent } from '../teacher-modal/teacher-modal.component';
-
 
 export interface CalendarMonthViewEventTimesChangedEvent< EventMetaType = any, DayMetaType = any > 
   extends CalendarEventTimesChangedEvent<EventMetaType> { day: MonthViewDay<DayMetaType>; }
@@ -63,7 +62,7 @@ export class SchedulepageComponent {
   selectedDayRemove= new EventEmitter();
   selectedDaySubscribtion !: any;
 
-  words = this._lang.currentLanguage.schedule;
+  words$ = this._lang.currentLanguage$;
 
   constructor(
     private readonly _route: ActivatedRoute,
@@ -74,10 +73,6 @@ export class SchedulepageComponent {
     readonly auth : Auth,
     ) {
     this.futureCourses = this.extractedData.pipe(map( (courses:any) => courses = courses.filter((course:any) =>dayjs(course.timeStart).isAfter(dayjs(getNowDate()),"hour") )))
-  }
-
-  async ionViewDidEnter(){
-    const temp = await firstValueFrom(this.futureCourses);
   }
 
   async ngOnInit(){
@@ -108,32 +103,16 @@ export class SchedulepageComponent {
     this.selectedDaySubscribtion = this.selectedDayRemove.subscribe(_=>{
       this.refresh.next();
     });
+
+    this.words$.subscribe(_=>{
+      this.locale = this._lang.getCurrentCode();
+    });
   }
 
   ngOnDestroy(){
     this.coursesSubscribtion.unsubscribe();
     this.selectedDaySubscribtion.unsubscribe();
   }
-
-  // actions: CalendarEventAction[] = [
-  //   {
-  //     label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-  //     a11yLabel: 'Edit',
-  //     onClick: ({ event }: { event: CalendarEvent }): void => {
-  //       console.log('Edit event', event);
-  //       // this.handleCalendarEntry('Edited', event);
-  //     },
-  //   },
-  //   {
-  //     label: '<i class="fas fa-fw fa-trash-alt"></i>',
-  //     a11yLabel: 'Delete',
-  //     onClick: ({ event }: { event: CalendarEvent }): void => {
-  //       console.log('Delete event', event);
-  //       //     this.events = this.events.filter((iEvent) => iEvent !== event);
-  //       //     this.handleCalendarEntry('Deleted', event);
-  //     },
-  //   },
-  // ];
 
   async handleCalendarEntry(action: string, event: CalendarEvent) {
     const modal = await this.modalController.create({

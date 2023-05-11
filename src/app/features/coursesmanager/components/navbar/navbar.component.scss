@@ -22,3 +22,37 @@ ion-tab-bar{
     }
 }
 
+.langButton{
+    max-width:50px;
+}
+
+.langList{
+    max-width: 50px;
+    ion-item{
+        cursor: pointer;
+    }
+}
+
+ion-popover{
+    --width:50px !important;
+    ion-item{
+        cursor: pointer;
+    }
+}
+
+ion-popover ion-content{
+    --background: rgba(40, 173, 218, 0.6);
+    --backdrop-opacity: 0.6;
+    --box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.6);
+    --color: transparent;
+    // --size:50px;
+    // --width: 50px;
+  }
+  
+  ion-popover ion-content {
+    --background: rgba(0, 0, 0, 0);
+  }
+  
+  ion-popover::part(backdrop) {
+    background-color: rgba(0, 0, 0,0);
+  }

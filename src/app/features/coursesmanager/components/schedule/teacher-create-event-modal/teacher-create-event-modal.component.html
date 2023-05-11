@@ -1,3 +1,5 @@
+<ng-container *ngIf="(words$|async).account as words">
+    
 <ion-content class="ion-padding" (keydown.enter)="confirm()">
     <form (ngSubmit)="confirm()" #evtCreation="ngForm">
     <ion-item>
@@ -96,3 +98,4 @@
 
     </ion-toolbar>
 </ion-footer>
+</ng-container>

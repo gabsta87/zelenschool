@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, User } from '@angular/fire/auth';
+import { Auth, User, user } from '@angular/fire/auth';
 import { DocumentData, Firestore, QueryConstraint, addDoc, arrayRemove, arrayUnion, collection, collectionData, deleteField, doc, getDocs, setDoc, where } from '@angular/fire/firestore';
 import { deleteDoc, getDoc, query, updateDoc } from '@firebase/firestore';
 import dayjs from 'dayjs';
@@ -27,7 +27,7 @@ export class AngularfireService{
     return observableStream;
   }
 
-  async getSnapshot(collection:string,documentId:string){
+  async getSnapshot(collection:string,documentId:string):Promise<DocumentData|undefined>{
     const docRef = doc(this._dbaccess, collection, documentId);
     const docSnap = await getDoc(docRef);
     return docSnap.data() ? {...docSnap.data(),id:documentId}: undefined;
@@ -224,6 +224,20 @@ export class AngularfireService{
   updateCurrentUser(newValue:any){
     const docRef = doc(this._dbaccess,'users/'+this._auth.currentUser?.uid);
     return updateDoc(docRef,{...newValue});
+  }
+
+  async getCurrentUserLanguage():Promise<string|undefined>{
+    let currentUserId = this._auth.currentUser?.uid;
+    if(currentUserId){
+      let userData = await this.getSnapshot("users",currentUserId);
+      if(userData){
+        return userData['language'];
+      }else{
+        return undefined;
+      }
+    }else{
+      return undefined
+    }
   }
 
   // Teachers specific functions

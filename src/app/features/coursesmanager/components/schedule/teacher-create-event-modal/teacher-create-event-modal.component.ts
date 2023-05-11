@@ -36,7 +36,7 @@ export class TeacherCreateEventModalComponent {
   defaultHour!:number;
   defaultMinute!:number;
 
-  words = this._lang.currentLanguage.schedule;
+  words$ = this._lang.currentLanguage$;
 
   constructor(private readonly modalCtrl:ModalController,
     private readonly _db: AngularfireService,

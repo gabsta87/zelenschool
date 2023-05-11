@@ -16,7 +16,7 @@ export class AboutpageComponent {
   fragment!:any;
   myAnchor!:any;
 
-  words = this._lang.currentLanguage.about;
+  words$ = this._lang.currentLanguage$;
 
   private _positions : any[] = [];
   

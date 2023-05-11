@@ -23,7 +23,7 @@ export class LoginpageComponent {
   providerFB = new FacebookAuthProvider();
   auth = getAuth();
 
-  words = this._lang.currentLanguage.account;
+  words$ = this._lang.currentLanguage$;
 
   constructor(
     private readonly _auth: Auth,

@@ -1,4 +1,4 @@
-<ion-content> 
+<ion-content *ngIf="(words$|async).schedule as words"> 
 <div class="scheduleContainer">
 
     <ion-popover #popover [isOpen]="isBanned.value">

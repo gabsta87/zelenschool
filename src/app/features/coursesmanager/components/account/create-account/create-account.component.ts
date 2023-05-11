@@ -14,7 +14,7 @@ import { bdValidator, emailValidator, passwordValidator, phoneValidator,permitVa
 })
 export class CreateAccountComponent {
 
-  words = this._lang.currentLanguage.account;
+  words$ = this._lang.currentLanguage$;
 
   profileForm!:FormGroup<{
     email:FormControl<string|null>,

@@ -22,9 +22,6 @@ export class UserpageResolver  {
       user : this._usr.getUserData()
     }
 
-    console.log("result : ",result);
-    
-
     return result;
   }
 }

@@ -1,5 +1,6 @@
 import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
+import { map } from 'rxjs';
 import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 // import {App} from ‘@ionic-angular’;
@@ -17,32 +18,32 @@ export class NavbarComponent {
   @ViewChildren("aboutIonContent") divs!:QueryList<ElementRef>;
   myAnchor !: any;
 
-  constructor(private readonly _userS:UsermanagementService, private readonly _router:Router, private readonly _lang:LanguageManagerService){ }
+  constructor(private readonly _userS:UsermanagementService, private readonly _router:Router, readonly _lang:LanguageManagerService){ }
 
-  ngAfterViewInit(){
-    this.myAnchor = document.querySelector('aboutIonContent');
+  ngAfterViewInit(){ 
+    this.myAnchor = document.querySelector('aboutIonContent'); 
   }
 
   isAdmin = this._userS.isLoggedAsAdmin;
   isTeacher = this._userS.isLoggedAsTeacher;
   isLogged = this._userS.isLogged;
 
-  words = this._lang.currentLanguage.navbar;
+  words$ = this._lang.currentLanguage$;
 
   navigationItems = [
-    {title:this.words.about,page:"about",routerLink:"/about",fragment:"about",iconName:"information-circle-outline"},
-    {title:this.words.activities,page:"about",routerLink:"/about",fragment:"activities",iconSrc:"../../assets/icons/activities.svg"},
-    {title:this.words.partners,page:"about",routerLink:"/about",fragment:"partners",iconSrc:"../../assets/icons/partners.svg"},
-    {title:this.words.contact,page:"about",routerLink:"/about",fragment:"contact",iconName:"call-outline"},
-    {title:this.words.donate,page:"about",routerLink:"/about",fragment:"donate",iconSrc:"../../assets/icons/donate.svg"},
+    {title:"about",page:"about",routerLink:"/about",fragment:"about",iconName:"information-circle-outline"},
+    {title:"activities",page:"about",routerLink:"/about",fragment:"activities",iconSrc:"../../assets/icons/activities.svg"},
+    {title:"partners",page:"about",routerLink:"/about",fragment:"partners",iconSrc:"../../assets/icons/partners.svg"},
+    {title:"contact",page:"about",routerLink:"/about",fragment:"contact",iconName:"call-outline"},
+    {title:"donate",page:"about",routerLink:"/about",fragment:"donate",iconSrc:"../../assets/icons/donate.svg"},
   ]
 
   simpleNavItems = [
-    {title:this.words.gallery,page:"gallery",iconName:"images-outline"},
-    {title:this.words.schedule,page:"schedule",iconName:"calendar-number-outline"},
+    {title:"gallery",page:"gallery",iconName:"images-outline"},
+    {title:"schedule",page:"schedule",iconName:"calendar-number-outline"},
   ]
 
-  goToAnchor(link : {title:string,routerLink:string,fragment:string}){
+  goToAnchor(link : {title?:string,routerLink:string,fragment:string}){
     this._router.navigate([link.routerLink],{fragment:link.fragment});
  
     if(this._router.url.includes("about")){
@@ -50,6 +51,11 @@ export class NavbarComponent {
       
       aboutDoc?.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
     }
+  }
+
+  changeLanguage(lang:string){
+    this._lang.changeLanguageTo(lang);
+    this._lang.saveUserLanguage(lang);
   }
 }
 

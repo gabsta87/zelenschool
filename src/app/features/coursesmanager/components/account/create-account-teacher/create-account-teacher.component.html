@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content *ngIf="(words$|async).account as words">
     <div class="accountItems" (keydown.enter)="register()">
         <form (ngSubmit)="register()" [formGroup]="profileForm">
 
@@ -70,10 +70,9 @@
             </div>
         </form>
     </div>
+    <ion-popover #popover [isOpen]="isOpen" (didDismiss)="isOpen = false">
+        <ng-template>
+          <ion-content class="ion-padding">{{words.teacherRequestSubmitted}}</ion-content>
+        </ng-template>
+    </ion-popover>
 </ion-content>
-
-<ion-popover #popover [isOpen]="isOpen" (didDismiss)="isOpen = false">
-    <ng-template>
-      <ion-content class="ion-padding">{{words.teacherRequestSubmitted}}</ion-content>
-    </ng-template>
-</ion-popover>
