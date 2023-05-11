@@ -15,7 +15,7 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 URGENT :
-    ☐ Fix calendar language change (refresh);
+    ✔ Fix calendar language change (refresh); @done(23-05-11 20:30)
     ✘ Bug : when creating a course (next month), timeEnd was set before timeStart (cannot reproduce) @cancelled(23-04-17 10:45)
     ✔ automatic unban for absences after 30 days (on login of user) @done(23-04-11 10:54)
     ✔ Admin page : When charge new photo, only for 1 asso member, not others @done(23-04-10 11:39)
@@ -37,9 +37,9 @@ Misc :
     ☐ admin page : when deleting user, remove from auth
     ✔ fix account creation @done(23-05-04 17:51)
     ✔ past courses : dont display conflicts @done(23-05-04 17:51)
-    ☐ remember user language
+    ✔ remember user language @done(23-05-11 20:31)
         user management service
-    ☐ button to change languages (account/navBar)
+    ✔ button to change languages (account/navBar) @done(23-05-11 20:31)
         Cookies to remember users' language
         https://www.npmjs.com/package/ngx-cookie-service
     ☐ teachers need to see banned people (where?)
