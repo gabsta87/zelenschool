@@ -1,4 +1,4 @@
-<ng-container *ngIf="(words$|async).account as words">
+<ng-container *ngIf="(words$|async).schedule as words">
 <ion-header>
     <ion-toolbar>
         <ion-title>{{title}}</ion-title>
@@ -36,7 +36,7 @@
     </ion-item>
 
     <ion-item [disabled]="cannotModify">
-        <ion-label>{{words.duration}}</ion-label>
+        <ion-label>{{words.duration}} :</ion-label>
         <ion-input type="number" value="1" [min]="0" required name="duration" [(ngModel)]="duration" (ionChange)="updateDuration($event)"></ion-input>
         <ion-select interface="popover" name="durationUnit" (ionChange)="updateDurationUnit($event)" [(ngModel)]="durationUnit">
             <ion-select-option value="hour">{{words.hours}}</ion-select-option>
@@ -45,12 +45,12 @@
     </ion-item>
 
     <ion-item>
-        <ion-label>{{words.maxParticipants}}</ion-label>
+        <ion-label>{{words.maxParticipants}} :</ion-label>
         <ion-input type="number" placeholder="0" [min]="0" required name="max_participants" [(ngModel)]="max_participants" [disabled]="cannotModify"></ion-input>
     </ion-item>
 
     <ion-item>
-        <ion-label>{{words.description}}</ion-label>
+        <ion-label>{{words.description}} :</ion-label>
         <ion-textarea [(ngModel)]="description" [autoGrow]="true" required name="description" [disabled]="cannotModify"> </ion-textarea>
     </ion-item>
 
