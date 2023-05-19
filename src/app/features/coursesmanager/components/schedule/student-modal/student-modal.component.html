@@ -1,4 +1,4 @@
-<ng-container *ngIf="(words$|async).account as words">
+<ng-container *ngIf="(words$|async).schedule as words">
 <ion-header>
     <ion-toolbar>
         <ion-title>{{title}}</ion-title>
@@ -11,7 +11,7 @@
     </ng-template>
     </ion-popover>
 
-    <div *ngIf="dataObs |async as currentEvent">
+    <div *ngIf="calendarEntries$ |async as currentEvent">
     <ion-item *ngIf="creator">
         <ion-text>{{words.teacher}} : {{creator['f_name']}} {{creator['l_name']}}</ion-text>
     </ion-item>
@@ -34,6 +34,12 @@
         <ion-checkbox slot="start" [(ngModel)]="isAttending" [disabled]="isSubscribtionBlocked"></ion-checkbox>
         <ion-label>{{words.participate}}</ion-label>
     </ion-item>
+    <ng-container *ngIf="isParent|async">
+        <ion-item lines="none" *ngFor="let child of currentUser.childrenInfos; let index = index">
+            <ion-checkbox slot="start" [(ngModel)]="isChildAttending[index]" [disabled]="isSubscribtionBlocked"></ion-checkbox>
+            <ion-label>{{child.f_name}}</ion-label>
+        </ion-item>
+    </ng-container>
     </div>
 </ion-content>
 
