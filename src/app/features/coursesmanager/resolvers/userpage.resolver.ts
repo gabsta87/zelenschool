@@ -16,12 +16,27 @@ interface UserData{
 export class UserpageResolver  {
   constructor(private readonly _usr:UsermanagementService, private readonly _db : AngularfireService){ }
 
+  // async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<UserData> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): UserData {
 
     let result = {
       userObs : this._usr.getUserObs(),
       user : this._usr.getUserData()
     }
+
+    // if(result.user.children && result.user.children.length > 0){
+      
+    //   const childrenInfos = await Promise.all(result.user.children.map((childId: string) => this._db.getUser(childId)));
+
+    //   result.user.children = await Promise.all(result.user.children.map(async (childId: string) => {
+    //     const childInfo = childrenInfos.find((child: any) => child.id === childId);
+    //     if (childInfo) {
+    //       const childData = await this._db.getUser(childId);
+    //       return childData;
+    //     }
+    //     return null;
+    //   }));
+    // }
 
     result.userObs = result.userObs?.pipe(
       switchMap(async (user: any) => {
