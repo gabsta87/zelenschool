@@ -15,6 +15,7 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 URGENT :
+    ☐ debug child subscribtion
     ☐ when marking child as absent, mark only once for all parent/children
     ☐ when banning children, prevent parent from subscribing him
     ✔ when admin deletes a child, remove from parent list of children @done(23-05-19 11:49)

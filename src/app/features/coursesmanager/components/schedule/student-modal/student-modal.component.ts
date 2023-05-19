@@ -57,31 +57,29 @@ export class StudentModalComponent {
     
     this.calendarEntries$ = this._db.getCalendarEntry(this.meta.id);
 
-    let courseActualValues = await firstValueFrom(this.calendarEntries$);
-    this.courseActualValues = courseActualValues;
+    this.courseActualValues = await firstValueFrom(this.calendarEntries$);
 
-    if (courseActualValues) {
+    if (this.courseActualValues) {
 
-      this.creator = await this._db.getUser(courseActualValues['author']);
+      this.creator = await this._db.getUser(this.courseActualValues['author']);
 
-      this.isAttending = courseActualValues['attendantsId'].includes(this._user.getId());
-      this.isCourseFull = courseActualValues['attendantsId'].length >= courseActualValues['max_participants'];
+      this.isAttending = this.courseActualValues['attendantsId'].includes(this._user.getId());
+      this.isCourseFull = this.courseActualValues['attendantsId'].length >= this.courseActualValues['max_participants'];
 
       this.isParent = this._user.isParent;
 
-      if(this.currentUser.children && this.currentUser.children.length > 0){
-        this.currentUser.children.forEach((child:any) => {
+      // Checking if children are subscribed in the course
+      if(this.currentUser.childrenInfos && this.currentUser.childrenInfos.length > 0){
+        this.currentUser.childrenInfos.forEach((child:any) => {
           this.isChildAttending.push(this.courseActualValues['attendantsId'].includes(child['id']))
         })
       }
-      console.log("isChildAttending : ",this.isChildAttending);
-      
 
-      this.duration = dayjs(courseActualValues['timeEnd']).diff(courseActualValues['timeStart'], "minute");
+      this.duration = dayjs(this.courseActualValues['timeEnd']).diff(this.courseActualValues['timeStart'], "minute");
       if (this.duration < 60 || this.duration % 60 != 0) {
         this.durationUnit = "minute"
       } else {
-        this.duration = dayjs(courseActualValues['timeEnd']).diff(courseActualValues['timeStart'], "hour");
+        this.duration = dayjs(this.courseActualValues['timeEnd']).diff(this.courseActualValues['timeStart'], "hour");
         this.durationUnit = "hour"
       }
 
@@ -96,13 +94,13 @@ export class StudentModalComponent {
         this._user.isBanned() ||
 
         // Date is already passed
-        dayjs(courseActualValues['timeStart']).isBefore(getNowDate()) ||
+        dayjs(this.courseActualValues['timeStart']).isBefore(getNowDate()) ||
 
         // Subscribed and 12 hours before course
-        (this.isAttending && dayjs(courseActualValues['timeStart']).subtract(12, "hour").isBefore(getNowDate())) ||
+        (this.isAttending && dayjs(this.courseActualValues['timeStart']).subtract(12, "hour").isBefore(getNowDate())) ||
 
         // Still possible to subscribe 12 hours after the course
-        (!this.isAttending && dayjs(courseActualValues['timeStart']).add(12, "hour").isBefore(getNowDate()))
+        (!this.isAttending && dayjs(this.courseActualValues['timeStart']).add(12, "hour").isBefore(getNowDate()))
     }
   }
 
@@ -130,7 +128,6 @@ export class StudentModalComponent {
 
     // Children management
     if(this.currentUser.childrenInfos){
-      console.log("subscribe");
       
       this.currentUser.childrenInfos.forEach((child:any,index:number) => {
         this._db.toggleSubscribtionToCalendarEntry(child['id'],this.meta.id,this.isChildAttending[index])
