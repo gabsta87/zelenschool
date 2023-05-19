@@ -15,6 +15,7 @@ import { StudentModalComponent } from '../student-modal/student-modal.component'
 import { TeacherCreateEventModalComponent } from '../teacher-create-event-modal/teacher-create-event-modal.component';
 import { CustomDateFormatter } from './custom-date-formatter.provider';
 import { TeacherModalComponent } from '../teacher-modal/teacher-modal.component';
+import { UserInfos } from 'src/app/shared/service/angularfire.service';
 
 export interface CalendarMonthViewEventTimesChangedEvent< EventMetaType = any, DayMetaType = any > 
   extends CalendarEventTimesChangedEvent<EventMetaType> { day: MonthViewDay<DayMetaType>; }
@@ -107,6 +108,7 @@ export class SchedulepageComponent {
     this.words$.subscribe(_=>{
       this.locale = this._lang.getCurrentCode();
     });
+    
   }
 
   ngOnDestroy(){
@@ -115,6 +117,7 @@ export class SchedulepageComponent {
   }
 
   async handleCalendarEntry(action: string, event: CalendarEvent) {
+    
     const modal = await this.modalController.create({
       component: (this.isTeacher.value || this.isAdmin.value )? TeacherModalComponent: StudentModalComponent,
       componentProps: {

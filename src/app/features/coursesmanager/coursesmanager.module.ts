@@ -99,7 +99,7 @@ import { ChildCreationModalComponent } from './components/account/child-creation
           path:"schedule",
           component:SchedulepageComponent,
           resolve:{
-            scheduleData:CalendareventsresolveResolver
+            scheduleData:CalendareventsresolveResolver,
           }
         },{
           path:"gallery",
