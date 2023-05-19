@@ -60,7 +60,7 @@
 
             <ion-accordion-group [multiple]="true">
                 <ion-item *ngFor="let usr of filteredData[0]" lines="none">
-                    <ion-accordion [value]="usr['l_name']">
+                    <ion-accordion [value]="usr['id']">
                         <ion-item slot="header" color="light">
                         <ion-label>{{usr['l_name']}} {{usr['f_name']}}</ion-label>
                         </ion-item>
@@ -76,6 +76,17 @@
                             <p> Banned on : {{usr['ban'].date}} by {{usr['ban'].author?.l_name}} {{usr['ban'].author?.f_name}}<br>
                             Reason : {{usr['ban'].comment}}</p>
                             </ion-text>
+                            <ion-list *ngIf="usr['children'] && usr['children'].length > 0">
+                                <ion-item *ngFor="let child of usr['children']">{{child|json}} {{child.f_name}} {{child.l_name}} {{child.birthday}}
+
+                                    <ion-button *ngIf="child['ban'] == undefined; else unban" (click)="banUser(child['id'])">Ban</ion-button>
+                                    <ng-template #unban>
+                                        <ion-button (click)="unbanUser(child['id'])">Unban</ion-button>
+                                    </ng-template>
+
+                                </ion-item>
+                            </ion-list>
+                            
                             <span>
                             <ion-button *ngIf="usr['ban'] == undefined; else unban" (click)="banUser(usr['id'])">Ban</ion-button>
                             <ng-template #unban>
@@ -137,7 +148,7 @@
         </div>
         <ion-accordion-group>
             <ion-item *ngFor="let usr of (assoMembers|async)" lines="none">
-                <ion-accordion [value]="usr['name']">
+                <ion-accordion [value]="usr['id']">
                     <ion-item slot="header" color="light" (click)="cancelMemberEdit()">
                     <ion-label> <b>{{usr['name']}}</b> {{usr['role']}}</ion-label>
                     </ion-item>
