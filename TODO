@@ -15,6 +15,10 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 URGENT :
+    ☐ when marking child as absent, mark only once for all parent/children
+    ☐ when banning children, prevent parent from subscribing him
+    ✔ when admin deletes a child, remove from parent list of children @done(23-05-19 11:49)
+    ✔ when admin deletes a parent, remove children too @done(23-05-19 11:49)
     ✔ Fix calendar language change (refresh); @done(23-05-11 20:30)
     ✘ Bug : when creating a course (next month), timeEnd was set before timeStart (cannot reproduce) @cancelled(23-04-17 10:45)
     ✔ automatic unban for absences after 30 days (on login of user) @done(23-04-11 10:54)
@@ -31,7 +35,7 @@ URGENT :
     ✔ See why some users have no status @done(23-03-30 17:11)
 
 Misc :
-    ☐ Galleries have a presentation image, a description, and half screen before the gallery is big image
+    ✘ Galleries have a presentation image, a description, and half screen before the gallery is big image @cancelled(23-05-19 11:50)
     ☐ better galleries management for mobile 
     ✘ "Contact us" banner -> no behavior @cancelled(23-05-05 15:44)
     ☐ admin page : when deleting user, remove from auth

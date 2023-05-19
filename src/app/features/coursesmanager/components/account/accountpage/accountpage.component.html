@@ -61,6 +61,21 @@
                 </ion-row>
             </ion-grid>
 
+            <div class="childManagement">
+                <ion-title>{{words.children}}</ion-title>
+                <ion-grid *ngIf="(userData.userObs | async) as usr">
+                    <ion-row *ngFor="let child of usr['children']" class="child-row">
+                        <ion-col>
+                            {{ child.f_name }} {{ child.l_name }} - {{ child.birthday }}
+                        </ion-col>
+                        <ion-col>
+                            <ion-icon color="danger" size="large" (click)="deleteChild(child.id)" name="close-circle-outline"></ion-icon>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+                <ion-icon color="success" size="large" (click)="addChild()" name="add-circle-outline"></ion-icon>
+            </div>
+
             <div class="accountItems">
                 <ion-button (click)="cancel()">{{words.reload}}</ion-button>
                 <ion-button (click)="update()" [disabled]="!profileForm.valid">{{words.update}}</ion-button>

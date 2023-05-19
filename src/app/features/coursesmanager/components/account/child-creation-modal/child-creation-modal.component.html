@@ -1,0 +1,36 @@
+<ng-container *ngIf="(words$|async).account as words">
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>{{words.addChild}}</ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+        <ion-list>
+            <ion-item>
+                <ion-label position="floating">{{words.firstName}}</ion-label>
+                <ion-input [(ngModel)]="child.f_name"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">{{words.lastName}}</ion-label>
+                <ion-input [(ngModel)]="child.l_name"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">{{words.birthday}}</ion-label>
+                <ion-input [(ngModel)]="child.birthday"></ion-input>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+
+    <ion-footer>
+        <ion-toolbar>
+            <ion-buttons slot="start">
+                <ion-button expand="block" (click)="cancel()">{{words.cancel}}</ion-button>
+            </ion-buttons>
+            <ion-buttons slot="end">
+                <ion-button expand="block" (click)="confirm()">{{words.confirm}}</ion-button>
+            </ion-buttons>
+        </ion-toolbar>
+    </ion-footer>
+</ng-container>
+  

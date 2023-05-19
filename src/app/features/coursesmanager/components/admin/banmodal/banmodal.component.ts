@@ -11,7 +11,6 @@ export class BanmodalComponent {
 
   constructor(
     private modalCtrl: ModalController,
-
   ){ }
 
   cancel(){

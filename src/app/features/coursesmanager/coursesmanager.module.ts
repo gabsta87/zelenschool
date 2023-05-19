@@ -39,6 +39,7 @@ import { NewAssoMemberModalComponent } from './components/admin/new-asso-member-
 import { GalleryNameModalComponent } from './components/admin/gallery-name-modal/gallery-name-modal.component';
 import { ModalWorkingHoursComponent } from './components/admin/modal-working-hours/modal-working-hours.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ChildCreationModalComponent } from './components/account/child-creation-modal/child-creation-modal.component';
 
 
 
@@ -67,6 +68,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     NewAssoMemberModalComponent,
     GalleryNameModalComponent,
     ModalWorkingHoursComponent,
+    ChildCreationModalComponent,
   ],
   imports: [
     SwiperModule,

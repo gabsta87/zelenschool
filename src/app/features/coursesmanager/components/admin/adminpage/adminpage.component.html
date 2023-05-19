@@ -50,6 +50,7 @@
                 <ion-select interface="action-sheet" [(ngModel)]="statusToFilter" (ionChange)="filterUsersList()" value="all">
                     <ion-select-option value="all">All</ion-select-option>
                     <ion-select-option value="student">Students</ion-select-option>
+                    <ion-select-option value="child">Children</ion-select-option>
                     <ion-select-option value="teacher">Teachers</ion-select-option>
                     <ion-select-option value="admin">Admins</ion-select-option>
                     <ion-select-option value="request">Teachers requests </ion-select-option>
@@ -64,7 +65,7 @@
                         <ion-label>{{usr['l_name']}} {{usr['f_name']}}</ion-label>
                         </ion-item>
                         <div class="ion-padding" slot="content">
-                            <p>email : {{usr['email']}}</p>
+                            <p *ngIf="usr['email']">Email : {{usr['email']}}</p>
                             <p>Status : {{usr['status']}}</p>
                             <p *ngIf="usr['phone']">Phone : {{usr['phone']}}</p>
                             <p *ngIf="usr['birthday']">Birthday : {{usr['birthday']}}</p>

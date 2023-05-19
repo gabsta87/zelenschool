@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { DocumentData } from 'firebase/firestore';
 import { Observable } from 'rxjs';
+import { UserInfos } from 'src/app/shared/service/angularfire.service';
 import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 import { bdValidator, emailValidator,permitValidator,phoneValidator } from 'src/app/shared/service/validators-lib.service';
+import { ChildCreationModalComponent } from '../child-creation-modal/child-creation-modal.component';
 
 @Component({
   selector: 'app-accountpage',
@@ -12,8 +16,7 @@ import { bdValidator, emailValidator,permitValidator,phoneValidator } from 'src/
   styleUrls: ['./accountpage.component.scss']
 })
 export class AccountpageComponent {
-  userData = this._route.snapshot.data['userData'];
-  userObs!:Observable<any>;
+  userData : {user:UserInfos,userObs:Observable<DocumentData|undefined>} = this._route.snapshot.data['userData'];
 
   words$ = this._lang.currentLanguage$;
 
@@ -32,7 +35,9 @@ export class AccountpageComponent {
     private readonly _router:Router,
     private readonly _route:ActivatedRoute,
     private readonly _lang:LanguageManagerService,
-  ){ }
+    private readonly modalCtrl : ModalController,
+  ){
+  }
 
   async logout(){
     this._user.logout();
@@ -53,13 +58,31 @@ export class AccountpageComponent {
   }
 
   cancel(){
-    this.profileForm.controls['email'].setValue(this.userData.user.email);
+    this.profileForm.controls['email'].setValue(this.userData.user.email ? this.userData.user.email : "");
     this.profileForm.controls['f_name'].setValue(this.userData.user.f_name);
     this.profileForm.controls['l_name'].setValue(this.userData.user.l_name);
-    this.profileForm.controls['phone'].setValue(this.userData.user.phone);
-    this.profileForm.controls['address'].setValue(this.userData.user.address);
+    this.profileForm.controls['phone'].setValue(this.userData.user.phone ? this.userData.user.phone : "");
+    this.profileForm.controls['address'].setValue(this.userData.user.address ? this.userData.user.address : "");
     this.profileForm.controls['s_permit_number'].setValue(this.userData.user.s_permit_id);
-    this.profileForm.controls['birthday'].setValue(this.userData.user.birthday);
+    this.profileForm.controls['birthday'].setValue(this.userData.user.birthday ? this.userData.user.birthday : "");
+  }
+
+  deleteChild(id:string){
+    this._user.deleteChild(id);
+  }
+
+  async addChild(){
+
+    const modal = await this.modalCtrl.create({
+      component: ChildCreationModalComponent
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      this._user.addChild(data);
+    }
   }
 
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DocumentData } from '@angular/fire/firestore';
 import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import { Observable, firstValueFrom, switchMap } from 'rxjs';
+import { Observable, firstValueFrom, switchMap, mergeMap } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 
 interface AdminData{
@@ -32,16 +32,31 @@ export class AdminpageresolveResolver  {
     result.usersObs = result.usersObs.pipe(
       switchMap(async (user: any) => {
 
-        // Filtrage des utilisateurs ayant été bannis
+        // Loading children infos
+        // Filtering users with children
+        const parents = user.filter((user:any) => user.children != undefined)
+
+        // Getting children IDs
+        let childrenId : string[]= [];
+        parents.map((usr: any) => {usr.children.forEach((e:string) => childrenId.push(e))});
+        
+        // Getting children infos
+        const childrenInfos = await Promise.all(childrenId.map((childId:any) => this._db.getUser(childId)));
+
+        //Replacing IDs by infos
+        parents.map((usr:any) => usr.children.map((id:any) => id = childrenInfos.find( (child:any) => child == id)))
+
+        // Loading ban authors infos
+        // Filtering banned users
         const bannedUsers = user.filter((user:any) => user.ban != undefined)
 
-        // Récupère les IDs des auteurs de chaque ban
+        // Getting ban authors IDs
         const banAuthorId = bannedUsers.map((usr: any) => usr.ban.authorID);
 
-        // Récupère les infos des auteurs
+        // Getting ban author infos
         const authorInfos = await Promise.all(banAuthorId.map((authorID:any) => this._db.getUser(authorID)));
         
-        // Remplace les IDs par les données des utilisateurs
+        // Replacing IDs by infos
         bannedUsers.map((usr:any) => usr.ban.author = authorInfos.find((e:any) => e.id === usr.ban.authorID));
 
         return user;

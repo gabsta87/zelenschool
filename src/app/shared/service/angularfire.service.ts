@@ -4,7 +4,7 @@ import { DocumentData, Firestore, QueryConstraint, addDoc, arrayRemove, arrayUni
 import { deleteDoc, getDoc, query, updateDoc } from '@firebase/firestore';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
-import { Observable, find, firstValueFrom, map, switchMap } from 'rxjs';
+import { Observable, find, firstValueFrom, forkJoin, map, switchMap } from 'rxjs';
 import { formatForDB, getNowDate, isColliding } from './hour-management.service';
 dayjs.extend(isBetween);
 
@@ -162,7 +162,26 @@ export class AngularfireService{
     futureCourses.forEach( (course:any)=> this.removeUserFromCourse(course['id'],userId))
   }
 
-  removeUser(userId:string){
+  async removeUser(userId:string){
+    let value = await this.getSnapshot("users",userId);
+    
+    if(value){
+      // If children, remove from parent children list
+      if(value['parent']){
+        const docRef = doc(this._dbaccess,'users/'+value['parent']);
+        updateDoc(docRef, {
+          children: arrayRemove(userId)
+        });
+      }
+
+      // If parent, remove children
+      if(value['children']){
+        value['children'].forEach((child:string) => {
+          this.removeUser(child);
+        })
+      }
+    }
+
     this.removeUserFromCourses(userId);
     const docRef = doc(this._dbaccess,'users/'+userId);
     deleteDoc(docRef);
@@ -212,7 +231,9 @@ export class AngularfireService{
 
   getUserObs(userId:string):Observable<DocumentData | undefined>{
     let tempObs = this.getUsers();
-    return tempObs.pipe(map(datas => datas.find(e => e['id'] === userId)));
+    let result =  tempObs.pipe(map(datas => datas.find(e => e['id'] === userId)));
+    
+    return result;
   }
 
   setUser(id:string,data:any){
@@ -292,6 +313,10 @@ export class AngularfireService{
     
     // Otherwise, returns reference to doc created
     return doc(this._dbaccess,'users/',userId);
+  }
+
+  createChild(newUser:UserInfos){
+    return addDoc(collection(this._dbaccess,"users"),{...newUser})
   }
 
   async addAssoMember(e: {name: string, photo: string, role: string, link?: undefined, }){
@@ -446,7 +471,7 @@ export class AngularfireService{
 export interface UserInfos {
   f_name:string,
   l_name:string,
-  email:string,
+  email?:string,
   status:string,
   phone?:string|undefined|null,
   birthday?:string|undefined|null,
@@ -455,6 +480,8 @@ export interface UserInfos {
   ban?:{author:string,comment:string,date:string}|undefined|null,
   missedCourses?:{courseId:string}|undefined|null,
   id?:string,
+  children?:string[],
+  parent?:string,
 }
 
 export interface CalendarEntry{

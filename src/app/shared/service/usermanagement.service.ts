@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import dayjs from 'dayjs';
-import { BehaviorSubject } from 'rxjs';
-import { AngularfireService } from './angularfire.service';
+import { BehaviorSubject, Observable, firstValueFrom, of } from 'rxjs';
+import { AngularfireService, UserInfos } from './angularfire.service';
 import { getNowDate } from './hour-management.service';
 import { LanguageManagerService } from './language-manager.service';
 
@@ -16,6 +16,7 @@ export class UsermanagementService{
   isLoggedAsTeacher = new BehaviorSubject(false);
   isLogged = new BehaviorSubject(false);
   isUserBanned = new BehaviorSubject(false);
+  isParent = new BehaviorSubject(false);
 
   constructor(private readonly _db:AngularfireService, private readonly _auth:Auth, private readonly _lang : LanguageManagerService) {
     
@@ -45,6 +46,8 @@ export class UsermanagementService{
               }
           }
         })
+        this.checkChildren().then(parent => this.isParent.next(parent))
+
       }else{
           this.isLoggedAsAdmin.next(false);
           this.isLoggedAsTeacher.next(false);
@@ -55,13 +58,8 @@ export class UsermanagementService{
     })
   }
 
-  getStatus(){
-    if(this.userData && this.userData['status'])
-      return this.userData['status'];
-    return "visitor";
-  }
-
   userData:any = undefined;
+  userObs!:Observable<any>;
 
   private async checkStatus(requestedStatus:string):Promise<boolean>{
     let userId = this._auth?.currentUser?.uid;
@@ -70,6 +68,10 @@ export class UsermanagementService{
         
         if(this.userData == undefined){
           this.userData = await this._db.getUser(userId);
+        }
+
+        if(this.userObs == undefined){
+          this.userObs = await this._db.getUserObs(userId);
         }
         
         if(this.userData && this.userData['status'] && this.userData['status'].includes(requestedStatus)){
@@ -86,6 +88,19 @@ export class UsermanagementService{
         this.userData = await this._db.getUser(userId);
       
       if(this.userData && this.userData['ban'] != undefined){
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private async checkChildren(){
+    let userId = this._auth?.currentUser?.uid;
+    if(userId){
+      if(this.userData == undefined)
+        this.userData = await this._db.getUser(userId);
+      
+      if(this.userData && this.userData['children'] != undefined && this.userData['children'].length > 0){
         return true;
       }
     }
@@ -139,14 +154,32 @@ export class UsermanagementService{
     this._db.updateCurrentUser({"language":lang});
   }
 
-  private getLanguage(){
-    if(this.userData == undefined)
-      return undefined;
-    return this.userData["language"];
+  async addChild(data:UserInfos){
+    let result = await this._db.createChild({...data,status:"child",parent:this._auth.currentUser?.uid});
+    let newId = result.path.split("/")[1];
+    
+    let actualValue = await firstValueFrom(this.userObs)
+    let actualChildren = actualValue.children;
+      
+    this.updateUser({children:[...actualChildren,newId]})
+  }
+
+  async deleteChild(id:string){
+    
+    let actualValue = await firstValueFrom(this.userObs)
+    let actualChildren = actualValue.children;
+
+    let childrenIndex = actualChildren.indexOf(id);
+    
+    actualChildren.splice(childrenIndex,1);
+    
+    this._db.updateCurrentUser({children:actualChildren})
+    this._db.removeUser(id);
   }
 
   logout(){
     this.userData = undefined;
+    this.userObs = undefined as any;
     this._auth.signOut();
     this.isLoggedAsAdmin.next(false);
     this.isLoggedAsTeacher.next(false);
