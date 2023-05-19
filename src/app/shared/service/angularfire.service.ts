@@ -74,14 +74,21 @@ export class AngularfireService{
     }
   }
 
-  async toggleSubscribtionToCalendarEntry(eventId:string,subscribe:boolean){
+  async toggleSubscribtionToCalendarEntryForCurrentUser(eventId:string,subscribe:boolean){
+    if(!this._auth.currentUser)
+      return
+
+    this.toggleSubscribtionToCalendarEntry(this._auth.currentUser?.uid,eventId,subscribe);
+  }
+
+  async toggleSubscribtionToCalendarEntry(userId:string,eventId:string,subscribe:boolean){
     const docRef = doc(this._dbaccess,'calendarEntries/'+eventId);
     
-    if(!this._auth.currentUser)
+    if(!userId)
       return;
 
     await updateDoc(docRef, {
-      attendantsId: subscribe ? arrayUnion(this._auth.currentUser?.uid) : arrayRemove(this._auth.currentUser?.uid)
+      attendantsId: subscribe ? arrayUnion(userId) : arrayRemove(userId)
     });
   }
 

@@ -117,7 +117,7 @@ export class TeacherModalComponent{
   }
 
   statusChanged($event:any){
-    this._db.toggleSubscribtionToCalendarEntry(this.meta.id, $event.detail.checked);
+    this._db.toggleSubscribtionToCalendarEntryForCurrentUser(this.meta.id, $event.detail.checked);
   }
 
   canDismiss = async () => {
