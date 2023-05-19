@@ -108,14 +108,17 @@ export class AdminpageComponent {
         user.f_name.toLowerCase().includes(searchString.toLowerCase()) ||
         user.l_name.toLowerCase().includes(searchString.toLowerCase())
       );
+
       const filteredCourses = courses.filter((course: any) =>
         course.description?.toLowerCase().includes(searchString.toLowerCase()) ||
         course.title.toLowerCase().includes(searchString.toLowerCase()) ||
         course.author.l_name.toLowerCase().includes(searchString.toLocaleLowerCase()) ||
         course.author.f_name.toLowerCase().includes(searchString.toLocaleLowerCase()) ||
-        course.attendantsId.find((e: any) =>
-          e.l_name.toLowerCase().includes(searchString.toLowerCase()) ||
-          e.f_name.toLowerCase().includes(searchString.toLowerCase())
+        course.attendants.find((e: any) =>
+          e && (
+            e.l_name.toLowerCase().includes(searchString.toLowerCase()) ||
+            e.f_name.toLowerCase().includes(searchString.toLowerCase())
+          )
         )
       );
       return [filteredUsers, filteredCourses];
