@@ -23,7 +23,7 @@ export class AccountpageComponent {
   profileForm = new FormGroup({
     email : new FormControl(this.userData.user.email?this.userData.user.email:"",emailValidator()),
     f_name : new FormControl(this.userData.user.f_name?this.userData.user.f_name:"",Validators.required),
-    l_name : new FormControl(this.userData.user.l_name?this.userData.user.f_name:"",Validators.required),
+    l_name : new FormControl(this.userData.user.l_name?this.userData.user.l_name:"",Validators.required),
     phone : new FormControl(this.userData.user.phone?this.userData.user.phone:"",phoneValidator()),
     address : new FormControl(this.userData.user.address?this.userData.user.address:"",Validators.required),
     s_permit_number : new FormControl(this.userData.user.s_permit_id,permitValidator()),
