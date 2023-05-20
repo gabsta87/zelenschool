@@ -90,9 +90,6 @@ export class StudentModalComponent {
         // User is not logged
         !this._user.isLogged.value ||
 
-        // User is banned
-        this._user.isBanned() ||
-
         // Date is already passed
         dayjs(this.courseActualValues['timeStart']).isBefore(getNowDate()) ||
 
@@ -130,7 +127,7 @@ export class StudentModalComponent {
     if(this.currentUser.childrenInfos){
       
       this.currentUser.childrenInfos.forEach((child:any,index:number) => {
-        this._db.toggleSubscribtionToCalendarEntry(child['id'],this.meta.id,this.isChildAttending[index])
+        this._db.toggleSubscribtionToCalendarEntry(child['id'],this.meta.id,this.isChildAttending[index] && !child['ban']);
       })
     }
 

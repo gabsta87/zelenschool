@@ -31,13 +31,13 @@
         <ion-text>{{words.participants}} : {{currentEvent['attendantsId'].length}}/{{currentEvent['max_participants']}}</ion-text>
     </ion-item>
     <ion-item lines="none">
-        <ion-checkbox slot="start" [(ngModel)]="isAttending" [disabled]="isSubscribtionBlocked"></ion-checkbox>
+        <ion-checkbox slot="start" [(ngModel)]="isAttending" [disabled]="isSubscribtionBlocked || ban"></ion-checkbox>
         <ion-label>{{words.participate}}</ion-label>
     </ion-item>
     <ng-container *ngIf="isParent|async">
         <ion-item lines="none" *ngFor="let child of currentUser.childrenInfos; let index = index">
-            <ion-checkbox slot="start" [(ngModel)]="isChildAttending[index]" [disabled]="isSubscribtionBlocked"></ion-checkbox>
-            <ion-label>{{child.f_name}}</ion-label>
+            <ion-checkbox slot="start" [(ngModel)]="isChildAttending[index]" [disabled]="isSubscribtionBlocked || child.ban"></ion-checkbox>
+            <ion-label>{{child.f_name}}</ion-label> <ion-text *ngIf="child.ban" color="danger">{{words.ban}} : {{child.ban.comment}}</ion-text>
         </ion-item>
     </ng-container>
     </div>
