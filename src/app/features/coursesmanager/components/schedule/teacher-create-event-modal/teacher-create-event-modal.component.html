@@ -1,4 +1,4 @@
-<ng-container *ngIf="(words$|async).account as words">
+<ng-container *ngIf="(words$|async).schedule as words">
     
 <ion-content class="ion-padding" (keydown.enter)="confirm()">
     <form (ngSubmit)="confirm()" #evtCreation="ngForm">
@@ -54,10 +54,10 @@
         <ion-textarea [(ngModel)]="description" [autoGrow]="true" required name="descr"> </ion-textarea>
     </ion-item>
 
-    <div *ngIf="multiCollisions">
+    <ion-item *ngIf="multiCollisions">
         <ion-label>{{words.conflicts}} : </ion-label>
         <ion-list *ngFor="let day of multiCollisions; let dayIndex = index">
-            <ion-item>
+            <ion-item lines="none">
                 <ion-label>
                     {{day.date|date:"dd.MM.YY"}}
                 </ion-label>
@@ -75,7 +75,7 @@
                 </ion-list>
             </ion-item>
         </ion-list>
-    </div>
+    </ion-item>
     </form>
 </ion-content>
 
