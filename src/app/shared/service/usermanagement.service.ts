@@ -20,7 +20,7 @@ export class UsermanagementService{
 
   constructor(private readonly _db:AngularfireService, private readonly _auth:Auth, private readonly _lang : LanguageManagerService) {
     
-    _auth.onAuthStateChanged(user=>{
+    _auth.onAuthStateChanged(async user=>{
       if(user){
         this.isLogged.next(true);
         this.checkStatus("superadmin").then(newVal=>{
@@ -37,16 +37,14 @@ export class UsermanagementService{
         })
         this.checkBan().then(ban => {
           this.isUserBanned.next(ban);
-        }).then(_ => {
-          if(this.isUserBanned.value){
-            if(this.userData.ban.comment == "SYSTEM : missed too many courses" && 
-              dayjs(this.userData.ban.date).add(1,"month").isBefore(getNowDate())){
-                this._db.unbanUser(this.userData.id);
-                this.isUserBanned.next(false);
-              }
-          }
+          if(ban) this.isBanFinished(this.userData)
         })
-        this.checkChildren().then(parent => this.isParent.next(parent))
+        
+        this.isParent.next(await this.checkChildren())
+
+        if(this.isParent.value){
+          this.userData['children'].forEach(async (child:string) => this.isBanFinished(await this._db.getUser(child)));
+        }
 
       }else{
           this.isLoggedAsAdmin.next(false);
@@ -56,6 +54,18 @@ export class UsermanagementService{
       }
       _lang.loadUserLanguage();
     })
+  }
+
+  private isBanFinished(user:any){
+    if(!user.ban)
+      return true;
+
+    if(user.ban.comment == "SYSTEM : missed too many courses" && 
+        dayjs(user.ban.date).add(1,"month").isBefore(getNowDate())){
+      this._db.unbanUser(user.id);
+      return true
+    }
+    return false;
   }
 
   userData:any = undefined;
