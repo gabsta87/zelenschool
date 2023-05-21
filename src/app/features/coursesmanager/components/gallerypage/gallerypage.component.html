@@ -39,20 +39,21 @@
     <div *ngIf="imagesData.length > 0" class="gallery-container">
         
         <div class="swiper-container">
-        <swiper
-            #swiper
-            [config]="config"
-            class="banner-slides"
-            >
-            <ng-template swiperSlide *ngFor="let img of imagesData">
-                <img [src]="img.link"/>
-            </ng-template>
+            <swiper
+                #swiper
+                [config]="config"
+                class="banner-slides"
+                >
+                <ng-template swiperSlide *ngFor="let img of imagesData">
+                    <img [src]="img.link"/>
+                    <ion-icon (click)="slidePrev()" class="gallerySideButton left" name="chevron-back-outline"></ion-icon>
+                    <ion-icon (click)="slideNext()" class="gallerySideButton right" name="chevron-forward-outline"></ion-icon>
+                </ng-template>
 
-        </swiper>
+            </swiper>
         </div>
-
-        <ion-button (click)="slidePrev()"><ion-icon name="arrow-back-outline"></ion-icon></ion-button>
-        <ion-button (click)="slideNext()"><ion-icon name="arrow-forward-outline"></ion-icon></ion-button>
+        <!-- <ion-button (click)="slidePrev()"><ion-icon name="arrow-back-outline"></ion-icon></ion-button>
+        <ion-button (click)="slideNext()"><ion-icon name="arrow-forward-outline"></ion-icon></ion-button> -->
 
     </div>
 

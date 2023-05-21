@@ -15,7 +15,6 @@ import { StudentModalComponent } from '../student-modal/student-modal.component'
 import { TeacherCreateEventModalComponent } from '../teacher-create-event-modal/teacher-create-event-modal.component';
 import { CustomDateFormatter } from './custom-date-formatter.provider';
 import { TeacherModalComponent } from '../teacher-modal/teacher-modal.component';
-import { UserInfos } from 'src/app/shared/service/angularfire.service';
 
 export interface CalendarMonthViewEventTimesChangedEvent< EventMetaType = any, DayMetaType = any > 
   extends CalendarEventTimesChangedEvent<EventMetaType> { day: MonthViewDay<DayMetaType>; }
@@ -63,6 +62,7 @@ export class SchedulepageComponent {
   selectedDayRemove= new EventEmitter();
   selectedDaySubscribtion !: any;
 
+  isHelpOpen:BehaviorSubject<boolean> = new BehaviorSubject(false);
   words$ = this._lang.currentLanguage$;
 
   constructor(
@@ -303,6 +303,10 @@ export class SchedulepageComponent {
     this.futureCourses = result;
     this.filterAscTime = !this.filterAscTime;
     this.filterAscTitle = true;
+  }
+
+  showHelp(){
+
   }
 
 }

@@ -15,9 +15,9 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 URGENT :
-    ☐ debug child subscribtion
-    ☐ when marking child as absent, mark only once for all parent/children
-    ☐ when banning children, prevent parent from subscribing him
+    ✔ debug child subscribtion @done(23-05-20 12:22)
+    ✘ when marking child as absent, mark only once for all parent/children @cancelled(23-05-20 12:22)
+    ✔ when banning children, prevent parent from subscribing him @done(23-05-20 12:22)
     ✔ when admin deletes a child, remove from parent list of children @done(23-05-19 11:49)
     ✔ when admin deletes a parent, remove children too @done(23-05-19 11:49)
     ✔ Fix calendar language change (refresh); @done(23-05-11 20:30)
@@ -36,7 +36,8 @@ URGENT :
     ✔ See why some users have no status @done(23-03-30 17:11)
 
 Misc :
-    ☐ parents can subscribe 2 children, even if course has 1 more slot left
+    ☐ Help popover
+    ☐ prevent : parents can subscribe 2 children, even if course has 1 more slot left
     ✘ Galleries have a presentation image, a description, and half screen before the gallery is big image @cancelled(23-05-19 11:50)
     ☐ better galleries management for mobile 
     ✘ "Contact us" banner -> no behavior @cancelled(23-05-05 15:44)
