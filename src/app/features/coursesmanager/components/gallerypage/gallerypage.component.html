@@ -42,10 +42,10 @@
             <swiper
                 #swiper
                 [config]="config"
-                class="banner-slides"
+                class="banner-slides border-swiper"
                 >
                 <ng-template swiperSlide *ngFor="let img of imagesData">
-                    <img [src]="img.link"/>
+                    <img [src]="img.link" (click)="showFullSizeImage(img.link)"/>
                     <ion-icon (click)="slidePrev()" class="gallerySideButton left" name="chevron-back-outline"></ion-icon>
                     <ion-icon (click)="slideNext()" class="gallerySideButton right" name="chevron-forward-outline"></ion-icon>
                 </ng-template>
@@ -69,6 +69,16 @@
         </ion-grid>
     </div>
     </ng-container>
+
+    <ion-popover [isOpen]="isImageOpen">
+        <ng-template>
+            <ion-img [src]="currentImage" class="fullSizeImage" (click)="closeFullSizeImage()">
+
+            </ion-img>
+            <ion-icon (click)="slidePrev()" class="gallerySideButton left" name="chevron-back-outline"></ion-icon>
+            <ion-icon (click)="slideNext()" class="gallerySideButton right" name="chevron-forward-outline"></ion-icon>
+        </ng-template>
+    </ion-popover>
 
 
 </ion-content>

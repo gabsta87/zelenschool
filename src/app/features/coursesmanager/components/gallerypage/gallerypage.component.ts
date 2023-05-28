@@ -2,7 +2,7 @@ import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 import { getDownloadURL } from 'firebase/storage';
-import { Observable, find, findIndex, firstValueFrom, map, of } from 'rxjs';
+import { BehaviorSubject, Observable, find, findIndex, firstValueFrom, map, of } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { StorageService } from 'src/app/shared/service/storage.service';
 
@@ -29,6 +29,9 @@ export class GallerypageComponent {
   imagesCollections : {id:string,name:string,images:any}[] = [];
   openFolderIndex = -1;
   openingGalleryId :string|null = null;
+
+  currentImage!:string;
+  isImageOpen = false;
 
   constructor(
     private readonly _storage : StorageService,
@@ -103,6 +106,19 @@ export class GallerypageComponent {
 
   selectImage(index:number){
     this.swiper?.swiperRef.slideTo(index);
+  }
+
+  showFullSizeImage(link:string){
+    this.currentImage = link;
+    console.log("image : ",this.currentImage);
+    
+    console.log("before change : ",this.isImageOpen);
+    this.isImageOpen = true;
+    console.log("showing full size ",this.isImageOpen);
+  }
+
+  closeFullSizeImage(){
+    this.isImageOpen = false;
   }
 
 }
