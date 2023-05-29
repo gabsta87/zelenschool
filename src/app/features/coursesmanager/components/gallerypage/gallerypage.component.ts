@@ -110,11 +110,7 @@ export class GallerypageComponent {
 
   showFullSizeImage(link:string){
     this.currentImage = link;
-    console.log("image : ",this.currentImage);
-    
-    console.log("before change : ",this.isImageOpen);
     this.isImageOpen = true;
-    console.log("showing full size ",this.isImageOpen);
   }
 
   closeFullSizeImage(){

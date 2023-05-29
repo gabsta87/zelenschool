@@ -39,7 +39,8 @@ Misc :
     ☐ Help popover
     ☐ prevent : parents can subscribe 2 children, even if course has 1 more slot left
     ✘ Galleries have a presentation image, a description, and half screen before the gallery is big image @cancelled(23-05-19 11:50)
-    ☐ better galleries management for mobile 
+    ☐ Test with more galleries
+    ✔ better galleries management for mobile @done(23-05-28 14:43)
     ✘ "Contact us" banner -> no behavior @cancelled(23-05-05 15:44)
     ☐ admin page : when deleting user, remove from auth
     ✔ fix account creation @done(23-05-04 17:51)

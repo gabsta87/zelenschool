@@ -2,10 +2,10 @@
 <div class="scheduleContainer">
     <ion-icon name="help-circle-outline" class="helpIcon" size="large" (click)="showHelp()"></ion-icon>
 
-    <ion-popover [isOpen]="isHelpOpen">
+    <ion-popover [isOpen]="isHelpOpen" class="fullSizeModal" (ionPopoverDidDismiss)="closeHelp()" side="top" alignment="start">
         <ng-template>
-            <ion-content class="ion-padding">
-                
+            <ion-content >
+                <ion-img [src]="helpImage" class="fullSizeImage"/>
             </ion-content>
         </ng-template>
     </ion-popover>

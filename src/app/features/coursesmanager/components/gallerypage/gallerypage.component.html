@@ -16,25 +16,6 @@
         </div>
     </div>
 
-    <!-- <div class="imgFolders">
-        <ion-grid>
-            <ion-row>
-                <ion-col *ngFor="let coll of imagesCollections; let index = index">
-                    <ion-item (click)="openGallery(coll.id)" lines="none">
-                        <ion-thumbnail>
-                            <ion-icon *ngIf="index == openFolderIndex; else closeFolder" name="folder-open-outline"></ion-icon>
-                            <ng-template #closeFolder>
-                                <ion-icon name="folder-outline"></ion-icon>
-                            </ng-template>
-                            
-                            <ion-label>{{coll.name}}</ion-label>
-                        </ion-thumbnail>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-    </div> -->
-
     <ng-container *ngIf="imagesToDisplay | async as imagesData">
     <div *ngIf="imagesData.length > 0" class="gallery-container">
         
@@ -48,6 +29,7 @@
                     <img [src]="img.link" (click)="showFullSizeImage(img.link)"/>
                     <ion-icon (click)="slidePrev()" class="gallerySideButton left" name="chevron-back-outline"></ion-icon>
                     <ion-icon (click)="slideNext()" class="gallerySideButton right" name="chevron-forward-outline"></ion-icon>
+                    
                 </ng-template>
 
             </swiper>
@@ -70,15 +52,12 @@
     </div>
     </ng-container>
 
-    <ion-popover [isOpen]="isImageOpen">
+    <ion-popover [isOpen]="isImageOpen" class="fullSizeModal" (ionPopoverDidDismiss)="closeFullSizeImage()" side="top" alignment="start">
         <ng-template>
-            <ion-img [src]="currentImage" class="fullSizeImage" (click)="closeFullSizeImage()">
-
-            </ion-img>
-            <ion-icon (click)="slidePrev()" class="gallerySideButton left" name="chevron-back-outline"></ion-icon>
-            <ion-icon (click)="slideNext()" class="gallerySideButton right" name="chevron-forward-outline"></ion-icon>
+            <ion-content >
+                <ion-img [src]="currentImage" class="fullSizeImage"/>
+            </ion-content>
         </ng-template>
     </ion-popover>
-
 
 </ion-content>

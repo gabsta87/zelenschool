@@ -62,7 +62,8 @@ export class SchedulepageComponent {
   selectedDayRemove= new EventEmitter();
   selectedDaySubscribtion !: any;
 
-  isHelpOpen:BehaviorSubject<boolean> = new BehaviorSubject(false);
+  isHelpOpen = false;
+  helpImage = this.isTeacher ? "../../assets/helpImages/help_teacher.jpeg" : "../../assets/helpImages/help.jpeg";
   words$ = this._lang.currentLanguage$;
 
   constructor(
@@ -306,7 +307,11 @@ export class SchedulepageComponent {
   }
 
   showHelp(){
+    this.isHelpOpen = true;
+  }
 
+  closeHelp(){
+    this.isHelpOpen = false;
   }
 
 }
