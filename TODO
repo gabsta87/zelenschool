@@ -15,6 +15,11 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 URGENT :
+    ☐ Child creation : Enter button
+    ☐ Enter button not blocked on account creation when 
+    ☐ Account : login/register with Google/FB not working from other computers
+    ☐ admin page : filter teacher's requests
+    ☐ Teacher creation process : creating empty account with no value
     ✔ debug child subscribtion @done(23-05-20 12:22)
     ✘ when marking child as absent, mark only once for all parent/children @cancelled(23-05-20 12:22)
     ✔ when banning children, prevent parent from subscribing him @done(23-05-20 12:22)
@@ -36,6 +41,8 @@ URGENT :
     ✔ See why some users have no status @done(23-03-30 17:11)
 
 Misc :
+    ☐ dates formats : automatically insert dots or slashes
+    ☐ Schedule : Add arrows to show where it's possible to sort
     ☐ Help popover
     ☐ prevent : parents can subscribe 2 children, even if course has 1 more slot left
     ✘ Galleries have a presentation image, a description, and half screen before the gallery is big image @cancelled(23-05-19 11:50)

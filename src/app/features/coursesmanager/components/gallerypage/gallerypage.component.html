@@ -55,7 +55,7 @@
     <ion-popover [isOpen]="isImageOpen" class="fullSizeModal" (ionPopoverDidDismiss)="closeFullSizeImage()" side="top" alignment="start">
         <ng-template>
             <ion-content >
-                <ion-img [src]="currentImage" class="fullSizeImage"/>
+                <ion-img [src]="currentImage" class="fullSizeImage" (click)="closeFullSizeImage()"/>
             </ion-content>
         </ng-template>
     </ion-popover>

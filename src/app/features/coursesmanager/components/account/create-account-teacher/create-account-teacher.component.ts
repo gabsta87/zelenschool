@@ -52,6 +52,8 @@ export class CreateAccountTeacherComponent {
   }
 
   register(){
+    if(!this.profileForm.valid)
+      return
 
     const auth = getAuth();
     let email = this.profileForm.get('email')?.value;
@@ -59,11 +61,11 @@ export class CreateAccountTeacherComponent {
     
     if(email!=null && password != null){
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
         // Signed in 
         const user = userCredential.user;
         
-        this._db.createUser(user);
+        await this._db.createUser(user);
 
         let tmpFName = this.profileForm.get('firstName')?.value;
         let tmpLName = this.profileForm.get('lastName')?.value;

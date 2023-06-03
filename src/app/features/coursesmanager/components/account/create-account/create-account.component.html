@@ -64,7 +64,7 @@
                         <ion-label>{{words.birthday}}</ion-label>
                     </ion-col>
                     <ion-col>
-                        <ion-input formControlName="b_day" placeholder="dd.mm.yyyy"></ion-input>
+                        <ion-input formControlName="b_day" placeholder="dd.mm.yyyy" (ionInput)="onInput($event)"></ion-input>
                     </ion-col>
                 </ion-row>
                 <ion-row>

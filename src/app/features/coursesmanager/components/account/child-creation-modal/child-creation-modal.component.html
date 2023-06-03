@@ -1,4 +1,4 @@
-<ng-container *ngIf="(words$|async).account as words">
+<ng-container *ngIf="(words$|async).account as words" (keydown.enter)="confirm()">
     <ion-header>
         <ion-toolbar>
             <ion-title>{{words.addChild}}</ion-title>
@@ -9,15 +9,15 @@
         <ion-list>
             <ion-item>
                 <ion-label position="floating">{{words.firstName}}</ion-label>
-                <ion-input [(ngModel)]="child.f_name"></ion-input>
+                <ion-input [(ngModel)]="child.f_name" required></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label position="floating">{{words.lastName}}</ion-label>
-                <ion-input [(ngModel)]="child.l_name"></ion-input>
+                <ion-input [(ngModel)]="child.l_name" required></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label position="floating">{{words.birthday}}</ion-label>
-                <ion-input [(ngModel)]="child.birthday"></ion-input>
+                <ion-input [(ngModel)]="child.birthday" required></ion-input>
             </ion-item>
         </ion-list>
     </ion-content>

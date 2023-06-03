@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { createUserWithEmailAndPassword, getAuth } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { IonInput } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
@@ -125,5 +126,20 @@ export class CreateAccountComponent {
   return(){
     this.errorMessage = "";
     this._router.navigate(['/login/']);
+  }
+
+  onInput(ev:any) {
+    const value = ev.target!.value;
+    
+    // Removes non alphanumeric characters
+    const correctedValue = value.replace(/(?<=^\d{2})(\d)/g, ".$1");
+    const correctedSecondLevel = correctedValue.replace(/(?<=^\d{2}\.\d{2})(\d)/g, ".$1");
+
+    /**
+     * Update both the state variable and
+     * the component to keep them in sync.
+     */
+    ev.target.value = correctedSecondLevel;
+    this.profileForm.get("b_day")?.setValue(correctedSecondLevel);
   }
 }

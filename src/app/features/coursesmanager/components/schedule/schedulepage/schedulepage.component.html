@@ -5,7 +5,7 @@
     <ion-popover [isOpen]="isHelpOpen" class="fullSizeModal" (ionPopoverDidDismiss)="closeHelp()" side="top" alignment="start">
         <ng-template>
             <ion-content >
-                <ion-img [src]="helpImage" class="fullSizeImage"/>
+                <ion-img [src]="helpImage" class="fullSizeImage" (click)="closeHelp()"/>
             </ion-content>
         </ng-template>
     </ion-popover>
