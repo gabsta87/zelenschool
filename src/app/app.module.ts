@@ -13,6 +13,7 @@ import { environment } from '../environments/environment';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { InputDateFieldComponent } from './shared/components/input-date-field/input-date-field.component';
 
 registerLocaleData(localeFr);
 registerLocaleData(localeRu);
@@ -28,6 +29,7 @@ registerLocaleData(localeRu);
 @NgModule({
   declarations: [
     AppComponent,
+    InputDateFieldComponent,
   ],
   imports: [
     BrowserModule,
