@@ -96,10 +96,8 @@
                             <ion-button *ngIf="usr['status']=='request'" (click)="acceptRequest(usr['id'])">Accept teacher</ion-button>
                             <ion-button *ngIf="usr['status'].includes('teacher') || usr['status'].includes('admin')" (click)="seeWorkingHours(usr['id'])">Working hours</ion-button>
                             <ng-container *ngIf="isSuperAdmin.value && ! usr['status'].includes('superadmin')">
-                                <ion-button *ngIf="usr['status']=='teacher';else revokeAdminButton" (click)="promoteAdmin(usr['id'])">Promote admin</ion-button>
-                                <ng-template #revokeAdminButton>
-                                    <ion-button (click)="revokeAdmin(usr['id'])">Revoke admin</ion-button>
-                                </ng-template>
+                                <ion-button *ngIf="usr['status']=='teacher'" (click)="promoteAdmin(usr['id'])">Promote admin</ion-button>
+                                <ion-button *ngIf="usr['status'].includes('admin')" (click)="revokeAdmin(usr['id'])">Revoke admin</ion-button>
                             </ng-container>
                             </span>
                         </div>
