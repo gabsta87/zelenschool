@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import dayjs from 'dayjs';
-import { BehaviorSubject, Observable, firstValueFrom, of } from 'rxjs';
+import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { AngularfireService, UserInfos } from './angularfire.service';
 import { getNowDate } from './hour-management.service';
 import { LanguageManagerService } from './language-manager.service';
@@ -30,9 +30,6 @@ export class UsermanagementService{
             this.isLoggedAsAdmin.next(newVal);
         })
         this.checkStatus("teacher").then(newVal=>{
-          this.isLoggedAsTeacher.next(newVal);
-        })
-        this.checkStatus("request").then(newVal=>{
           this.isLoggedAsTeacher.next(newVal);
         })
         this.checkBan().then(ban => {
@@ -73,7 +70,7 @@ export class UsermanagementService{
 
   private async checkStatus(requestedStatus:string):Promise<boolean>{
     let userId = this._auth?.currentUser?.uid;
-
+      
       if(userId){
         
         if(this.userData == undefined){
