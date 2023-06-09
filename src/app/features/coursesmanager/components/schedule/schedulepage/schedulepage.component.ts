@@ -63,7 +63,7 @@ export class SchedulepageComponent {
   selectedDaySubscribtion !: any;
 
   isHelpOpen = false;
-  helpImage = this.isTeacher ? "../../assets/helpImages/help_teacher.jpeg" : "../../assets/helpImages/help.jpeg";
+  helpImage = this.isTeacher.value ? "../../assets/helpImages/help_teacher.jpeg" : "../../assets/helpImages/help.jpeg";
   words$ = this._lang.currentLanguage$;
 
   constructor(
