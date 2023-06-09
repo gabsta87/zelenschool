@@ -306,7 +306,11 @@ export class AngularfireService{
     return firstValueFrom(this.getElements("articles"));
   }
 
-  async createUser(newUser:User){
+  async createUser(newUser:User,
+    data:{email:string,f_name:string,l_name:string,phone:string,status:string,
+      s_permit_number ? : string,
+      address ? :string,    
+    }){
     let userId = newUser.uid;
     let userStored = await this.getUser(userId);
 
@@ -316,7 +320,13 @@ export class AngularfireService{
       return undefined;
     }
     
-    setDoc(doc(this._dbaccess,'users/',userId),{});
+    setDoc(doc(this._dbaccess,'users/',userId),{
+      email : data.email ? data.email : "",
+      f_name: data.f_name ? data.f_name : "",
+      l_name: data.l_name ? data.l_name : "",
+      phone: data.phone ? data.phone : "",
+      status: data.status ? data.status : ""
+    });
     
     // Otherwise, returns reference to doc created
     return doc(this._dbaccess,'users/',userId);
