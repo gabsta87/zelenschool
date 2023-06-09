@@ -5,6 +5,7 @@ import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { AlertController, ModalController } from '@ionic/angular';
 import { ChoiceModalComponent } from '../choice-modal/choice-modal.component';
 import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
+import { CompleteAccountModalComponent } from '../complete-account-modal/complete-account-modal.component';
 
 @Component({
   selector: 'app-loginpage',
@@ -56,7 +57,9 @@ export class LoginpageComponent {
 
     console.log("credential : ",credential);
     
-    const createdUser = await this._dbAccess.createUser(credential.user);
+    const accountData = await this._modalCtrl.create({component:CompleteAccountModalComponent});
+
+    const createdUser = await this._dbAccess.createUser(credential.user,{email:"",f_name:"",l_name:"",phone:"",status:""});
 
     // User is new, and an entry was added to the database
     if(createdUser != undefined){
@@ -138,7 +141,8 @@ export class LoginpageComponent {
       .then(async (userCredential) => {
         // Signed in 
         const user = userCredential.user;
-        this._dbAccess.createUser(user);
+        // If User doesn't exists, It may have been deleted by an admin -> visitor 
+        // this._dbAccess.createUser(user,{email:"",f_name:"",l_name:"",phone:"",status:""});
         this._router.navigate(['/schedule/']);
         this.loading = false;
         this.error = "";

@@ -40,6 +40,7 @@ import { GalleryNameModalComponent } from './components/admin/gallery-name-modal
 import { ModalWorkingHoursComponent } from './components/admin/modal-working-hours/modal-working-hours.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ChildCreationModalComponent } from './components/account/child-creation-modal/child-creation-modal.component';
+import { CompleteAccountModalComponent } from './components/account/complete-account-modal/complete-account-modal.component';
 
 
 
@@ -69,6 +70,7 @@ import { ChildCreationModalComponent } from './components/account/child-creation
     GalleryNameModalComponent,
     ModalWorkingHoursComponent,
     ChildCreationModalComponent,
+    CompleteAccountModalComponent,
   ],
   imports: [
     SwiperModule,

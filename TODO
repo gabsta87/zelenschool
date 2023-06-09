@@ -15,11 +15,11 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 URGENT :
+    ☐ Teacher creation process : dont create empty entry -> inconsistant state
     ☐ Child creation : Enter button
     ☐ Enter button not blocked on account creation when 
-    ☐ Account : login/register with Google/FB not working from other computers
-    ☐ admin page : filter teacher's requests
-    ☐ Teacher creation process : creating empty account with no value
+    ✔ Account : login/register with Google/FB not working from other computers @done(23-06-07 20:17)
+    ✔ admin page : filter teacher's requests @done(23-06-07 20:17)
     ✔ debug child subscribtion @done(23-05-20 12:22)
     ✘ when marking child as absent, mark only once for all parent/children @cancelled(23-05-20 12:22)
     ✔ when banning children, prevent parent from subscribing him @done(23-05-20 12:22)
@@ -41,7 +41,8 @@ URGENT :
     ✔ See why some users have no status @done(23-03-30 17:11)
 
 Misc :
-    ☐ dates formats : automatically insert dots or slashes
+    ☐ Login page : loginWithEmail() -> if account doesn't exists in firestore, then the account may have been deleted by an admin
+    ✔ dates formats : automatically insert dots or slashes @done(23-06-09 20:27)
     ☐ Schedule : Add arrows to show where it's possible to sort
     ☐ Help popover
     ☐ prevent : parents can subscribe 2 children, even if course has 1 more slot left
