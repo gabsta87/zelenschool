@@ -82,28 +82,35 @@ export class CreateAccountComponent {
         
         // Signed in 
         const user = userCredential.user;
-        
-        await this._db.createUser(user);
 
         let tmpFName = this.profileForm.get('firstName')?.value;
+        tmpFName = tmpFName ? tmpFName : "";
         let tmpLName = this.profileForm.get('lastName')?.value;
+        tmpLName = tmpLName ? tmpLName : "";
         let tmpMail = this.profileForm.get('email')?.value;
+        tmpMail = tmpMail ? tmpMail : "";
+        let tmpS_permit_id = this.profileForm.get('permitId')?.value;
+        tmpS_permit_id = tmpS_permit_id ? tmpS_permit_id : "";
+        let tmpBirthday = this.profileForm.get('b_day')?.value;
+        tmpBirthday = tmpBirthday ? tmpBirthday : "";
+        let tmpPhone = this.profileForm.get('phone')?.value;
+        tmpPhone = tmpPhone ? tmpPhone : "";
+        let tmpAddress = this.profileForm.get('address')?.value;
+        tmpAddress = tmpAddress ? tmpAddress : "";
+        let tmpStatus = "student";
 
-        if(tmpFName && tmpLName && tmpMail){
+        await this._db.createUser(user,{
+          f_name : tmpFName, 
+          l_name : tmpLName, 
+          email : tmpMail, 
+          s_permit_number : tmpS_permit_id, 
+          phone : tmpPhone, 
+          address : tmpAddress,
+          status : tmpStatus,
+        });
 
-          this._db.updateCurrentUser({
-            f_name : tmpFName,
-            l_name : tmpLName,
-            email : tmpMail,
-            status:"student",
-            s_permit_id : this.profileForm.get('permitId')?.value,
-            birthday : this.profileForm.get('b_day')?.value,
-            phone : this.profileForm.get('phone')?.value,
-            address : this.profileForm.get('address')?.value,
-          });
-          
-          this._router.navigate(['/schedule/']);
-        }
+
+        this._router.navigate(['/schedule/']);
       })
       .catch((error) => {
         const errorCode = error.code;

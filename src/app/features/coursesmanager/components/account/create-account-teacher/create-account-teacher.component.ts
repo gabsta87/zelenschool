@@ -65,24 +65,26 @@ export class CreateAccountTeacherComponent {
         // Signed in 
         const user = userCredential.user;
         
-        await this._db.createUser(user);
-
         let tmpFName = this.profileForm.get('firstName')?.value;
+        tmpFName = tmpFName ? tmpFName : "";
         let tmpLName = this.profileForm.get('lastName')?.value;
+        tmpLName = tmpLName ? tmpLName : "";
         let tmpMail = this.profileForm.get('email')?.value;
+        tmpMail = tmpMail ? tmpMail : "";
+        let tmpPhone = this.profileForm.get('phone')?.value;
+        tmpPhone = tmpPhone ? tmpPhone : "";
+        let tmpStatus = "request";
 
-        if(tmpFName && tmpLName && tmpMail){
-          this._db.updateCurrentUser({
-            f_name : tmpFName,
-            l_name : tmpLName,
-            email : tmpMail,
-            phone : this.profileForm.get('phone')?.value,
-            status : "request"
-          });
-          this.presentPopover();
-          // TODO popup to confirm request
-          this._router.navigate(['/about/']);
-        }
+        await this._db.createUser(user,{
+          email : tmpMail,
+          f_name : tmpFName,
+          l_name : tmpLName, 
+          phone : tmpPhone, 
+          status : tmpStatus});
+
+        this.presentPopover();
+        // TODO popup to confirm request
+        this._router.navigate(['/about/']);
       })
       .catch((error) => {
         const errorCode = error.code;
