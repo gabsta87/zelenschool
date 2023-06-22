@@ -5,6 +5,8 @@ import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { AngularfireService, UserInfos } from './angularfire.service';
 import { getNowDate } from './hour-management.service';
 import { LanguageManagerService } from './language-manager.service';
+import { CompleteAccountModalComponent } from 'src/app/features/coursesmanager/components/account/complete-account-modal/complete-account-modal.component';
+import { ModalController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +19,27 @@ export class UsermanagementService{
   isLogged = new BehaviorSubject(false);
   isUserBanned = new BehaviorSubject(false);
   isParent = new BehaviorSubject(false);
-
-  constructor(private readonly _db:AngularfireService, private readonly _auth:Auth, private readonly _lang : LanguageManagerService) {
+    
+  constructor(private readonly _db:AngularfireService, private readonly _auth:Auth, private readonly _lang : LanguageManagerService, private readonly _modalCtrl: ModalController) {
     
     _auth.onAuthStateChanged(async user=>{
       if(user){
         this.isLogged.next(true);
+        
+        const isDataComplete = await this.isDataComplete();
+
+        if(!isDataComplete){
+          const accountData = await this._modalCtrl.create({component:CompleteAccountModalComponent,
+            componentProps: { 
+              userData: this.userData
+            },
+            backdropDismiss:false});
+          accountData.present();
+          const {data, role} = await accountData.onWillDismiss();
+          this._db.updateCurrentUser(data);
+          this.userData = undefined;
+        }
+
         this.checkStatus("superadmin").then(newVal=>{
             this.isLoggedAsSuperAdmin.next(newVal);
         })
@@ -67,6 +84,24 @@ export class UsermanagementService{
 
   userData:any = undefined;
   userObs!:Observable<any>;
+
+  private async isDataComplete():Promise<boolean>{
+    let userId = this._auth?.currentUser?.uid;
+    if(userId){
+      if(this.userData == undefined){
+        this.userData = await this._db.getUser(userId);
+      }
+
+      if(this.userData && this.userData['status'] && this.userData['email'] && this.userData['f_name'] && this.userData['l_name']){
+        return true;
+      }else{
+        return false;
+      }
+
+    }else {
+      return false;
+    }
+  }
 
   private async checkStatus(requestedStatus:string):Promise<boolean>{
     let userId = this._auth?.currentUser?.uid;

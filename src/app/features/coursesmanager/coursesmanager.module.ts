@@ -41,6 +41,7 @@ import { ModalWorkingHoursComponent } from './components/admin/modal-working-hou
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ChildCreationModalComponent } from './components/account/child-creation-modal/child-creation-modal.component';
 import { CompleteAccountModalComponent } from './components/account/complete-account-modal/complete-account-modal.component';
+import { BirthdayFieldComponent } from './components/account/birthday-field/birthday-field.component';
 
 
 
@@ -71,6 +72,7 @@ import { CompleteAccountModalComponent } from './components/account/complete-acc
     ModalWorkingHoursComponent,
     ChildCreationModalComponent,
     CompleteAccountModalComponent,
+    BirthdayFieldComponent,
   ],
   imports: [
     SwiperModule,

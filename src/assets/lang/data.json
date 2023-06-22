@@ -80,6 +80,7 @@
             "visitorInfo":"You cannot subscribe to courses as a visitor. You must subscribe from the Login section"
         },
         "account":{
+            "accountInfos":"Account infos to complete",
             "confirm":"Confirm",
             "cancel":"Cancel",
             "addChild":"Register child",
@@ -201,6 +202,7 @@
             "visitorInfo":"Vous ne pouvez pas vous inscrire à des cours en tant que visiteur. Vous devez vous inscrire à partir de la section Login"
         },
         "account":{
+            "accountInfos":"Informations à compléter",
             "confirm":"Confirmer",
             "cancel":"Annuler",
             "children":"Enfants",
@@ -322,6 +324,7 @@
             "visitorInfo": "Ви не можете підписатися на курси як відвідувач. Ви повинні підписатися з розділу 'Вхід'"
         },
         "account":{
+            "accountInfos":"Інформація для заповнення",
             "confirm": "Підтвердити",
             "cancel": "Скасувати",
             "children":"діти",

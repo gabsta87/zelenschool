@@ -13,8 +13,6 @@ import { CompleteAccountModalComponent } from '../complete-account-modal/complet
   styleUrls: ['./loginpage.component.scss']
 })
 export class LoginpageComponent {
-
-
   email:string = "";
   password:string = "";
   error:string = "";
@@ -34,6 +32,7 @@ export class LoginpageComponent {
     private readonly _alertController: AlertController,
     private readonly _lang : LanguageManagerService,
     ) {
+      
   }
 
   async loginWithGoogle(){
@@ -47,8 +46,6 @@ export class LoginpageComponent {
     if(credential == null)
       return;
 
-    this.completeUserInscription(credential);
-    
     this.loading = false;
     return credential;
   }
@@ -57,7 +54,11 @@ export class LoginpageComponent {
 
     console.log("credential : ",credential);
     
-    const accountData = await this._modalCtrl.create({component:CompleteAccountModalComponent});
+    // TODO 
+    const accountData = await this._modalCtrl.create({component:CompleteAccountModalComponent,backdropDismiss:false, canDismiss:false});
+    accountData.present();
+    const {data, role} = await accountData.onWillDismiss();
+
 
     const createdUser = await this._dbAccess.createUser(credential.user,{email:"",f_name:"",l_name:"",phone:"",status:""});
 
@@ -105,29 +106,8 @@ export class LoginpageComponent {
     if(credential == null)
       return;
 
-    this.completeUserInscription(credential);
-
     this.error = "";
     return credential;
-    
-    // .then((result) => {
-    //   // The signed-in user info.
-    //   const user = result.user;
-      
-    //   // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-    //   const credential = FacebookAuthProvider.credentialFromResult(result);
-
-    //   let accessToken = undefined;
-    //   if(credential)
-    //     accessToken = credential.accessToken;
-
-    //   console.log("access token : ",accessToken);
-    //   this.error = "";
-      
-    //   // IdP data available using getAdditionalUserInfo(result)
-    //   // ...
-    // })
-    
   }
 
   async loginWithEmail(){
@@ -139,6 +119,7 @@ export class LoginpageComponent {
     this.loading = true;
     const credential = await signInWithEmailAndPassword(this.auth, this.email, this.password)
       .then(async (userCredential) => {
+
         // Signed in 
         const user = userCredential.user;
         // If User doesn't exists, It may have been deleted by an admin -> visitor 

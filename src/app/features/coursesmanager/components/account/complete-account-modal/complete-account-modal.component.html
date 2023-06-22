@@ -1,12 +1,91 @@
-<ion-tabs>
-    <ion-tab-bar slot="top">
-      <ion-tab-button tab="student">
-        Student
-      </ion-tab-button>
-      <ion-tab-button tab="teacher">
-        Teacher
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
+<ng-container *ngIf="(words$|async).account as words">
 
-  
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Complete account infos</ion-title>
+    <ion-select [(ngModel)]="status" interface="popover" [disabled]="statusDisabled">
+      <ion-select-option value="student">{{words.student}}</ion-select-option>
+      <ion-select-option value="teacher">{{words.teacher}}</ion-select-option>
+    </ion-select>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content (keydown.enter)="register()">
+
+  <!-- <form [formGroup]="status === 'student' ? formDataStudent : formDataTeacher"> -->
+  <!-- <div [style.display]="status=='teacher' ? 'block' : 'none'"> -->
+
+  <form (ngSubmit)="register()" [formGroup]="formDataStudent" *ngIf="status == 'student'; else teacherForm">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">{{words.email}}</ion-label>
+        <ion-input formControlName="email" type="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">{{words.lastName}}</ion-label>
+        <ion-input formControlName="lastName" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">{{words.firstName}}</ion-label>
+        <ion-input formControlName="firstName" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">{{words.phone}}</ion-label>
+        <ion-input formControlName="phoneNumber" type="tel"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">{{words.birthday}}</ion-label>
+        <!-- <app-birthday-field formControlName="dateOfBirth"></app-birthday-field> -->
+        <ion-input formControlName="dateOfBirth" placeholder="dd.mm.yyyy" (ionInput)="onDateInput($event)"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">{{words.spermit}}</ion-label>
+        <ion-input formControlName="sPermitNumber" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">{{words.address}}</ion-label>
+        <ion-input formControlName="address" type="text"></ion-input>
+      </ion-item>
+    </ion-list>
+  </form>
+
+  <ng-template #teacherForm>
+    <form (ngSubmit)="register()" [formGroup]="formDataTeacher">
+      <ion-list>
+        <ion-item>
+          <ion-label position="floating">{{words.email}}</ion-label>
+          <ion-input formControlName="email" type="email"></ion-input>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label position="floating">{{words.lastName}}</ion-label>
+          <ion-input formControlName="lastName" type="text"></ion-input>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label position="floating">{{words.firstName}}</ion-label>
+          <ion-input formControlName="firstName" type="text"></ion-input>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label position="floating">{{words.phone}}</ion-label>
+          <ion-input formControlName="phoneNumber" type="tel"></ion-input>
+        </ion-item>
+      </ion-list>
+    </form>
+  </ng-template>
+
+</ion-content>
+<ion-footer>
+  <ion-button expand="block" (click)="register()" *ngIf="status=='student'; else teacher" [disabled]="!formDataStudent.valid">{{words.confirm}}</ion-button>
+  <ng-template #teacher>
+    <ion-button expand="block" (click)="register()" [disabled]="!formDataTeacher.valid">{{words.confirm}}</ion-button>
+  </ng-template>
+</ion-footer>
+</ng-container>

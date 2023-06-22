@@ -41,6 +41,8 @@ URGENT :
     ✔ See why some users have no status @done(23-03-30 17:11)
 
 Misc :
+    ☐ User management service : if admin accepts teacher, does the teacher status changes automatically without reload ?
+    ☐ Accounts : after registering with google/FB, complete account informations
     ☐ Login page : loginWithEmail() -> if account doesn't exists in firestore, then the account may have been deleted by an admin
     ✔ dates formats : automatically insert dots or slashes @done(23-06-09 20:27)
     ☐ Schedule : Add arrows to show where it's possible to sort

@@ -251,6 +251,8 @@ export class AngularfireService{
   // Updates current user infos
   updateCurrentUser(newValue:any){
     const docRef = doc(this._dbaccess,'users/'+this._auth.currentUser?.uid);
+    // console.log("updating user ",this._auth.currentUser?.uid," with value ",newValue);
+    
     return updateDoc(docRef,{...newValue});
   }
 
