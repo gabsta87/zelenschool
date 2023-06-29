@@ -61,6 +61,8 @@ export class SchedulepageComponent {
   futureCourses !: Observable<DocumentData[]>;
   selectedDayRemove= new EventEmitter();
   selectedDaySubscribtion !: any;
+  sortIconTitle = "caret-down-outline";
+  sortIconTime = "caret-down-outline";
 
   isHelpOpen = false;
   helpImage = this.isTeacher.value ? "../../assets/helpImages/help_teacher.jpeg" : "../../assets/helpImages/help.jpeg";
@@ -283,10 +285,18 @@ export class SchedulepageComponent {
 
   sortCoursesByTitle(){
     let result;
-    if(this.filterAscTitle)
+    if(this.filterAscTitle){
       result = this.futureCourses.pipe(map((e:any)=> [...e].sort( (a,b) => a['title'].toLowerCase() > b['title'].toLowerCase() ? 1 : -1)))
-    else
+      // TODO : move display logic into HTML file
+      this.sortIconTime = "caret-down-outline";
+      this.sortIconTitle = "caret-down-outline";
+    }
+    else{
       result = this.futureCourses.pipe(map((e:any)=> [...e].sort( (a,b) => a['title'].toLowerCase() < b['title'].toLowerCase() ? 1 : -1)))
+      // TODO : move display logic into HTML file
+      this.sortIconTime = "caret-down-outline";
+      this.sortIconTitle = "caret-up-outline";
+    }
       
     this.futureCourses = result;
     this.filterAscTitle = !this.filterAscTitle;
@@ -297,8 +307,14 @@ export class SchedulepageComponent {
     let result;
     if(this.filterAscTime){
       result = this.futureCourses.pipe(map((e:any)=> [...e].sort( (a,b) => dayjs(a['timeStart']).utc().isAfter(dayjs(b['timeStart']).utc(),"minute") ? 1 : -1 )))
+      // TODO : move display logic into HTML file
+      this.sortIconTime = "caret-down-outline";
+      this.sortIconTitle = "caret-down-outline";
     }else{
       result = this.futureCourses.pipe(map((e:any)=> [...e].sort( (a,b) => dayjs(a['timeStart']).utc().isBefore(dayjs(b['timeStart']).utc(),"minute") ? 1 : -1)))
+      // TODO : move display logic into HTML file
+      this.sortIconTime = "caret-up-outline";
+      this.sortIconTitle = "caret-down-outline";
     }
       
     this.futureCourses = result;

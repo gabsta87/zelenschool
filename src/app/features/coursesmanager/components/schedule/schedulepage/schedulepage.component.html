@@ -149,10 +149,10 @@
     <ion-grid class="eventsTable ion-no-padding">
         <ion-row>
             <ion-col (click)="sortCoursesByTitle()">
-                <b>{{words.title}}</b>
+                <b>{{words.title}} <ion-icon [name]="sortIconTitle"></ion-icon></b>
             </ion-col>
             <ion-col (click)="sortCoursesByTime()">
-                <b>{{words.time}}</b>
+                <b>{{words.time}} <ion-icon [name]="sortIconTime"></ion-icon></b>
             </ion-col>
             <ion-col>
                 <b>{{words.teacher}}</b>
