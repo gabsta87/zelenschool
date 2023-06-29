@@ -87,19 +87,22 @@
                                 </ion-item>
                             </ion-list>
                             
-                            <span>
-                            <ion-button *ngIf="usr['ban'] == undefined; else unban" (click)="banUser(usr['id'])">Ban</ion-button>
-                            <ng-template #unban>
-                                <ion-button (click)="unbanUser(usr['id'])">Unban</ion-button>
-                            </ng-template>
-                            <ion-button (click)="deleteUser(usr['id'])">Delete</ion-button>
-                            <ion-button *ngIf="usr['status']=='request'" (click)="acceptRequest(usr['id'])">Accept teacher</ion-button>
-                            <ion-button *ngIf="usr['status'].includes('teacher') || usr['status'].includes('admin')" (click)="seeWorkingHours(usr['id'])">Working hours</ion-button>
-                            <ng-container *ngIf="isSuperAdmin.value && ! usr['status'].includes('superadmin')">
-                                <ion-button *ngIf="usr['status']=='teacher'" (click)="promoteAdmin(usr['id'])">Promote admin</ion-button>
-                                <ion-button *ngIf="usr['status'].includes('admin')" (click)="revokeAdmin(usr['id'])">Revoke admin</ion-button>
-                            </ng-container>
+                            <span *ngIf="usr['status']; else deleteButton">
+                                <ion-button *ngIf="usr['ban'] == undefined; else unban" (click)="banUser(usr['id'])">Ban</ion-button>
+                                <ng-template #unban>
+                                    <ion-button (click)="unbanUser(usr['id'])">Unban</ion-button>
+                                </ng-template>
+                                <ion-button (click)="deleteUser(usr['id'])">Delete</ion-button>
+                                <ion-button *ngIf="usr['status']=='request'" (click)="acceptRequest(usr['id'])">Accept teacher</ion-button>
+                                <ion-button *ngIf="usr['status'].includes('teacher') || usr['status'].includes('admin')" (click)="seeWorkingHours(usr['id'])">Working hours</ion-button>
+                                <ng-container *ngIf="isSuperAdmin.value && ! usr['status'].includes('superadmin')">
+                                    <ion-button *ngIf="usr['status']=='teacher'" (click)="promoteAdmin(usr['id'])">Promote admin</ion-button>
+                                    <ion-button *ngIf="usr['status'].includes('admin')" (click)="revokeAdmin(usr['id'])">Revoke admin</ion-button>
+                                </ng-container>
                             </span>
+                            <ng-template #deleteButton>
+                                <span><ion-button (click)="deleteUser(usr['id'])">Delete</ion-button></span>
+                            </ng-template>
                         </div>
                     </ion-accordion>
                 </ion-item>
