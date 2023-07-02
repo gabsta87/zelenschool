@@ -5,21 +5,23 @@
         </ion-toolbar>
     </ion-header>
 
-    <ion-content>
-        <ion-list>
-            <ion-item>
-                <ion-label position="floating">{{words.firstName}}</ion-label>
-                <ion-input [(ngModel)]="child.f_name" required></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating">{{words.lastName}}</ion-label>
-                <ion-input [(ngModel)]="child.l_name" required></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating">{{words.birthday}}</ion-label>
-                <ion-input [(ngModel)]="child.birthday" required></ion-input>
-            </ion-item>
-        </ion-list>
+    <ion-content (keydown.enter)="confirm()">
+        <form (ngSubmit)="confirm()" [formGroup]="profileForm">
+            <ion-list>
+                <ion-item>
+                    <ion-label position="floating">{{words.firstName}}</ion-label>
+                    <ion-input formControlName="f_name" required></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">{{words.lastName}}</ion-label>
+                    <ion-input formControlName="l_name" required></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">{{words.birthday}}</ion-label>
+                    <ion-input formControlName="birthday" required (ionInput)="onInput($event)"></ion-input>
+                </ion-item>
+            </ion-list>
+        </form>
     </ion-content>
 
     <ion-footer>
