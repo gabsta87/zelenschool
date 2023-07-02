@@ -42,10 +42,10 @@ URGENT :
 
 Misc :
     ☐ User management service : if admin accepts teacher, does the teacher status changes automatically without reload ?
-    ☐ Accounts : after registering with google/FB, complete account informations
+    ✔ Accounts : after registering with google/FB, complete account informations @done(23-06-30 18:53)
     ☐ Login page : loginWithEmail() -> if account doesn't exists in firestore, then the account may have been deleted by an admin
     ✔ dates formats : automatically insert dots or slashes @done(23-06-09 20:27)
-    ☐ Schedule : Add arrows to show where it's possible to sort
+    ✔ Schedule : Add arrows to show where it's possible to sort @done(23-06-30 18:53)
     ☐ Help popover
     ☐ prevent : parents can subscribe 2 children, even if course has 1 more slot left
     ✘ Galleries have a presentation image, a description, and half screen before the gallery is big image @cancelled(23-05-19 11:50)
