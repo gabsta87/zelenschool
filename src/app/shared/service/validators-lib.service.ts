@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import dayjs, { Dayjs } from 'dayjs';
 
 @Injectable({
   providedIn: 'root'
@@ -64,7 +65,22 @@ export function emailValidator(): ValidatorFn {
 export function bdValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
 
-    const expression = RegExp("^((0?[1-9]|[12][0-9]|3[01])[- /.]){2}(?:\\d{2}){1,2}$");
+    // const expression = RegExp("^((0?[1-9]|[12][0-9]|3[01])[- /.]){2}(?:\\d{2}){1,2}$");
+    const expression = RegExp("^((\\d{1,2})[- /.]){2}(?:\\d{2}){1,2}$");
+
+    let parts = control.value.split(/[- /.]/); 
+    let year = parts[2];
+    let month = parts[1];
+    let day = parts[0];
+
+    if((year >= 100 && year <= 1900) || year <= 0 || year > new Date().getFullYear())
+      return { 'invalidDate': true };
+
+    if(month < 0 || month > 12)
+      return { 'invalidDate': true };
+
+    if(day < 0 || day > 31)
+      return { 'invalidDate': true };
 
     if (!expression.test(control.value))
       return { 'invalidDate': true };
