@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Auth, getAuth, GoogleAuthProvider, FacebookAuthProvider ,sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup } from '@angular/fire/auth';
-import { AngularfireService } from 'src/app/shared/service/angularfire.service';
-import { AlertController, ModalController } from '@ionic/angular';
-import { ChoiceModalComponent } from '../choice-modal/choice-modal.component';
+import { AlertController } from '@ionic/angular';
 import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
-import { CompleteAccountModalComponent } from '../complete-account-modal/complete-account-modal.component';
 
 @Component({
   selector: 'app-loginpage',
@@ -26,68 +23,36 @@ export class LoginpageComponent {
 
   constructor(
     private readonly _auth: Auth,
-    private readonly _dbAccess:AngularfireService,
     private readonly _router: Router,
-    private readonly _modalCtrl: ModalController,
     private readonly _alertController: AlertController,
     private readonly _lang : LanguageManagerService,
-    ) {
-      
-  }
+    ) { }
 
   async loginWithGoogle(){
     this.loading = true;
     const credential = await signInWithPopup(this._auth,this.providerGoogle)
     .catch(error => {
-      this.error = error.message
       this.loading = false;
+
+      // The AuthCredential type that was used.
+      const credentialError = GoogleAuthProvider.credentialFromError(error);
+      console.log("error while logging in with Google",error.message);
+      console.log("credential from error : ",credentialError);
+
+      this.error = error.message
     });
 
     if(credential == null)
       return;
 
+    this.error = "";
     this.loading = false;
+    this._router.navigate(['/about/']);
     return credential;
   }
 
-  private async completeUserInscription(credential:any){
-
-    console.log("credential : ",credential);
-    
-    // TODO 
-    const accountData = await this._modalCtrl.create({component:CompleteAccountModalComponent,backdropDismiss:false, canDismiss:false});
-    accountData.present();
-    const {data, role} = await accountData.onWillDismiss();
-
-
-    const createdUser = await this._dbAccess.createUser(credential.user,{email:"",f_name:"",l_name:"",phone:"",status:""});
-
-    // User is new, and an entry was added to the database
-    if(createdUser != undefined){
-      this.error = "";
-      console.log("created user : ",createdUser);
-      console.log("credential : ",credential);
-
-      this._dbAccess.banUser(createdUser.id,"Waiting for user to complete profile informations");
-
-      const choiceModal = await this._modalCtrl.create({
-        component : ChoiceModalComponent
-      });
-      choiceModal.present();
-      const {data, role} = await choiceModal.onWillDismiss();
-      if(role === "student"){
-        this._dbAccess.updateCurrentUser({status:"student"})
-        this._router.navigate(['/account/']);
-      }else if(role === "teacher"){
-        this._dbAccess.updateCurrentUser({status:"teacher"})
-        this._router.navigate(['/accountTeacher/']);
-      }
-    }else{
-      this._router.navigate(['/about/']);
-    }
-  }
-
   async loginWithFB() {
+    this.loading = true;
     const credential = await signInWithPopup(this.auth, this.providerFB)
     .catch((error) => {
       // Handle Errors here.
@@ -105,8 +70,10 @@ export class LoginpageComponent {
 
     if(credential == null)
       return;
-
+      
     this.error = "";
+    this.loading = false;
+    this._router.navigate(['/about/']);
     return credential;
   }
 
@@ -139,6 +106,8 @@ export class LoginpageComponent {
   }
 
   resetPassword(){
+    this.error = "";
+    
     if(this.email == "")
       return;
 
@@ -154,6 +123,7 @@ export class LoginpageComponent {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log("Error : ",errorMessage);
+      this.error = error.message;
     });
   }
 }
