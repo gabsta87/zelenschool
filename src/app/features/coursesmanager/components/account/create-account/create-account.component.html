@@ -17,7 +17,7 @@
                             <ion-label>{{words.password}}</ion-label>
                         </ion-col>
                         <ion-col>
-                            <ion-input formControlName="password" type="password" placeholder="At least 6 characters"></ion-input>
+                            <ion-input formControlName="password" type="password" placeholder={{words.passwordPlaceholder}}></ion-input>
                         </ion-col>
                     </ion-row>
                 </div>
@@ -27,7 +27,7 @@
                             <ion-label>{{words.passwordConfirm}}</ion-label>
                         </ion-col>
                         <ion-col>
-                            <ion-input formControlName="password2" type="password" placeholder="Password repeat"></ion-input>
+                            <ion-input formControlName="password2" type="password" placeholder={{words.passwordRepeatPlaceholder}}></ion-input>
                         </ion-col>
                     </ion-row>
                     <!-- <label *ngIf="!profileForm.get('passData')?.valid && profileForm.get('passData')?.touched" [ngClass]="'error'">Password error</label> -->
