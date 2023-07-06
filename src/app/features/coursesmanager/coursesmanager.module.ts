@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
 import { LoginpageComponent } from './components/account/loginpage/loginpage.component';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
@@ -50,7 +49,6 @@ import { BirthdayFieldComponent } from './components/account/birthday-field/birt
 
   declarations: [
     HeaderComponent,
-    FooterComponent,
     LoginpageComponent,
     NavbarComponent,
     GallerypageComponent,
