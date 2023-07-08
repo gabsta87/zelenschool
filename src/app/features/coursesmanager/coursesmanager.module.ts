@@ -1,46 +1,45 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from './components/header/header.component';
-import { LoginpageComponent } from './components/account/loginpage/loginpage.component';
+import { HttpClientModule } from '@angular/common/http';
+import { CUSTOM_ELEMENTS_SCHEMA, ElementRef, NgModule, QueryList, ViewChildren } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { GallerypageComponent } from './components/gallerypage/gallerypage.component';
-import { SwiperModule } from 'swiper/angular';
-import { AboutpageComponent } from './components/aboutpage/aboutpage.component';
-import { SchedulepageComponent } from './components/schedule/schedulepage/schedulepage.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FlatpickrModule } from 'angularx-flatpickr';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import * as dayjs from 'dayjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { StorageService } from 'src/app/shared/service/storage.service';
-import { AdminpageComponent } from './components/admin/adminpage/adminpage.component';
-import { AdminpageGuard } from './guards/adminpage.guard';
-import { AdminpageresolveResolver } from './resolvers/adminpageresolve.resolver';
-import { AccountpageComponent } from './components/account/accountpage/accountpage.component';
-import { UserpageResolver } from './resolvers/userpage.resolver';
-import { UserLoggedGuard } from './guards/user-logged.guard';
-import { CreateAccountComponent } from './components/account/create-account/create-account.component';
-import { AccountteacherpageComponent } from './components/account/accountteacherpage/accountteacherpage.component';
-import { CreateAccountTeacherComponent } from './components/account/create-account-teacher/create-account-teacher.component';
+import { SwiperModule } from 'swiper/angular';
+import { AboutpageComponent } from './components/aboutpage/aboutpage.component';
 import { AccountadminpageComponent } from './components/account/accountadminpage/accountadminpage.component';
-import { StudentModalComponent } from './components/schedule/student-modal/student-modal.component';
-import { TeacherModalComponent } from './components/schedule/teacher-modal/teacher-modal.component';
-import { CalendareventsresolveResolver } from './resolvers/calendareventsresolve.resolver';
-import { TeacherCreateEventModalComponent } from './components/schedule/teacher-create-event-modal/teacher-create-event-modal.component';
-import * as dayjs from 'dayjs';
+import { AccountpageComponent } from './components/account/accountpage/accountpage.component';
+import { AccountteacherpageComponent } from './components/account/accountteacherpage/accountteacherpage.component';
+import { BirthdayFieldComponent } from './components/account/birthday-field/birthday-field.component';
+import { ChildCreationModalComponent } from './components/account/child-creation-modal/child-creation-modal.component';
 import { ChoiceModalComponent } from './components/account/choice-modal/choice-modal.component';
+import { CompleteAccountModalComponent } from './components/account/complete-account-modal/complete-account-modal.component';
+import { CreateAccountTeacherComponent } from './components/account/create-account-teacher/create-account-teacher.component';
+import { CreateAccountComponent } from './components/account/create-account/create-account.component';
+import { LoginpageComponent } from './components/account/loginpage/loginpage.component';
+import { AdminpageComponent } from './components/admin/adminpage/adminpage.component';
 import { BanmodalComponent } from './components/admin/banmodal/banmodal.component';
-import { HttpClientModule } from '@angular/common/http';
-import { AboutPageResolver } from './resolvers/about-page.resolver';
-import { NewAssoMemberModalComponent } from './components/admin/new-asso-member-modal/new-asso-member-modal.component';
 import { GalleryNameModalComponent } from './components/admin/gallery-name-modal/gallery-name-modal.component';
 import { ModalWorkingHoursComponent } from './components/admin/modal-working-hours/modal-working-hours.component';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ChildCreationModalComponent } from './components/account/child-creation-modal/child-creation-modal.component';
-import { CompleteAccountModalComponent } from './components/account/complete-account-modal/complete-account-modal.component';
-import { BirthdayFieldComponent } from './components/account/birthday-field/birthday-field.component';
+import { NewAssoMemberModalComponent } from './components/admin/new-asso-member-modal/new-asso-member-modal.component';
+import { GallerypageComponent } from './components/gallerypage/gallerypage.component';
+import { HeaderComponent } from './components/header/header.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { SchedulepageComponent } from './components/schedule/schedulepage/schedulepage.component';
+import { StudentModalComponent } from './components/schedule/student-modal/student-modal.component';
+import { TeacherCreateEventModalComponent } from './components/schedule/teacher-create-event-modal/teacher-create-event-modal.component';
+import { TeacherModalComponent } from './components/schedule/teacher-modal/teacher-modal.component';
+import { AdminpageGuard } from './guards/adminpage.guard';
+import { UserLoggedGuard } from './guards/user-logged.guard';
+import { AboutPageResolver } from './resolvers/about-page.resolver';
+import { AdminpageresolveResolver } from './resolvers/adminpageresolve.resolver';
+import { CalendareventsresolveResolver } from './resolvers/calendareventsresolve.resolver';
+import { UserpageResolver } from './resolvers/userpage.resolver';
 
 
 
@@ -158,4 +157,4 @@ import { BirthdayFieldComponent } from './components/account/birthday-field/birt
     { provide: 'dayjs', useValue: dayjs },
   ]
 })
-export class CoursesmanagerModule { }
+export class CoursesmanagerModule{ }

@@ -1,6 +1,5 @@
 import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
-import { map } from 'rxjs';
 import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 // import {App} from ‘@ionic-angular’;
@@ -21,7 +20,12 @@ export class NavbarComponent {
   constructor(private readonly _userS:UsermanagementService, private readonly _router:Router, readonly _lang:LanguageManagerService){ }
 
   ngAfterViewInit(){ 
+    // Finds emtpy results
     this.myAnchor = document.querySelector('aboutIonContent'); 
+    console.log("from navBar ");
+    console.log("content : ",this.content);
+    console.log("navbar : ",this.navbar);
+    console.log("aboutIonContent : ",this.divs);
   }
 
   isAdmin = this._userS.isLoggedAsAdmin;
