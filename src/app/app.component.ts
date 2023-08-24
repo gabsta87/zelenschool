@@ -5,25 +5,27 @@ import { AfterViewInit, Component, ElementRef, QueryList, ViewChildren } from '@
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterViewInit{
+export class AppComponent{
   title = 'zelenschool';
+  // export class AppComponent implements AfterViewInit{
+  // title = 'zelenschool';
 
-  @ViewChildren('aboutIonContent') content!: ElementRef<HTMLInputElement>;
-  @ViewChildren('navbar') navbar!: ElementRef<HTMLInputElement>;
-  @ViewChildren("aboutIonContent") divs!:QueryList<ElementRef>;
+  // @ViewChildren('aboutIonContent') content!: ElementRef<HTMLInputElement>;
+  // @ViewChildren('navbar') navbar!: ElementRef<HTMLInputElement>;
+  // @ViewChildren("aboutIonContent") divs!:QueryList<ElementRef>;
 
-  myAnchor !: any;
+  // myAnchor !: any;
 
-  ngAfterViewInit(){
+  // ngAfterViewInit(){
 
-    this.myAnchor = document.querySelector('aboutIonContent');
-    console.log("app component");
+  //   this.myAnchor = document.querySelector('aboutIonContent');
+  //   console.log("app component");
     
 
-    console.log("content : ",this.content);
-    console.log("navBar : ",this.navbar);
-    console.log("my anchor : ",this.myAnchor);
-    console.log("divs : ",this.divs);
+  //   console.log("content : ",this.content);
+  //   console.log("navBar : ",this.navbar);
+  //   console.log("my anchor : ",this.myAnchor);
+  //   console.log("divs : ",this.divs);
     
-  }
+  // }
 }
