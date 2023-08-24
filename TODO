@@ -16,7 +16,7 @@ Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManag
 
 URGENT :
     ☐ Creating new account -> incomplete information : account blocked (logout)
-    ☐ Accessing to course with subscribed children (anonymous) : TypeError: Cannot read properties of undefined (reading 'children')
+    ✔ Accessing to course with subscribed children (anonymous) : TypeError: Cannot read properties of undefined (reading 'children') @done(23-08-24 14:15)
     ✔ Creating new children :  addDoc() called with invalid data. Unsupported filed value : a custom ct object (found ni field f_name in document users/G3mauh....) @done(23-08-24 12:27)
     ✔ s-permit number mandatory for users in order to be able to save informations @done(23-08-24 13:16)
     ☐ toutes les tentatives de connexion depuis un ordinateur aboutissent sur le même compte, même si les logs sont différents
