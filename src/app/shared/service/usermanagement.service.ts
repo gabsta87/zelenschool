@@ -25,14 +25,12 @@ export class UsermanagementService{
     _auth.onAuthStateChanged(async user=>{
       if(user){
 
+        // TODO Find a way to way better delay. In case of bad connection, this delay may not be enough
         setTimeout(async () => {
           
           this.isLogged.next(true);
           
           const isDataComplete = await this.isDataComplete();
-
-          console.log("is data complete : ",isDataComplete);
-          
 
           if(!isDataComplete){
             const accountData = await this._modalCtrl.create({component:CompleteAccountModalComponent,
@@ -97,13 +95,11 @@ export class UsermanagementService{
 
   private async isDataComplete():Promise<boolean>{
     let userId = this._auth?.currentUser?.uid;
-    console.log("userId : ",userId);
     
     if(userId){
       if(this.userData == undefined){
         this.userData = await this._db.getUser(userId);
       }
-      console.log("userData : ",this.userData);
 
       if(this.userData && this.userData['status'] && this.userData['email'] && this.userData['f_name'] && this.userData['l_name']){
         return true;
@@ -214,7 +210,7 @@ export class UsermanagementService{
     let newId = result.path.split("/")[1];
     
     let actualValue = await firstValueFrom(this.userObs)
-    let actualChildren = actualValue.children;
+    let actualChildren = actualValue.children ? actualValue.children : [];
       
     this.updateUser({children:[...actualChildren,newId]})
   }
