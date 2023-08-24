@@ -50,7 +50,7 @@ export class StudentModalComponent {
   async ionViewWillEnter() {
     
     // Loading children infos
-    if(this.currentUser.children && this.currentUser.children.length > 0){
+    if(this.currentUser &&  this.currentUser.children && this.currentUser.children.length > 0){
       
       this.currentUser.childrenInfos = await Promise.all(this.currentUser.children.map((childId: string) => this._db.getUser(childId)));
     }
@@ -69,7 +69,7 @@ export class StudentModalComponent {
       this.isParent = this._user.isParent;
 
       // Checking if children are subscribed in the course
-      if(this.currentUser.childrenInfos && this.currentUser.childrenInfos.length > 0){
+      if(this.currentUser && this.currentUser.childrenInfos && this.currentUser.childrenInfos.length > 0){
         this.currentUser.childrenInfos.forEach((child:any) => {
           this.isChildAttending.push(this.courseActualValues['attendantsId'].includes(child['id']))
         })
@@ -88,7 +88,7 @@ export class StudentModalComponent {
         (this.isCourseFull && !this.isAttending) ||
 
         // User is not logged
-        !this._user.isLogged.value ||
+        (!this._user.isLogged.value || !this.currentUser )||
 
         // Date is already passed
         dayjs(this.courseActualValues['timeStart']).isBefore(getNowDate()) ||
