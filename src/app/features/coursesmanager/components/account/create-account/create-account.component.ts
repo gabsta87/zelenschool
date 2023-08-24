@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { createUserWithEmailAndPassword, getAuth } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonInput } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
@@ -107,6 +106,7 @@ export class CreateAccountComponent {
           phone : tmpPhone, 
           address : tmpAddress,
           status : tmpStatus,
+          birthday : tmpBirthday,
         });
 
 

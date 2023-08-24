@@ -310,8 +310,9 @@ export class AngularfireService{
 
   async createUser(newUser:User,
     data:{email:string,f_name:string,l_name:string,phone:string,status:string,
+      birthday ? : string,
       s_permit_number ? : string,
-      address ? :string,    
+      address ? :string,
     }){
     let userId = newUser.uid;
     let userStored = await this.getUser(userId);
@@ -327,7 +328,9 @@ export class AngularfireService{
       f_name: data.f_name ? data.f_name : "",
       l_name: data.l_name ? data.l_name : "",
       phone: data.phone ? data.phone : "",
-      status: data.status ? data.status : ""
+      status: data.status ? data.status : "",
+      birthday : data.birthday ? data.birthday : "",
+      address : data.address ? data.address : "",
     });
     
     // Otherwise, returns reference to doc created

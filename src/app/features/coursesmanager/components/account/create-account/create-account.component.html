@@ -91,6 +91,9 @@
                         <ion-input formControlName="phone" placeholder="+88 88 888 88 88"></ion-input>
                     </ion-col>
                 </ion-row>
+                <ion-row>
+                    <ion-text color="danger">{{errorMessage}}</ion-text>
+                </ion-row>
                 <ion-row style="justify-content: center;">
                     <ion-button (click)="return()">{{words.return}}</ion-button>
                     <ion-button [disabled]="!profileForm.valid" type="submit">{{words.register}}</ion-button>

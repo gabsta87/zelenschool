@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
-import { BehaviorSubject } from 'rxjs';
 import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
 import { bdValidator, emailValidator, permitValidator, phoneValidator } from 'src/app/shared/service/validators-lib.service';
 

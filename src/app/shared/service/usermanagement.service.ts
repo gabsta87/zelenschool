@@ -24,21 +24,29 @@ export class UsermanagementService{
     
     _auth.onAuthStateChanged(async user=>{
       if(user){
-        this.isLogged.next(true);
-        
-        const isDataComplete = await this.isDataComplete();
 
-        if(!isDataComplete){
-          const accountData = await this._modalCtrl.create({component:CompleteAccountModalComponent,
-            componentProps: { 
-              userData: this.userData
-            },
-            backdropDismiss:false});
-          accountData.present();
-          const {data, role} = await accountData.onWillDismiss();
-          this._db.updateCurrentUser(data);
-          this.userData = undefined;
-        }
+        setTimeout(async () => {
+          
+          this.isLogged.next(true);
+          
+          const isDataComplete = await this.isDataComplete();
+
+          console.log("is data complete : ",isDataComplete);
+          
+
+          if(!isDataComplete){
+            const accountData = await this._modalCtrl.create({component:CompleteAccountModalComponent,
+              componentProps: { 
+                userData: this.userData
+              },
+              backdropDismiss:false});
+            accountData.present();
+            const {data, role} = await accountData.onWillDismiss();
+            this._db.updateCurrentUser(data);
+            this.userData = undefined;
+          }
+        }, 1000);
+
 
         this.checkStatus("superadmin").then(newVal=>{
             this.isLoggedAsSuperAdmin.next(newVal);
@@ -68,6 +76,8 @@ export class UsermanagementService{
       }
       _lang.loadUserLanguage();
     })
+
+    this.isLogged.asObservable()
   }
 
   private isBanFinished(user:any){
@@ -87,10 +97,13 @@ export class UsermanagementService{
 
   private async isDataComplete():Promise<boolean>{
     let userId = this._auth?.currentUser?.uid;
+    console.log("userId : ",userId);
+    
     if(userId){
       if(this.userData == undefined){
         this.userData = await this._db.getUser(userId);
       }
+      console.log("userData : ",this.userData);
 
       if(this.userData && this.userData['status'] && this.userData['email'] && this.userData['f_name'] && this.userData['l_name']){
         return true;
