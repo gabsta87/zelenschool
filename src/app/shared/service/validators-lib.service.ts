@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
-import dayjs, { Dayjs } from 'dayjs';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +42,7 @@ export function permitValidator(): ValidatorFn {
 
     let expression = RegExp("^([A-Za-z]{2}\\d{7})?$");
 
-    if (!expression.test(control.value))
+    if (control.value != null && control.value != "" && !expression.test(control.value))
       return { 'invalidPermitFormat': true };
     
     return null;
