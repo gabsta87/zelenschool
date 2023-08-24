@@ -48,9 +48,9 @@ export class ChildCreationModalComponent {
 
   confirm(){
     let returnChild = {
-      f_name:this.profileForm.get("f_name"),
-      l_name:this.profileForm.get("l_name"),
-      birthday:this.profileForm.get("birthday")
+      f_name:this.profileForm.get("f_name")?.value,
+      l_name:this.profileForm.get("l_name")?.value,
+      birthday:this.profileForm.get("birthday")?.value
     }
     return this.modalCtrl.dismiss(returnChild, "confirm");
   }

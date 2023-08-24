@@ -335,6 +335,9 @@ export class AngularfireService{
   }
 
   createChild(newUser:UserInfos){
+    console.log("new user : ",newUser);
+    console.log("deconstructed : ",{...newUser});
+    
     return addDoc(collection(this._dbaccess,"users"),{...newUser})
   }
 
