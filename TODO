@@ -15,6 +15,10 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 URGENT :
+    ☐ Help section
+    ☐ admin page : when deleting user, remove from auth
+    ☐ delay visitor popover in schedule
+    ☐ Language button in navbar
     ✔ child creation problem @done(23-08-24 16:41)
     ✔ Creating new account -> incomplete information : account blocked (logout) @done(23-08-24 16:40)
     ✔ Accessing to course with subscribed children (anonymous) : TypeError: Cannot read properties of undefined (reading 'children') @done(23-08-24 14:15)
@@ -59,7 +63,6 @@ Misc :
     ☐ Test with more galleries
     ✔ better galleries management for mobile @done(23-05-28 14:43)
     ✘ "Contact us" banner -> no behavior @cancelled(23-05-05 15:44)
-    ☐ admin page : when deleting user, remove from auth
     ✔ fix account creation @done(23-05-04 17:51)
     ✔ past courses : dont display conflicts @done(23-05-04 17:51)
     ✔ remember user language @done(23-05-11 20:31)

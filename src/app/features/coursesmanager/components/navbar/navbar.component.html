@@ -81,10 +81,15 @@
             </ion-tab-button>
         </ng-template>
 
-        <ion-tab-button class="langButton">
-            <ion-img id="bannerClick" [src]="_lang.currentLanguageFlag"></ion-img>
-        </ion-tab-button>
+        <div class="langButton ion-activable" id="bannerClick">
+            <ion-tab-button class="langButton">
+                <ion-img [src]="_lang.currentLanguageFlag" ></ion-img>
+            <!-- <ion-tab-button class="langButton" (click)="showLangPopover()"> -->
+            </ion-tab-button>
+
+        </div>
         <ion-popover trigger="bannerClick" triggerAction="click" size="cover">
+        <!-- <ion-popover [isOpen]="isLangPopoverOpen" triggerAction="click" size="cover"> -->
             <ng-template>
                 <ion-content>
                         <ion-item (click)="changeLanguage('EN')" class="ion-no-padding" lines="none">

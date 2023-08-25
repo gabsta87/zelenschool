@@ -82,6 +82,9 @@ export class LoginpageComponent {
       this.error = "Please enter an email"
       return;
     }
+
+    console.log("cred : ", this.auth, this.email, this.password);
+    
     
     this.loading = true;
     const credential = await signInWithEmailAndPassword(this.auth, this.email, this.password)

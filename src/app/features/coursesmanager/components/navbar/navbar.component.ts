@@ -60,7 +60,20 @@ export class NavbarComponent {
   changeLanguage(lang:string){
     this._lang.changeLanguageTo(lang);
     this._lang.saveUserLanguage(lang);
+    this.closeLangPopover();
   }
+
+  isLangPopoverOpen = false;
+
+  showLangPopover(){
+    this.isLangPopoverOpen = true;
+  }
+  
+  closeLangPopover(){
+    this.isLangPopoverOpen = false;
+  }
+
+
 }
 
 
