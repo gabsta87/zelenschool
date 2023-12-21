@@ -17,15 +17,14 @@ Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManag
 URGENT :
     ☐ Help section on the schedule page (button needs a better behavior than showing an image)
     ☐ admin page : when deleting user, remove from auth
-    ☐ delay visitor popover in schedule
+    ✔ delay visitor popover in schedule @done(23-12-21 20:00)
     ✔ Language button in navbar @done(23-08-25 10:57)
     ✔ child creation problem @done(23-08-24 16:41)
     ✔ Creating new account -> incomplete information : account blocked (logout) @done(23-08-24 16:40)
     ✔ Accessing to course with subscribed children (anonymous) : TypeError: Cannot read properties of undefined (reading 'children') @done(23-08-24 14:15)
     ✔ Creating new children :  addDoc() called with invalid data. Unsupported filed value : a custom ct object (found ni field f_name in document users/G3mauh....) @done(23-08-24 12:27)
     ✔ s-permit number mandatory for users in order to be able to save informations @done(23-08-24 13:16)
-    ☐ toutes les tentatives de connexion depuis un ordinateur aboutissent sur le même compte, même si les logs sont différents
-    ☐ All connexion trys from a same computer end up loging in on the same account, even with different logs after logout
+    ✔ All connexion trys from a same computer end up loging in on the same account, even with different logs after logout @done(23-12-21 20:00)
 
     ☐ Teacher creation process : dont create empty entry -> inconsistant state
     ☐ Child creation : Enter button
