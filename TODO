@@ -18,7 +18,7 @@ URGENT :
     ☐ Help section
     ☐ admin page : when deleting user, remove from auth
     ☐ delay visitor popover in schedule
-    ☐ Language button in navbar
+    ✔ Language button in navbar @done(23-08-25 10:57)
     ✔ child creation problem @done(23-08-24 16:41)
     ✔ Creating new account -> incomplete information : account blocked (logout) @done(23-08-24 16:40)
     ✔ Accessing to course with subscribed children (anonymous) : TypeError: Cannot read properties of undefined (reading 'children') @done(23-08-24 14:15)
@@ -162,6 +162,8 @@ Features:
         ✘ Admin : color banned users @cancelled(23-03-30 16:59)
 
 Technical :
+    ☐ Email validation
+        https://firebase.google.com/docs/auth/web/manage-users?hl=en#web-modular-api_2
     ✔ create component for conflicting courses (used in both teachermodal and teachercreatemodal) @done(23-04-06 20:08)
     ✘ fix CORS problem to upload files on server @cancelled(23-04-11 11:22)
     ✔ Create service to manage course (modal creation) that can be launched from both schedule and admin page @done(23-04-06 20:08)

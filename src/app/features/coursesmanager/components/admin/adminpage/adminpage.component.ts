@@ -214,17 +214,25 @@ export class AdminpageComponent {
     this._db.unbanUser(id);
   }
 
-  async promoteAdmin(id: string) {
-    this.modifyAdmin(id, "admin");
-  }
-
   private async modifyAdmin(id: string, newStatus: string) {
     let newValue = { status: newStatus, }
     this._db.setUser(id, newValue);
   }
 
+  async promoteAdmin(id: string) {
+    this.modifyAdmin(id, "admin");
+  }
+
   async revokeAdmin(id: string) {
     this.modifyAdmin(id, "teacher")
+  }
+
+  async promoteSuperAdmin(id: string) {
+    this.modifyAdmin(id, "superadmin");
+  }
+
+  async revokeSuperAdmin(id: string) {
+    this.modifyAdmin(id, "admin");
   }
 
   // Manage events

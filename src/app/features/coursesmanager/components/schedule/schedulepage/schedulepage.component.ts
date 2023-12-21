@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
@@ -31,7 +31,7 @@ export interface CalendarMonthViewEventTimesChangedEvent< EventMetaType = any, D
     },
   ],
 })
-export class SchedulepageComponent {
+export class SchedulepageComponent implements OnInit{
   @ViewChild(IonModal) studentModal!: IonModal;
  
   // Angular Calendar
@@ -64,6 +64,11 @@ export class SchedulepageComponent {
   sortIconTitle = "caret-down-outline";
   sortIconTime = "caret-down-outline";
 
+  searchString = "";  
+  search = new BehaviorSubject("");
+
+
+  showVisitorWarning = false;
   isHelpOpen = false;
   helpImage = this.isTeacher.value ? "../../assets/helpImages/help_teacher.jpeg" : "../../assets/helpImages/help.jpeg";
   words$ = this._lang.currentLanguage$;
@@ -78,6 +83,13 @@ export class SchedulepageComponent {
     ) {
     this.futureCourses = this.extractedData.pipe(map( (courses:any) => courses = courses.filter((course:any) =>dayjs(course.timeStart).isAfter(dayjs(getNowDate()),"hour") )))
   }
+
+  // async ngAfterViewInit(){
+  //   setTimeout(async ()=>{
+  //     this.showVisitorWarning = !this.isLogged.value;
+  //     console.log("timer finished, value : ", !this.isLogged.value);
+  //   },1000)
+  // }
 
   async ngOnInit(){
     this.coursesSubscribtion = this.extractedData.subscribe((newValues) => {
@@ -320,6 +332,10 @@ export class SchedulepageComponent {
     this.futureCourses = result;
     this.filterAscTime = !this.filterAscTime;
     this.filterAscTitle = true;
+  }
+
+  updateSearchValue() {
+    this.search.next(this.searchString);
   }
 
   showHelp(){

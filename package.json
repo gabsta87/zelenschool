@@ -26,6 +26,7 @@
     "date-fns": "^2.29.3",
     "dayjs": "^1.11.7",
     "firebase": "^9.15.0",
+    "firebase-admin": "^11.10.1",
     "ngx-image-cropper": "^6.3.2",
     "rxjs": "~7.5.0",
     "swiper": "^8.4.5",

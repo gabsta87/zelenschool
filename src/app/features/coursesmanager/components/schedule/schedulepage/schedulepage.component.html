@@ -10,13 +10,14 @@
         </ng-template>
     </ion-popover>
 
-    <ion-popover #popover [isOpen]="isBanned.value">
+    <ion-popover [isOpen]="isBanned.value">
         <ng-template>
             <ion-content class="ion-padding">{{words.banInfo}}</ion-content>
         </ng-template>
     </ion-popover>
     
-    <ion-popover #popover [isOpen]="!isLogged.value">
+    <!-- <ion-popover #popover [isOpen]="!isLogged.value && isTimerFinished.value"> -->
+    <ion-popover [isOpen]="!isLogged.value">
         <ng-template>
             <ion-content class="ion-padding">{{words.visitorInfo}}</ion-content>
         </ng-template>
@@ -127,10 +128,13 @@
 <!-- Event commands -->
 <ion-grid class="ion-no-margin">
     <ion-row class="ion-text-center">
-        <ion-col>
+        <ion-col class="scheduleTitleColumn">
             <h3>
                 {{words.futureEvents}}
             </h3>
+        </ion-col>
+        <ion-col>
+            <ion-searchbar placeholder="Search" [(ngModel)]="searchString" (ionChange)="updateSearchValue()"></ion-searchbar>
         </ion-col>
         <ion-col *ngIf="(isTeacher|async) || (isAdmin|async)">
             <ion-buttons class="ion-justify-content-center bottomButtons">

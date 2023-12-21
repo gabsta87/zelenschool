@@ -7,6 +7,7 @@ import { getNowDate } from './hour-management.service';
 import { LanguageManagerService } from './language-manager.service';
 import { CompleteAccountModalComponent } from 'src/app/features/coursesmanager/components/account/complete-account-modal/complete-account-modal.component';
 import { ModalController } from '@ionic/angular';
+import { browserSessionPersistence, setPersistence } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,11 @@ export class UsermanagementService{
   isUserBanned = new BehaviorSubject(false);
   isParent = new BehaviorSubject(false);
     
-  constructor(private readonly _db:AngularfireService, private readonly _auth:Auth, private readonly _lang : LanguageManagerService, private readonly _modalCtrl: ModalController) {
+  constructor(
+    private readonly _db:AngularfireService, 
+    private readonly _auth:Auth, 
+    private readonly _lang : LanguageManagerService, 
+    private readonly _modalCtrl: ModalController) {
     
     _auth.onAuthStateChanged(async user=>{
       if(user){
@@ -76,6 +81,9 @@ export class UsermanagementService{
     })
 
     this.isLogged.asObservable()
+
+    setPersistence(_auth, browserSessionPersistence)
+
   }
 
   private isBanFinished(user:any){

@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Auth, User, user } from '@angular/fire/auth';
+import { Auth, User } from '@angular/fire/auth';
 import { DocumentData, Firestore, QueryConstraint, addDoc, arrayRemove, arrayUnion, collection, collectionData, deleteField, doc, getDocs, setDoc, where } from '@angular/fire/firestore';
 import { deleteDoc, getDoc, query, updateDoc } from '@firebase/firestore';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
-import { Observable, find, firstValueFrom, forkJoin, map, switchMap } from 'rxjs';
+import { deleteUser, getAuth } from 'firebase/auth';
+import { Observable, find, firstValueFrom, map, switchMap } from 'rxjs';
 import { formatForDB, getNowDate, isColliding } from './hour-management.service';
 dayjs.extend(isBetween);
+import firebase from 'firebase/app';
 
 @Injectable({
   providedIn:'root'
@@ -192,6 +194,21 @@ export class AngularfireService{
     this.removeUserFromCourses(userId);
     const docRef = doc(this._dbaccess,'users/'+userId);
     deleteDoc(docRef);
+
+    let currentUser = getAuth().currentUser
+
+    console.log(
+      "user : ",currentUser
+    );
+    // firebase.auth().getUser(userId);
+
+    const userToDelete = {uid:userId} as User;
+
+    deleteUser(userToDelete).then(() => {
+      console.log("user deleted");
+    }).catch((error) => {
+      console.log("error : ",error);
+    });
   }
 
   async unbanUser(userId:string){

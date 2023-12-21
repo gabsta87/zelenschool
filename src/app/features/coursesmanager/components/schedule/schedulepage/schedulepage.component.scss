@@ -83,3 +83,12 @@ ion-button{
     top: 40px;
   }
 }
+
+.scheduleTitleColumn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  h3{
+    margin: 0px;
+  }
+}
