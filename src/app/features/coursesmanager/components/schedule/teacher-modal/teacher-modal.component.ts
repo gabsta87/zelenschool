@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import dayjs from 'dayjs';
 import { DocumentData } from 'firebase/firestore';
-import { BehaviorSubject, firstValueFrom, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, map, Observable, switchMap } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { formatForIonDateTime, getNowDate } from 'src/app/shared/service/hour-management.service';
 import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
@@ -17,6 +17,7 @@ export class TeacherModalComponent{
   meta!:any;
   title!:string;
   room_id!:string;
+  author_id!:string;
   timeStart!:string;
   timeEnd!:string;
   max_participants!:number;
@@ -38,6 +39,9 @@ export class TeacherModalComponent{
   isAdmin!:boolean;
   cannotModify!:boolean;
   isPassedEvent!:boolean;
+
+  teachers :Observable<DocumentData[]> = this._db.getUsers().pipe(
+    map(usersList => usersList.filter((user: any) => user.status == 'teacher' || user.status == 'admin' || user.status == 'superadmin')))
 
   words$ = this._lang.currentLanguage$;
 
@@ -83,6 +87,7 @@ export class TeacherModalComponent{
     this.timeEnd = formatForIonDateTime(this.meta.timeEnd);
     this.max_participants = this.meta.max_participants;
     this.description = this.meta.description;
+    this.author_id = this.meta.author['id'];
 
     this.defaultHour = dayjs(this.timeStart).hour();
     this.defaultMinute = dayjs(this.timeStart).minute();
@@ -169,6 +174,7 @@ export class TeacherModalComponent{
       room_id:this.room_id,
       max_participants:this.max_participants,
       description:this.description,
+      author:this.author_id,
     }
     
     this._db.updateCalendarEntry(entry);

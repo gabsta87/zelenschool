@@ -21,9 +21,18 @@
         </ion-select>
     </ion-item>
 
-    <ion-item [disabled]="cannotModify">
-        <ion-text>{{words.teacher}} : {{creatorName}}</ion-text>
+    <ion-item *ngIf="isAdmin; else notAdmin">
+        <ion-label>Author :</ion-label>
+        <ion-select *ngIf="(teachers|async) as teachersList" [(ngModel)]="author_id" [ngModelOptions]="{standalone: true}" aria-label="Teacher" interface="popover" placeholder="Select teacher">
+            <ion-select-option *ngFor="let teacher of teachersList" value="{{teacher['id']}}">{{teacher["f_name"]}} {{teacher["l_name"]}}</ion-select-option>
+        </ion-select>
     </ion-item>
+    <ng-template #notAdmin>
+        <ion-item [disabled]="cannotModify">
+            <ion-text>{{words.teacher}} : {{creatorName}}</ion-text>
+        </ion-item>
+    </ng-template>
+
 
     <ion-item class="hours" [disabled]="cannotModify" >
         <ion-label>{{words.time}} :</ion-label>
