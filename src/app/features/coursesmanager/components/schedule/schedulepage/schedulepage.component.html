@@ -10,14 +10,14 @@
         </ng-template>
     </ion-popover>
 
-    <ion-popover [isOpen]="isBanned.value">
+    <ion-popover [isOpen]="isBanned|async">
         <ng-template>
             <ion-content class="ion-padding">{{words.banInfo}}</ion-content>
         </ng-template>
     </ion-popover>
     
     <!-- <ion-popover #popover [isOpen]="!isLogged.value && isTimerFinished.value"> -->
-    <ion-popover [isOpen]="!isLogged.value">
+    <ion-popover [isOpen]="!(isLogged |async)">
         <ng-template>
             <ion-content class="ion-padding">{{words.visitorInfo}}</ion-content>
         </ng-template>
