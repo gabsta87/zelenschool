@@ -57,7 +57,7 @@ export class SchedulepageComponent implements OnInit{
   filterAscTitle = true;
   filterAscTime = true;
   now = getNowDate();
-  coursesSubscribtion !: any;
+  // coursesSubscribtion !: any;
   // futureCourses !: Observable<DocumentData[]>;
   selectedDayRemove= new EventEmitter();
   selectedDaySubscribtion !: any;
@@ -84,7 +84,6 @@ export class SchedulepageComponent implements OnInit{
           return courses
 
         // searchString = searchString.toLowerCase()
-        console.log("course : ",courses);
 
         const filteredCourses = courses.filter((course: any) =>
         course.description?.toLowerCase().includes(searchS.toLowerCase()) ||
@@ -97,6 +96,30 @@ export class SchedulepageComponent implements OnInit{
     )
   )
 
+  coursesSubscribtion = this.filteredCourses.subscribe((newValues) => {
+    this.events = [];
+    newValues.forEach( (e:any) =>{
+      this.events.push({
+        title : e['title'],
+        start : new Date(e['timeStart']),
+        end : new Date(e['timeEnd']),
+        // actions : this.actions, 
+        allDay : false,
+        meta : {
+          id : e['id'],
+          timeStart : formatTime(e['timeStart']),
+          timeEnd : formatTime(e['timeEnd']),
+          author: e['author'],
+          room_id: e['room_id'],
+          room : e['room'],
+          attendantsId: e['attendantsId'],
+          max_participants: e['max_participants'],
+          description: e['description'],
+        },
+      })
+    })
+  })
+
   constructor(
     private readonly _route: ActivatedRoute,
     private readonly _user: UsermanagementService,
@@ -106,38 +129,8 @@ export class SchedulepageComponent implements OnInit{
     readonly auth : Auth,
     ) { }
 
-  // async ngAfterViewInit(){
-  //   setTimeout(async ()=>{
-  //     this.showVisitorWarning = !this.isLogged.value;
-  //     console.log("timer finished, value : ", !this.isLogged.value);
-  //   },1000)
-  // }
-
   async ngOnInit(){
-    this.coursesSubscribtion = this.extractedData.subscribe((newValues) => {
-      this.events = [];
-      newValues.forEach( e =>{
-        this.events.push({
-          title : e['title'],
-          start : new Date(e['timeStart']),
-          end : new Date(e['timeEnd']),
-          // actions : this.actions, 
-          allDay : false,
-          meta : {
-            id : e['id'],
-            timeStart : formatTime(e['timeStart']),
-            timeEnd : formatTime(e['timeEnd']),
-            author: e['author'],
-            room_id: e['room_id'],
-            room : e['room'],
-            attendantsId: e['attendantsId'],
-            max_participants: e['max_participants'],
-            description: e['description'],
-          },
-        })
-      })
-    });
-
+    
     this.selectedDaySubscribtion = this.selectedDayRemove.subscribe(_=>{
       this.refresh.next();
     });
