@@ -49,6 +49,13 @@
         <ion-input type="number" [min]="0" placeholder="00" name="max_participants" required [(ngModel)]="max_participants"></ion-input>
     </ion-item>
 
+    <ion-item *ngIf="(isAdmin|async)">
+        <ion-label>Author :</ion-label>
+        <ion-select *ngIf="(teachers|async) as teachersList" [(ngModel)]="author" [ngModelOptions]="{standalone: true}" aria-label="Teacher" interface="popover" placeholder="Select teacher">
+            <ion-select-option *ngFor="let teacher of teachersList" value="{{teacher['id']}}">{{teacher["f_name"]}} {{teacher["l_name"]}}</ion-select-option>
+        </ion-select>
+    </ion-item>
+
     <ion-item>
         <ion-label>{{words.description}} :</ion-label>
         <ion-textarea [(ngModel)]="description" [autoGrow]="true" required name="descr"> </ion-textarea>

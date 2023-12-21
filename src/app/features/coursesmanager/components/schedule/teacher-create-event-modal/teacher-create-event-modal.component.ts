@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import dayjs from 'dayjs';
 import { DocumentData } from 'firebase/firestore';
-import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
+import { BehaviorSubject, Observable, firstValueFrom, map } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { formatTime, getNowDate } from 'src/app/shared/service/hour-management.service';
 import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
+import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 
 @Component({
   selector: 'app-teacher-create-event-modal',
@@ -20,6 +21,7 @@ export class TeacherCreateEventModalComponent {
   timeStart!:string;
   timeEnd!:string;
   title!:string;
+  author!:string;
   max_participants!:number;
   room_id!:string;
   description!:string;
@@ -35,12 +37,17 @@ export class TeacherCreateEventModalComponent {
   collisionIndexes = [] as number[];
   defaultHour!:number;
   defaultMinute!:number;
+  isAdmin = this._user.isLoggedAsAdmin;
 
   words$ = this._lang.currentLanguage$;
 
-  constructor(private readonly modalCtrl:ModalController,
-    private readonly _db: AngularfireService,
-    private readonly _lang: LanguageManagerService
+  teachers :Observable<DocumentData[]> = this._db.getUsers().pipe(
+    map(usersList => usersList.filter((user: any) => user.status == 'teacher' || user.status == 'admin' || user.status == 'superadmin')))
+
+  constructor(private readonly modalCtrl : ModalController,
+    private readonly _db : AngularfireService,
+    private readonly _lang : LanguageManagerService,
+    private readonly _user : UsermanagementService
     ){ }
 
   ionViewDidEnter(){
@@ -63,12 +70,13 @@ export class TeacherCreateEventModalComponent {
       let entryTimeEnd = dayjs(e.date).hour(dayjs(this.timeEnd).hour()).minute(dayjs(this.timeEnd).minute()).toString();
 
       entry = {
-        title:this.title,
-        timeStart:entryTimeStart,
-        timeEnd:entryTimeEnd,
-        room_id:this.room_id,
-        max_participants:this.max_participants,
-        description:this.description
+        title : this.title,
+        timeStart : entryTimeStart,
+        timeEnd : entryTimeEnd,
+        room_id : this.room_id,
+        author : this.author,
+        description : this.description,
+        max_participants : this.max_participants,
       }
       this._db.createCalendarEntry(entry);
     })
@@ -149,7 +157,6 @@ export class TeacherCreateEventModalComponent {
     
     return !this.collisionIndexes.some(positive);
   }
-
 
   removeDay(index:number){
     if(this.selectedDays.length > 1){

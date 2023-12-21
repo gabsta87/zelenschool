@@ -45,10 +45,10 @@ export class AngularfireService{
 
     return addDoc(collection(this._dbaccess,"calendarEntries"),{
       ...newEntry,
-      attendantsId:[],
+      attendantsId : [],
       timeStart : formatForDB(newEntry.timeStart),
       timeEnd : formatForDB(newEntry.timeEnd),
-      author:this._auth.currentUser.uid,
+      author : newEntry.author ? newEntry.author : this._auth.currentUser.uid,
     });
   }
 
