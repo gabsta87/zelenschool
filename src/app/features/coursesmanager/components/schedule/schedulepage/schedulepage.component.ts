@@ -7,7 +7,7 @@ import { CalendarDateFormatter, CalendarEvent, CalendarEventTimesChangedEvent, C
 import { MonthViewDay, WeekViewHourColumn } from 'calendar-utils';
 import { isSameDay, isSameMonth } from 'date-fns';
 import dayjs from 'dayjs';
-import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, combineLatest, map } from 'rxjs';
 import { formatTime, getNowDate } from 'src/app/shared/service/hour-management.service';
 import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
@@ -58,7 +58,7 @@ export class SchedulepageComponent implements OnInit{
   filterAscTime = true;
   now = getNowDate();
   coursesSubscribtion !: any;
-  futureCourses !: Observable<DocumentData[]>;
+  // futureCourses !: Observable<DocumentData[]>;
   selectedDayRemove= new EventEmitter();
   selectedDaySubscribtion !: any;
   sortIconTitle = "caret-down-outline";
@@ -67,11 +67,35 @@ export class SchedulepageComponent implements OnInit{
   searchString = "";  
   search = new BehaviorSubject("");
 
-
   showVisitorWarning = false;
   isHelpOpen = false;
   helpImage = this.isTeacher.value ? "../../assets/helpImages/help_teacher.jpeg" : "../../assets/helpImages/help.jpeg";
   words$ = this._lang.currentLanguage$;
+
+  futureCourses = this.extractedData.pipe(map( (courses:any) => courses = courses.filter((course:any) =>dayjs(course.timeStart).isAfter(dayjs(getNowDate()),"hour") )))
+
+  filteredCourses =  combineLatest([
+    this.search.asObservable(),
+    this.futureCourses
+    ]).pipe(
+      map(([searchS, courses]) => {
+
+        if(searchS == "")
+          return courses
+
+        // searchString = searchString.toLowerCase()
+        console.log("course : ",courses);
+
+        const filteredCourses = courses.filter((course: any) =>
+        course.description?.toLowerCase().includes(searchS.toLowerCase()) ||
+        course.title.toLowerCase().includes(searchS.toLowerCase()) ||
+        course.author.l_name.toLowerCase().includes(searchS.toLocaleLowerCase()) ||
+        course.author.f_name.toLowerCase().includes(searchS.toLocaleLowerCase()) 
+        );
+        return filteredCourses;
+      }
+    )
+  )
 
   constructor(
     private readonly _route: ActivatedRoute,
@@ -80,9 +104,7 @@ export class SchedulepageComponent implements OnInit{
     private cd: ChangeDetectorRef,
     private readonly _lang:LanguageManagerService,
     readonly auth : Auth,
-    ) {
-    this.futureCourses = this.extractedData.pipe(map( (courses:any) => courses = courses.filter((course:any) =>dayjs(course.timeStart).isAfter(dayjs(getNowDate()),"hour") )))
-  }
+    ) { }
 
   // async ngAfterViewInit(){
   //   setTimeout(async ()=>{
