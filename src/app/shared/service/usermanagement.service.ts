@@ -8,6 +8,7 @@ import { LanguageManagerService } from './language-manager.service';
 import { CompleteAccountModalComponent } from 'src/app/features/coursesmanager/components/account/complete-account-modal/complete-account-modal.component';
 import { ModalController } from '@ionic/angular';
 import { browserSessionPersistence, setPersistence } from 'firebase/auth';
+import { NONE_TYPE } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -81,8 +82,6 @@ export class UsermanagementService{
     })
 
     this.isLogged.asObservable()
-
-    setPersistence(_auth, browserSessionPersistence)
 
   }
 

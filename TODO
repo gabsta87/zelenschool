@@ -15,7 +15,7 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 URGENT :
-    ☐ Help section
+    ☐ Help section on the schedule page (button needs a better behavior than showing an image)
     ☐ admin page : when deleting user, remove from auth
     ☐ delay visitor popover in schedule
     ✔ Language button in navbar @done(23-08-25 10:57)
@@ -25,6 +25,7 @@ URGENT :
     ✔ Creating new children :  addDoc() called with invalid data. Unsupported filed value : a custom ct object (found ni field f_name in document users/G3mauh....) @done(23-08-24 12:27)
     ✔ s-permit number mandatory for users in order to be able to save informations @done(23-08-24 13:16)
     ☐ toutes les tentatives de connexion depuis un ordinateur aboutissent sur le même compte, même si les logs sont différents
+    ☐ All connexion trys from a same computer end up loging in on the same account, even with different logs after logout
 
     ☐ Teacher creation process : dont create empty entry -> inconsistant state
     ☐ Child creation : Enter button
@@ -150,7 +151,7 @@ Features:
     ☐ Teachers can Mark a course as canceled / Mail sent to all participants @low
         https://firebase.google.com/docs/extensions/official/firestore-send-email?hl=fr
     Schedule : 
-        ☐ filter available courses, filter by teacher, search tool
+        ✔ filter available courses, filter by teacher, search tool @done(23-12-21 19:18)
     Admin Page :
         ✔ add search tool @done(23-03-30 17:04)
         ✔ load teachers names @done(23-03-30 17:04)
