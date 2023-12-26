@@ -89,7 +89,8 @@ export class SchedulepageComponent implements OnInit{
         course.description?.toLowerCase().includes(searchS.toLowerCase()) ||
         course.title.toLowerCase().includes(searchS.toLowerCase()) ||
         course.author.l_name.toLowerCase().includes(searchS.toLocaleLowerCase()) ||
-        course.author.f_name.toLowerCase().includes(searchS.toLocaleLowerCase()) 
+        course.author.f_name.toLowerCase().includes(searchS.toLocaleLowerCase()) ||
+        course.room.name.toLowerCase().includes(searchS.toLocaleLowerCase()) 
         );
         return filteredCourses;
       }
