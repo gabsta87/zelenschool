@@ -15,6 +15,7 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 URGENT :
+    ☐ Possibility to promote new superadmins
     ☐ Help section on the schedule page (button needs a better behavior than showing an image)
     ☐ admin page : when deleting user, remove from auth
     ✔ delay visitor popover in schedule @done(23-12-21 20:00)
