@@ -122,7 +122,13 @@
                 <ion-item *ngFor="let course of filteredData[1]" lines="none">
                     <ion-accordion [value]="course['id']">
                         <ion-item slot="header" color="light">
-                            <ion-label>{{course['title']}} {{course['timeStart']| date: "HH:mm d MMM, yy"}} {{course['author'].l_name}} {{course['author'].f_name}}</ion-label>
+                            <div *ngIf="course['author']; else unknownAuthor">
+                                <ion-label>{{course['title']}} {{course['timeStart']| date: "HH:mm d MMM, yy"}} {{course['author'].l_name}} {{course['author'].f_name}}</ion-label>
+                            </div>
+                            <ng-template #unknownAuthor>
+                                <ion-label>{{course['title']}} {{course['timeStart']| date: "HH:mm d MMM, yy"}} </ion-label>
+                                <ion-label color="danger">Deleted author</ion-label>
+                            </ng-template>
                         </ion-item>
                         <div class="ion-padding" slot="content" (click)="handleEvent(course)">
                             <p>Room : {{course['room'].name}}</p>

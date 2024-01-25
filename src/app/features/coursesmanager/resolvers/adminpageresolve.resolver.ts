@@ -74,8 +74,12 @@ export class AdminpageresolveResolver  {
         // Récupération des infos des auteurs 
         const authorInfos = await Promise.all(authorId.map((authorID:any) => this._db.getUser(authorID)));
 
+        const authorInfosFiltered = authorInfos.filter((item) => item) // ideally AuthorsInfos[]
+        console.log(authorInfos);
+        console.log(authorInfosFiltered);
+
         // Remplace les IDs par les données des utilisateurs
-        courses.map((course:any) => course.author = authorInfos.find((e:any) => e.id === course.author));
+        courses.map((course:any) => course.author = authorInfosFiltered.find((e:any) => e.id === course.author));
 
         // Récupération des IDs des participants
         const attendants = courses.flatMap( (course:any) => course.attendantsId );
