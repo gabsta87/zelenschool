@@ -30,11 +30,12 @@ export class AdminpageresolveResolver  {
     result.usersObs = this._db.getUsers();
 
     result.usersObs = result.usersObs.pipe(
-      switchMap(async (user: any) => {
+      switchMap(async (users: any) => {
 
         // Loading children infos
+
         // Filtering users with children
-        const parents = user.filter((user:any) => user.children != undefined)
+        const parents = users.filter((user:any) => user.children != undefined && user.children.length > 0)
 
         // Getting children IDs
         let childrenId : string[]= [];
@@ -43,12 +44,28 @@ export class AdminpageresolveResolver  {
         // Getting children infos
         const childrenInfos = await Promise.all(childrenId.map((childId:any) => this._db.getUser(childId)));
 
-        //Replacing IDs by infos
-        parents.map((usr:any) => usr.children.map((id:any) => id = childrenInfos.find( (child:any) => child == id)))
+        //Replacing children IDs by infos
+        // parents.map((usr:any) => usr.children.map((id:any) => id = childrenInfos.find( (child:any) => child == id)))
+        parents.forEach((usr: any) => {
+          usr.children.forEach((id: any, index: number) => {
+            const childInfo = childrenInfos.find((child: any) => child.id === id);
+            if (childInfo) {
+              usr.children[index] = childInfo;
+            }
+          });
+        });
 
+        // Loading parents infos
+
+        // Filtering users with parents
+        const children = users.filter((user:any) => user.parent != undefined)
+
+        // Replacing parent ID by infos
+        children.map((user:any) => user.parent = parents.find((e:any) => e.id === user.parent));
+        
         // Loading ban authors infos
         // Filtering banned users
-        const bannedUsers = user.filter((user:any) => user.ban != undefined)
+        const bannedUsers = users.filter((user:any) => user.ban != undefined)
 
         // Getting ban authors IDs
         const banAuthorId = bannedUsers.map((usr: any) => usr.ban.authorID);
@@ -59,7 +76,7 @@ export class AdminpageresolveResolver  {
         // Replacing IDs by infos
         bannedUsers.map((usr:any) => usr.ban.author = authorInfos.find((e:any) => e.id === usr.ban.authorID));
 
-        return user;
+        return users;
       })
     );
 
@@ -74,9 +91,8 @@ export class AdminpageresolveResolver  {
         // Récupération des infos des auteurs 
         const authorInfos = await Promise.all(authorId.map((authorID:any) => this._db.getUser(authorID)));
 
-        const authorInfosFiltered = authorInfos.filter((item) => item) // ideally AuthorsInfos[]
-        console.log(authorInfos);
-        console.log(authorInfosFiltered);
+        // Filtering undefined values (due to users deleted by admins mostly)
+        const authorInfosFiltered = authorInfos.filter((item) => item)
 
         // Remplace les IDs par les données des utilisateurs
         courses.map((course:any) => course.author = authorInfosFiltered.find((e:any) => e.id === course.author));

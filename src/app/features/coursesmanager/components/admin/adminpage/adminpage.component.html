@@ -72,12 +72,15 @@
                             <p *ngIf="usr['s_permit_id']">S permit ID : {{usr['s_permit_id']}}</p>
                             <p *ngIf="usr['address']">Address : {{usr['address']}}</p>
                             <p *ngIf="usr['subscribeDate']">Subscribe date : {{usr['subscribeDate']}}</p>
-                            <ion-text *ngIf="usr['ban']" color="danger">
-                            <p> Banned on : {{usr['ban'].date}} by {{usr['ban'].author?.l_name}} {{usr['ban'].author?.f_name}}<br>
-                            Reason : {{usr['ban'].comment}}</p>
-                            </ion-text>
-                            <ion-list *ngIf="usr['children'] && usr['children'].length > 0">
-                                <ion-item *ngFor="let child of usr['children']">{{child|json}} {{child.f_name}} {{child.l_name}} {{child.birthday}}
+                            <p *ngIf="usr['parent']">Parent : {{usr['parent'].f_name}} {{usr['parent'].l_name}} 
+                                <ion-button *ngIf="usr['parent'].ban == undefined; else unban" (click)="banUser(usr['parent']['id'])">Ban</ion-button>
+                                <ng-template #unban>
+                                    <ion-button (click)="unbanUser(usr['parent']['id'])">Unban</ion-button>
+                                </ng-template>
+                            </p>
+                           <ion-list *ngIf="usr['children'] && usr['children'].length > 0">
+                                <ion-label>Children</ion-label>
+                                <ion-item *ngFor="let child of usr['children']">{{child.f_name}} {{child.l_name}} {{child.birthday}}
 
                                     <ion-button *ngIf="child['ban'] == undefined; else unban" (click)="banUser(child['id'])">Ban</ion-button>
                                     <ng-template #unban>
@@ -86,6 +89,11 @@
 
                                 </ion-item>
                             </ion-list>
+                            <ion-text *ngIf="usr['ban']" color="danger">
+                                <p> Banned on : {{usr['ban'].date}} by {{usr['ban'].author?.l_name}} {{usr['ban'].author?.f_name}}<br>
+                                Reason : {{usr['ban'].comment}}</p>
+                            </ion-text>
+                             
                             
                             <span *ngIf="usr['status']; else deleteButton">
                                 <ion-button *ngIf="usr['ban'] == undefined; else unban" (click)="banUser(usr['id'])">Ban</ion-button>

@@ -18,7 +18,7 @@ URGENT :
     ☐ Before release : Change Zelenschool to Ukraine-Reborn
     ☐ Possibility to promote new superadmins
     ☐ Help section on the schedule page (button needs a better behavior than showing an image)
-    ☐ When a child is deleted, the parent will show his id number instead of his name
+    ✔ When a child is deleted, the parent will show his id number instead of his name @done(24-01-27 17:36)
     ✔ Management of deleted authors while viewing courses @done(24-01-25 11:31)
     ✔ delay visitor popover in schedule @done(23-12-21 20:00)
     ✔ Language button in navbar @done(23-08-25 10:57)
