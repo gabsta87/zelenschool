@@ -29,6 +29,7 @@ URGENT :
     ✔ s-permit number mandatory for users in order to be able to save informations @done(23-08-24 13:16)
     ✔ All connexion trys from a same computer end up loging in on the same account, even with different logs after logout @done(23-12-21 20:00)
 
+    ☐ Admin adding new partners/assoc members should see a popup window, not a save button
     ☐ Child creation : Enter button
     ☐ Enter button not blocked on account creation when 
     ☐ admin page : when deleting user, remove from auth
