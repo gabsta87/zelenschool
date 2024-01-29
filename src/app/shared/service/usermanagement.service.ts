@@ -7,8 +7,6 @@ import { getNowDate } from './hour-management.service';
 import { LanguageManagerService } from './language-manager.service';
 import { CompleteAccountModalComponent } from 'src/app/features/coursesmanager/components/account/complete-account-modal/complete-account-modal.component';
 import { ModalController } from '@ionic/angular';
-import { browserSessionPersistence, setPersistence } from 'firebase/auth';
-import { NONE_TYPE } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -53,7 +51,7 @@ export class UsermanagementService{
 
 
         this.checkStatus("superadmin").then(newVal=>{
-            this.isLoggedAsSuperAdmin.next(newVal);
+          this.isLoggedAsSuperAdmin.next(newVal);
         })
         this.checkStatus("admin").then(newVal=>{
             this.isLoggedAsAdmin.next(newVal);

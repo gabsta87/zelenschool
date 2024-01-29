@@ -30,6 +30,7 @@ URGENT :
     ✔ All connexion trys from a same computer end up loging in on the same account, even with different logs after logout @done(23-12-21 20:00)
 
     ☐ Admin adding new partners/assoc members should see a popup window, not a save button
+    ☐ Activities Cards should be designed better for mobile version
     ☐ Child creation : Enter button
     ☐ Enter button not blocked on account creation when 
     ☐ admin page : when deleting user, remove from auth

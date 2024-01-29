@@ -19,14 +19,8 @@
                 <h2>
                     {{words.assoTitle}}
                 </h2>
-                <p>
-                    {{words.assoDescription[0]}}
-                </p>
-                <p>
-                    {{words.assoDescription[1]}}
-                </p>
-                <p>
-                    {{words.assoDescription[2]}}
+                <p *ngFor="let paragraph of words.assoDescription">
+                    {{paragraph}}
                 </p>
             </div>
         </div>
@@ -74,14 +68,8 @@
                 </h2>
                 {{words.teamDescription}}
                 <ul>
-                    <li>
-                        {{words.teamQualities[0]}}
-                    </li>
-                    <li>
-                        {{words.teamQualities[1]}}
-                    </li>
-                    <li>
-                        {{words.teamQualities[2]}}
+                    <li *ngFor="let quality of words.teamQualities">
+                        {{quality}}
                     </li>
                 </ul>
 

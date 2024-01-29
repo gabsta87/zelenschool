@@ -53,6 +53,7 @@
                     <ion-select-option value="child">Children</ion-select-option>
                     <ion-select-option value="teacher">Teachers</ion-select-option>
                     <ion-select-option value="admin">Admins</ion-select-option>
+                    <ion-select-option value="superadmin">Superadmins</ion-select-option>
                     <ion-select-option value="request">Teachers requests </ion-select-option>
                     <ion-select-option value="ban">Banned</ion-select-option>
                 </ion-select>
@@ -106,6 +107,8 @@
                                 <ng-container *ngIf="isSuperAdmin.value && ! usr['status'].includes('superadmin')">
                                     <ion-button *ngIf="usr['status']=='teacher'" (click)="promoteAdmin(usr['id'])">Promote admin</ion-button>
                                     <ion-button *ngIf="usr['status'].includes('admin')" (click)="revokeAdmin(usr['id'])">Revoke admin</ion-button>
+                                    <ion-button *ngIf="usr['status']=='teacher' || usr['status'].includes('admin')" (click)="promoteSuperAdmin(usr['id'])">Promote superadmin</ion-button>
+                                    <ion-button *ngIf="usr['status'].includes('superadmin')" (click)="revokeAdmin(usr['id'])">Revoke superadmin</ion-button>
                                 </ng-container>
                             </span>
                             <ng-template #deleteButton>
