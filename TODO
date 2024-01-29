@@ -16,7 +16,7 @@ Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManag
 
 URGENT :
     ☐ Before release : Change Zelenschool to Ukraine-Reborn
-    ☐ Possibility to promote new superadmins
+    ✔ Possibility to promote new superadmins @done(24-01-29 17:03)
     ☐ Help section on the schedule page (button needs a better behavior than showing an image)
     ✔ When a child is deleted, the parent will show his id number instead of his name @done(24-01-27 17:36)
     ✔ Management of deleted authors while viewing courses @done(24-01-25 11:31)
@@ -32,7 +32,7 @@ URGENT :
     ☐ Admin adding new partners/assoc members should see a popup window, not a save button
     ☐ Activities Cards should be designed better for mobile version
     ☐ Child creation : Enter button
-    ☐ Enter button not blocked on account creation when 
+    ☐ Enter button not blocked on account creation when account creation is blocked (information missing)
     ☐ admin page : when deleting user, remove from auth
     ✔ Teacher creation process : dont create empty entry -> inconsistant state @done(23-12-21 20:05)
     ✔ Account : login/register with Google/FB not working from other computers @done(23-06-07 20:17)

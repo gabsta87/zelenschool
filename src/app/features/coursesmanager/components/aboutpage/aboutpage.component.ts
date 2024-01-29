@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonContent } from '@ionic/angular';
+import { BehaviorSubject } from 'rxjs';
 import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
 
 @Component({
@@ -30,6 +31,8 @@ export class AboutpageComponent {
   members = this._route.snapshot.data['aboutData'].members;
   partners_addresses = this._route.snapshot.data['aboutData'].partners;
   activities = this._route.snapshot.data['aboutData'].activities;
+  activityDetail = undefined;
+  isActivityDetailOpen = new BehaviorSubject(false);
 
   ionViewWillEnter(){
     if(this.fragment)
@@ -74,4 +77,12 @@ export class AboutpageComponent {
     this._router.navigate(["gallery"],{fragment:galleryId});
   }
 
+  displayActivity(receivedActivity:any){
+    if(this.activityDetail === receivedActivity){
+      this.activityDetail = undefined
+    }else{
+      this.activityDetail = receivedActivity
+    }
+    this.isActivityDetailOpen.next(this.isActivityDetailOpen != undefined);
+  }
 }
