@@ -371,7 +371,7 @@ export class AngularfireService{
 
   updateAssoMember(newValue:AssoMember){
     const docRef = doc(this._dbaccess,'assoMembers/'+newValue.id);
-    return updateDoc(docRef,{name : newValue.name, role:newValue.role, photo : newValue.photo, link : newValue.link});
+    return updateDoc(docRef,{...newValue});
   }
 
   getAssoMembers(){
@@ -399,7 +399,7 @@ export class AngularfireService{
 
   updatePartner(partner: { id: string; link: string; logoName: string }) {
     const docRef = doc(this._dbaccess,'partners/'+partner.id);
-    return updateDoc(docRef,{link : partner.link, logoName : partner.logoName});
+    return updateDoc(docRef,{...partner});
   }
 
   // Rooms management

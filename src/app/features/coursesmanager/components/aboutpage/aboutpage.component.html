@@ -19,8 +19,8 @@
                 <h2>
                     {{words.assoTitle}}
                 </h2>
-                <p *ngFor="let paragraph of words.assoDescription">
-                    {{paragraph}}
+                <p *ngFor="let paragraph of words.assoDescription" [innerHTML]="paragraph">
+                    <!-- {{paragraph}} -->
                 </p>
             </div>
         </div>

@@ -300,7 +300,11 @@ export class AdminpageComponent {
 
   async updateMember() {
     let data = { id: this.memberId, name: this.memberNewName, role: this.memberNewRole, link: this.memberNewLink } as AssoMember;
-    if (this.photoChanged) {
+    console.log("data : ",data);
+    console.log("photoChanged : ",this.photoChanged.value);
+    
+    
+    if (this.photoChanged.value) {
       this.memberNewPhoto = await this.saveAssoMemberImage(this.imageFile);
       data.photo = this.memberNewPhoto;
     }

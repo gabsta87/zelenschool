@@ -16,6 +16,7 @@ Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManag
 
 URGENT :
     ☐ Before release : Change Zelenschool to Ukraine-Reborn
+    ☐ Association member from admin page : modify link generates bugs
     ✔ Possibility to promote new superadmins @done(24-01-29 17:03)
     ☐ Help section on the schedule page (button needs a better behavior than showing an image)
     ✔ When a child is deleted, the parent will show his id number instead of his name @done(24-01-27 17:36)
@@ -29,6 +30,7 @@ URGENT :
     ✔ s-permit number mandatory for users in order to be able to save informations @done(23-08-24 13:16)
     ✔ All connexion trys from a same computer end up loging in on the same account, even with different logs after logout @done(23-12-21 20:00)
 
+    ☐ Remove links from Activities ? Since events have their own galleries
     ☐ Admin adding new partners/assoc members should see a popup window, not a save button
     ☐ Activities Cards should be designed better for mobile version
     ☐ Child creation : Enter button
