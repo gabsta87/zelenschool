@@ -8,7 +8,6 @@ import { deleteUser, getAuth } from 'firebase/auth';
 import { Observable, find, firstValueFrom, map, switchMap } from 'rxjs';
 import { formatForDB, getNowDate, isColliding } from './hour-management.service';
 dayjs.extend(isBetween);
-import firebase from 'firebase/app';
 
 @Injectable({
   providedIn:'root'
@@ -493,15 +492,43 @@ export class AngularfireService{
   updateActivity(newValue : {id:string,title?:string,link?:string,iconName?:string,description?:string}){
     const docRef = doc(this._dbaccess,'activities/'+newValue.id);
     return updateDoc(docRef,{
-      title : newValue.title,
-      link : newValue.link,
-      iconName : newValue.iconName,
-      description : newValue.description,
+      title : newValue?.title,
+      link : newValue?.link,
+      iconName : newValue?.iconName,
+      description : newValue?.description,
     });
   }
 
   deleteActivity(id:string){
     const docRef = doc(this._dbaccess,'activities/'+id);
+    deleteDoc(docRef);
+  }
+
+  // Asso Events management
+
+  async getAssoEvents():Promise<DocumentData[]>{
+    const evts = await firstValueFrom(this.getElements("assoEvent"));
+    return evts;
+  }
+
+  createAssoEvent(newValue:{name:string,galleryId?:string,leafletLink?:string,location?:string,participants?:string[],timeStart?:string,timeEnd?:string}){
+    return addDoc(collection(this._dbaccess,"assoEvent"),{ ...newValue })
+  }
+
+  updateAssoEvent(newValue : {id:string,name?:string,galleryId?:string,leafletLink?:string,location?:string,participants?:string[],timeStart?:string,timeEnd?:string}){
+    const docRef = doc(this._dbaccess,'activities/'+newValue.id);
+    return updateDoc(docRef,{
+      name:newValue?.name,
+      galleryId:newValue?.galleryId,
+      leafletLink:newValue?.leafletLink,
+      location:newValue?.location,
+      participants:newValue?.participants,
+      timeStart:newValue?.timeStart,
+      timeEnd:newValue?.timeEnd});
+  }
+
+  deleteAssoEvent(id:string){
+    const docRef = doc(this._dbaccess,'assoEvent/'+id);
     deleteDoc(docRef);
   }
 

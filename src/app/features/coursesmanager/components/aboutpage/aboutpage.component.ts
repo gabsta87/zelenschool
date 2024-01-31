@@ -2,7 +2,9 @@ import { Component, ElementRef, EventEmitter, Output, QueryList, ViewChild, View
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonContent } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
+import dayjs from 'dayjs';
 import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
+import { getNowDate } from 'src/app/shared/service/hour-management.service';
 
 @Component({
   selector: 'app-aboutpage',
@@ -31,8 +33,12 @@ export class AboutpageComponent {
   members = this._route.snapshot.data['aboutData'].members;
   partners_addresses = this._route.snapshot.data['aboutData'].partners;
   activities = this._route.snapshot.data['aboutData'].activities;
+  assoEvents = this._route.snapshot.data['aboutData'].assoEvents;
   activityDetail = undefined;
+  activityRelatedPastEvents = undefined;
+  activityRelatedFutureEvents = undefined;
   isActivityDetailOpen = new BehaviorSubject(false);
+  actualDate = getNowDate();
 
   ionViewWillEnter(){
     if(this.fragment)
@@ -63,7 +69,6 @@ export class AboutpageComponent {
     // TODO Color tabs according to position on AboutPage
     // this.navigationComp.setButtonActive(elementToSelectIndex);
     this.selectButton.emit(elementToSelectIndex);
-
   }
 
   initElemPositions(){
@@ -78,11 +83,16 @@ export class AboutpageComponent {
   }
 
   displayActivity(receivedActivity:any){
+    
     if(this.activityDetail === receivedActivity){
       this.activityDetail = undefined
     }else{
       this.activityDetail = receivedActivity
+      const activityRelatedEvents = this.assoEvents.filter((evt:any) => receivedActivity.assoEvents.includes(evt.id) )
+      
+      this.activityRelatedPastEvents = activityRelatedEvents.filter((relatedEvent:any) => dayjs(relatedEvent.timeStart).utc().isAfter(dayjs(this.actualDate).utc()) );
+      this.activityRelatedFutureEvents = activityRelatedEvents.filter((relatedEvent:any) => dayjs(relatedEvent.timeStart).utc().isBefore(dayjs(this.actualDate).utc()));
     }
-    this.isActivityDetailOpen.next(this.isActivityDetailOpen != undefined);
+    this.isActivityDetailOpen.next(this.activityDetail != undefined);
   }
 }

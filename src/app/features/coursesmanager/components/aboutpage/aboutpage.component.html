@@ -19,9 +19,7 @@
                 <h2>
                     {{words.assoTitle}}
                 </h2>
-                <p *ngFor="let paragraph of words.assoDescription" [innerHTML]="paragraph">
-                    <!-- {{paragraph}} -->
-                </p>
+                <p *ngFor="let paragraph of words.assoDescription" [innerHTML]="paragraph"> </p>
             </div>
         </div>
 
@@ -51,9 +49,20 @@
                             </ion-card>
                         </ion-col>
                     </ion-row>
-                    <ion-row *ngIf="isActivityDetailOpen.value">
-                        {{activityDetail|json}}
-                    </ion-row>
+                        <ion-grid *ngIf="isActivityDetailOpen.value">
+                            {{activityDetail|json}}
+                            <ion-row>
+                                <ion-col>
+                                    <h3>Past events</h3>
+                                    <ion-row *ngFor="let evt of activityRelatedPastEvents">{{evt.name}}</ion-row>
+                                </ion-col>
+                                <ion-col>
+                                    <h3>Upcoming events</h3>
+                                    <ion-row *ngFor="let evt of activityRelatedFutureEvents">{{evt.name}}</ion-row>
+                                </ion-col>
+                            </ion-row>
+                            {{assoEvents|json}}
+                        </ion-grid>
                 </ion-grid>
             </div>
         </div>
