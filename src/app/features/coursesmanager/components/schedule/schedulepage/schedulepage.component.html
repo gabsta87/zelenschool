@@ -131,7 +131,12 @@
         <ion-col>
             <ion-searchbar placeholder="Search" [(ngModel)]="searchString" (ionChange)="updateSearchValue()"></ion-searchbar>
         </ion-col>
-        <ion-col *ngIf="(isTeacher|async) || (isAdmin|async)" class="buttonColumn" size="4">
+        <ion-col size="2"  class="buttonColumn">
+            <ion-select interface="popover" placeholder="Center">
+
+            </ion-select>
+        </ion-col>
+        <ion-col *ngIf="(isTeacher|async) || (isAdmin|async)" class="buttonColumn" size="2">
             <ion-buttons class="ion-justify-content-center bottomButtons">
                 <ion-button 
                     id="open-modal" 

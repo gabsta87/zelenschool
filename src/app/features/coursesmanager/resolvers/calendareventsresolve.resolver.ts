@@ -12,7 +12,6 @@ export class CalendareventsresolveResolver  {
   constructor(private readonly _db:AngularfireService){}
   
   eventsObs!:Observable<DocumentData[]>;
-  extractedData!:Observable<DocumentData[]>;
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Observable<DocumentData[]>> {
     this.eventsObs = this._db.getCalendarEntries();

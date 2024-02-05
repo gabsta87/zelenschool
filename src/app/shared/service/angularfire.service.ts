@@ -532,6 +532,34 @@ export class AngularfireService{
     deleteDoc(docRef);
   }
 
+  // Asso centers management
+
+  async getAssoCenters():Promise<Observable<DocumentData[]>>{
+    const centers =  this.getElements("assoCenter");
+    return centers;
+  }
+
+  createAssoCenter(newValue:{name:string,location:string,contactPerson?:string,contactPhone?:string,contactPhotoLink?:string,rooms?:string[],openingHours?:string[]}){
+    return addDoc(collection(this._dbaccess,"assoCenter"),{...newValue})
+  }
+
+  updateAssoCenter(newValue:{id:string,name?:string,location?:string,contactPerson?:string,contactPhone?:string,contactPhotoLink?:string,rooms?:string[],openingHours?:string[]}){
+  const docRef = doc(this._dbaccess,'activities/'+newValue.id);
+    return updateDoc(docRef,{
+      name:newValue?.name,
+      location:newValue?.location,
+      contactPerson:newValue?.contactPerson,
+      contactPhone:newValue?.contactPhone,
+      contactPhotoLink:newValue?.contactPhotoLink,
+      rooms:newValue?.rooms,
+      openingHours:newValue?.openingHours});
+  }
+
+  deleteAssoCenter(id:string){
+    const docRef = doc(this._dbaccess,'assoCenter/'+id);
+    deleteDoc(docRef);
+  }
+
 }
 
 export interface UserInfos {
