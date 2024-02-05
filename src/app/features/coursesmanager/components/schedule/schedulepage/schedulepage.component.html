@@ -131,9 +131,11 @@
         <ion-col>
             <ion-searchbar placeholder="Search" [(ngModel)]="searchString" (ionChange)="updateSearchValue()"></ion-searchbar>
         </ion-col>
-        <ion-col size="2"  class="buttonColumn">
-            <ion-select interface="popover" placeholder="Center">
-
+        <ion-col size="2"  class="buttonColumn" *ngIf="(assoCenters) as centers">
+        <!-- <ion-col size="2"  class="buttonColumn" *ngIf="(assoCenters | async) as centers"> -->
+            <ion-select interface="popover" placeholder="Center" (ionChange)="filterAssoCenter($event)">
+                <ion-select-option value="all">{{words.all}}</ion-select-option>
+                <ion-select-option *ngFor="let assoCenter of centers" value="{{assoCenter['id']}}">{{assoCenter['name']}}</ion-select-option>
             </ion-select>
         </ion-col>
         <ion-col *ngIf="(isTeacher|async) || (isAdmin|async)" class="buttonColumn" size="2">

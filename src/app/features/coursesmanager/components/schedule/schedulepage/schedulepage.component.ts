@@ -7,7 +7,7 @@ import { CalendarDateFormatter, CalendarEvent, CalendarEventTimesChangedEvent, C
 import { MonthViewDay, WeekViewHourColumn } from 'calendar-utils';
 import { isSameDay, isSameMonth } from 'date-fns';
 import dayjs from 'dayjs';
-import { BehaviorSubject, Observable, Subject, combineLatest, map } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, combineLatest, find, firstValueFrom, map, tap } from 'rxjs';
 import { formatTime, getNowDate } from 'src/app/shared/service/hour-management.service';
 import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
@@ -54,11 +54,11 @@ export class SchedulepageComponent implements OnInit{
   isBanned:BehaviorSubject<boolean> = this._user.isUserBanned;
   isLogged:BehaviorSubject<boolean> = this._user.isLogged;
   extractedData :Observable<DocumentData[]> =  this._route.snapshot.data["scheduleData"];
+  // assoCenters :Observable<DocumentData[]> =  this._route.snapshot.data["assoCenters"];
+  assoCenters!:DocumentData[];
   filterAscTitle = true;
   filterAscTime = true;
   now = getNowDate();
-  // coursesSubscribtion !: any;
-  // futureCourses !: Observable<DocumentData[]>;
   selectedDayRemove= new EventEmitter();
   selectedDaySubscribtion !: any;
   sortIconTitle = "caret-down-outline";
@@ -66,6 +66,7 @@ export class SchedulepageComponent implements OnInit{
 
   searchString = "";  
   search = new BehaviorSubject("");
+  selectedCenter = new BehaviorSubject<any>(undefined);
 
   showVisitorWarning = false;
   isHelpOpen = false;
@@ -76,22 +77,27 @@ export class SchedulepageComponent implements OnInit{
 
   filteredCourses =  combineLatest([
     this.search.asObservable(),
+    this.selectedCenter,
     this.futureCourses
     ]).pipe(
-      map(([searchS, courses]) => {
+      map(([searchS, centerFilter ,courses]) => {
 
-        if(searchS == "")
-          return courses
+        let filteredCourses = courses;
 
-        // searchString = searchString.toLowerCase()
+        if(centerFilter != undefined){
+          const selectedRooms = centerFilter.rooms || [];
+          filteredCourses = filteredCourses.filter((course: any) => selectedRooms.includes(course.room_id) );
+        }
 
-        const filteredCourses = courses.filter((course: any) =>
-        course.description?.toLowerCase().includes(searchS.toLowerCase()) ||
-        course.title.toLowerCase().includes(searchS.toLowerCase()) ||
-        course.author.l_name.toLowerCase().includes(searchS.toLocaleLowerCase()) ||
-        course.author.f_name.toLowerCase().includes(searchS.toLocaleLowerCase()) ||
-        course.room.name.toLowerCase().includes(searchS.toLocaleLowerCase()) 
-        );
+        if(searchS != ""){
+          filteredCourses = filteredCourses.filter((course: any) =>
+          course.description?.toLowerCase().includes(searchS.toLowerCase()) ||
+          course.title.toLowerCase().includes(searchS.toLowerCase()) ||
+          course.author.l_name.toLowerCase().includes(searchS.toLocaleLowerCase()) ||
+          course.author.f_name.toLowerCase().includes(searchS.toLocaleLowerCase()) ||
+          course.room.name.toLowerCase().includes(searchS.toLocaleLowerCase()) 
+          );
+        }
         return filteredCourses;
       }
     )
@@ -132,6 +138,8 @@ export class SchedulepageComponent implements OnInit{
 
   async ngOnInit(){
     
+    this.assoCenters =  await firstValueFrom(this._route.snapshot.data["assoCenters"]);
+
     this.selectedDaySubscribtion = this.selectedDayRemove.subscribe(_=>{
       this.refresh.next();
     });
@@ -352,6 +360,10 @@ export class SchedulepageComponent implements OnInit{
 
   updateSearchValue() {
     this.search.next(this.searchString);
+  }
+
+  filterAssoCenter(event:any){
+    this.selectedCenter.next(this.assoCenters.find((e:any) => e.id == event.detail.value))
   }
 
   showHelp(){

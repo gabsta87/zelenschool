@@ -40,6 +40,7 @@ import { AboutPageResolver } from './resolvers/about-page.resolver';
 import { AdminpageresolveResolver } from './resolvers/adminpageresolve.resolver';
 import { CalendareventsresolveResolver } from './resolvers/calendareventsresolve.resolver';
 import { UserpageResolver } from './resolvers/userpage.resolver';
+import { CentersResolver } from './resolvers/centers.resolver';
 
 
 
@@ -101,6 +102,7 @@ import { UserpageResolver } from './resolvers/userpage.resolver';
           component:SchedulepageComponent,
           resolve:{
             scheduleData:CalendareventsresolveResolver,
+            assoCenters:CentersResolver
           }
         },{
           path:"gallery",
