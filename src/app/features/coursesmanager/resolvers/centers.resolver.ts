@@ -1,6 +1,6 @@
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { DocumentData } from 'firebase/firestore';
-import { Observable, map, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 
 export class centersResolver{
