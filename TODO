@@ -18,7 +18,7 @@ URGENT :
     ☐ Before release : Change Zelenschool to Ukraine-Reborn
     ☐ Association member from admin page : modify link generates bugs
     ☐ Help section on the schedule page (button needs a better behavior than showing an image)
-    ☐ Administrators management of centers
+    ☐ Administrators management of centers -> change from ROOMS to CENTERS
     ✔ Possibility to filter courses by Centers @done(24-02-05 20:49)
     ✔ Possibility to promote new superadmins @done(24-01-29 17:03)
     ✔ When a child is deleted, the parent will show his id number instead of his name @done(24-01-27 17:36)
