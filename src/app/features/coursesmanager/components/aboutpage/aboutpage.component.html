@@ -50,7 +50,7 @@
                         </ion-col>
                     </ion-row>
                         <ion-grid *ngIf="isActivityDetailOpen.value">
-                            {{activityDetail|json}}
+                            <!-- {{activityDetail|json}} -->
                             <ion-row>
                                 <ion-col>
                                     <h3>Past events</h3>
@@ -61,7 +61,7 @@
                                     <ion-row *ngFor="let evt of activityRelatedFutureEvents">{{evt.name}}</ion-row>
                                 </ion-col>
                             </ion-row>
-                            {{assoEvents|json}}
+                            <!-- {{assoEvents|json}} -->
                         </ion-grid>
                 </ion-grid>
             </div>

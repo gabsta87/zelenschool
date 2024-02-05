@@ -49,12 +49,12 @@ export class UsermanagementService{
           }
         }, 1000);
 
-
+        this.checkStatus("admin").then(newVal=>{
+          this.isLoggedAsAdmin.next(newVal);
+        })
         this.checkStatus("superadmin").then(newVal=>{
           this.isLoggedAsSuperAdmin.next(newVal);
-        })
-        this.checkStatus("admin").then(newVal=>{
-            this.isLoggedAsAdmin.next(newVal);
+          this.isLoggedAsAdmin.next(newVal);
         })
         this.checkStatus("teacher").then(newVal=>{
           this.isLoggedAsTeacher.next(newVal);
