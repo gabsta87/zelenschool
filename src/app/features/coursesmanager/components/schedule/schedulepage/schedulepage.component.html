@@ -128,15 +128,10 @@
 <!-- Event commands -->
 <ion-grid class="ion-no-margin">
     <ion-row class="ion-text-center">
-        <ion-col class="scheduleTitleColumn">
-            <h3>
-                {{words.futureEvents}}
-            </h3>
-        </ion-col>
         <ion-col>
             <ion-searchbar placeholder="Search" [(ngModel)]="searchString" (ionChange)="updateSearchValue()"></ion-searchbar>
         </ion-col>
-        <ion-col *ngIf="(isTeacher|async) || (isAdmin|async)">
+        <ion-col *ngIf="(isTeacher|async) || (isAdmin|async)" class="buttonColumn" size="4">
             <ion-buttons class="ion-justify-content-center bottomButtons">
                 <ion-button 
                     id="open-modal" 
