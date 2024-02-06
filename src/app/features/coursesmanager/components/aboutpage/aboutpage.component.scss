@@ -47,6 +47,7 @@
         }
     }
 }
+
 .topElements2{
     a ion-button{
         color: var(--ion-color-primary-contrast);
@@ -169,4 +170,8 @@ ion-content{
 .authorsSection{
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.activityTitle{
+    padding: 6px;
 }

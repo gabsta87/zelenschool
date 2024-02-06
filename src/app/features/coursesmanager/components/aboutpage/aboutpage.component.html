@@ -44,7 +44,7 @@
                             <ion-card button="true" (click)="displayActivity(activity)" class="activityItem">
                             <!-- <ion-card button="true" (click)="goToGallery(activity.link)" class="activityItem"> -->
                                 <ion-icon [name]="activity.iconName"></ion-icon>
-                                <ion-card-header><ion-title class="ion-no-padding">{{activity.title}}</ion-title></ion-card-header>
+                                <ion-card-header class="activityTitle"><ion-title class="ion-no-padding">{{activity.title}}</ion-title></ion-card-header>
                                 <ion-card-content>{{activity.description}}</ion-card-content>
                             </ion-card>
                         </ion-col>
