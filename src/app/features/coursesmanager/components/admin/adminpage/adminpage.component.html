@@ -288,20 +288,19 @@
                     
                     <ion-button color="danger" (click)="deleteGallery(gall['id'])">Delete</ion-button>
                     <ion-button (click)="renameGallery(gall['id'])">Rename</ion-button>
+
+                    <ion-button (click)="galleryPhotoUpload.click()">Add photo</ion-button>
+                    <input type="file" (change)="addImageToGallery($event)" accept="*" required style="display: none;" #galleryPhotoUpload>
+                    
+
                 </div>
                 <div *ngIf="selectedGallery >= 0">
                     <ion-grid *ngIf="!isLoadingGallery.value; else loadingGallery">
                         <ion-row *ngIf="images | async as imagesSnapshot">
-                            <ion-col *ngFor="let img of imagesSnapshot">
+                            <ion-col *ngFor="let img of imagesSnapshot" class="galleryImagesColumn">
                                 <ion-thumbnail class="galleryImage">
                                     <img [src]="img['link']"/>
                                     <ion-icon color="danger" class="removeIcon" name="close-circle" (click)="deleteImageFromGallery(img)"></ion-icon>
-                                </ion-thumbnail>
-                            </ion-col>
-                            <ion-col>
-                                <input type="file" (change)="addImageToGallery($event)" accept="*" required style="display: none;" #galleryPhotoUpload>
-                                <ion-thumbnail (click)="galleryPhotoUpload.click()">
-                                    <ion-icon class="addPhotoToGalleryIcon" name="add-circle-outline"></ion-icon>
                                 </ion-thumbnail>
                             </ion-col>
                         </ion-row>
