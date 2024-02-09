@@ -13,6 +13,7 @@ import { BanmodalComponent } from '../banmodal/banmodal.component';
 import { GalleryNameModalComponent } from '../gallery-name-modal/gallery-name-modal.component';
 import { ModalWorkingHoursComponent } from '../modal-working-hours/modal-working-hours.component';
 import { NewAssoMemberModalComponent } from '../new-asso-member-modal/new-asso-member-modal.component';
+import { NewAssoCenterModalComponent } from '../new-asso-center-modal/new-asso-center-modal.component';
 
 @Component({
   selector: 'app-adminpage',
@@ -23,10 +24,9 @@ export class AdminpageComponent {
   constructor(
     private readonly _db: AngularfireService,
     private readonly _route: ActivatedRoute,
-    private readonly _modal: ModalController,
     private readonly actionSheetCtrl: ActionSheetController,
     private readonly storage: StorageService,
-    private readonly modalCtrl: ModalController,
+    private readonly _modalCtrl: ModalController,
     private readonly _user: UsermanagementService,
   ) {
     this.galleries.subscribe((e: any) => {
@@ -148,7 +148,7 @@ export class AdminpageComponent {
 
   async banUser(id: string) {
 
-    const modal = await this._modal.create({
+    const modal = await this._modalCtrl.create({
       component: BanmodalComponent
     })
     modal.present();
@@ -167,7 +167,7 @@ export class AdminpageComponent {
       return;
 
     this._db.removeUser(id);
-    return this._modal.dismiss(null, 'delete');
+    return this._modalCtrl.dismiss(null, 'delete');
   }
 
   async seeWorkingHours(id: string) {
@@ -175,7 +175,7 @@ export class AdminpageComponent {
 
     let courses = await this._db.getTeacherCoursesByMonth(id);
 
-    const modal = await this.modalCtrl.create({
+    const modal = await this._modalCtrl.create({
       component: ModalWorkingHoursComponent,
       componentProps: {
         teacher: teacher,
@@ -246,7 +246,7 @@ export class AdminpageComponent {
     if (result == undefined)
       return
 
-    const modal = await this._modal.create({
+    const modal = await this._modalCtrl.create({
       component: TeacherModalComponent,
       componentProps: {
         meta: {
@@ -316,7 +316,7 @@ export class AdminpageComponent {
 
   async createMember() {
 
-    const modal = await this.modalCtrl.create({
+    const modal = await this._modalCtrl.create({
       component: NewAssoMemberModalComponent
     });
     modal.present();
@@ -398,7 +398,7 @@ export class AdminpageComponent {
 
   async addGallery() {
 
-    const modal = await this.modalCtrl.create({
+    const modal = await this._modalCtrl.create({
       component: GalleryNameModalComponent
     });
     modal.present();
@@ -434,7 +434,7 @@ export class AdminpageComponent {
 
   async renameGallery(id: string) {
 
-    const modal = await this.modalCtrl.create({
+    const modal = await this._modalCtrl.create({
       component: GalleryNameModalComponent
     });
     modal.present();
@@ -498,6 +498,26 @@ export class AdminpageComponent {
     setTimeout(() => {
       this.showRoomConfirmation = false;
     }, 2000);
+  }
+
+  // Asso Centers management
+
+  createAssoCenter(newValue:{name:string, location:string, contactPerson?:string, contactPhone?:string, contactPhotoLink?:string, openingHours?:string[], rooms?:string[]}){
+    this._db.createAssoCenter(newValue);
+  }
+
+  openCenterCreationModal(){
+    this._modalCtrl.create({
+      component:NewAssoCenterModalComponent
+    })
+  }
+
+  updateAssoCenter(newValue:{id:string,name?:string,contactPerson?:string, contactPhone?:string, contactPhotoLink?:string, location?:string, openingHours?:string[], rooms?:string[]}){
+    this._db.updateAssoCenter(newValue);
+  }
+
+  deleteAssoCenter(id:string){
+    this._db.deleteAssoCenter(id);
   }
 
   // Activities management

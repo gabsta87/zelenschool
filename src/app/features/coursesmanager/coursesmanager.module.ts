@@ -41,6 +41,7 @@ import { AdminpageresolveResolver } from './resolvers/adminpageresolve.resolver'
 import { CalendareventsresolveResolver } from './resolvers/calendareventsresolve.resolver';
 import { UserpageResolver } from './resolvers/userpage.resolver';
 import { CentersResolver } from './resolvers/centers.resolver';
+import { NewAssoCenterModalComponent } from './components/admin/new-asso-center-modal/new-asso-center-modal.component';
 
 
 
@@ -71,6 +72,7 @@ import { CentersResolver } from './resolvers/centers.resolver';
     ChildCreationModalComponent,
     CompleteAccountModalComponent,
     BirthdayFieldComponent,
+    NewAssoCenterModalComponent,
   ],
   imports: [
     SwiperModule,

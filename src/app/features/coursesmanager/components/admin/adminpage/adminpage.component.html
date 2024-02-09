@@ -337,7 +337,8 @@
                     </ion-row>
                     <ion-row>
                         <span>
-                            <ion-button color="danger" (click)="deleteRoomByIndex(i)">Delete</ion-button>
+                            <!-- <ion-button color="danger" (click)="deleteRoomByIndex(i)">Delete</ion-button> -->
+                            <ion-button color="danger" (click)="deleteRoom(room.id)">Delete</ion-button>
                             <ion-button (click)="updateRoom(i)">Update</ion-button>
                         </span>
                     </ion-row>
@@ -356,7 +357,7 @@
                 <ion-button>
                     Edit
                 </ion-button>
-                <ion-button color="danger">
+                <ion-button color="danger" (click)="deleteAssoCenter(center['id'])">
                     Delete    
                 </ion-button>
                 <ion-button>
