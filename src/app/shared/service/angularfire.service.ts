@@ -406,11 +406,6 @@ export class AngularfireService{
     return this.getElements("rooms");
   }
 
-  async getRoomOld(id:string){
-    let tempObs = await firstValueFrom(this.getRooms());
-    return tempObs.find(e => e['id'] === id);
-  }
-
   getRoom(id:string){
     const room = this.getSnapshot("rooms",id);
     return room;
@@ -438,7 +433,7 @@ export class AngularfireService{
         this.updateAssoCenter({id:center['id'],rooms:newRooms})
       }
     }
-    
+
     const docRef = doc(this._dbaccess,'rooms/'+id);
     deleteDoc(docRef);
   }
