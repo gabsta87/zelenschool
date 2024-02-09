@@ -562,7 +562,7 @@ export class AngularfireService{
   }
 
   updateAssoCenter(newValue:{id:string,name?:string,location?:string,contactPerson?:string,contactPhone?:string,contactPhotoLink?:string,rooms?:string[],openingHours?:string[]}){
-  const docRef = doc(this._dbaccess,'activities/'+newValue.id);
+  const docRef = doc(this._dbaccess,'assoCenter/'+newValue.id);
     return updateDoc(docRef,{
       name:newValue?.name,
       location:newValue?.location,

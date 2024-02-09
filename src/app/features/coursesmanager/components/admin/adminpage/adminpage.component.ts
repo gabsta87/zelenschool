@@ -502,21 +502,59 @@ export class AdminpageComponent {
 
   // Asso Centers management
 
-  createAssoCenter(newValue:{name:string, location:string, contactPerson?:string, contactPhone?:string, contactPhotoLink?:string, openingHours?:string[], rooms?:string[]}){
-    this._db.createAssoCenter(newValue);
+  async openCenterCreationModal(inputData?:DocumentData){
+    let modal;
+    if(inputData){
+      modal = await this._modalCtrl.create({
+      component:NewAssoCenterModalComponent,
+      componentProps:{
+          id:inputData['id'],
+          name:inputData['name'], 
+          location:inputData['location'],
+          contactPerson:inputData['contactPerson'], 
+          contactPhone:inputData['contactPhone'], 
+          contactPhotoLink:inputData['contactPhotoLink'], 
+          openingHours:inputData['openingHours'], 
+          rooms:inputData['rooms'],
+          roomsData : this.roomsData,
+        }
+      })
+
+      modal.present();
+
+      const { data, role } = await modal.onWillDismiss();
+
+      if(role == "confirm")
+        this.updateAssoCenter(data);
+
+    }else{
+
+      modal = await this._modalCtrl.create({
+        component:NewAssoCenterModalComponent,
+      })
+
+      modal.present();
+
+      const { data, role } = await modal.onWillDismiss();
+
+      if(role == "confirm")
+        this.createAssoCenter(data);
+    }
   }
 
-  openCenterCreationModal(){
-    this._modalCtrl.create({
-      component:NewAssoCenterModalComponent
-    })
+  createAssoCenter(newValue:{name:string, location:string, contactPerson?:string, contactPhone?:string, contactPhotoLink?:string, openingHours?:string[], rooms?:string[]}){
+    this._db.createAssoCenter(newValue);
   }
 
   updateAssoCenter(newValue:{id:string,name?:string,contactPerson?:string, contactPhone?:string, contactPhotoLink?:string, location?:string, openingHours?:string[], rooms?:string[]}){
     this._db.updateAssoCenter(newValue);
   }
 
-  deleteAssoCenter(id:string){
+  async deleteAssoCenter(id:string){
+    let response = await this.canDismiss();
+    if (!response)
+      return;
+
     this._db.deleteAssoCenter(id);
   }
 

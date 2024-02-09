@@ -352,16 +352,19 @@
                 </ion-grid>
             </ion-item>
         </ion-list>
+        <h1>Centers</h1>
+        <ion-button (click)="openCenterCreationModal()"> <ion-icon name="add-circle-outline"></ion-icon> Add new</ion-button>
+
         <ion-list *ngIf="assoCenters | async as centersList">
-            <ion-item *ngFor="let center of centersList">{{center['name']}} {{center|json}}
-                <ion-button>
-                    Edit
+            <ion-item *ngFor="let center of centersList">{{center['name']}}
+                <ion-button (click)="openCenterCreationModal(center)">
+                    Edit Center
+                </ion-button>
+                <ion-button (click)="createRoom()">
+                    Add Room
                 </ion-button>
                 <ion-button color="danger" (click)="deleteAssoCenter(center['id'])">
-                    Delete    
-                </ion-button>
-                <ion-button>
-                    Add Room
+                    Delete Center
                 </ion-button>
             </ion-item>
         </ion-list>
