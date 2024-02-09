@@ -337,7 +337,7 @@
                     </ion-row>
                     <ion-row>
                         <span>
-                            <ion-button color="danger" (click)="deleteRoom(i)">Delete</ion-button>
+                            <ion-button color="danger" (click)="deleteRoomByIndex(i)">Delete</ion-button>
                             <ion-button (click)="updateRoom(i)">Update</ion-button>
                         </span>
                     </ion-row>
@@ -352,7 +352,17 @@
             </ion-item>
         </ion-list>
         <ion-list *ngIf="assoCenters | async as centersList">
-            <ion-item *ngFor="let center of centersList">{{center['name']}}</ion-item>
+            <ion-item *ngFor="let center of centersList">{{center['name']}} {{center|json}}
+                <ion-button>
+                    Edit
+                </ion-button>
+                <ion-button color="danger">
+                    Delete    
+                </ion-button>
+                <ion-button>
+                    Add Room
+                </ion-button>
+            </ion-item>
         </ion-list>
     </div>
 

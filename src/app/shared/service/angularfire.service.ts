@@ -406,9 +406,14 @@ export class AngularfireService{
     return this.getElements("rooms");
   }
 
-  async getRoom(id:string){
+  async getRoomOld(id:string){
     let tempObs = await firstValueFrom(this.getRooms());
     return tempObs.find(e => e['id'] === id);
+  }
+
+  getRoom(id:string){
+    const room = this.getSnapshot("rooms",id);
+    return room;
   }
 
   updateRoom(room : {id: string, name: string, maxStudents: number}){
@@ -420,7 +425,20 @@ export class AngularfireService{
     }
   }
 
-  deleteRoom(id:string){
+  async deleteRoom(id:string){
+    const room = await this.getRoom(id);
+    
+    // Removing room from assoCenter
+    if(room){
+      const center = await this.getAssoCenter(room['assoCenter']);
+      if(center){
+        const rooms = center['rooms']; 
+        const newRooms = rooms.filter((roomId:string) => roomId != id)
+        
+        this.updateAssoCenter({id:center['id'],rooms:newRooms})
+      }
+    }
+    
     const docRef = doc(this._dbaccess,'rooms/'+id);
     deleteDoc(docRef);
   }
@@ -539,6 +557,11 @@ export class AngularfireService{
     return centers;
   }
 
+  getAssoCenter(id:string){
+    const center = this.getSnapshot("assoCenter",id);
+    return center;
+  }
+
   createAssoCenter(newValue:{name:string,location:string,contactPerson?:string,contactPhone?:string,contactPhotoLink?:string,rooms?:string[],openingHours?:string[]}){
     return addDoc(collection(this._dbaccess,"assoCenter"),{...newValue})
   }
@@ -555,7 +578,18 @@ export class AngularfireService{
       openingHours:newValue?.openingHours});
   }
 
-  deleteAssoCenter(id:string){
+  async deleteAssoCenter(id:string){
+    const center = await this.getAssoCenter(id);
+
+    // Deleting rooms of the center
+    if(center){
+      const rooms = center['rooms'];
+      rooms.forEach((roomID:string) => {
+        const docRef = doc(this._dbaccess,'rooms/'+roomID);
+        deleteDoc(docRef);
+      })
+    }
+
     const docRef = doc(this._dbaccess,'assoCenter/'+id);
     deleteDoc(docRef);
   }

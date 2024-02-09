@@ -478,12 +478,17 @@ export class AdminpageComponent {
     (this.roomsData as {}[]).unshift({ id: undefined, name: "", maxStudents: "" })
   }
 
-  deleteRoom(index: number) {
+  deleteRoomByIndex(index: number) {
     if (this.roomsData[index].id == undefined) {
       this.roomsData.splice(index, 1);
     } else {
       this._db.deleteRoom(this.roomsData[index].id);
     }
+  }
+
+  deleteRoom(id:string){
+    if(id != undefined && id != "")
+      this._db.deleteRoom(id);
   }
 
   updateRoom(index: number) {
