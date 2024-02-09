@@ -139,7 +139,8 @@ import { CentersResolver } from './resolvers/centers.resolver';
           component:AdminpageComponent,
           canActivate:[AdminpageGuard],
           resolve:{
-            adminData:AdminpageresolveResolver
+            adminData:AdminpageresolveResolver,
+            assoCenters:CentersResolver
           }  
         },{
           path:"",

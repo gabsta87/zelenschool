@@ -47,6 +47,7 @@ export class AdminpageComponent {
   roomsData = this.adminData.roomsData;
   galleries = this.adminData.galleries as Observable<DocumentData[]>;
   @Input() activities = this.adminData.activities;
+  assoCenters:Observable<DocumentData[]> = this._route.snapshot.data['assoCenters'];
 
   searchString = "";
   statusToFilter = "all";
