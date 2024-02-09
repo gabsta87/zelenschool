@@ -15,10 +15,12 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 URGENT :
-    ☐ Before release : Change Zelenschool to Ukraine-Reborn
-    ☐ Association member from admin page : modify link generates bugs
-    ☐ Help section on the schedule page (button needs a better behavior than showing an image)
     ☐ Administrators management of centers -> change from ROOMS to CENTERS
+    ☐ Finish activities panel
+    ☐ Modify activities admin panel accordingly
+    ☐ Before release : Change Zelenschool to Ukraine-Reborn
+    ☐ Help section on the schedule page (button needs a better behavior than showing an image)
+    ✔ Association member from admin page : modify link generates bugs @done(24-02-09 13:54)
     ✔ Possibility to filter courses by Centers @done(24-02-05 20:49)
     ✔ Possibility to promote new superadmins @done(24-01-29 17:03)
     ✔ When a child is deleted, the parent will show his id number instead of his name @done(24-01-27 17:36)
@@ -32,12 +34,12 @@ URGENT :
     ✔ s-permit number mandatory for users in order to be able to save informations @done(23-08-24 13:16)
     ✔ All connexion trys from a same computer end up loging in on the same account, even with different logs after logout @done(23-12-21 20:00)
 
-    ☐ Remove links from Activities ? Since events have their own galleries
-    ☐ Admin adding new partners/assoc members should see a popup window, not a save button
-    ☐ Activities Cards should be designed better for mobile version
     ☐ Child creation : Enter button
     ☐ Enter button not blocked on account creation when account creation is blocked (information missing)
     ☐ admin page : when deleting user, remove from auth
+    ☐ Admin adding new partners/assoc members should see a popup window, not a save button
+    ✘ Remove links from Activities ? Since events have their own galleries @cancelled(24-02-09 13:56)
+    ✔ Activities Cards should be designed better for mobile version @done(24-02-09 13:56)
     ✔ Teacher creation process : dont create empty entry -> inconsistant state @done(23-12-21 20:05)
     ✔ Account : login/register with Google/FB not working from other computers @done(23-06-07 20:17)
     ✔ admin page : filter teacher's requests @done(23-06-07 20:17)
