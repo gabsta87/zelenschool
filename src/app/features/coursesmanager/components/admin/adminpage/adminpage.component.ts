@@ -14,6 +14,7 @@ import { GalleryNameModalComponent } from '../gallery-name-modal/gallery-name-mo
 import { ModalWorkingHoursComponent } from '../modal-working-hours/modal-working-hours.component';
 import { NewAssoMemberModalComponent } from '../new-asso-member-modal/new-asso-member-modal.component';
 import { NewAssoCenterModalComponent } from '../new-asso-center-modal/new-asso-center-modal.component';
+import { NewRoomModalComponent } from '../new-room-modal/new-room-modal.component';
 
 @Component({
   selector: 'app-adminpage',
@@ -45,6 +46,7 @@ export class AdminpageComponent {
   partners = this.adminData.partners;
   partnersData = this.adminData.partnersData;
   roomsData = this.adminData.roomsData;
+  roomsObs: Observable<DocumentData[]> = this.adminData.rooms;
   galleries = this.adminData.galleries as Observable<DocumentData[]>;
   @Input() activities = this.adminData.activities;
   assoCenters:Observable<DocumentData[]> = this._route.snapshot.data['assoCenters'];
@@ -474,11 +476,40 @@ export class AdminpageComponent {
   @ViewChild('roomUpdatePopOver') popover!: any;
   showRoomConfirmation = false;
 
-  createRoom() {
-    // (this.roomsData as {}[]).unshift({ id: undefined, name: "", maxStudents: "" })
-    console.log("TODO");
-    // TODO
+  async openRoomModal(centerData:DocumentData,roomData?:DocumentData) {
+    console.log("center data : ", centerData);
+    
 
+    let modal;
+    if(roomData){
+      modal = await this._modalCtrl.create({
+      component:NewRoomModalComponent,
+      componentProps:{
+          id:roomData['id'],
+          name:roomData['name'], 
+          maxSudents:roomData['maxSudents'],
+          assoCenterData :centerData,
+        }
+      })
+
+    }else{
+      modal = await this._modalCtrl.create({
+        component:NewRoomModalComponent,
+        componentProps:{
+          assoCenterData :centerData,
+        }
+      })
+    }
+
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    console.log("data : ",data);
+    
+
+    if(role == "confirm")
+      this._db.updateRoom(data);
   }
 
   deleteRoomByIndex(index: number) {
@@ -492,15 +523,6 @@ export class AdminpageComponent {
   deleteRoom(id:string){
     if(id != undefined && id != "")
       this._db.deleteRoom(id);
-  }
-
-  updateRoom(index: number) {
-    this._db.updateRoom({ id: this.roomsData[index].id, name: this.roomsData[index].name, maxStudents: this.roomsData[index].maxStudents });
-
-    this.showRoomConfirmation = true;
-    setTimeout(() => {
-      this.showRoomConfirmation = false;
-    }, 2000);
   }
 
   // Asso Centers management
@@ -520,37 +542,25 @@ export class AdminpageComponent {
           openingHours:inputData['openingHours'], 
           rooms:inputData['rooms'],
           roomsData : this.roomsData.filter((roomData:any) => inputData['rooms'].includes(roomData.id)),
+          // roomsObs : this.roomsObs.pipe((rooms:any) => { return rooms.filter((roomData:any) => inputData['rooms'].includes(roomData.id)) }
+          roomsObs : this.roomsObs.pipe(map (rooms =>  rooms.filter((roomData:any) => inputData['rooms'].includes(roomData.id)) )
+          ),
         }
       })
 
-      modal.present();
-
-      const { data, role } = await modal.onWillDismiss();
-
-      if(role == "confirm")
-        this.updateAssoCenter(data);
-
     }else{
-
       modal = await this._modalCtrl.create({
         component:NewAssoCenterModalComponent,
       })
-
-      modal.present();
-
-      const { data, role } = await modal.onWillDismiss();
-
-      if(role == "confirm")
-        this.createAssoCenter(data);
     }
-  }
 
-  createAssoCenter(newValue:{name:string, location:string, contactPerson?:string, contactPhone?:string, contactPhotoLink?:string, openingHours?:string[], rooms?:string[]}){
-    this._db.createAssoCenter(newValue);
-  }
+    modal.present();
 
-  updateAssoCenter(newValue:{id:string,name?:string,contactPerson?:string, contactPhone?:string, contactPhotoLink?:string, location?:string, openingHours?:string[], rooms?:string[]}){
-    this._db.updateAssoCenter(newValue);
+    const { data, role } = await modal.onWillDismiss();
+
+    if(role == "confirm")
+      this._db.updateAssoCenter(data);
+
   }
 
   async deleteAssoCenter(id:string){

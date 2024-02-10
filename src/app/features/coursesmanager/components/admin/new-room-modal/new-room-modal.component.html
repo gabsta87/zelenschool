@@ -1,1 +1,31 @@
-<p>new-room-modal works!</p>
+<ng-container>
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>{{assoCenterData['name']}}</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content (keydown.enter)="confirm()">
+        <ion-list>
+            
+            <ion-item>
+                <ion-label position="floating">Name</ion-label>
+                <ion-input [(ngModel)]="name"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">Maximum number of students</ion-label>
+                <ion-input [(ngModel)]="maxStudents"></ion-input>
+            </ion-item>
+
+        </ion-list>
+    </ion-content>
+    <ion-footer>
+        <ion-toolbar>
+            <ion-buttons slot="start">
+                <ion-button (click)="cancel()">Cancel</ion-button>
+            </ion-buttons>
+            <ion-buttons slot="end">
+                <ion-button (click)="confirm()" [strong]="true" [disabled]="false">Confirm</ion-button>
+            </ion-buttons>
+        </ion-toolbar>
+    </ion-footer>
+</ng-container>

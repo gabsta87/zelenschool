@@ -45,6 +45,15 @@
                     <!-- <ion-item *ngFor="let room of roomsData">{{room|json}}<ion-button color="danger">Delete</ion-button></ion-item> -->
                 </ion-list>
             </ion-item>
+            <ion-item>
+                <ion-label>Rooms 2</ion-label>
+                <ion-list *ngIf="roomsObs|async as roomsLive">
+                    <ion-item *ngFor="let room of roomsLive">{{room['name']}} - {{room['maxStudents']}} 
+                        <ion-button color="danger" (click)="deleteRoom(room['id'])">Delete</ion-button>
+                    </ion-item>
+                </ion-list>
+                
+            </ion-item>
 
         </ion-list>
     </ion-content>

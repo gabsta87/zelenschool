@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { DocumentData } from 'firebase/firestore';
+import { Observable } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 
 @Component({
@@ -17,6 +19,7 @@ export class NewAssoCenterModalComponent {
   openingHours!:string[];
   rooms!:string[];
   roomsData!:{id:string,name:string,maxStudents:string}[];
+  roomsObs!:Observable<DocumentData[]>;
 
   constructor( private readonly modalCtrl : ModalController, private readonly _db: AngularfireService){}
 

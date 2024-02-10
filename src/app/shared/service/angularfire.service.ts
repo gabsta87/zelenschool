@@ -401,43 +401,6 @@ export class AngularfireService{
     return updateDoc(docRef,{...partner});
   }
 
-  // Rooms management
-  getRooms(){
-    return this.getElements("rooms");
-  }
-
-  getRoom(id:string){
-    const room = this.getSnapshot("rooms",id);
-    return room;
-  }
-
-  updateRoom(room : {id: string, name: string, maxStudents: number}){
-    if(!room.id){
-      return addDoc(collection(this._dbaccess,"rooms"),{ name: room.name, maxStudents: room.maxStudents })
-    }else{
-      const docRef = doc(this._dbaccess,'rooms/'+room.id);
-      return updateDoc(docRef,{name : room.name, maxStudents : room.maxStudents});
-    }
-  }
-
-  async deleteRoom(id:string){
-    const room = await this.getRoom(id);
-    
-    // Removing room from assoCenter
-    if(room){
-      const center = await this.getAssoCenter(room['assoCenter']);
-      if(center){
-        const rooms = center['rooms']; 
-        const newRooms = rooms.filter((roomId:string) => roomId != id)
-        
-        this.updateAssoCenter({id:center['id'],rooms:newRooms})
-      }
-    }
-
-    const docRef = doc(this._dbaccess,'rooms/'+id);
-    deleteDoc(docRef);
-  }
-
   // Galleries Management
 
   getGalleries(){
@@ -557,22 +520,18 @@ export class AngularfireService{
     return center;
   }
 
-  createAssoCenter(newValue:{name:string,location:string,contactPerson?:string,contactPhone?:string,contactPhotoLink?:string,rooms?:string[],openingHours?:string[]}){
-    return addDoc(collection(this._dbaccess,"assoCenter"),{...newValue})
-  }
-
   updateAssoCenter(newValue:{id:string,name?:string,location?:string,contactPerson?:string,contactPhone?:string,contactPhotoLink?:string,rooms?:string[],openingHours?:string[]}){
-  const docRef = doc(this._dbaccess,'assoCenter/'+newValue.id);
-    return updateDoc(docRef,{
-      name:newValue?.name,
-      location:newValue?.location,
-      contactPerson:newValue?.contactPerson,
-      contactPhone:newValue?.contactPhone,
-      contactPhotoLink:newValue?.contactPhotoLink,
-      rooms:newValue?.rooms,
-      openingHours:newValue?.openingHours});
+    if(!newValue.id || newValue.id == ""){
+      return addDoc(collection(this._dbaccess,"assoCenter"),{...newValue})
+    }else{
+      // Removing the ID property from the new value
+      const { id, ...strippedValue } = newValue;
+      
+      const docRef = doc(this._dbaccess,'assoCenter/'+newValue.id);
+      return updateDoc(docRef,strippedValue);
+    }
   }
-
+  
   async deleteAssoCenter(id:string){
     const center = await this.getAssoCenter(id);
 
@@ -588,6 +547,70 @@ export class AngularfireService{
     const docRef = doc(this._dbaccess,'assoCenter/'+id);
     deleteDoc(docRef);
   }
+
+  // Rooms management
+  getRooms(){
+    return this.getElements("rooms");
+  }
+
+  getRoom(id:string){
+    const room = this.getSnapshot("rooms",id);
+    return room;
+  }
+
+  async updateRoom(room : {id: string, name: string, maxStudents: number, assoCenterID:string}){
+    
+    if(!room.id || room.id == ""){
+      // Creating a new room
+      const result = await addDoc(collection(this._dbaccess,"rooms"),{ name: room.name, maxStudents: room.maxStudents, assoCenter : room.assoCenterID})
+      
+      // Adding the room reference in the Association Center
+      const center = await this.getAssoCenter(room.assoCenterID);
+      let newArray;
+      if(center && center['rooms']){
+        newArray = [...center['rooms'],result.id]
+      }else{
+        newArray = [result.id];
+      }
+      this.updateAssoCenter({id:room.assoCenterID,rooms:newArray})
+
+      return result;
+    }else{
+      // Adding a new room
+      const docRef = doc(this._dbaccess,'rooms/'+room.id);
+      console.log("modifying old room ",room);
+      
+      return updateDoc(docRef,{name : room.name, maxStudents : room.maxStudents, assoCenter : room.assoCenterID});
+    }
+  }
+
+  async deleteRoom(id:string){
+    console.log("deleting room ",id);
+    
+    const room = await this.getRoom(id);
+    
+    console.log("room found : ",room);
+    
+
+    // Removing room from assoCenter
+    if(room){
+      const center = await this.getAssoCenter(room['assoCenter']);
+      console.log("center found : ",center);
+      
+      if(center){
+        const rooms = center['rooms']; 
+        const newRooms = rooms.filter((roomId:string) => roomId != id)
+        console.log("updating : ",center['id']," ",newRooms);
+        
+        this.updateAssoCenter({id:center['id'],rooms:newRooms})
+      }
+    }
+    console.log("deleting ",id);
+    
+    const docRef = doc(this._dbaccess,'rooms/'+id);
+    deleteDoc(docRef);
+  }
+
 
 }
 
