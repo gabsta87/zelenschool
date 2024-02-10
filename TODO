@@ -15,11 +15,13 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 URGENT :
-    ☐ Administrators management of centers -> change from ROOMS to CENTERS
+    ☐ Display of center information for all users (on click from schedule)
+    ☐ Management of opening hours
     ☐ Finish activities panel
     ☐ Modify activities admin panel accordingly
     ☐ Before release : Change Zelenschool to Ukraine-Reborn
     ☐ Help section on the schedule page (button needs a better behavior than showing an image)
+    ✔ Administrators management of centers -> change from ROOMS to CENTERS @done(24-02-10 15:24)
     ✔ Association member from admin page : modify link generates bugs @done(24-02-09 13:54)
     ✔ Possibility to filter courses by Centers @done(24-02-05 20:49)
     ✔ Possibility to promote new superadmins @done(24-01-29 17:03)

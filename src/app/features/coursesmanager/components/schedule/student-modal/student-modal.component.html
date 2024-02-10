@@ -16,7 +16,7 @@
         <ion-text>{{words.teacher}} : {{creator['f_name']}} {{creator['l_name']}}</ion-text>
     </ion-item>
     <ion-item>
-        <ion-text>{{words.time}} : {{currentEvent['timeStart'] | date: "HH:mm"}}</ion-text>
+        <ion-text>{{words.time}} : {{currentEvent['timeStart'] | date: "DD.MM HH:mm"}}</ion-text>
     </ion-item>
     <ion-item>
         <ion-text>{{words.duration}} : {{duration}} {{durationUnit}}<span *ngIf="duration > 1">s</span></ion-text>
