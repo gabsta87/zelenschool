@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 
 @Component({
   selector: 'app-new-asso-center-modal',
@@ -15,8 +16,9 @@ export class NewAssoCenterModalComponent {
   contactPhotoLink!:string;
   openingHours!:string[];
   rooms!:string[];
+  roomsData!:{id:string,name:string,maxStudents:string}[];
 
-  constructor( private readonly modalCtrl : ModalController, ){}
+  constructor( private readonly modalCtrl : ModalController, private readonly _db: AngularfireService){}
 
   confirm(){
     let entry = {
@@ -35,5 +37,11 @@ export class NewAssoCenterModalComponent {
 
   cancel(){
     return this.modalCtrl.dismiss(undefined, 'cancel');
+  }
+
+
+  deleteRoom(id:string){
+    if(id != undefined && id != "")
+      this._db.deleteRoom(id);
   }
 }

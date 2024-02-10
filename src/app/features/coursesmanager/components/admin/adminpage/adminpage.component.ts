@@ -475,7 +475,10 @@ export class AdminpageComponent {
   showRoomConfirmation = false;
 
   createRoom() {
-    (this.roomsData as {}[]).unshift({ id: undefined, name: "", maxStudents: "" })
+    // (this.roomsData as {}[]).unshift({ id: undefined, name: "", maxStudents: "" })
+    console.log("TODO");
+    // TODO
+
   }
 
   deleteRoomByIndex(index: number) {
@@ -516,7 +519,7 @@ export class AdminpageComponent {
           contactPhotoLink:inputData['contactPhotoLink'], 
           openingHours:inputData['openingHours'], 
           rooms:inputData['rooms'],
-          roomsData : this.roomsData,
+          roomsData : this.roomsData.filter((roomData:any) => inputData['rooms'].includes(roomData.id)),
         }
       })
 
