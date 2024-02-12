@@ -17,10 +17,10 @@ Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManag
 URGENT :
     ☐ Display of center information for all users (on click from schedule or hover)
     ☐ Finish activities panel
-    ☐ Admin : change partners to observable in admin panel (add with modal)
     ☐ Modify activities admin panel accordingly
     ☐ Before release : Change Zelenschool to Ukraine-Reborn
     ☐ Help section on the schedule page (button needs a better behavior than showing an image)
+    ✔ Admin : change partners to observable in admin panel (add with modal) @done(24-02-12 18:40)
     ✔ Management of opening hours @done(24-02-12 10:45)
     ✔ Use an observable to display opening hours of centers, so they appear/disappear when manipulating from admin page @done(24-02-12 10:45)
     ✔ Administrators management of centers -> change from ROOMS to CENTERS @done(24-02-10 15:24)

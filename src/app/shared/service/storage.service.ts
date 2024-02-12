@@ -46,7 +46,7 @@ export class StorageService {
   }
   
   async addPartnerImage(newFile:File){
-    const collectionName = "partner";
+    const collectionName = "partners";
     const link = await this.storeImage(newFile,collectionName);
     return link;
   }

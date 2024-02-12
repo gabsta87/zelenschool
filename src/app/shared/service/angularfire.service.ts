@@ -385,21 +385,19 @@ export class AngularfireService{
     return this.getElements("partners");
   }
 
-  writePartner(newEntry : {logoName:string,link:string}){
-    console.log("write partner ",newEntry);
-    
+  writePartner(newEntry : {logoName:string,link:string,name:string}){
     return addDoc(collection(this._dbaccess,"partners"),{ ...newEntry })
   }
 
-  deletePartner(id:string){
-    const docRef = doc(this._dbaccess,'partners/'+id);
+  deletePartner(entry:DocumentData){
+    const docRef = doc(this._dbaccess,'partners/'+entry['id']);
     deleteDoc(docRef);
   }
 
-  updatePartner(partner: { id: string; link: string; logoName: string }) {
-    const docRef = doc(this._dbaccess,'partners/'+partner.id);
-    return updateDoc(docRef,{...partner});
-  }
+  // updatePartner(partner: { id: string; link: string; logoName: string }) {
+  //   const docRef = doc(this._dbaccess,'partners/'+partner.id);
+  //   return updateDoc(docRef,{...partner});
+  // }
 
   // Galleries Management
 

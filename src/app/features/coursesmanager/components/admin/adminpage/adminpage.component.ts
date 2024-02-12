@@ -382,19 +382,14 @@ export class AdminpageComponent {
     const { data, role } = await modal.onWillDismiss();
 
     if (role === 'confirm') {
-      console.log("Creating partner ",data);
       const photoAddress = await this.savePartnerImage(data.logoName);
-      console.log("photo address : ",photoAddress);
-      
-      data.logoName = photoAddress;
-
-      this._db.writePartner(data);
+      this._db.writePartner({logoName:photoAddress,link:data.link,name:data.logoName.name});
     }
-    
   }
 
-  deletePartner(index: number) {
-    this._db.deletePartner(this.partnersData[index].id);
+  deletePartner(partner:DocumentData) {
+    this.storage.deleteImageFromGallery({id:partner['id'],link:partner['logoName'],collection:"partners",name:partner['name']})
+    this._db.deletePartner(partner);
   }
 
   async restorePartner(index: number) {
@@ -403,10 +398,10 @@ export class AdminpageComponent {
     this.partnersData[index] = (partner as [])[index];
   }
 
-  updatePartner(index: number) {
-    this._db.updatePartner({ id: this.partnersData[index].id, link: this.partnersData[index].link, logoName: this.partnersData[index].logoName })
-    this.partnersData[index].photoChanged = false;
-  }
+  // updatePartner(partner:DocumentData) {
+  //   this._db.updatePartner({ id: partner['id'], link: this.partnersData[index].link, logoName: this.partnersData[index].logoName })
+  //   this.partnersData[index].photoChanged = false;
+  // }
 
   onFileSelectedPartners(event: any, index: number): void {
     this.partnersData[index].photoChanged = true;
