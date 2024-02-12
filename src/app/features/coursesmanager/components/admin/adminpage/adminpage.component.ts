@@ -15,6 +15,7 @@ import { ModalWorkingHoursComponent } from '../modal-working-hours/modal-working
 import { NewAssoMemberModalComponent } from '../new-asso-member-modal/new-asso-member-modal.component';
 import { NewAssoCenterModalComponent } from '../new-asso-center-modal/new-asso-center-modal.component';
 import { NewRoomModalComponent } from '../new-room-modal/new-room-modal.component';
+import { CenterOpeningHourModalComponent } from '../center-opening-hour-modal/center-opening-hour-modal.component';
 
 @Component({
   selector: 'app-adminpage',
@@ -530,6 +531,7 @@ export class AdminpageComponent {
   async openCenterCreationModal(inputData?:DocumentData){
     let modal;
     if(inputData){
+      const assoCentersObs = await this._db.getAssoCenters();
       modal = await this._modalCtrl.create({
       component:NewAssoCenterModalComponent,
       componentProps:{
@@ -539,10 +541,10 @@ export class AdminpageComponent {
           contactPerson:inputData['contactPerson'], 
           contactPhone:inputData['contactPhone'], 
           contactPhotoLink:inputData['contactPhotoLink'], 
-          openingHours:inputData['openingHours'], 
+          openingHours:inputData['openingHours'],
+          openingHoursObs : assoCentersObs.pipe(map ((assoCenters:any) => assoCenters.find((center:any) => center['id'] == inputData['id'])['openingHours'])),
           rooms:inputData['rooms'],
           roomsData : this.roomsData.filter((roomData:any) => inputData['rooms'].includes(roomData.id)),
-          // roomsObs : this.roomsObs.pipe((rooms:any) => { return rooms.filter((roomData:any) => inputData['rooms'].includes(roomData.id)) }
           roomsObs : this.roomsObs.pipe(map (rooms =>  rooms.filter((roomData:any) => inputData['rooms'].includes(roomData.id)) )
           ),
         }
@@ -569,6 +571,28 @@ export class AdminpageComponent {
       return;
 
     this._db.deleteAssoCenter(id);
+  }
+
+  async addDaySchedule(assoCenterID:string){
+    const center = await this._db.getAssoCenter(assoCenterID);
+
+    let modal = await this._modalCtrl.create({
+      component:CenterOpeningHourModalComponent
+    })
+
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if(role == "confirm")
+      this._db.updateAssoCenter({id:assoCenterID})
+
+    if(center){
+      const schedules = center['openingHours'];
+      let finalSchedules = [...schedules,data];
+      
+      return this._db.updateAssoCenter({id:assoCenterID,openingHours:finalSchedules})
+    }
   }
 
   // Activities management

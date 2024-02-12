@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { DocumentData } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
+import { CenterOpeningHourModalComponent } from '../center-opening-hour-modal/center-opening-hour-modal.component';
 
 @Component({
   selector: 'app-new-asso-center-modal',
@@ -20,8 +21,12 @@ export class NewAssoCenterModalComponent {
   rooms!:string[];
   roomsData!:{id:string,name:string,maxStudents:string}[];
   roomsObs!:Observable<DocumentData[]>;
+  openingHoursObs!:Observable<DocumentData[]>;
 
-  constructor( private readonly modalCtrl : ModalController, private readonly _db: AngularfireService){}
+  constructor( 
+    private readonly modalCtrl : ModalController, 
+    private readonly _db: AngularfireService,
+    ){}
 
   confirm(){
     let entry = {
@@ -42,9 +47,12 @@ export class NewAssoCenterModalComponent {
     return this.modalCtrl.dismiss(undefined, 'cancel');
   }
 
-
   deleteRoom(id:string){
     if(id != undefined && id != "")
       this._db.deleteRoom(id);
+  }
+
+  deleteDaySchedule(index:number){
+    this._db.deleteDayScedule(this.id,index);
   }
 }

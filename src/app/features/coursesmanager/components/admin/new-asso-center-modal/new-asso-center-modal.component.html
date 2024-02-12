@@ -29,10 +29,12 @@
             </ion-item>
             <ion-item>
                 <ion-label>Opening hours</ion-label>
-                <ion-list>
-                    <ion-item *ngFor="let day of openingHours">{{day}}</ion-item>
+                <ion-list *ngIf="openingHoursObs | async as openingHoursAs">
+                    <ion-item *ngFor="let day of openingHoursAs; let index = index">{{day}}
+                        <ion-button color="danger" (click)="deleteDaySchedule(index)">Delete</ion-button>
+                    </ion-item>
                 </ion-list>
-                <ion-button>Add hours</ion-button>
+                <!-- <ion-button (click)="updateDaySchedule(id)">Add hours</ion-button> -->
                 <!-- <ion-input [(ngModel)]="openingHours"></ion-input> -->
             </ion-item>
             <ion-item>

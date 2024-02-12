@@ -15,7 +15,8 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 URGENT :
-    ☐ Display of center information for all users (on click from schedule)
+    ☐ Use an observable to display opening hours of centers, so they appear/disappear when manipulating from admin page
+    ☐ Display of center information for all users (on click from schedule or hover)
     ☐ Management of opening hours
     ☐ Finish activities panel
     ☐ Modify activities admin panel accordingly
@@ -36,6 +37,7 @@ URGENT :
     ✔ s-permit number mandatory for users in order to be able to save informations @done(23-08-24 13:16)
     ✔ All connexion trys from a same computer end up loging in on the same account, even with different logs after logout @done(23-12-21 20:00)
 
+    ☐ No photo management for contact persons of Association Centers
     ☐ Child creation : Enter button
     ☐ Enter button not blocked on account creation when account creation is blocked (information missing)
     ☐ admin page : when deleting user, remove from auth

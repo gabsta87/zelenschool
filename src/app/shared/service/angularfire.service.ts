@@ -511,12 +511,17 @@ export class AngularfireService{
   // Asso centers management
 
   async getAssoCenters():Promise<Observable<DocumentData[]>>{
-    const centers =  this.getElements("assoCenter");
+    const centers = await this.getElements("assoCenter");
     return centers;
   }
 
   getAssoCenter(id:string){
     const center = this.getSnapshot("assoCenter",id);
+    return center;
+  }
+
+  getAssoCenterObs(id:string){
+    const center = this.getElements("assoCenter",where("id","==",id));
     return center;
   }
 
@@ -526,7 +531,7 @@ export class AngularfireService{
     }else{
       // Removing the ID property from the new value
       const { id, ...strippedValue } = newValue;
-      
+
       const docRef = doc(this._dbaccess,'assoCenter/'+newValue.id);
       return updateDoc(docRef,strippedValue);
     }
@@ -546,6 +551,17 @@ export class AngularfireService{
 
     const docRef = doc(this._dbaccess,'assoCenter/'+id);
     deleteDoc(docRef);
+  }
+
+  async deleteDayScedule(assoCenterID:string,index:number){
+    const center = await this.getAssoCenter(assoCenterID);
+
+    if(center){
+      const schedules = center['openingHours'];
+      schedules.splice(index,1);
+      
+      return this.updateAssoCenter({id:assoCenterID,openingHours:schedules})
+    }
   }
 
   // Rooms management
@@ -578,34 +594,25 @@ export class AngularfireService{
     }else{
       // Adding a new room
       const docRef = doc(this._dbaccess,'rooms/'+room.id);
-      console.log("modifying old room ",room);
       
       return updateDoc(docRef,{name : room.name, maxStudents : room.maxStudents, assoCenter : room.assoCenterID});
     }
   }
 
   async deleteRoom(id:string){
-    console.log("deleting room ",id);
-    
     const room = await this.getRoom(id);
     
-    console.log("room found : ",room);
-    
-
     // Removing room from assoCenter
     if(room){
       const center = await this.getAssoCenter(room['assoCenter']);
-      console.log("center found : ",center);
       
       if(center){
         const rooms = center['rooms']; 
         const newRooms = rooms.filter((roomId:string) => roomId != id)
-        console.log("updating : ",center['id']," ",newRooms);
         
         this.updateAssoCenter({id:center['id'],rooms:newRooms})
       }
     }
-    console.log("deleting ",id);
     
     const docRef = doc(this._dbaccess,'rooms/'+id);
     deleteDoc(docRef);
