@@ -16,6 +16,7 @@ import { NewAssoMemberModalComponent } from '../new-asso-member-modal/new-asso-m
 import { NewAssoCenterModalComponent } from '../new-asso-center-modal/new-asso-center-modal.component';
 import { NewRoomModalComponent } from '../new-room-modal/new-room-modal.component';
 import { CenterOpeningHourModalComponent } from '../center-opening-hour-modal/center-opening-hour-modal.component';
+import { PartnerModalComponent } from '../partner-modal/partner-modal.component';
 
 @Component({
   selector: 'app-adminpage',
@@ -44,7 +45,7 @@ export class AdminpageComponent {
   usersListObs: Observable<DocumentData[]> = this.adminData.usersObs;
   coursesObs: Observable<DocumentData[]> = this.adminData.coursesObs;
   assoMembers = this.adminData.assoMembers;
-  partners = this.adminData.partners;
+  partners: Observable<DocumentData[]> = this.adminData.partners;
   partnersData = this.adminData.partnersData;
   roomsData = this.adminData.roomsData;
   roomsObs: Observable<DocumentData[]> = this.adminData.rooms;
@@ -348,6 +349,15 @@ export class AdminpageComponent {
     return downloadUrl;
   }
 
+  async savePartnerImage(imageFile: File) {
+
+    this.uploadingImage.next(true);
+    const downloadUrl = await this.storage.addPartnerImage(imageFile);
+
+    this.uploadingImage.next(false);
+    return downloadUrl;
+  }
+
   onFileSelected(event: any): void {
     this.photoChanged.next(true);
     const file: File = event.target.files[0];
@@ -362,16 +372,29 @@ export class AdminpageComponent {
   tempImagePartner !: any;
   imageFilePartner !: File;
 
-  createPartner() {
-    (this.partnersData as {}[]).unshift({ id: undefined, link: "", logoName: "" })
+  async createPartner() {
+
+    const modal = await this._modalCtrl.create({
+      component: PartnerModalComponent
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      console.log("Creating partner ",data);
+      const photoAddress = await this.savePartnerImage(data.logoName);
+      console.log("photo address : ",photoAddress);
+      
+      data.logoName = photoAddress;
+
+      this._db.writePartner(data);
+    }
+    
   }
 
   deletePartner(index: number) {
-    if (this.partnersData[index].id == undefined) {
-      this.partnersData.splice(index, 1)
-    } else {
-      this._db.deletePartner(this.partnersData[index].id);
-    }
+    this._db.deletePartner(this.partnersData[index].id);
   }
 
   async restorePartner(index: number) {

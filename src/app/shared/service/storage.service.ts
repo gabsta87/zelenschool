@@ -17,11 +17,13 @@ export class StorageService {
   constructor(private readonly _db: AngularfireService){ }
 
   private async storeImage(file: File, collection:string): Promise<string> {
+    console.log("file : ",file);
+    
     // Créez une référence pour l'image
     const imageRef = ref(this.imagesRef, collection+"/"+file.name);
 
+    
     const uploadTask = uploadBytesResumable(imageRef, file);
-
     // uploadTask.snapshotChanges().pipe(
     //   finalize(async () => {
     //     const downloadUrl = await getDownloadURL(imageRef);
@@ -40,6 +42,12 @@ export class StorageService {
     const collectionName = "assoMembers";
     const link = await this.storeImage(newFile,collectionName);
 
+    return link;
+  }
+  
+  async addPartnerImage(newFile:File){
+    const collectionName = "partner";
+    const link = await this.storeImage(newFile,collectionName);
     return link;
   }
 

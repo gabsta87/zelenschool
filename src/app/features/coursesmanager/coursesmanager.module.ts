@@ -44,6 +44,7 @@ import { CentersResolver } from './resolvers/centers.resolver';
 import { NewAssoCenterModalComponent } from './components/admin/new-asso-center-modal/new-asso-center-modal.component';
 import { NewRoomModalComponent } from './components/admin/new-room-modal/new-room-modal.component';
 import { CenterOpeningHourModalComponent } from './components/admin/center-opening-hour-modal/center-opening-hour-modal.component';
+import { PartnerModalComponent } from './components/admin/partner-modal/partner-modal.component';
 
 
 
@@ -77,6 +78,7 @@ import { CenterOpeningHourModalComponent } from './components/admin/center-openi
     NewAssoCenterModalComponent,
     NewRoomModalComponent,
     CenterOpeningHourModalComponent,
+    PartnerModalComponent,
   ],
   imports: [
     SwiperModule,

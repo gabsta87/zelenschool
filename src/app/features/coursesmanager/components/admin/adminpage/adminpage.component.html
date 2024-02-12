@@ -240,24 +240,24 @@
         <div lines="none" class="addButtonContainer">
             <ion-button (click)="createPartner()" color="success"> <ion-icon name="add-circle-outline"></ion-icon> Add new</ion-button>
         </div>
-        <ion-list>
-            <ion-item *ngFor="let partner of partnersData; let i = index">
+        <ion-list *ngIf="partners | async as part">
+            <ion-item *ngFor="let partner of part; let i = index">
                 <ion-grid>
                     <ion-row>
                         <ion-col size="3">
                             <input type="file" (change)="onFileSelectedPartners($event,i)" accept="*" required style="display: none;" #fileUpload>
                             <ion-thumbnail style="cursor: pointer;">
                                 <ion-item (click)="fileUpload.click()" lines="none" class="partnersLogo">
-                                    <ion-img *ngIf="partner.photoChanged;else dbPhotoPartner" [src]="tempImagePartner" alt="Profile view"></ion-img>
+                                    <ion-img *ngIf="partner['photoChanged'];else dbPhotoPartner" [src]="tempImagePartner" alt="Profile view"></ion-img>
                                     <ng-template #dbPhotoPartner>
-                                        <ion-img [src]="partner.logoName" alt="Profile view"></ion-img>
+                                        <ion-img [src]="partner['logoName']" alt="Profile view"></ion-img>
                                     </ng-template>
                                 </ion-item>
                             </ion-thumbnail>
                         </ion-col>
                         <ion-col>
                             <ion-item class="parnterInputItem" lines="none">
-                                <ion-input type="text" [(ngModel)]="partnersData[i].link"> </ion-input>
+                                <ion-input type="text" [(ngModel)]="partner['link']"> </ion-input>
                             </ion-item>
                         </ion-col>
                     </ion-row>
@@ -265,7 +265,7 @@
                         <span>
                             <ion-button color="danger" (click)="deletePartner(i)">Delete</ion-button>
                             <ion-button (click)="restorePartner(i)">Restore</ion-button>
-                            <ion-button (click)="updatePartner(i)">{{partner.id?"Update":"Save"}}</ion-button>
+                            <ion-button (click)="updatePartner(i)">{{partner['id']?"Update":"Save"}}</ion-button>
                         </span>
                     </ion-row>
                 </ion-grid>

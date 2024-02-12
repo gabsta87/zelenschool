@@ -17,6 +17,7 @@ Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManag
 URGENT :
     ☐ Display of center information for all users (on click from schedule or hover)
     ☐ Finish activities panel
+    ☐ Admin : change partners to observable in admin panel (add with modal)
     ☐ Modify activities admin panel accordingly
     ☐ Before release : Change Zelenschool to Ukraine-Reborn
     ☐ Help section on the schedule page (button needs a better behavior than showing an image)
@@ -41,7 +42,6 @@ URGENT :
     ☐ Child creation : Enter button
     ☐ Enter button not blocked on account creation when account creation is blocked (information missing)
     ☐ admin page : when deleting user, remove from auth
-    ☐ Admin adding new partners/assoc members should see a popup window, not a save button
     ✘ Remove links from Activities ? Since events have their own galleries @cancelled(24-02-09 13:56)
     ✔ Activities Cards should be designed better for mobile version @done(24-02-09 13:56)
     ✔ Teacher creation process : dont create empty entry -> inconsistant state @done(23-12-21 20:05)

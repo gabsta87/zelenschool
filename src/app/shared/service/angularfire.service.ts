@@ -386,9 +386,9 @@ export class AngularfireService{
   }
 
   writePartner(newEntry : {logoName:string,link:string}){
-    return addDoc(collection(this._dbaccess,"partners"),{
-      ...newEntry
-    })
+    console.log("write partner ",newEntry);
+    
+    return addDoc(collection(this._dbaccess,"partners"),{ ...newEntry })
   }
 
   deletePartner(id:string){

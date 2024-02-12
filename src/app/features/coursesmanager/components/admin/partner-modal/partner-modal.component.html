@@ -1,19 +1,11 @@
 <ion-header>
-    <ion-title>Adding a new member</ion-title>
+    <ion-title>Partner</ion-title>
 </ion-header>
   
 <ion-content>
     <ion-item>
-        <ion-label position="stacked">Name</ion-label>
-        <ion-input type="text" [(ngModel)]="assoMemberName" required></ion-input>
-    </ion-item>
-    <ion-item>
         <ion-label position="stacked">Link</ion-label>
-        <ion-input type="text" [(ngModel)]="assoMemberLink"></ion-input>
-    </ion-item>
-    <ion-item>
-        <ion-label position="stacked">Role</ion-label>
-        <ion-input type="text" [(ngModel)]="assoMemberRole" required></ion-input>
+        <ion-input type="text" [(ngModel)]="link"></ion-input>
     </ion-item>
     <ion-item>
         <ion-thumbnail style="cursor: pointer;">
@@ -34,7 +26,7 @@
           <ion-button (click)="cancel()">
             Cancel
           </ion-button>
-          <ion-button (click)="confirm()" [disabled]="!assoMemberName || !assoMemberLink">
+          <ion-button (click)="confirm()" [disabled]="!partnerLogo">
             Confirm
           </ion-button>
         </ion-buttons>
