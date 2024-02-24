@@ -42,10 +42,10 @@
                     <ion-row>
                         <ion-col *ngFor="let activity of activities|async" class="activityCol">
                             <ion-card button="true" (click)="displayActivity(activity)" class="activityItem">
-                            <!-- <ion-card button="true" (click)="goToGallery(activity.link)" class="activityItem"> -->
-                                <ion-icon [name]="activity.iconName"></ion-icon>
-                                <ion-card-header class="activityTitle"><ion-title class="ion-no-padding">{{activity.title}}</ion-title></ion-card-header>
-                                <ion-card-content>{{activity.description}}</ion-card-content>
+                            <!-- <ion-card button="true" (click)="goToGallery(activity['link'])" class="activityItem"> -->
+                                <ion-icon [name]="activity['iconName']"></ion-icon>
+                                <ion-card-header class="activityTitle"><ion-title class="ion-no-padding">{{activity['title']}}</ion-title></ion-card-header>
+                                <ion-card-content>{{activity['description']}}</ion-card-content>
                             </ion-card>
                         </ion-col>
                     </ion-row>
@@ -86,26 +86,26 @@
                     </li>
                 </ul>
 
-                <ion-grid>
+                <ion-grid *ngIf="members |async as membersSnapshot">
                     <ion-row>
-                        <ion-col *ngFor="let member of members">
+                        <ion-col *ngFor="let member of membersSnapshot">
                             <div class="memberCard">
-                                <a *ngIf="member.link; else withoutLink" href="{{member.link}}">
+                                <a *ngIf="member['link']; else withoutLink" href="{{member['link']}}">
                                 <ion-thumbnail>
                                     <!-- TODO load default image if null -->
-                                    <img src="{{member.photo}}"/>
+                                    <img src="{{member['photo']}}"/>
                                 </ion-thumbnail>
                         
-                                <ion-label>{{member.name}} </ion-label>
-                                <ion-label>{{member.role}}</ion-label>
+                                <ion-label>{{member['name']}} </ion-label>
+                                <ion-label>{{member['role']}}</ion-label>
                                 </a>
                                 <ng-template #withoutLink>
                                     <ion-thumbnail>
-                                        <img src="{{member.photo}}"/>
+                                        <img src="{{member['photo']}}"/>
                                     </ion-thumbnail>
                             
-                                    <ion-label>{{member.name}} </ion-label>
-                                    <ion-label>{{member.role}}</ion-label>
+                                    <ion-label>{{member['name']}} </ion-label>
+                                    <ion-label>{{member['role']}}</ion-label>
                                 </ng-template>
                             </div>
                         </ion-col>
@@ -118,12 +118,12 @@
         <div class="partnersSection" id="anchor_partners" #anchor_>
             <div class="partnersContent">
                 <h2>{{words.partners}}</h2>
-                <ion-grid>
+                <ion-grid *ngIf="partners_addresses | async as partners">
                     <ion-row class="ion-align-items-center">
-                        <ion-col *ngFor="let partner of partners_addresses">
+                        <ion-col *ngFor="let partner of partners">
                             <div class="partnerCard">
-                                <ion-button href={{partner.link}} fill="clear" class="ion-no-padding">
-                                    <img src="{{partner.logoName}}"/>
+                                <ion-button href="{{partner['link']}}" fill="clear" class="ion-no-padding">
+                                    <img src="{{partner['logoName']}}"/>
                                 </ion-button>
                             </div>
                         </ion-col>

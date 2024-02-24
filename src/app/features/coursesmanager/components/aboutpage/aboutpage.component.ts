@@ -1,10 +1,11 @@
 import { Component, ElementRef, EventEmitter, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonContent } from '@ionic/angular';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import dayjs from 'dayjs';
 import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
 import { getNowDate } from 'src/app/shared/service/hour-management.service';
+import { DocumentData } from 'firebase/firestore';
 
 @Component({
   selector: 'app-aboutpage',
@@ -30,13 +31,13 @@ export class AboutpageComponent {
     });
   }
 
-  members = this._route.snapshot.data['aboutData'].members;
-  partners_addresses = this._route.snapshot.data['aboutData'].partners;
-  activities = this._route.snapshot.data['aboutData'].activities;
-  assoEvents = this._route.snapshot.data['aboutData'].assoEvents;
+  members : Observable<DocumentData[]> = this._route.snapshot.data['aboutData'].members;
+  partners_addresses : Observable<DocumentData[]> = this._route.snapshot.data['aboutData'].partners;
+  activities : Observable<DocumentData[]> = this._route.snapshot.data['aboutData'].activities;
+  assoEvents : Observable<DocumentData[]> = this._route.snapshot.data['aboutData'].assoEvents;
   activityDetail = undefined;
-  activityRelatedPastEvents = undefined;
-  activityRelatedFutureEvents = undefined;
+  activityRelatedPastEvents:any = undefined;
+  activityRelatedFutureEvents:any = undefined;
   isActivityDetailOpen = new BehaviorSubject(false);
   actualDate = getNowDate();
 
@@ -88,10 +89,10 @@ export class AboutpageComponent {
       this.activityDetail = undefined
     }else{
       this.activityDetail = receivedActivity
-      const activityRelatedEvents = this.assoEvents.filter((evt:any) => receivedActivity.assoEvents.includes(evt.id) )
+      const activityRelatedEvents = this.assoEvents.pipe((e:any) => e.filter((evt:any) => receivedActivity.assoEvents.includes(evt.id) ))
       
-      this.activityRelatedPastEvents = activityRelatedEvents.filter((relatedEvent:any) => dayjs(relatedEvent.timeStart).utc().isAfter(dayjs(this.actualDate).utc()) );
-      this.activityRelatedFutureEvents = activityRelatedEvents.filter((relatedEvent:any) => dayjs(relatedEvent.timeStart).utc().isBefore(dayjs(this.actualDate).utc()));
+      this.activityRelatedPastEvents = activityRelatedEvents.pipe( (e:any) => e.filter((relatedEvent:any) => dayjs(relatedEvent.timeStart).utc().isAfter(dayjs(this.actualDate).utc()) ));
+      this.activityRelatedFutureEvents = activityRelatedEvents.pipe((e:any) => e.filter((relatedEvent:any) => dayjs(relatedEvent.timeStart).utc().isBefore(dayjs(this.actualDate).utc())));
     }
     this.isActivityDetailOpen.next(this.activityDetail != undefined);
   }
