@@ -15,7 +15,7 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 URGENT :
-    ☐ Display of center information for all users (on click from schedule or hover)
+    ☐ Display of Center information for all users (on click from schedule or hover)
     ☐ Finish activities panel
     ☐ Modify activities admin panel accordingly
     ☐ Before release : Change Zelenschool to Ukraine-Reborn
@@ -66,6 +66,14 @@ URGENT :
     ✔ Fix hours properly @done(23-03-30 17:11)
     ✔ Collision events not working @done(23-03-30 17:11)
     ✔ See why some users have no status @done(23-03-30 17:11)
+
+Refactoring:
+    ☐ angularfireservice : activities to put in separate file
+    ☐ Break AngularFireService into smaller services
+    ☐ break adminpageresolve.resolver.ts and about-page.resolver.ts into smaller resolvers
+    ☐ remove accesses to observable that use firstValueFrom from the beginning
+    ☐ rename modals
+    ☐ Comments and Doc
 
 Misc :
     ☐ User management service : if admin accepts teacher, does the teacher status changes automatically without reload ?
@@ -136,8 +144,8 @@ Misc :
     ✔ admin can modify courses @done(23-04-17 10:46)
 
 OPTIONAL : 
-    ☐ schedule : limit future courses to current month/week/day
-    ☐ schedule : filter future events for week/day
+    ✘ schedule : limit future courses to current month/week/day @cancelled(24-02-13 16:36)
+    ✘ schedule : filter future events for week/day @cancelled(24-02-13 16:37)
     ✔ search (teacher/title) @done(23-12-21 21:53)
     ☐ Full screen image when clicking on it
         https://forum.ionicframework.com/t/advice-for-displaying-a-full-screen-image/5028

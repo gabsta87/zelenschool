@@ -19,7 +19,7 @@ export class AngularfireService{
     private readonly _auth:Auth,
   ) { }
 
-  private getElements(name:string,...constraint:QueryConstraint[]){
+  getElements(name:string,...constraint:QueryConstraint[]){
     const myCollection = collection(this._dbaccess,name);
 
     let data = query(myCollection,...constraint)
@@ -66,7 +66,6 @@ export class AngularfireService{
   }
 
   deleteCalendarEntry(entryId:string){
-    // TODO add security : admin or owner of course
     if(this._auth.currentUser?.uid){
       return deleteDoc(doc(this._dbaccess,"calendarEntries",entryId))
     }else{
@@ -200,6 +199,7 @@ export class AngularfireService{
       "user : ",currentUser
     );
     // firebase.auth().getUser(userId);
+    // TODO Remove user from AUTH
 
     const userToDelete = {uid:userId} as User;
 
@@ -264,7 +264,6 @@ export class AngularfireService{
     return updateDoc(docRef,{...data});
   }
 
-  // Updates current user infos
   updateCurrentUser(newValue:any){
     const docRef = doc(this._dbaccess,'users/'+this._auth.currentUser?.uid);
     // console.log("updating user ",this._auth.currentUser?.uid," with value ",newValue);
@@ -320,10 +319,6 @@ export class AngularfireService{
     })
   }
 
-  getArticles(){
-    return firstValueFrom(this.getElements("articles"));
-  }
-
   async createUser(newUser:User,
     data:{email:string,f_name:string,l_name:string,phone:string,status:string,
       birthday ? : string,
@@ -357,6 +352,8 @@ export class AngularfireService{
     return addDoc(collection(this._dbaccess,"users"),{...newUser})
   }
 
+  // Asso members management
+
   async addAssoMember(e: {name: string, photo: string, role: string, link?: undefined, }){
     return addDoc(collection(this._dbaccess,"assoMembers"),{
       ...e
@@ -381,6 +378,8 @@ export class AngularfireService{
     return this.getAssoMembers().pipe(find((e:any) => e.id === id));
   }
 
+  // Partners management
+
   getPartners(){
     return this.getElements("partners");
   }
@@ -393,11 +392,6 @@ export class AngularfireService{
     const docRef = doc(this._dbaccess,'partners/'+entry['id']);
     deleteDoc(docRef);
   }
-
-  // updatePartner(partner: { id: string; link: string; logoName: string }) {
-  //   const docRef = doc(this._dbaccess,'partners/'+partner.id);
-  //   return updateDoc(docRef,{...partner});
-  // }
 
   // Galleries Management
 
@@ -444,6 +438,7 @@ export class AngularfireService{
   }
 
   // Activities management
+  // TODO Copy in different file
 
   async getActivities():Promise<DocumentData[]>{
     const act = await firstValueFrom(this.getElements("activities"));
@@ -615,7 +610,6 @@ export class AngularfireService{
     const docRef = doc(this._dbaccess,'rooms/'+id);
     deleteDoc(docRef);
   }
-
 
 }
 
