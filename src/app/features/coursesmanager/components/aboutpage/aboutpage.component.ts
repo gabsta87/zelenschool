@@ -34,7 +34,7 @@ export class AboutpageComponent {
   members : Observable<DocumentData[]> = this._route.snapshot.data['aboutData'].members;
   partners_addresses : Observable<DocumentData[]> = this._route.snapshot.data['aboutData'].partners;
   activities : Observable<DocumentData[]> = this._route.snapshot.data['aboutData'].activities;
-  assoEvents : Observable<DocumentData[]> = this._route.snapshot.data['aboutData'].assoEvents;
+  assoEvents : DocumentData[] = this._route.snapshot.data['aboutData'].assoEvents;
   activityDetail = undefined;
   activityRelatedPastEvents:any = undefined;
   activityRelatedFutureEvents:any = undefined;
@@ -88,11 +88,11 @@ export class AboutpageComponent {
     if(this.activityDetail === receivedActivity){
       this.activityDetail = undefined
     }else{
-      this.activityDetail = receivedActivity
-      const activityRelatedEvents = this.assoEvents.pipe((e:any) => e.filter((evt:any) => receivedActivity.assoEvents.includes(evt.id) ))
+      this.activityDetail = receivedActivity;
+      const activityRelatedEvents = this.assoEvents.filter((evt:any) => receivedActivity.assoEvents.includes(evt.id));
       
-      this.activityRelatedPastEvents = activityRelatedEvents.pipe( (e:any) => e.filter((relatedEvent:any) => dayjs(relatedEvent.timeStart).utc().isAfter(dayjs(this.actualDate).utc()) ));
-      this.activityRelatedFutureEvents = activityRelatedEvents.pipe((e:any) => e.filter((relatedEvent:any) => dayjs(relatedEvent.timeStart).utc().isBefore(dayjs(this.actualDate).utc())));
+      this.activityRelatedPastEvents = activityRelatedEvents.filter((relatedEvent:any) => dayjs(relatedEvent.timeStart).utc().isAfter(dayjs(this.actualDate).utc()) );
+      this.activityRelatedFutureEvents = activityRelatedEvents.filter((relatedEvent:any) => dayjs(relatedEvent.timeStart).utc().isBefore(dayjs(this.actualDate).utc()));
     }
     this.isActivityDetailOpen.next(this.activityDetail != undefined);
   }
