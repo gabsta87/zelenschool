@@ -1,0 +1,40 @@
+<ion-content>
+    <ion-button>Return</ion-button>
+    <ion-list *ngIf="assoCenters | async as centers">
+        <!-- <p>{{centers|json}}</p> -->
+        <ion-item lines="none" class="oneCenter" *ngFor="let center of centers">
+            <ion-grid>
+                <ion-row>
+                    <ion-title>{{center['name']}}</ion-title>
+                </ion-row>
+                <ion-row>
+                    <ion-col *ngIf="center['centerPhotoLink']">
+                        <ion-img src="{{center['centerPhotoLink']}}"> </ion-img>
+                    </ion-col>
+                    <ion-col>
+                        <ion-list lines="none">
+                            <ion-item>
+                                <ion-label>Contact person</ion-label>
+                                {{center['contactPerson']}}
+                            </ion-item>
+                            <ion-item>
+                                <ion-label>Address</ion-label>
+                                {{center['location']}}
+                            </ion-item>
+                            <ion-item>
+                                <ion-label>Phone</ion-label>
+                                {{center['contactPhone']}}
+                            </ion-item>
+                            <ion-item>
+                                <ion-list inset="true" class="hoursList">
+                                    <ion-label>Opening hours</ion-label>
+                                    <ion-item *ngFor="let hoursSet of center['openingHours']">{{hoursSet}}</ion-item>
+                                </ion-list>
+                            </ion-item>
+                        </ion-list>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+    </ion-list>
+</ion-content>

@@ -96,4 +96,9 @@ export class AboutpageComponent {
     }
     this.isActivityDetailOpen.next(this.activityDetail != undefined);
   }
+
+  goToCentersPage(){
+    this._router.navigate(["centersPage"]);
+
+  }
 }

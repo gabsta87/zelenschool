@@ -41,7 +41,8 @@
                 <ion-grid>
                     <ion-row>
                         <ion-col *ngFor="let activity of activities|async" class="activityCol">
-                            <ion-card button="true" (click)="displayActivity(activity)" class="activityItem">
+                            <ion-card button="true" (click)="goToCentersPage()" class="activityItem">
+                            <!-- <ion-card button="true" (click)="displayActivity(activity)" class="activityItem"> -->
                             <!-- <ion-card button="true" (click)="goToGallery(activity['link'])" class="activityItem"> -->
                                 <ion-icon [name]="activity['iconName']"></ion-icon>
                                 <ion-card-header class="activityTitle"><ion-title class="ion-no-padding">{{activity['title']}}</ion-title></ion-card-header>
@@ -52,7 +53,7 @@
                         <ion-grid *ngIf="isActivityDetailOpen.value">
                             <!-- {{activityDetail|json}} -->
                             <ion-row>
-                                <ion-col>
+                                <ion-col (click)="goToCentersPage()">
                                     <h3>Past events</h3>
                                     <ion-row *ngFor="let evt of activityRelatedPastEvents">{{evt.name}}</ion-row>
                                 </ion-col>
