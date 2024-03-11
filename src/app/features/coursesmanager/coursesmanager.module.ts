@@ -11,7 +11,7 @@ import * as dayjs from 'dayjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { StorageService } from 'src/app/shared/service/storage.service';
 import { SwiperModule } from 'swiper/angular';
-import { AboutpageComponent } from './components/aboutpage/aboutpage.component';
+import { AboutpageComponent } from './components/presentation/aboutpage/aboutpage.component';
 import { AccountadminpageComponent } from './components/account/accountadminpage/accountadminpage.component';
 import { AccountpageComponent } from './components/account/accountpage/accountpage.component';
 import { AccountteacherpageComponent } from './components/account/accountteacherpage/accountteacherpage.component';
@@ -45,6 +45,8 @@ import { NewAssoCenterModalComponent } from './components/admin/new-asso-center-
 import { NewRoomModalComponent } from './components/admin/new-room-modal/new-room-modal.component';
 import { CenterOpeningHourModalComponent } from './components/admin/center-opening-hour-modal/center-opening-hour-modal.component';
 import { PartnerModalComponent } from './components/admin/partner-modal/partner-modal.component';
+import { CentersPageComponent } from './components/presentation/centers-page/centers-page.component';
+import { AssoCenterService } from 'src/app/shared/service/db-access/asso-center.service';
 
 
 
@@ -79,6 +81,7 @@ import { PartnerModalComponent } from './components/admin/partner-modal/partner-
     NewRoomModalComponent,
     CenterOpeningHourModalComponent,
     PartnerModalComponent,
+    CentersPageComponent,
   ],
   imports: [
     SwiperModule,
@@ -122,6 +125,12 @@ import { PartnerModalComponent } from './components/admin/partner-modal/partner-
           path:"createTeacher",
           component:CreateAccountTeacherComponent
         },{
+          path:"centersPage",
+          component:CentersPageComponent,
+          resolve:{
+            assoCenters : CentersResolver
+          }
+        },{
           path:"account",
           component:AccountpageComponent,
           canActivate:[UserLoggedGuard],
@@ -164,6 +173,7 @@ import { PartnerModalComponent } from './components/admin/partner-modal/partner-
   ],
   providers:[
     { provide:"MyDatabaseService", useClass:AngularfireService },
+    { provide:"AssoDatabaseService", useClass:AssoCenterService },
     { provide:"MyStorageService", useClass:StorageService },
     { provide: 'dayjs', useValue: dayjs },
   ]
