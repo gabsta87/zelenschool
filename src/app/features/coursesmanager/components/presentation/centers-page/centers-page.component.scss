@@ -1,0 +1,30 @@
+.oneCenter {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+
+}
+
+ion-title{
+    font-weight: bold;
+    color: var(--ion-color-primary);
+}
+
+ion-label{
+    font-weight: bold;
+    color: var(--ion-color-primary) !important;
+    max-width: 200px;
+}
+
+.hoursList{
+    margin: 0px;
+}
+
+ion-col:first-child {
+    ion-img {
+        width: 100%;
+        height: auto;
+    }
+}
+
