@@ -11,10 +11,9 @@ export class CentersResolver{
   
   constructor(private readonly _db:AngularfireService){}
   
-  assoCenters!:Observable<DocumentData[]>;
-
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Observable<DocumentData[]>> {
-    this.assoCenters = await this._db.getAssoCenters();
-    return this.assoCenters;
+    let assoCenters = await this._db.getAssoCenters();
+    
+    return assoCenters;
   }
 };
