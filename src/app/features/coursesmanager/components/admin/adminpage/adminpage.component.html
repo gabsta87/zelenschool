@@ -369,6 +369,7 @@
                                     <ion-icon name="images-outline" class="activityIcon" (click)="setIconName(activity,'images-outline')"></ion-icon>
                                     <ion-icon name="language-outline" class="activityIcon" (click)="setIconName(activity,'language-outline')"></ion-icon>
                                     <ion-icon name="library-outline" class="activityIcon" (click)="setIconName(activity,'library-outline')"></ion-icon>
+                                    <ion-icon name="calendar-clear-outline" class="activityIcon" (click)="setIconName(activity,'calendar-clear-outline')"></ion-icon>
                                 </ion-content>
                             </ng-template>
                             </ion-popover>
@@ -401,7 +402,7 @@
                     <ion-row>
                         <ion-popover #roomUpdatePopOver [isOpen]="showRoomConfirmation" (didDismiss)="showRoomConfirmation = false">
                         <ng-template>
-                            <ion-content class="ion-padding"> Value updated!</ion-content>
+                            <ion-content class="ion-padding">Value updated!</ion-content>
                         </ng-template>
                         </ion-popover>
                     </ion-row>
