@@ -317,21 +317,22 @@
         <ion-button (click)="openCenterCreationModal()"> <ion-icon name="add-circle-outline"></ion-icon> Add new</ion-button>
 
         <ion-list *ngIf="assoCenters | async as centersList">
-            <ion-item *ngFor="let center of centersList">{{center['name']}}
-                <ion-item>
-                    <ion-button (click)="openCenterCreationModal(center)">
-                        Edit Center
-                    </ion-button>
-                    <ion-button (click)="openRoomModal(center)">
-                        Add Room
-                    </ion-button>
-                    <ion-button (click)="addDaySchedule(center['id'])">
-                        Add day schedule
-                    </ion-button>
-                    <ion-button color="danger" (click)="deleteAssoCenter(center['id'])">
-                        Delete Center
-                    </ion-button>
-                </ion-item>
+            <ion-item *ngFor="let center of centersList">
+                <ion-label class = "centerLabel">
+                    {{center['name']}}
+                </ion-label>
+                <ion-button (click)="openCenterCreationModal(center)">
+                    Edit Center
+                </ion-button>
+                <ion-button (click)="openRoomModal(center)">
+                    Add Room
+                </ion-button>
+                <ion-button (click)="addDaySchedule(center['id'])">
+                    Add day schedule
+                </ion-button>
+                <ion-button color="danger" (click)="deleteAssoCenter(center['id'])">
+                    Delete Center
+                </ion-button>
             </ion-item>
         </ion-list>
     </div>
