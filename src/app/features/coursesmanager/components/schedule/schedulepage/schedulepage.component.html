@@ -142,7 +142,8 @@
             <ion-buttons class="ion-justify-content-center bottomButtons">
                 <ion-button 
                     id="open-modal" 
-                    fill="solid" 
+                    fill="solid"
+                    class="createCourseButton"
                     [disabled]="(selectedDays.length == 0 && !selectedDayViewDate) || (isBanned|async)" 
                     (click)="createEvent()">{{words.createCourse}}</ion-button>
                     <!-- (click)="createEvent()">{{words.createCourse}}<span *ngIf="selectedDays.length > 1">s</span></ion-button> -->
