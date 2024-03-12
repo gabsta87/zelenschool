@@ -47,6 +47,8 @@ import { CenterOpeningHourModalComponent } from './components/admin/center-openi
 import { PartnerModalComponent } from './components/admin/partner-modal/partner-modal.component';
 import { CentersPageComponent } from './components/presentation/centers-page/centers-page.component';
 import { AssoCenterService } from 'src/app/shared/service/db-access/asso-center.service';
+import { ProjectsPageComponent } from './components/presentation/projects-page/projects-page.component';
+import { assoProjectsResolver } from './resolvers/asso-projects.resolver';
 
 
 
@@ -82,6 +84,7 @@ import { AssoCenterService } from 'src/app/shared/service/db-access/asso-center.
     CenterOpeningHourModalComponent,
     PartnerModalComponent,
     CentersPageComponent,
+    ProjectsPageComponent,
   ],
   imports: [
     SwiperModule,
@@ -158,6 +161,12 @@ import { AssoCenterService } from 'src/app/shared/service/db-access/asso-center.
           resolve:{
             adminData:AdminpageresolveResolver,
             assoCenters:CentersResolver
+          }  
+        },{
+          path:"assoProjects",
+          component:ProjectsPageComponent,
+          resolve:{
+            assoProjects:assoProjectsResolver,
           }  
         },{
           path:"",

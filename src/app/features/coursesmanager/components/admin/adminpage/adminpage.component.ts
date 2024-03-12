@@ -602,15 +602,17 @@ export class AdminpageComponent {
 
     const { data, role } = await modal.onWillDismiss();
 
-    if(role == "confirm")
+    if(role == "confirm"){
       this._db.updateAssoCenter({id:assoCenterID})
 
-    if(center){
-      const schedules = center['openingHours'];
-      let finalSchedules = [...schedules,data];
-      
-      return this._db.updateAssoCenter({id:assoCenterID,openingHours:finalSchedules})
+      if(center){
+        const schedules = center['openingHours'];
+        let finalSchedules = [...schedules,data];
+        
+        return this._db.updateAssoCenter({id:assoCenterID,openingHours:finalSchedules})
+      }
     }
+
   }
 
   // Activities management

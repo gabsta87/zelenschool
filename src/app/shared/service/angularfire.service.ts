@@ -611,6 +611,11 @@ export class AngularfireService{
     deleteDoc(docRef);
   }
 
+  // Asso projects management
+  getAssoProjects(){
+    return this.getElements("assoProjects");
+  }
+
 }
 
 export interface UserInfos {

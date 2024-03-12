@@ -98,7 +98,7 @@ export class AboutpageComponent {
   }
 
   goToOtherProjects(){
-    this._router.navigate(["otherProjects"]);
+    this._router.navigate(["assoProjects"]);
   }
 
   goToCentersPage(){
