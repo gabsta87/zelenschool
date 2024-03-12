@@ -1,0 +1,14 @@
+<ion-content>
+    <ion-grid *ngIf="projectsObs | async as projects">
+        <ion-row>
+            <ion-col *ngFor="let project of projects">
+                <ion-card class="projectCard">
+                    <img [src]="project['imgLink']" class="projectImg"/>
+                    <ion-card-title>{{project['name']}}</ion-card-title>
+                    <ion-card-content>{{project['description']}} </ion-card-content>
+                    <ion-card-subtitle>{{project['date'] | date:"dd.MM.yyyy"}} - {{project['type']}}</ion-card-subtitle>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
