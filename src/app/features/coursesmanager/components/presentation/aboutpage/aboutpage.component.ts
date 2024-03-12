@@ -37,6 +37,7 @@ export class AboutpageComponent {
   assoEvents : DocumentData[] = this._route.snapshot.data['aboutData'].assoEvents;
   activityDetail = undefined;
   activityRelatedPastEvents:any = undefined;
+  groupedPastEvents!:Map<number, DocumentData[]>;
   activityRelatedFutureEvents:any = undefined;
   isActivityDetailOpen = new BehaviorSubject(false);
   actualDate = getNowDate();
@@ -83,22 +84,39 @@ export class AboutpageComponent {
     this._router.navigate(["gallery"],{fragment:galleryId});
   }
 
-  displayActivity(receivedActivity:any){
-    
-    if(this.activityDetail === receivedActivity){
-      this.activityDetail = undefined
-    }else{
-      this.activityDetail = receivedActivity;
-      const activityRelatedEvents = this.assoEvents.filter((evt:any) => receivedActivity.assoEvents.includes(evt.id));
+  displayActivities(){
+
+    // const activityRelatedEvents = this.assoEvents.filter((evt:any) => receivedActivity.assoEvents.includes(evt.id));
+    if(!this.isActivityDetailOpen.value){
+      this.activityRelatedPastEvents = this.assoEvents.filter((relatedEvent:any) => dayjs(relatedEvent.timeStart).utc().isBefore(dayjs(this.actualDate).utc()) );
+      this.activityRelatedFutureEvents = this.assoEvents.filter((relatedEvent:any) => dayjs(relatedEvent.timeStart).utc().isAfter(dayjs(this.actualDate).utc()));
       
-      this.activityRelatedPastEvents = activityRelatedEvents.filter((relatedEvent:any) => dayjs(relatedEvent.timeStart).utc().isAfter(dayjs(this.actualDate).utc()) );
-      this.activityRelatedFutureEvents = activityRelatedEvents.filter((relatedEvent:any) => dayjs(relatedEvent.timeStart).utc().isBefore(dayjs(this.actualDate).utc()));
+      this.groupedPastEvents = this.groupBy(this.activityRelatedPastEvents);
+      console.log("grouped list : ",this.groupedPastEvents);
     }
-    this.isActivityDetailOpen.next(this.activityDetail != undefined);
+    this.isActivityDetailOpen.next(!this.isActivityDetailOpen.value);
+  }
+
+  goToOtherProjects(){
+    this._router.navigate(["otherProjects"]);
   }
 
   goToCentersPage(){
     this._router.navigate(["centersPage"]);
+  }
 
+  private groupBy(listGroupByYear:DocumentData[]){
+
+    let map = new Map<number, DocumentData[]>(); 
+
+    listGroupByYear.forEach((activity:DocumentData) => {
+      let year = dayjs(activity['timeStart']).year();
+      if(map.get(year) == undefined){
+        map.set(year,[])
+      }
+      map.get(year)?.push(activity)
+    } );
+
+    return map;
   }
 }

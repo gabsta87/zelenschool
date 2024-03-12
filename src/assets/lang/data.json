@@ -39,7 +39,15 @@
             "donateTitle":"Donate now",
             "donateDescription":"Our association supports well-being and integration of Ukrainian refugees seeking protection in Switzerland. Your donation is vital for people who have fled Ukraine. You could support our activities by making donations. ",
             "beneficiaryTitle":"Beneficiary",
-            "donateMoreInfo":"Ukraine Reborn is non-profit association that is tax-exempt due to its public utility purpose. If you are an individual or corporate donor that pays taxes in Switzerland, you may deduct your donations from your taxable income. The maximum deduction amount varies depending on your canton of residence. We will be happy to send you an attestation for tax purposes upon request, for the donation amounts of minimum 100.- CHF per year. Please send us e-mail with your full name, address, contact details and amount of donation to "
+            "donateMoreInfo":"Ukraine Reborn is non-profit association that is tax-exempt due to its public utility purpose. If you are an individual or corporate donor that pays taxes in Switzerland, you may deduct your donations from your taxable income. The maximum deduction amount varies depending on your canton of residence. We will be happy to send you an attestation for tax purposes upon request, for the donation amounts of minimum 100.- CHF per year. Please send us e-mail with your full name, address, contact details and amount of donation to ",
+            "integrationCenters": "Integration centers", 
+            "centersDescription": "Where to find us in Switzerland", 
+            "events": "Events", 
+            "eventsDescription": "What we have organized", 
+            "otherProjects": "Other projects", 
+            "otherProjectsDescription": "On the fringe of the association",
+            "pastEvents":"Past events",
+            "futureEvents":"Future events"
         },
         "schedule":{
             "all":"All",
@@ -164,7 +172,15 @@
             "donateTitle":"Donnez maintenant",
             "donateDescription":"Notre association soutient le bien-être et l'intégration des réfugiés ukrainiens qui cherchent protection en Suisse. Votre don est vital pour les personnes qui ont fui l'Ukraine. Vous pouvez soutenir nos activités en faisant des dons.",
             "beneficiaryTitle":"Bénéficiaire",
-            "donateMoreInfo":"Ukraine Reborn est une association à but non lucratif exonérée d'impôts en raison de son but d'utilité publique. Si vous êtes un particulier ou une entreprise donatrice qui paie des impôts en Suisse, vous pouvez déduire vos dons de votre revenu imposable. Le montant maximal de la déduction varie en fonction de votre canton de résidence. Sur demande, nous vous enverrons volontiers une attestation fiscale pour les dons d'un montant minimum de 100 CHF par an. Veuillez nous envoyer un e-mail avec votre nom complet, votre adresse, vos coordonnées et le montant de votre don à l'adresse suivante "
+            "donateMoreInfo":"Ukraine Reborn est une association à but non lucratif exonérée d'impôts en raison de son but d'utilité publique. Si vous êtes un particulier ou une entreprise donatrice qui paie des impôts en Suisse, vous pouvez déduire vos dons de votre revenu imposable. Le montant maximal de la déduction varie en fonction de votre canton de résidence. Sur demande, nous vous enverrons volontiers une attestation fiscale pour les dons d'un montant minimum de 100 CHF par an. Veuillez nous envoyer un e-mail avec votre nom complet, votre adresse, vos coordonnées et le montant de votre don à l'adresse suivante ",
+            "integrationCenters":"Centres d'intégration",
+            "centersDescription":"Où nous trouver en Suisse",
+            "events":"Événements",
+            "eventsDescription":"Ce que nous avons organisé",
+            "otherProjects":"Autres projets",
+            "otherProjectsDescription":"En marge de l'association",
+            "pastEvents":"Événements passés",
+            "futureEvents":"Événements futurs"
         },
         "schedule":{
             "all":"Tous",
@@ -289,7 +305,15 @@
             "donateTitle": "Пожертвувати зараз",
             "donateDescription": "Наша асоціація підтримує добробут та інтеграцію українських біженців, які шукають захисту в Швейцарії. Ваша пожертва є життєво важливою для людей, які вимушено виіхали з України. Ви можете підтримати нашу діяльність, зробивши пожертву.",
             "beneficiaryTitle": "Бенефіціар",
-            "donateMoreInfo": "Ukraine Reborn є неприбутковою організацією, звільненою від сплати податків через свою суспільну мету. Якщо ви є приватною особою або корпоративним донором, який сплачує податки у Швейцарії, ви можете вирахувати ваші пожертви з вашого оподатковуваного доходу. Максимальна сума відрахування залежить від кантону, в якому ви проживаєте. За запитом ми з радістю надішлемо вам податкову довідку для пожертв на суму не менше 100 швейцарських франків на рік. Будь ласка, надішліть нам електронного листа з вашим повним ім'ям, адресою, контактними даними та сумою вашої пожертви на адресу "
+            "donateMoreInfo": "Ukraine Reborn є неприбутковою організацією, звільненою від сплати податків через свою суспільну мету. Якщо ви є приватною особою або корпоративним донором, який сплачує податки у Швейцарії, ви можете вирахувати ваші пожертви з вашого оподатковуваного доходу. Максимальна сума відрахування залежить від кантону, в якому ви проживаєте. За запитом ми з радістю надішлемо вам податкову довідку для пожертв на суму не менше 100 швейцарських франків на рік. Будь ласка, надішліть нам електронного листа з вашим повним ім'ям, адресою, контактними даними та сумою вашої пожертви на адресу ",
+            "integrationCenters":"Інтеграційні центри", 
+            "centersDescription": "Де нас знайти у Швейцарії", 
+            "events": "Події", 
+            "eventsDescription": "Що ми організували", 
+            "otherProjects": "Інші проекти", 
+            "otherProjectsDescription": "На периферії асоціації",
+            "pastEvents":"Минулі події",
+            "futureEvents":"Майбутні події"
         },
         "schedule":{ 
             "all":"всі",

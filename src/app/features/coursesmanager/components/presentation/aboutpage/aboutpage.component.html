@@ -40,18 +40,71 @@
                 <h2>{{words.activitiesTitle}}</h2>
                 <ion-grid>
                     <ion-row>
-                        <ion-col *ngFor="let activity of activities|async" class="activityCol">
-                            <ion-card button="true" (click)="goToCentersPage()" class="activityItem">
-                            <!-- <ion-card button="true" (click)="displayActivity(activity)" class="activityItem"> -->
-                            <!-- <ion-card button="true" (click)="goToGallery(activity['link'])" class="activityItem"> -->
-                                <ion-icon [name]="activity['iconName']"></ion-icon>
-                                <ion-card-header class="activityTitle"><ion-title class="ion-no-padding">{{activity['title']}}</ion-title></ion-card-header>
-                                <ion-card-content>{{activity['description']}}</ion-card-content>
+                        <ion-col class="activityCol">
+                            <ion-card button="true" class="activityItem" (click)="goToCentersPage()">
+                                <ion-icon name="home-outline"></ion-icon>
+                                <ion-card-header class="activityTitle"><ion-title class="ion-no-padding">{{words.integrationCenters}}</ion-title></ion-card-header>
+                                <ion-card-content>{{words.centersDescription}}</ion-card-content>
+                            </ion-card>
+                        </ion-col>
+                        <ion-col class="activityCol">
+                            <ion-card button="true" class="activityItem" (click)="displayActivities()">
+                                <ion-icon name="calendar-outline"></ion-icon>
+                                <ion-card-header class="activityTitle"><ion-title class="ion-no-padding">{{words.events}}</ion-title></ion-card-header>
+                                <ion-card-content>{{words.eventsDescription}}</ion-card-content>
+                            </ion-card>
+                        </ion-col>
+                        <ion-col class="activityCol">
+                            <ion-card button="true" class="activityItem" (click)="goToOtherProjects()">
+                                <ion-icon name="sparkles-outline"></ion-icon>
+                                <ion-card-header class="activityTitle"><ion-title class="ion-no-padding">{{words.otherProjects}}</ion-title></ion-card-header>
+                                <ion-card-content>{{words.otherProjectsDescription}}</ion-card-content>
                             </ion-card>
                         </ion-col>
                     </ion-row>
                         <ion-grid *ngIf="isActivityDetailOpen.value">
-                            <!-- {{activityDetail|json}} -->
+                            <ion-row>
+                                <ion-col>
+                                    <h3>{{words.pastEvents}}</h3>
+                                    <ion-row *ngFor="let evtList of groupedPastEvents | keyvalue">
+                                        <ion-list lines="none">
+                                            <ion-label>{{evtList.key}}</ion-label>
+                                            <ion-item *ngFor="let evt of evtList.value" class="eventItem">
+                                                {{evt['name']}}
+                                            </ion-item>
+                                        </ion-list>
+                                    </ion-row>
+
+                                </ion-col>
+                                <ion-col>
+                                    <h3>{{words.futureEvents}}</h3>
+                                    <ion-list lines="none">
+                                        <ion-item *ngFor="let evt of activityRelatedFutureEvents" class="eventItem">
+                                            {{evt.name}}
+                                        </ion-item>
+                                    </ion-list>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                </ion-grid>
+            </div>
+        </div>
+        <!-- <div class="activitiesPart" id="anchor_activities" #anchor_>
+            <div class="partContent">
+                <h2>{{words.activitiesTitle}}</h2>
+                <ion-grid>
+                    <ion-row>
+                        <ion-col *ngFor="let activity of activities|async" class="activityCol">
+                            <ion-card button="true" class="activityItem">
+                                <ion-icon [name]="activity['iconName']" (click)="goToCentersPage()" ></ion-icon>
+                                <ion-card-header class="activityTitle" (click)="goToCentersPage()" ><ion-title class="ion-no-padding">{{activity['title']}}</ion-title></ion-card-header>
+                                <ion-card-content (click)="goToCentersPage()" >{{activity['description']}}</ion-card-content>
+                                <ion-item (click)="displayActivity(activity)">Display activity</ion-item>
+                                <ion-item (click)="goToGallery(activity['link'])">Go to Gallery</ion-item>
+                            </ion-card>
+                        </ion-col>
+                    </ion-row>
+                        <ion-grid *ngIf="isActivityDetailOpen.value">
                             <ion-row>
                                 <ion-col (click)="goToCentersPage()">
                                     <h3>Past events</h3>
@@ -62,11 +115,10 @@
                                     <ion-row *ngFor="let evt of activityRelatedFutureEvents">{{evt.name}}</ion-row>
                                 </ion-col>
                             </ion-row>
-                            <!-- {{assoEvents|json}} -->
                         </ion-grid>
                 </ion-grid>
             </div>
-        </div>
+        </div> -->
 
         <div class="filledPart donateBanner" (click)="scrollTo('donate')">
             <div class="partContent">

@@ -30,12 +30,12 @@
     <ng-template #hidePhotoGall>
         <ion-button (click)="toggle(showGalleriesManager)"><ion-icon name="caret-down-outline"></ion-icon>Photos galleries</ion-button>
     </ng-template>
-    
+<!--     
     <ion-button class="activatedButton" *ngIf="showActivities.value; else hideActivities" (click)="toggle(showActivities)"><ion-icon name="caret-up-outline"></ion-icon>Activities</ion-button>
     <ng-template #hideActivities>
         <ion-button (click)="toggle(showActivities)"><ion-icon name="caret-down-outline"></ion-icon>Activities</ion-button>
     </ng-template>
-    
+-->
     <ion-button class="activatedButton" *ngIf="showRooms.value; else hideRooms" (click)="toggle(showRooms)"><ion-icon name="caret-up-outline"></ion-icon>Centers</ion-button>
     <ng-template #hideRooms>
         <ion-button (click)="toggle(showRooms)"><ion-icon name="caret-down-outline"></ion-icon>Centers</ion-button>
@@ -337,6 +337,7 @@
         </ion-list>
     </div>
 
+<!--     
     <div *ngIf="showActivities.value">
         <h1>Activities</h1>
         <div lines="none" class="addButtonContainer">
@@ -410,7 +411,8 @@
                 </ion-grid>
             </ion-item>
         </ion-list>
-    </div>
+    </div> 
+-->
 
 </div>
 </ion-content>
