@@ -49,6 +49,9 @@ import { CentersPageComponent } from './components/presentation/centers-page/cen
 import { AssoCenterService } from 'src/app/shared/service/db-access/asso-center.service';
 import { ProjectsPageComponent } from './components/presentation/projects-page/projects-page.component';
 import { assoProjectsResolver } from './resolvers/asso-projects.resolver';
+import { EventModalComponent } from './components/admin/event-modal/event-modal.component';
+import { ProjectModalComponent } from './components/admin/project-modal/project-modal.component';
+import { assoEventsResolver } from './resolvers/asso-events.resolver';
 
 
 
@@ -85,6 +88,8 @@ import { assoProjectsResolver } from './resolvers/asso-projects.resolver';
     PartnerModalComponent,
     CentersPageComponent,
     ProjectsPageComponent,
+    EventModalComponent,
+    ProjectModalComponent,
   ],
   imports: [
     SwiperModule,
@@ -160,7 +165,9 @@ import { assoProjectsResolver } from './resolvers/asso-projects.resolver';
           canActivate:[AdminpageGuard],
           resolve:{
             adminData:AdminpageresolveResolver,
-            assoCenters:CentersResolver
+            assoCenters:CentersResolver,
+            assoProjects:assoProjectsResolver,
+            assoEvents:assoEventsResolver
           }  
         },{
           path:"assoProjects",

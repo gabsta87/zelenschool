@@ -15,12 +15,16 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 URGENT :
-    ☐ Centers' page : make translation
     ☐ Display of Center information for all users (on click from schedule or hover)
-    ☐ Finish activities panel
     ☐ Modify activities admin panel accordingly
     ☐ Before release : Change Zelenschool to Ukraine-Reborn
     ☐ Help section on the schedule page (button needs a better behavior than showing an image)
+    ☐ When deleting activity, check how image gallery gets deleted 
+    ☐ Delete old image when modifying asso Event/project/center image
+    ☐ Delete activities from DB, angularFireService, admin resolver, galleries resolver
+    ☐ Fix image galleries
+    ✔ Centers' page : make translation @done(24-03-12 23:56)
+    ✔ Finish activities panel @done(24-03-12 23:57)
     ✔ Admin : change partners to observable in admin panel (add with modal) @done(24-02-12 18:40)
     ✔ Management of opening hours @done(24-02-12 10:45)
     ✔ Use an observable to display opening hours of centers, so they appear/disappear when manipulating from admin page @done(24-02-12 10:45)

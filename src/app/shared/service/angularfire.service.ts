@@ -475,9 +475,13 @@ export class AngularfireService{
 
   // Asso Events management
 
-  async getAssoEvents():Promise<DocumentData[]>{
-    const evts = await firstValueFrom(this.getElements("assoEvent"));
+  async getAssoEvents():Promise<Observable<DocumentData[]>>{
+    const evts = await this.getElements("assoEvent");
     return evts;
+  }
+
+  async getAssoEvent(id:string){
+    return this.getSnapshot("assoEvents",id);
   }
 
   createAssoEvent(newValue:{name:string,galleryId?:string,leafletLink?:string,location?:string,participants?:string[],timeStart?:string,timeEnd?:string}){
@@ -612,8 +616,32 @@ export class AngularfireService{
   }
 
   // Asso projects management
+  getAssoProject(id:string){
+    return this.getSnapshot("assoProjects",id);
+  }
+
   getAssoProjects(){
     return this.getElements("assoProjects");
+  }
+
+  createAssoProject(newProject : any){
+    return addDoc(collection(this._dbaccess,"assoProjects"),{ ...newProject })
+  }
+
+  deleteAssoProject(id:string){
+    const docRef = doc(this._dbaccess,'assoProjects/'+id);
+    deleteDoc(docRef);
+  }
+
+  updateAssoProject(newValue:{id:string,author:string,date:string,description:string,imgLink:string,name:string,type:string}){
+    const docRef = doc(this._dbaccess,'assoProjects/'+newValue.id);
+    return updateDoc(docRef,{
+      author:newValue?.author,
+      date:newValue?.date,
+      description:newValue?.description,
+      imgLink:newValue?.imgLink,
+      name:newValue?.name,
+      type:newValue?.type});
   }
 
 }

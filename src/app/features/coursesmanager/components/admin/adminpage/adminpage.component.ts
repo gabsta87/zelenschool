@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { ActionSheetController, ModalController } from '@ionic/angular';
@@ -10,13 +10,15 @@ import { StorageService } from 'src/app/shared/service/storage.service';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 import { TeacherModalComponent } from '../../schedule/teacher-modal/teacher-modal.component';
 import { BanmodalComponent } from '../banmodal/banmodal.component';
+import { CenterOpeningHourModalComponent } from '../center-opening-hour-modal/center-opening-hour-modal.component';
+import { EventModalComponent } from '../event-modal/event-modal.component';
 import { GalleryNameModalComponent } from '../gallery-name-modal/gallery-name-modal.component';
 import { ModalWorkingHoursComponent } from '../modal-working-hours/modal-working-hours.component';
-import { NewAssoMemberModalComponent } from '../new-asso-member-modal/new-asso-member-modal.component';
 import { NewAssoCenterModalComponent } from '../new-asso-center-modal/new-asso-center-modal.component';
+import { NewAssoMemberModalComponent } from '../new-asso-member-modal/new-asso-member-modal.component';
 import { NewRoomModalComponent } from '../new-room-modal/new-room-modal.component';
-import { CenterOpeningHourModalComponent } from '../center-opening-hour-modal/center-opening-hour-modal.component';
 import { PartnerModalComponent } from '../partner-modal/partner-modal.component';
+import { ProjectModalComponent } from '../project-modal/project-modal.component';
 
 @Component({
   selector: 'app-adminpage',
@@ -50,8 +52,10 @@ export class AdminpageComponent {
   roomsData = this.adminData.roomsData;
   roomsObs: Observable<DocumentData[]> = this.adminData.rooms;
   galleries = this.adminData.galleries as Observable<DocumentData[]>;
-  @Input() activities = this.adminData.activities;
+  // @Input() activities = this.adminData.activities;
   assoCenters:Observable<DocumentData[]> = this._route.snapshot.data['assoCenters'];
+  assoProjects:Observable<DocumentData[]> = this._route.snapshot.data['assoProjects'];
+  assoEvents:Observable<DocumentData[]> = this._route.snapshot.data['assoEvents'];
 
   searchString = "";
   statusToFilter = "all";
@@ -60,7 +64,9 @@ export class AdminpageComponent {
   showUsers = new BehaviorSubject(false);
   showCourses = new BehaviorSubject(false);
   showAssoMembers = new BehaviorSubject(false);
-  showActivities = new BehaviorSubject(false);
+  showProjects = new BehaviorSubject(false);
+  showEvents = new BehaviorSubject(false);
+  // showActivities = new BehaviorSubject(false);
 
   isSuperAdmin = this._user.isLoggedAsSuperAdmin;
 
@@ -305,9 +311,6 @@ export class AdminpageComponent {
 
   async updateMember() {
     let data = { id: this.memberId, name: this.memberNewName, role: this.memberNewRole, link: this.memberNewLink } as AssoMember;
-    console.log("data : ",data);
-    console.log("photoChanged : ",this.photoChanged.value);
-    
     
     if (this.photoChanged.value) {
       this.memberNewPhoto = await this.saveAssoMemberImage(this.imageFile);
@@ -340,8 +343,23 @@ export class AdminpageComponent {
   photoChanged = new BehaviorSubject(false);
   tempImage !: any;
 
-  async saveAssoMemberImage(imageFile: File) {
+  async saveAssoEventImage(imageFile: File) {
+    this.uploadingImage.next(true);
+    const downloadUrl = await this.storage.addEventImage(imageFile);
 
+    this.uploadingImage.next(false);
+    return downloadUrl;
+  }
+
+  async saveProjectImage(imageFile: File) {
+    this.uploadingImage.next(true);
+    const downloadUrl = await this.storage.addProjectImage(imageFile);
+
+    this.uploadingImage.next(false);
+    return downloadUrl;
+  }
+
+  async saveAssoMemberImage(imageFile: File) {
     this.uploadingImage.next(true);
     const downloadUrl = await this.storage.addMemberImage(imageFile);
 
@@ -350,7 +368,6 @@ export class AdminpageComponent {
   }
 
   async savePartnerImage(imageFile: File) {
-
     this.uploadingImage.next(true);
     const downloadUrl = await this.storage.addPartnerImage(imageFile);
 
@@ -615,27 +632,126 @@ export class AdminpageComponent {
 
   }
 
-  // Activities management
+  // Events management
+  async createEvent(){
+    const modal = await this._modalCtrl.create({
+      component: EventModalComponent
+    });
+    modal.present();
 
-  setIconName(activity: any, name: string) {
-    activity.iconName = name;
-  }
+    const { data, role } = await modal.onWillDismiss();
 
-  createActivity() {
-    (this.activities as {}[]).unshift({ id: undefined, link: "", title: "", iconName: "add-circle-outline", description: "" })
-  }
-
-  deleteActivity(id: string, index: number) {
-    this._db.deleteActivity(id);
-    (this.activities as {}[]).splice(index, 1);
-  }
-
-  async updateActivity(activity: any) {
-    if (activity.id == undefined) {
-      const result = await this._db.createActivity(activity);
-      activity.id = result.id;
-    } else {
-      this._db.updateActivity(activity);
+    if (role === 'confirm') {
+      const photoAddress = await this.saveAssoEventImage(data.photo);
+      data.photo = photoAddress;
+      this._db.createAssoEvent(data);
     }
   }
+
+  async deleteEvent(id:string){
+    let response = await this.canDismiss();
+    if (!response)
+      return;
+
+    this._db.deleteAssoEvent(id);
+  }
+
+  async editEvent(event:DocumentData){
+    const modal = await this._modalCtrl.create({
+      component: EventModalComponent ,
+      componentProps: {
+        id:event['id'],
+        galleryId:event['galleryId'],
+        leafletLink:event['leafletLink'],
+        location:event['location'],
+        name:event['name'],
+        participants:event['participants'],
+        timeEnd:event['timeEnd'],
+        timeStart:event['timeStart'],
+      },
+    });
+
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      const photoAddress = await this.saveAssoEventImage(data.photo);
+      data.leafletLink = photoAddress;
+      this._db.updateAssoEvent(data);
+    }
+  }
+
+  // Projects management
+  async createProject(){
+    const modal = await this._modalCtrl.create({
+      component: ProjectModalComponent
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      const photoAddress = await this.saveProjectImage(data.photo);
+      data.photo = photoAddress;
+      this._db.createAssoProject(data);
+    }
+  }
+
+  async deleteProject(id:string){
+    let response = await this.canDismiss();
+    if (!response)
+      return;
+
+    this._db.deleteAssoProject(id);
+  }
+
+  async editProject(project:DocumentData){
+    const modal = await this._modalCtrl.create({
+      component: ProjectModalComponent ,
+      componentProps: {
+        id:project['id'],
+        author:project['author'],
+        date:project['date'],
+        description:project['description'],
+        imgLink:project['imgLink'],
+        name:project['name'],
+        type:project['type'],
+      },
+    });
+
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      const photoAddress = await this.saveProjectImage(data.photo);
+      data.imgLink = photoAddress;
+      this._db.updateAssoProject(data);
+    }
+  }
+
+  // Activities management
+
+  // setIconName(activity: any, name: string) {
+  //   activity.iconName = name;
+  // }
+
+  // createActivity() {
+  //   (this.activities as {}[]).unshift({ id: undefined, link: "", title: "", iconName: "add-circle-outline", description: "" })
+  // }
+
+  // deleteActivity(id: string, index: number) {
+  //   this._db.deleteActivity(id);
+  //   (this.activities as {}[]).splice(index, 1);
+  // }
+
+  // async updateActivity(activity: any) {
+  //   if (activity.id == undefined) {
+  //     const result = await this._db.createActivity(activity);
+  //     activity.id = result.id;
+  //   } else {
+  //     this._db.updateActivity(activity);
+  //   }
+  // }
 }

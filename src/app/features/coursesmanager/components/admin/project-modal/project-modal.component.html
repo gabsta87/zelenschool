@@ -1,0 +1,45 @@
+<ng-container>
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>{{name}}</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content (keydown.enter)="confirm()">
+        <ion-list>
+            <ion-item>
+                <ion-label position="floating">Name</ion-label>
+                <ion-input [(ngModel)]="name"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating"> Author </ion-label>
+                <ion-input [(ngModel)]="author"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating"> date </ion-label>
+                <ion-input [(ngModel)]="date"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating"> Description </ion-label>
+                <ion-input [(ngModel)]="description"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating"> Image </ion-label>
+                <ion-input [(ngModel)]="imgLink"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating"> type </ion-label>
+                <ion-input [(ngModel)]="type"></ion-input>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+    <ion-footer>
+        <ion-toolbar>
+            <ion-buttons slot="start">
+                <ion-button (click)="cancel()">Cancel</ion-button>
+            </ion-buttons>
+            <ion-buttons slot="end">
+                <ion-button (click)="confirm()" [strong]="true" [disabled]="false">Confirm</ion-button>
+            </ion-buttons>
+        </ion-toolbar>
+    </ion-footer>
+</ng-container>

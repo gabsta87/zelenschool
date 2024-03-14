@@ -22,7 +22,6 @@ export class StorageService {
     // Créez une référence pour l'image
     const imageRef = ref(this.imagesRef, collection+"/"+file.name);
 
-    
     const uploadTask = uploadBytesResumable(imageRef, file);
     // uploadTask.snapshotChanges().pipe(
     //   finalize(async () => {
@@ -38,17 +37,24 @@ export class StorageService {
     return downloadURL;
   }
 
-  async addMemberImage(newFile:File){
-    const collectionName = "assoMembers";
-    const link = await this.storeImage(newFile,collectionName);
+  async addEventImage(newFile:File){
+    return this.addImage("assoEvents",newFile)
+  }
 
-    return link;
+  async addProjectImage(newFile:File){
+    return this.addImage("projects",newFile)
+  }
+
+  async addMemberImage(newFile:File){
+    return this.addImage("assoMembers",newFile);
   }
   
   async addPartnerImage(newFile:File){
-    const collectionName = "partners";
-    const link = await this.storeImage(newFile,collectionName);
-    return link;
+    return this.addImage("partners",newFile);
+  }
+
+  private async addImage(collection:string,newFile:File){
+    return await this.storeImage(newFile,collection);
   }
 
   getGalleries(){
@@ -103,7 +109,6 @@ export class StorageService {
 
     // TODO see if the file must be deleted from firebase anyway or not
     this._db.deleteImage(image.id);
-
   }
 
 }

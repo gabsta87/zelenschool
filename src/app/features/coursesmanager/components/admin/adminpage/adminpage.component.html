@@ -40,6 +40,16 @@
     <ng-template #hideRooms>
         <ion-button (click)="toggle(showRooms)"><ion-icon name="caret-down-outline"></ion-icon>Centers</ion-button>
     </ng-template>
+    
+    <ion-button class="activatedButton" *ngIf="showProjects.value; else hideProjects" (click)="toggle(showProjects)"><ion-icon name="caret-up-outline"></ion-icon>Projects</ion-button>
+    <ng-template #hideProjects>
+        <ion-button (click)="toggle(showProjects)"><ion-icon name="caret-down-outline"></ion-icon>Projects</ion-button>
+    </ng-template>
+
+    <ion-button class="activatedButton" *ngIf="showEvents.value; else hideEvents" (click)="toggle(showEvents)"><ion-icon name="caret-up-outline"></ion-icon>Events</ion-button>
+    <ng-template #hideEvents>
+        <ion-button (click)="toggle(showEvents)"><ion-icon name="caret-down-outline"></ion-icon>Events</ion-button>
+    </ng-template>
 
     <ion-searchbar *ngIf="showUsers.value || showCourses.value" placeholder="Search" [(ngModel)]="searchString" (ionChange)="updateSearchValue()"></ion-searchbar>
 
@@ -314,7 +324,7 @@
 
     <div *ngIf="showRooms.value">
         <h1>Centers</h1>
-        <ion-button (click)="openCenterCreationModal()"> <ion-icon name="add-circle-outline"></ion-icon> Add new</ion-button>
+        <ion-button (click)="openCenterCreationModal()" color="success"> <ion-icon name="add-circle-outline"></ion-icon> Add new</ion-button>
 
         <ion-list *ngIf="assoCenters | async as centersList">
             <ion-item *ngFor="let center of centersList">
@@ -332,6 +342,44 @@
                 </ion-button>
                 <ion-button color="danger" (click)="deleteAssoCenter(center['id'])">
                     Delete Center
+                </ion-button>
+            </ion-item>
+        </ion-list>
+    </div>
+
+    <div *ngIf="showProjects.value">
+        <h1>Projects</h1>
+        <ion-button (click)="createProject()" color="success"><ion-icon name="add-circle-outline"></ion-icon> Add new</ion-button>
+
+        <ion-list *ngIf="assoProjects | async as projectsList">
+            <ion-item *ngFor="let project of projectsList">
+                <ion-label class = "centerLabel">
+                    {{project['name']}}
+                </ion-label>
+                <ion-button (click)="editProject(project)">
+                    Edit
+                </ion-button>
+                <ion-button color="danger" (click)="deleteProject(project['id'])">
+                    Delete
+                </ion-button>
+            </ion-item>
+        </ion-list>
+    </div>
+
+    <div *ngIf="showEvents.value">
+        <h1>Events</h1>
+        <ion-button (click)="createEvent()" color="success"><ion-icon name="add-circle-outline"></ion-icon> Add new</ion-button>
+
+        <ion-list *ngIf="assoEvents | async as eventsList">
+            <ion-item *ngFor="let event of eventsList">
+                <ion-label class = "centerLabel">
+                    {{event['name']}}
+                </ion-label>
+                <ion-button (click)="editEvent(event)">
+                    Edit
+                </ion-button>
+                <ion-button color="danger" (click)="deleteProject(event['id'])">
+                    Delete
                 </ion-button>
             </ion-item>
         </ion-list>

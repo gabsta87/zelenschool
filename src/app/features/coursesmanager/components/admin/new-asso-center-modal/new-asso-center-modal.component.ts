@@ -3,7 +3,6 @@ import { ModalController } from '@ionic/angular';
 import { DocumentData } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
-import { CenterOpeningHourModalComponent } from '../center-opening-hour-modal/center-opening-hour-modal.component';
 
 @Component({
   selector: 'app-new-asso-center-modal',
