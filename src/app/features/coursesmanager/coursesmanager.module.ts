@@ -52,6 +52,7 @@ import { assoProjectsResolver } from './resolvers/asso-projects.resolver';
 import { EventModalComponent } from './components/admin/event-modal/event-modal.component';
 import { ProjectModalComponent } from './components/admin/project-modal/project-modal.component';
 import { assoEventsResolver } from './resolvers/asso-events.resolver';
+import { assoEventsSnapshotResolver } from './resolvers/asso-events-snapshot.resolver';
 
 
 
@@ -114,7 +115,8 @@ import { assoEventsResolver } from './resolvers/asso-events.resolver';
           path:"about",
           component:AboutpageComponent,
           resolve:{
-            aboutData:AboutPageResolver
+            aboutData:AboutPageResolver,
+            assoEvents:assoEventsSnapshotResolver
           }
         },{
           path:"schedule",

@@ -1,11 +1,13 @@
 import { Component, ElementRef, EventEmitter, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonContent } from '@ionic/angular';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import dayjs from 'dayjs';
 import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
 import { getNowDate } from 'src/app/shared/service/hour-management.service';
 import { DocumentData } from 'firebase/firestore';
+var customParseFormat = require('dayjs/plugin/customParseFormat')
+dayjs.extend(customParseFormat)
 
 @Component({
   selector: 'app-aboutpage',
@@ -34,11 +36,11 @@ export class AboutpageComponent {
   members : Observable<DocumentData[]> = this._route.snapshot.data['aboutData'].members;
   partners_addresses : Observable<DocumentData[]> = this._route.snapshot.data['aboutData'].partners;
   activities : Observable<DocumentData[]> = this._route.snapshot.data['aboutData'].activities;
-  assoEvents : Observable<DocumentData[]> = this._route.snapshot.data['aboutData'].assoEvents;
+  assoEvents : DocumentData[] = this._route.snapshot.data['assoEvents'];
   activityDetail = undefined;
   activityRelatedPastEvents:any = undefined;
   groupedPastEvents!:Map<number, DocumentData[]>;
-  activityRelatedFutureEvents!:Observable<DocumentData[]>;
+  activityRelatedFutureEvents:any = undefined;
   isActivityDetailOpen = new BehaviorSubject(false);
   actualDate = getNowDate();
 
@@ -88,13 +90,10 @@ export class AboutpageComponent {
 
     // const activityRelatedEvents = this.assoEvents.filter((evt:any) => receivedActivity.assoEvents.includes(evt.id));
     if(!this.isActivityDetailOpen.value){
-      console.log("assoEvents ",this.assoEvents);
-      
-      this.activityRelatedPastEvents = this.assoEvents.pipe(map((evts:DocumentData[]) => evts.filter((relatedEvent:any) => dayjs(relatedEvent.timeStart).utc().isBefore(dayjs(this.actualDate).utc()) )));
-      this.activityRelatedFutureEvents = this.assoEvents.pipe(map((evts:DocumentData[]) => evts.filter((relatedEvent:any) => dayjs(relatedEvent.timeStart).utc().isAfter(dayjs(this.actualDate).utc()))));
+      this.activityRelatedPastEvents = this.assoEvents.filter((relatedEvent:any) => dayjs(relatedEvent.timeStart,"DD.MM.YYYY").utc().isBefore(dayjs(this.actualDate).utc()) );
+      this.activityRelatedFutureEvents = this.assoEvents.filter((relatedEvent:any) => dayjs(relatedEvent.timeStart,"DD.MM.YYYY").utc().isAfter(dayjs(this.actualDate).utc()));
       
       this.groupedPastEvents = this.groupBy(this.activityRelatedPastEvents);
-      console.log("grouped list : ",this.groupedPastEvents);
     }
     this.isActivityDetailOpen.next(!this.isActivityDetailOpen.value);
   }
@@ -112,7 +111,7 @@ export class AboutpageComponent {
     let map = new Map<number, DocumentData[]>(); 
 
     listGroupByYear.forEach((activity:DocumentData) => {
-      let year = dayjs(activity['timeStart']).year();
+      let year = dayjs(activity['timeStart'],"DD.MM.YYYY").year();
       if(map.get(year) == undefined){
         map.set(year,[])
       }

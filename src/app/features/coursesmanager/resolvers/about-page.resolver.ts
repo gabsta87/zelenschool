@@ -16,7 +16,6 @@ export class AboutPageResolver  {
       members : await this._db.getAssoMembers(),
       partners : await this._db.getPartners(),
       activities : await this._db.getActivitiesObs(),
-      assoEvents : await this._db.getAssoEvents(),
     }
 
     return result;

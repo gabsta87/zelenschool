@@ -76,12 +76,11 @@
                                     </ion-row>
 
                                 </ion-col>
-                                {{activityRelatedFutureEvents|json}}
-                                <ion-col *ngIf="activityRelatedFutureEvents | async as futureEvts">
+                                <ion-col>
                                     <h3>{{words.futureEvents}}</h3>
                                     <ion-list lines="none">
-                                        <ion-item *ngFor="let evt of futureEvts" class="eventItem">
-                                            {{evt['name']}}
+                                        <ion-item *ngFor="let evt of activityRelatedFutureEvents" class="eventItem">
+                                            {{evt.name}}
                                         </ion-item>
                                     </ion-list>
                                 </ion-col>
