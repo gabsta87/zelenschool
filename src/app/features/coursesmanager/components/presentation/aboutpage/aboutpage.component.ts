@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonContent } from '@ionic/angular';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import dayjs from 'dayjs';
 import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
 import { getNowDate } from 'src/app/shared/service/hour-management.service';
@@ -34,11 +34,11 @@ export class AboutpageComponent {
   members : Observable<DocumentData[]> = this._route.snapshot.data['aboutData'].members;
   partners_addresses : Observable<DocumentData[]> = this._route.snapshot.data['aboutData'].partners;
   activities : Observable<DocumentData[]> = this._route.snapshot.data['aboutData'].activities;
-  assoEvents : DocumentData[] = this._route.snapshot.data['aboutData'].assoEvents;
+  assoEvents : Observable<DocumentData[]> = this._route.snapshot.data['aboutData'].assoEvents;
   activityDetail = undefined;
   activityRelatedPastEvents:any = undefined;
   groupedPastEvents!:Map<number, DocumentData[]>;
-  activityRelatedFutureEvents:any = undefined;
+  activityRelatedFutureEvents!:Observable<DocumentData[]>;
   isActivityDetailOpen = new BehaviorSubject(false);
   actualDate = getNowDate();
 
@@ -88,8 +88,10 @@ export class AboutpageComponent {
 
     // const activityRelatedEvents = this.assoEvents.filter((evt:any) => receivedActivity.assoEvents.includes(evt.id));
     if(!this.isActivityDetailOpen.value){
-      this.activityRelatedPastEvents = this.assoEvents.filter((relatedEvent:any) => dayjs(relatedEvent.timeStart).utc().isBefore(dayjs(this.actualDate).utc()) );
-      this.activityRelatedFutureEvents = this.assoEvents.filter((relatedEvent:any) => dayjs(relatedEvent.timeStart).utc().isAfter(dayjs(this.actualDate).utc()));
+      console.log("assoEvents ",this.assoEvents);
+      
+      this.activityRelatedPastEvents = this.assoEvents.pipe(map((evts:DocumentData[]) => evts.filter((relatedEvent:any) => dayjs(relatedEvent.timeStart).utc().isBefore(dayjs(this.actualDate).utc()) )));
+      this.activityRelatedFutureEvents = this.assoEvents.pipe(map((evts:DocumentData[]) => evts.filter((relatedEvent:any) => dayjs(relatedEvent.timeStart).utc().isAfter(dayjs(this.actualDate).utc()))));
       
       this.groupedPastEvents = this.groupBy(this.activityRelatedPastEvents);
       console.log("grouped list : ",this.groupedPastEvents);

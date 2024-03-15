@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-event-modal',
@@ -17,19 +18,27 @@ export class EventModalComponent {
   timeStart!: string;
   timeEnd!: string;
 
+  // loadingFinished = new BehaviorSubject(false);
+
   constructor(
     private readonly modalCtrl: ModalController,
   ) { }
+
+  // ionViewDidEnter(){
+  //   console.log("time start : ",this.timeStart);
+  //   console.log("time end : ",this.timeEnd);
+  //   this.loadingFinished.next(true);
+  // }
 
   confirm() {
     let entry = {
       id: this.id,
       name: this.name,
-      location: this.location ? this.location : "",
-      participants: this.participants ? this.participants : "",
-      timeStart: this.timeStart ? this.timeStart : "",
-      timeEnd: this.timeEnd ? this.timeEnd : "",
-      galleryId: this.galleryId ? this.galleryId : "",
+      location: this.location,
+      participants: this.participants,
+      timeStart: this.timeStart,
+      timeEnd: this.timeEnd,
+      galleryId: this.galleryId,
     }
 
     return this.modalCtrl.dismiss(entry, 'confirm');

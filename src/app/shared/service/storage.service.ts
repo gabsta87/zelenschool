@@ -17,8 +17,9 @@ export class StorageService {
   constructor(private readonly _db: AngularfireService){ }
 
   private async storeImage(file: File, collection:string): Promise<string> {
-    console.log("file : ",file);
-    
+    if(file == undefined || collection == "")
+      return "";
+
     // Créez une référence pour l'image
     const imageRef = ref(this.imagesRef, collection+"/"+file.name);
 

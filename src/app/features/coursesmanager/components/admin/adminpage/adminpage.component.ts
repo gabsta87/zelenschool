@@ -676,6 +676,8 @@ export class AdminpageComponent {
     const { data, role } = await modal.onWillDismiss();
 
     if (role === 'confirm') {
+      console.log("updating");
+      
       const photoAddress = await this.saveAssoEventImage(data.photo);
       data.leafletLink = photoAddress;
       this._db.updateAssoEvent(data);

@@ -22,13 +22,13 @@ export class ProjectModalComponent {
 
   confirm() {
     let entry = {
-      id: this.id ? this.id : "",
+      id: this.id,
       name: this.name,
-      author: this.author ? this.author : "",
-      date: this.date ? this.date : "",
-      description: this.description ? this.description : "",
-      imgLink: this.imgLink ? this.imgLink : "",
-      type: this.type ? this.type : "",
+      author: this.author,
+      date: this.date,
+      description: this.description,
+      imgLink: this.imgLink,
+      type: this.type,
     }
 
     return this.modalCtrl.dismiss(entry, 'confirm');

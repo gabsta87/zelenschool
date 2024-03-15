@@ -489,15 +489,17 @@ export class AngularfireService{
   }
 
   updateAssoEvent(newValue : {id:string,name?:string,galleryId?:string,leafletLink?:string,location?:string,participants?:string[],timeStart?:string,timeEnd?:string}){
-    const docRef = doc(this._dbaccess,'activities/'+newValue.id);
+    const docRef = doc(this._dbaccess,'assoEvent/'+newValue.id);
+    console.log("updating ",newValue);
+    
     return updateDoc(docRef,{
-      name:newValue?.name,
-      galleryId:newValue?.galleryId,
-      leafletLink:newValue?.leafletLink,
-      location:newValue?.location,
-      participants:newValue?.participants,
-      timeStart:newValue?.timeStart,
-      timeEnd:newValue?.timeEnd});
+      name:newValue.name?newValue.name:"",
+      galleryId:newValue.galleryId?newValue.galleryId:"",
+      leafletLink:newValue.leafletLink?newValue.leafletLink:"",
+      location:newValue.location?newValue.location:"",
+      participants:newValue.participants?newValue.participants:"",
+      timeStart:newValue.timeStart?newValue.timeStart:"",
+      timeEnd:newValue.timeEnd?newValue.timeEnd:""});
   }
 
   deleteAssoEvent(id:string){
@@ -636,12 +638,12 @@ export class AngularfireService{
   updateAssoProject(newValue:{id:string,author:string,date:string,description:string,imgLink:string,name:string,type:string}){
     const docRef = doc(this._dbaccess,'assoProjects/'+newValue.id);
     return updateDoc(docRef,{
-      author:newValue?.author,
-      date:newValue?.date,
-      description:newValue?.description,
-      imgLink:newValue?.imgLink,
-      name:newValue?.name,
-      type:newValue?.type});
+      author:newValue.author?newValue.author:"",
+      date:newValue.date?newValue.date:"",
+      description:newValue.description?newValue.description:"",
+      imgLink:newValue.imgLink?newValue.imgLink:"",
+      name:newValue.name?newValue.name:"",
+      type:newValue.type?newValue.type:""});
   }
 
 }
