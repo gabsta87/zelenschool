@@ -180,6 +180,20 @@ ion-content{
     padding-top: 10px;
 }
 
-.eventItem{
-    --min-height: 25px;
+.assoEventsGrid {
+    ion-col{
+        justify-content: center;
+        display: ruby;
+    }
+    ion-item::part(native) {
+        width: 300px;
+        --min-height: 25px;
+        cursor: default;
+        border-radius: 4px;
+
+        &:hover { // Combine the hover state with the parent selector
+            background-color: var(--ion-color-primary);
+            color: white;
+        }
+    }
 }
