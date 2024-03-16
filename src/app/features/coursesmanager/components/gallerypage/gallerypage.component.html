@@ -4,10 +4,10 @@
         <div class="topElementsGallery activitiesPart">
             <ion-grid>
                 <ion-row>
-                    <ion-col *ngFor="let activity of activities|async" class="activityCol">
-                        <ion-card button="true" (click)="openGallery(activity['link'])" class="activityItem activityItemGallery">
-                            <ion-icon [name]="activity['iconName']"></ion-icon>
-                            <ion-card-header><ion-title class="ion-no-padding">{{activity['title']}}</ion-title></ion-card-header>
+                    <ion-col *ngFor="let activity of galleries|async, let i = index" class="activityCol">
+                        <ion-card button="true" (click)="openGallery(activity['link'],i)" class="activityItemGallery">
+                            <ion-icon name="folder-outline"></ion-icon>
+                            <ion-card-header><ion-title class="ion-no-padding">{{activity['name']}}</ion-title></ion-card-header>
                             <ion-card-content>{{activity['description']}}</ion-card-content>
                         </ion-card>
                     </ion-col>

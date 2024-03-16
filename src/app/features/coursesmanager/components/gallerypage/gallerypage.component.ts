@@ -24,8 +24,7 @@ export class GallerypageComponent {
 
   imagesToDisplay !:Observable<any>;
   
-  activities = this._db.getActivitiesObs();
-  galleries = this._storage.getGalleries();
+  galleries = this._route.snapshot.data['galleries'];
   imagesCollections : {id:string,name:string,images:any}[] = [];
   openFolderIndex = -1;
   openingGalleryId :string|null = null;
@@ -67,13 +66,15 @@ export class GallerypageComponent {
     }
   }
 
-  async openGallery(galleryId:string){
-    let foundIndex = await firstValueFrom(this.galleries.pipe(map((galleriesList:any) =>
-        galleriesList.findIndex((gallery:any)=>gallery.id == galleryId )
-      )));
-
-    if(foundIndex < 0)
-      return
+  async openGallery(galleryId:string,index?:number){
+    let foundIndex = 0;
+    if(index == undefined){
+          foundIndex= await firstValueFrom(this.galleries.pipe(map((galleriesList:any) =>
+          galleriesList.findIndex((gallery:any)=>gallery.id == galleryId )
+        )));
+    }else{
+      foundIndex = index
+    }
 
     this.openFolderIndex = foundIndex;
     

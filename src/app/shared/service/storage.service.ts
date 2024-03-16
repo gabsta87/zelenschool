@@ -58,10 +58,6 @@ export class StorageService {
     return await this.storeImage(newFile,collection);
   }
 
-  getGalleries(){
-    return this._db.getGalleries();
-  }
-
   getGalleryImages(galleryId:string){
     const imgsList = this._db.getGalleryImages(galleryId);
     return imgsList;
