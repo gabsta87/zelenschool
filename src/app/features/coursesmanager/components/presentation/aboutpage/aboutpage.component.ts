@@ -1,11 +1,12 @@
 import { Component, ElementRef, EventEmitter, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonContent } from '@ionic/angular';
+import { IonContent, PopoverController } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
 import dayjs from 'dayjs';
 import { LanguageManagerService } from 'src/app/shared/service/language-manager.service';
 import { getNowDate } from 'src/app/shared/service/hour-management.service';
 import { DocumentData } from 'firebase/firestore';
+import { AssoEventPopoverComponent } from '../asso-event-popover/asso-event-popover.component';
 var customParseFormat = require('dayjs/plugin/customParseFormat')
 dayjs.extend(customParseFormat)
 
@@ -26,7 +27,12 @@ export class AboutpageComponent {
 
   private _positions : any[] = [];
   
-  constructor(private readonly _route: ActivatedRoute,private readonly _router:Router, private readonly _lang : LanguageManagerService){
+  constructor(
+    private readonly _route: ActivatedRoute,
+    private readonly _router:Router, 
+    private readonly _lang : LanguageManagerService,
+    private readonly _popOver : PopoverController
+    ){
 
     this._route.fragment.subscribe(fragment => { 
       this.fragment = fragment;
@@ -42,6 +48,7 @@ export class AboutpageComponent {
   groupedPastEvents!:Map<number, DocumentData[]>;
   activityRelatedFutureEvents:any = undefined;
   isActivityDetailOpen = new BehaviorSubject(false);
+  
   actualDate = getNowDate();
 
   ionViewWillEnter(){
@@ -120,4 +127,20 @@ export class AboutpageComponent {
 
     return map;
   }
+
+  async triggerEventInfo(assoEvent : DocumentData){
+    
+      const popover = await this._popOver.create({
+        component: AssoEventPopoverComponent,
+        componentProps:{
+          assoEvent:assoEvent
+        },
+        translucent: true,
+      });
+      popover.present();
+  
+      // const { role } = await popover.onDidDismiss();
+  }
+  
+
 }

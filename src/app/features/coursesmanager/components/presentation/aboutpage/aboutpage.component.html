@@ -65,11 +65,13 @@
                         <ion-grid *ngIf="isActivityDetailOpen.value" class="assoEventsGrid">
                             <ion-row>
                                 <ion-col>
-                                    <h3>{{words.pastEvents}}</h3>
+                                    <ion-row>
+                                        <h3>{{words.pastEvents}}</h3>
+                                    </ion-row>
                                     <ion-row *ngFor="let evtList of groupedPastEvents | keyvalue">
                                         <ion-list lines="none">
                                             <ion-label>{{evtList.key}}</ion-label>
-                                            <ion-item *ngFor="let evt of evtList.value" class="eventItem">
+                                            <ion-item *ngFor="let evt of evtList.value" class="eventItem" (click)="triggerEventInfo(evt)">
                                                 {{evt['name']}}
                                             </ion-item>
                                         </ion-list>
@@ -77,12 +79,16 @@
 
                                 </ion-col>
                                 <ion-col>
-                                    <h3>{{words.futureEvents}}</h3>
-                                    <ion-list lines="none">
-                                        <ion-item *ngFor="let evt of activityRelatedFutureEvents" class="eventItem">
-                                            {{evt.name}}
-                                        </ion-item>
-                                    </ion-list>
+                                    <ion-row>
+                                        <h3>{{words.futureEvents}}</h3>
+                                    </ion-row>
+                                    <ion-row>
+                                        <ion-list lines="none">
+                                            <ion-item *ngFor="let evt of activityRelatedFutureEvents" class="eventItem" (click)="triggerEventInfo(evt)">
+                                                {{evt.name}}
+                                            </ion-item>
+                                        </ion-list>
+                                    </ion-row>
                                 </ion-col>
                             </ion-row>
                         </ion-grid>

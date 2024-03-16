@@ -53,6 +53,7 @@ import { EventModalComponent } from './components/admin/event-modal/event-modal.
 import { ProjectModalComponent } from './components/admin/project-modal/project-modal.component';
 import { assoEventsResolver } from './resolvers/asso-events.resolver';
 import { assoEventsSnapshotResolver } from './resolvers/asso-events-snapshot.resolver';
+import { AssoEventPopoverComponent } from './components/presentation/asso-event-popover/asso-event-popover.component';
 
 
 
@@ -91,6 +92,7 @@ import { assoEventsSnapshotResolver } from './resolvers/asso-events-snapshot.res
     ProjectsPageComponent,
     EventModalComponent,
     ProjectModalComponent,
+    AssoEventPopoverComponent,
   ],
   imports: [
     SwiperModule,

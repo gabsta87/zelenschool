@@ -183,12 +183,12 @@ ion-content{
 .assoEventsGrid {
     ion-col{
         justify-content: center;
-        display: ruby;
+        display: grid;
     }
     ion-item::part(native) {
         width: 300px;
         --min-height: 25px;
-        cursor: default;
+        cursor: pointer;
         border-radius: 4px;
 
         &:hover { // Combine the hover state with the parent selector
