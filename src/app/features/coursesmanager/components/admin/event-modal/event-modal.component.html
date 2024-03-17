@@ -16,26 +16,28 @@
                 <ion-input formControlName="location"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label position="floating"> Gallery </ion-label>
-                <ion-input formControlName="galleryId"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating"> Link to flyer </ion-label>
-                <ion-input formControlName="leafletLink"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating"> Participants </ion-label>
-                <ion-input formControlName="participants"></ion-input>
-            </ion-item>
-            <ion-item>
                 <ion-label position="floating"> Date </ion-label>
-                <!-- <ion-input [(ngModel)]="timeStart" formControlName="timeStart" placeholder="DD.MM.YYYY"></ion-input> -->
                 <app-day-input formControlName="startDay"></app-day-input>
             </ion-item>
             <ion-item>
                 <ion-label position="floating"> End </ion-label>
                 <app-day-input formControlName="endDay"></app-day-input>
-                <!-- <ion-input [(ngModel)]="timeEnd" formControlName="timeEnd" placeholder="DD.MM.YYYY"></ion-input> -->
+            </ion-item>
+            <ion-item *ngIf="galleries | async as GalleriesList">
+                <ion-label position="floating"> Gallery </ion-label>
+                <ion-select aria-label="Gallery" interface="popover" placeholder="Select gallery" formControlName="galleryId">
+                    <ion-select-option value="{{gallery['id']}}" *ngFor="let gallery of GalleriesList">{{gallery['name']}}</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating"> Link to flyer </ion-label>
+                <ion-input formControlName="leafletLink"></ion-input>
+                <!-- image upload -->
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating"> Participants </ion-label>
+                <ion-input formControlName="participants"></ion-input>
+                <!-- show users list -->
             </ion-item>
         </ion-list>
         </form>

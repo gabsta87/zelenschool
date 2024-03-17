@@ -15,6 +15,8 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 URGENT :
+    ☐ project modal : correct input fields (image, date)
+    ☐ event modal : gallery selection
     ☐ Enter button not blocked on account creation when account creation is blocked (information missing)
     ☐ asso event creation : block enter/validation when data is not valid
     ☐ asso event creation : show users list (with names)
