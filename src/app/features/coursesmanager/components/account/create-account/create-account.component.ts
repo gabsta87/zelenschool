@@ -69,6 +69,9 @@ export class CreateAccountComponent {
   }
 
   async register(){
+    if(!this.profileForm.valid)
+      return;
+
     this.loading.next(true);
 
     let email = this.profileForm.get('email')?.value;
