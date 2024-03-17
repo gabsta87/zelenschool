@@ -2,15 +2,21 @@
     <ion-title>
         <h1>{{assoEvent['name']}}</h1>
     </ion-title>
-    location : {{assoEvent['location']}}
-    date : {{assoEvent['timeStart']}}
-    <ion-list>
-        <ion-label>Participants</ion-label>
-        <ion-item *ngFor="let person of assoEvent['participants']">{{person}}</ion-item>
-    </ion-list>
+    <ion-item lines="none">
+        <b>{{assoEvent['location']}} </b> <i>- {{assoEvent['timeStart']}}</i>
+    </ion-item>
+    
+    <ion-item *ngIf="assoEvent['leafletLink']">
+        <img [src]="assoEvent['leafletLink']"/>
+    </ion-item>
+
+    <ion-item *ngIf="assoEvent['galleryId'] as gallId">
+        <ion-button (click)="goToGallery(gallId)">Gallery</ion-button>
+    </ion-item>
+    
 </ion-content>
 <!-- 
-galleryId!:string;
+    galleryId!:string;
   leafletLink!:string;
   name!:string;
   participants!:string[];

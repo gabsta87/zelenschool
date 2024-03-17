@@ -28,11 +28,13 @@
             </ion-item>
             <ion-item>
                 <ion-label position="floating"> Date </ion-label>
-                <ion-input [(ngModel)]="timeStart" class="dateInput"></ion-input>
+                <!-- <ion-input [(ngModel)]="timeStart" formControlName="timeStart" placeholder="DD.MM.YYYY"></ion-input> -->
+                <app-day-input></app-day-input>
             </ion-item>
             <ion-item>
                 <ion-label position="floating"> End </ion-label>
-                <ion-input [(ngModel)]="timeEnd"></ion-input>
+                <app-day-input></app-day-input>
+                <!-- <ion-input [(ngModel)]="timeEnd" formControlName="timeEnd" placeholder="DD.MM.YYYY"></ion-input> -->
             </ion-item>
         </ion-list>
     </ion-content>

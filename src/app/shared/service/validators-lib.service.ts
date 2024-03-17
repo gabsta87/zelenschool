@@ -87,3 +87,30 @@ export function bdValidator(): ValidatorFn {
     return null;
   };
 }
+
+export function dayValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+
+    const expression = RegExp("^((\\d{1,2})[- /.]){2}(?:\\d{2}){1,2}$");
+
+    let parts = control.value.split(/[- /.]/); 
+    let year = parts[2];
+    let month = parts[1];
+    let day = parts[0];
+
+    if((year >= 100 && year <= 1900) || year <= 0)
+      return { 'invalidDate': true };
+
+    if(month < 0 || month > 12)
+      return { 'invalidDate': true };
+
+    if(day < 0 || day > 31)
+      return { 'invalidDate': true };
+
+    if (!expression.test(control.value))
+      return { 'invalidDate': true };
+
+    return null;
+  };
+}
+

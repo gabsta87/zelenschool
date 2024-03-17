@@ -89,10 +89,6 @@ export class AboutpageComponent {
     this._positions = this.divs.filter((e:any) => e.nativeElement.id.includes("anchor_"))
   }
 
-  goToGallery(galleryId:string){
-    this._router.navigate(["gallery"],{fragment:galleryId});
-  }
-
   displayActivities(){
 
     // const activityRelatedEvents = this.assoEvents.filter((evt:any) => receivedActivity.assoEvents.includes(evt.id));
@@ -133,9 +129,10 @@ export class AboutpageComponent {
       const popover = await this._popOver.create({
         component: AssoEventPopoverComponent,
         componentProps:{
-          assoEvent:assoEvent
+          assoEvent:assoEvent,
         },
-        translucent: true,
+        showBackdrop: false,
+
       });
       popover.present();
   

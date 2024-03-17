@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
+import { StorageService } from 'src/app/shared/service/storage.service';
 
 @Component({
   selector: 'app-event-modal',
@@ -8,6 +10,9 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./event-modal.component.scss']
 })
 export class EventModalComponent {
+
+
+  
 
   id!: string;
   galleryId!: string;
@@ -18,17 +23,16 @@ export class EventModalComponent {
   timeStart!: string;
   timeEnd!: string;
 
-  // loadingFinished = new BehaviorSubject(false);
-
   constructor(
     private readonly modalCtrl: ModalController,
-  ) { }
+    private readonly _storage : StorageService,
+  ) {
+    // this.profileForm = new FormGroup({
+    //   timeStart: new FormControl('',
+    //   ])),
 
-  // ionViewDidEnter(){
-  //   console.log("time start : ",this.timeStart);
-  //   console.log("time end : ",this.timeEnd);
-  //   this.loadingFinished.next(true);
-  // }
+    // })
+  }
 
   confirm() {
     let entry = {

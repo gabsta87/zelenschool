@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DocumentData } from 'firebase/firestore';
 
 @Component({
@@ -8,4 +9,11 @@ import { DocumentData } from 'firebase/firestore';
 })
 export class AssoEventPopoverComponent {
   assoEvent!:DocumentData;
+
+  constructor(private readonly _router : Router){ }
+
+  goToGallery(galleryId:string){
+    this._router.navigate(["gallery"],{fragment:galleryId});
+  }
+
 }
