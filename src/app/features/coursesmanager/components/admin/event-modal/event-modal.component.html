@@ -34,10 +34,13 @@
                 <ion-input formControlName="leafletLink"></ion-input>
                 <!-- image upload -->
             </ion-item>
-            <ion-item>
-                <ion-label position="floating"> Participants </ion-label>
-                <ion-input formControlName="participants"></ion-input>
+            <ion-item *ngIf="users | async as usersList">
+                <ion-label> Participants </ion-label>
+                <!-- <ion-input formControlName="participants"></ion-input> -->
                 <!-- show users list -->
+                <ion-list lines="none">
+                    <ion-item *ngFor="let user of usersList">{{user['f_name']}} {{user['l_name']}}</ion-item>
+                </ion-list>
             </ion-item>
         </ion-list>
         </form>
@@ -48,7 +51,8 @@
                 <ion-button (click)="cancel()">Cancel</ion-button>
             </ion-buttons>
             <ion-buttons slot="end">
-                <ion-button (click)="confirm()" [strong]="true" [disabled]="!dayInputValid">Confirm</ion-button>
+                <ion-button type="submit" [strong]="true" [disabled]="!dayInputValid || !profileForm.valid">Confirm</ion-button>
+                <!-- <ion-button  type="submit" [strong]="true" [disabled]="!profileForm.valid">Confirm</ion-button> -->
             </ion-buttons>
         </ion-toolbar>
     </ion-footer>
