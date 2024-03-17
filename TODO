@@ -15,6 +15,14 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 URGENT :
+    ☐ Enter button not blocked on account creation when account creation is blocked (information missing)
+    ☐ asso event creation : block enter/validation when data is not valid
+    ☐ asso event creation : show users list (with names)
+    ☐ asso event creation : select gallery with dropdown list
+    ☐ (Asso event : users registration ?? )
+    ☐ asso event creation : check wrong data when validating invalid data with Enter button 
+
+
     ☐ Display of Center information for all users (on click from schedule or hover)
     ☐ Modify activities admin panel accordingly
     ☐ Before release : Change Zelenschool to Ukraine-Reborn
@@ -22,7 +30,7 @@ URGENT :
     ☐ When deleting activity, check how image gallery gets deleted 
     ☐ Delete old image when modifying asso Event/project/center image
     ☐ Delete activities from DB, angularFireService, admin resolver, galleries resolver
-    ☐ Fix image galleries
+    ✔ Fix image galleries @done(24-03-17 15:17)
     ✔ Centers' page : make translation @done(24-03-12 23:56)
     ✔ Finish activities panel @done(24-03-12 23:57)
     ✔ Admin : change partners to observable in admin panel (add with modal) @done(24-02-12 18:40)
@@ -43,9 +51,10 @@ URGENT :
     ✔ s-permit number mandatory for users in order to be able to save informations @done(23-08-24 13:16)
     ✔ All connexion trys from a same computer end up loging in on the same account, even with different logs after logout @done(23-12-21 20:00)
 
+    ☐ Galleries : show which gallery is open
+    ☐ asso events resolver : load galleries names and 
     ☐ No photo management for contact persons of Association Centers
     ☐ Child creation : Enter button
-    ☐ Enter button not blocked on account creation when account creation is blocked (information missing)
     ☐ admin page : when deleting user, remove from auth
     ✘ Remove links from Activities ? Since events have their own galleries @cancelled(24-02-09 13:56)
     ✔ Activities Cards should be designed better for mobile version @done(24-02-09 13:56)

@@ -91,6 +91,9 @@ export function bdValidator(): ValidatorFn {
 export function dayValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
 
+    if(control.value == null || control.value == "")
+      return null;
+
     const expression = RegExp("^((\\d{1,2})[- /.]){2}(?:\\d{2}){1,2}$");
 
     let parts = control.value.split(/[- /.]/); 

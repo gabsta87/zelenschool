@@ -1,13 +1,20 @@
-import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { bdValidator, dayValidator } from 'src/app/shared/service/validators-lib.service';
+import { Component, forwardRef } from '@angular/core';
+import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { dayValidator } from 'src/app/shared/service/validators-lib.service';
 
 @Component({
   selector: 'app-day-input',
   templateUrl: './day-input.component.html',
-  styleUrls: ['./day-input.component.scss']
+  styleUrls: ['./day-input.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => DayInputComponent),
+      multi: true
+    }
+  ]
 })
-export class DayInputComponent {
+export class DayInputComponent implements ControlValueAccessor{
   
   profileForm!:FormGroup<{
     day:FormControl<string|null>,
@@ -18,6 +25,26 @@ export class DayInputComponent {
       day: new FormControl('',
               dayValidator(),
             )}) ;
+  }
+
+  writeValue(obj: any): void {
+    this.profileForm.get("day")?.setValue(obj);
+  }
+
+  registerOnChange(fn: any): void {
+    this.profileForm.get("day")?.valueChanges.subscribe(fn);
+  }
+
+  registerOnTouched(fn: any): void {
+    this.profileForm.get("day")?.valueChanges.subscribe(fn);
+  }
+
+  setDisabledState?(isDisabled: boolean): void {
+    if (isDisabled) {
+      this.profileForm.disable();
+    } else {
+      this.profileForm.enable();
+    }
   }
 
   onInput(ev:any) {
