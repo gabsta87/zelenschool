@@ -36,7 +36,7 @@
                 <ng-template #image>
                     <ion-img [src]="leafletLink" (click)="galleryPhotoUpload.click()"></ion-img>
                 </ng-template>
-                <input type="file" (change)="addImage($event)" accept="*" required style="display: none;" #galleryPhotoUpload>
+                <input type="file" (change)="addImage($event)" accept="image/*" required style="display: none;" #galleryPhotoUpload>
             </ion-item>
 
 

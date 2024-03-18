@@ -56,6 +56,7 @@ import { assoEventsSnapshotResolver } from './resolvers/asso-events-snapshot.res
 import { AssoEventPopoverComponent } from './components/presentation/asso-event-popover/asso-event-popover.component';
 import { GalleryResolver } from './resolvers/gallery.resolver';
 import { DayInputComponent } from './components/common/day-input/day-input.component';
+import { ImageInputComponent } from './components/common/image-input/image-input.component';
 
 
 
@@ -96,6 +97,7 @@ import { DayInputComponent } from './components/common/day-input/day-input.compo
     ProjectModalComponent,
     AssoEventPopoverComponent,
     DayInputComponent,
+    ImageInputComponent,
   ],
   imports: [
     SwiperModule,

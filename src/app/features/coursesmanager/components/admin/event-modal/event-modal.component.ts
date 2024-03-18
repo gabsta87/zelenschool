@@ -93,10 +93,12 @@ export class EventModalComponent {
 
   async addImage(event: any) {
     this.leafletFile = event.target.files[0];
+    const leafletImageUrl = URL.createObjectURL(this.leafletFile);
+    
     if(this.leafletLink != undefined)
       this.oldImageAddress = this.leafletLink;
-    console.log("leaflet file : ",this.leafletFile);
-    // this.leafletLink = this.leafletFile.
+
+    this.leafletLink = leafletImageUrl;
   }
 
 }

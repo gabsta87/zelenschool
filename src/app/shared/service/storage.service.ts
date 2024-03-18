@@ -20,7 +20,7 @@ export class StorageService {
     if(file == undefined || collection == "")
       return "";
 
-    // Créez une référence pour l'image
+    // Creating image reference
     const imageRef = ref(this.imagesRef, collection+"/"+file.name);
 
     const uploadTask = uploadBytesResumable(imageRef, file);
@@ -30,10 +30,10 @@ export class StorageService {
     //   })
     // ).subscribe();
 
-    // Uploadez l'image
+    // Upload image
     await uploadBytes(imageRef, file);
 
-    // Récupérez l'URL de l'image
+    // get image URL
     const downloadURL = await getDownloadURL(imageRef);
     return downloadURL;
   }
@@ -54,14 +54,8 @@ export class StorageService {
     return this.addImage("partners",newFile);
   }
 
-  private async addImage2(collection:string,newFile:File){
-    return await this.storeImage(newFile,collection);
-  }
-
   private async addImage(collection:string,newFile:File){
     const link = await this.storeImage(newFile,collection);
-    console.log("new file : ",newFile);
-    console.log("image ",newFile.name," in collection ",collection," at address ",link);
     this._db.addImage({collection : collection, link : link, name: newFile.name});
     return link;
   }
