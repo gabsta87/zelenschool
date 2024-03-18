@@ -1,0 +1,5 @@
+<ion-icon *ngIf="!imageSource; else image" name="image-outline" (click)="galleryPhotoUpload.click()"></ion-icon>
+<ng-template #image>
+    <ion-img [src]="imageSource" (click)="galleryPhotoUpload.click()"></ion-img>
+</ng-template>
+<input type="file" (change)="loadImage($event)" accept="image/*" required style="display: none;" #galleryPhotoUpload>
