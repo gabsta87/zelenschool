@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { getApp } from "firebase/app";
-import { DocumentData } from 'firebase/firestore';
+import { DocumentData, deleteDoc } from 'firebase/firestore';
 import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 import { firstValueFrom } from 'rxjs';
 import { AngularfireService } from './angularfire.service';
@@ -112,6 +112,11 @@ export class StorageService {
 
     // TODO see if the file must be deleted from firebase anyway or not
     this._db.deleteImage(image.id);
+  }
+
+  deleteImageFromURL(url:string){
+    const fileRef = ref(this.storage,url);
+    deleteObject(fileRef);
   }
 
 }

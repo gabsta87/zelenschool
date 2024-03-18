@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { DocumentData } from 'firebase/firestore';
@@ -11,7 +11,7 @@ import { StorageService } from 'src/app/shared/service/storage.service';
   templateUrl: './event-modal.component.html',
   styleUrls: ['./event-modal.component.scss']
 })
-export class EventModalComponent {
+export class EventModalComponent{
 
   profileForm!:FormGroup<{
     name:FormControl<string|null>,
@@ -61,9 +61,9 @@ export class EventModalComponent {
   }
 
   confirm() {
-    this.profileForm.markAllAsTouched();
+    // this.profileForm.markAllAsTouched();
 
-    console.log(this.profileForm);
+    console.log("confirm method entered",this.profileForm);
     
     if(!this.profileForm.valid)
       return;
@@ -101,4 +101,9 @@ export class EventModalComponent {
     this.leafletLink = leafletImageUrl;
   }
 
+  debug(){
+    console.log("profileForm : ",this.profileForm);
+    
+    console.log("profileForm value : ",this.profileForm.valid);
+  }
 }

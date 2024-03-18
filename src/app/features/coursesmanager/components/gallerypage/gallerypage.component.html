@@ -8,7 +8,7 @@
                         <ion-card button="true" (click)="openGallery(activity['link'],i)" class="activityItemGallery">
                             <ion-icon name="folder-outline"></ion-icon>
                             <ion-card-header><ion-title class="ion-no-padding">{{activity['name']}}</ion-title></ion-card-header>
-                            <ion-card-content>{{activity['description']}}</ion-card-content>
+                            <ion-card-content *ngIf="activity['description']">{{activity['description']}}</ion-card-content>
                         </ion-card>
                     </ion-col>
                 </ion-row>

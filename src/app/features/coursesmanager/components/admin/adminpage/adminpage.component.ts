@@ -676,19 +676,13 @@ export class AdminpageComponent {
     const { data, role } = await modal.onWillDismiss();
 
     if (role === 'confirm') {
-      console.log("data : ",data);
-      
-      const photoAddress = await this.saveAssoEventImage(data.imageFile);
-      data.leafletLink = photoAddress;
-      console.log("photoAddress : ",photoAddress);
-      
+      if(data.imageFile){
+        const photoAddress = await this.saveAssoEventImage(data.imageFile);
+        data.leafletLink = photoAddress;
+        if(data.oldImageAddress)
+          this.storage.deleteImageFromURL(data.oldImageAddress);
+      }
       this._db.updateAssoEvent(data);
-    
-      console.log("old image address : ", data.oldImageAddress);
-      // TODO remove old image
-      // if(data.oldImageAddress != undefined){
-      //   this._db.deleteImage(data.oldImageAddress)
-      // }
     }
   }
 

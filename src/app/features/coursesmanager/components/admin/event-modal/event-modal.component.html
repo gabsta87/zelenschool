@@ -5,7 +5,7 @@
         </ion-toolbar>
     </ion-header>
     <ion-content >
-        <form (ngSubmit)="confirm()" [formGroup]="profileForm" (keydown.enter)="confirm()">
+        <form (ngSubmit)="confirm()" [formGroup]="profileForm">
         <ion-list>
             <ion-item>
                 <ion-label position="floating">Name</ion-label>
@@ -26,11 +26,12 @@
             <ion-item *ngIf="galleries | async as GalleriesList">
                 <ion-label position="floating"> Gallery </ion-label>
                 <ion-select aria-label="Gallery" interface="popover" placeholder="Select gallery" formControlName="galleryId">
+                    <ion-select-option value="">None</ion-select-option>
                     <ion-select-option value="{{gallery['id']}}" *ngFor="let gallery of GalleriesList">{{gallery['name']}}</ion-select-option>
                 </ion-select>
             </ion-item>
             <ion-item *ngIf="!isLoadingGallery.value; else loadingGallery">
-                <ion-label > Flyer </ion-label>
+                <ion-label> Flyer </ion-label>
             
                 <ion-icon *ngIf="!leafletLink; else image" name="image-outline" (click)="galleryPhotoUpload.click()"></ion-icon>
                 <ng-template #image>
@@ -63,7 +64,7 @@
             </ion-buttons>
             <ion-buttons slot="end">
                 <!-- <ion-button type="submit" [strong]="true" [disabled]="!dayInputValid || !profileForm.valid">Confirm</ion-button> -->
-                <ion-button  type="submit" [strong]="true" [disabled]="!profileForm.valid">Confirm</ion-button>
+                <ion-button (click)="debug()" type="submit" [strong]="true" [disabled]="!profileForm.valid">Confirm</ion-button>
             </ion-buttons>
         </ion-toolbar>
     </ion-footer>
