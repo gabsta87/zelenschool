@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { DocumentData } from 'firebase/firestore';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { StorageService } from 'src/app/shared/service/storage.service';
 
@@ -22,16 +22,20 @@ export class EventModalComponent {
     galleryId:FormControl<string|null>,
   }>;
 
-  id!: string;
-  galleryId!: string;
-  leafletLink!: string;
-  location!: string;
-  name!: string;
-  participants!: string[];
-  timeStart!: string;
-  timeEnd!: string;
+  @Input() id!: string;
+  @Input() galleryId!: string;
+  @Input() leafletLink!: string;
+  @Input() location!: string;
+  @Input() name!: string;
+  @Input() participants!: string[];
+  @Input() timeStart!: string;
+  @Input() timeEnd!: string;
 
   galleries!: Observable<DocumentData[]>;
+  isLoadingGallery = new BehaviorSubject(false);
+  leafletFile!:File;
+  oldImageAddress!:string;
+  
   users!: Observable<DocumentData[]>;
 
   constructor(
@@ -57,6 +61,10 @@ export class EventModalComponent {
   }
 
   confirm() {
+    this.profileForm.markAllAsTouched();
+
+    console.log(this.profileForm);
+    
     if(!this.profileForm.valid)
       return;
 
@@ -68,9 +76,10 @@ export class EventModalComponent {
       timeStart: this.profileForm.get('startDay')?.value,
       timeEnd: this.profileForm.get('endDay')?.value,
       galleryId: this.profileForm.get('galleryId')?.value,
-      participants : this.participants
+      participants : this.participants,
+      imageFile : this.leafletFile,
+      oldImageAddress : this.oldImageAddress,
     }
-
     return this.modalCtrl.dismiss(entry, 'confirm');
   }
 
@@ -78,8 +87,16 @@ export class EventModalComponent {
     return this.modalCtrl.dismiss(undefined, 'cancel');
   }
 
-  get dayInputValid(): boolean {
-    return (this.profileForm.get('startDay')?.valid && this.profileForm.get('endDay')?.valid) || false;
+  // get dayInputValid(): boolean {
+  //   return (this.profileForm.get('startDay')?.valid && this.profileForm.get('endDay')?.valid) || false;
+  // }
+
+  async addImage(event: any) {
+    this.leafletFile = event.target.files[0];
+    if(this.leafletLink != undefined)
+      this.oldImageAddress = this.leafletLink;
+    console.log("leaflet file : ",this.leafletFile);
+    // this.leafletLink = this.leafletFile.
   }
 
 }

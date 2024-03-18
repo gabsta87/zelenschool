@@ -54,8 +54,20 @@ export class StorageService {
     return this.addImage("partners",newFile);
   }
 
-  private async addImage(collection:string,newFile:File){
+  private async addImage2(collection:string,newFile:File){
     return await this.storeImage(newFile,collection);
+  }
+
+  private async addImage(collection:string,newFile:File){
+    const link = await this.storeImage(newFile,collection);
+    console.log("new file : ",newFile);
+    console.log("image ",newFile.name," in collection ",collection," at address ",link);
+    this._db.addImage({collection : collection, link : link, name: newFile.name});
+    return link;
+  }
+
+  getGalleries(){
+    return this._db.getGalleries();
   }
 
   getGalleryImages(galleryId:string){

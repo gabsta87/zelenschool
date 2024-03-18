@@ -300,8 +300,6 @@
 
                     <ion-button (click)="galleryPhotoUpload.click()">Add photo</ion-button>
                     <input type="file" (change)="addImageToGallery($event)" accept="*" required style="display: none;" #galleryPhotoUpload>
-                    
-
                 </div>
                 <div *ngIf="selectedGallery >= 0">
                     <ion-grid *ngIf="!isLoadingGallery.value; else loadingGallery">

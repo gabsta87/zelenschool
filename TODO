@@ -16,14 +16,14 @@ Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManag
 
 URGENT :
     ☐ project modal : correct input fields (image, date)
-    ☐ event modal : gallery selection
+    ✔ event modal : gallery selection @done(24-03-18 13:50)
     ☐ Enter button not blocked on account creation when account creation is blocked (information missing)
     ☐ asso event creation : block enter/validation when data is not valid
-    ☐ asso event creation : show users list (with names)
-    ☐ asso event creation : select gallery with dropdown list
+    ✔ asso event creation : show users list (with names) @done(24-03-18 13:50)
+    ✔ asso event creation : select gallery with dropdown list @done(24-03-18 13:50)
     ☐ (Asso event : users registration ?? )
     ☐ asso event creation : check wrong data when validating invalid data with Enter button 
-
+    ☐ asso event : when uploading new image, remove old image from storage
 
     ☐ Display of Center information for all users (on click from schedule or hover)
     ☐ Modify activities admin panel accordingly

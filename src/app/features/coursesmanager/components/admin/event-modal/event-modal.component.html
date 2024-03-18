@@ -4,8 +4,8 @@
             <ion-title>{{name}}</ion-title>
         </ion-toolbar>
     </ion-header>
-    <ion-content (keydown.enter)="confirm()">
-        <form (ngSubmit)="confirm()" [formGroup]="profileForm">
+    <ion-content >
+        <form (ngSubmit)="confirm()" [formGroup]="profileForm" (keydown.enter)="confirm()">
         <ion-list>
             <ion-item>
                 <ion-label position="floating">Name</ion-label>
@@ -29,15 +29,26 @@
                     <ion-select-option value="{{gallery['id']}}" *ngFor="let gallery of GalleriesList">{{gallery['name']}}</ion-select-option>
                 </ion-select>
             </ion-item>
-            <ion-item>
-                <ion-label position="floating"> Link to flyer </ion-label>
-                <ion-input formControlName="leafletLink"></ion-input>
-                <!-- image upload -->
+            <ion-item *ngIf="!isLoadingGallery.value; else loadingGallery">
+                <ion-label > Flyer </ion-label>
+            
+                <ion-icon *ngIf="!leafletLink; else image" name="image-outline" (click)="galleryPhotoUpload.click()"></ion-icon>
+                <ng-template #image>
+                    <ion-img [src]="leafletLink" (click)="galleryPhotoUpload.click()"></ion-img>
+                </ng-template>
+                <input type="file" (change)="addImage($event)" accept="*" required style="display: none;" #galleryPhotoUpload>
             </ion-item>
+
+
+            <ng-template #loadingGallery>
+                <ion-item>
+                    <ion-label position="floating"> Link to flyer </ion-label>
+                    <ion-spinner>Loading</ion-spinner>
+                </ion-item>
+            </ng-template>
+
             <ion-item *ngIf="users | async as usersList">
                 <ion-label> Participants </ion-label>
-                <!-- <ion-input formControlName="participants"></ion-input> -->
-                <!-- show users list -->
                 <ion-list lines="none">
                     <ion-item *ngFor="let user of usersList">{{user['f_name']}} {{user['l_name']}}</ion-item>
                 </ion-list>
@@ -51,8 +62,8 @@
                 <ion-button (click)="cancel()">Cancel</ion-button>
             </ion-buttons>
             <ion-buttons slot="end">
-                <ion-button type="submit" [strong]="true" [disabled]="!dayInputValid || !profileForm.valid">Confirm</ion-button>
-                <!-- <ion-button  type="submit" [strong]="true" [disabled]="!profileForm.valid">Confirm</ion-button> -->
+                <!-- <ion-button type="submit" [strong]="true" [disabled]="!dayInputValid || !profileForm.valid">Confirm</ion-button> -->
+                <ion-button  type="submit" [strong]="true" [disabled]="!profileForm.valid">Confirm</ion-button>
             </ion-buttons>
         </ion-toolbar>
     </ion-footer>
