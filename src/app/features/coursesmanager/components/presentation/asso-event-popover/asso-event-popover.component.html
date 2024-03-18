@@ -6,11 +6,11 @@
         <b>{{assoEvent['location']}} </b> <i>- {{assoEvent['timeStart']}}</i>
     </ion-item>
     
-    <ion-item *ngIf="assoEvent['leafletLink']">
-        <img [src]="assoEvent['leafletLink']"/>
+    <ion-item *ngIf="assoEvent['leafletLink']" lines="none">
+        <ion-img [src]="assoEvent['leafletLink']"></ion-img>
     </ion-item>
 
-    <ion-item *ngIf="assoEvent['galleryId'] as gallId">
+    <ion-item *ngIf="assoEvent['galleryId'] as gallId" lines="none">
         <ion-button (click)="goToGallery(gallId)">Gallery</ion-button>
     </ion-item>
     
