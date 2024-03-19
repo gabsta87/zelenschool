@@ -15,13 +15,13 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 URGENT :
-    ☐ project modal : correct input fields (image, date)
-    ☐ admin page : integration center upload images
-    ☐ Enter button not blocked on account creation when account creation is blocked (information missing)
-    ☐ asso event creation : block enter/validation when data is not valid
+    ☐ Integration Center : Correct image upload/input ☐ admin page : integration center upload images
     ☐ (Asso event : users registration ?? )
-    ☐ asso event creation : check wrong data when validating invalid data with Enter button 
-    ☐ asso event : when uploading new image, remove old image from storage
+    ✔ Enter button not blocked on account creation when account creation is blocked (information missing) @done(24-03-19 13:35)
+    ✔ asso event creation : block enter/validation when data is not valid @done(24-03-19 13:33)
+    ✔ asso event creation : check wrong data when validating invalid data with Enter button @done(24-03-19 13:32)
+    ✔ asso event : when uploading new image, remove old image from storage @done(24-03-19 13:32)
+    ✔ project modal : correct input fields (image, date) @done(24-03-19 13:32)
     ✔ event modal : gallery selection @done(24-03-18 13:50)
     ✔ asso event creation : show users list (with names) @done(24-03-18 13:50)
     ✔ asso event creation : select gallery with dropdown list @done(24-03-18 13:50)

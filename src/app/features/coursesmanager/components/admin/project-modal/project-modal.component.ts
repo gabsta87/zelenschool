@@ -47,6 +47,9 @@ export class ProjectModalComponent {
   }
 
   confirm() {
+    if(!this.profileForm.valid)
+      return;
+
     let entry = {
       id: this.id,
       name: this.profileForm.get('name')?.value,

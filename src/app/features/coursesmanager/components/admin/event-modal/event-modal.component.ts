@@ -61,8 +61,8 @@ export class EventModalComponent{
   }
 
   confirm() {
-    // if(!this.profileForm.valid)
-    //   return;
+    if(!this.profileForm.valid)
+      return;
 
     let entry = {
       id: this.id,
