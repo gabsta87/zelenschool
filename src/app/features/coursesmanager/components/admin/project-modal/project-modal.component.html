@@ -4,33 +4,41 @@
             <ion-title>{{name}}</ion-title>
         </ion-toolbar>
     </ion-header>
-    <ion-content (keydown.enter)="confirm()">
-        <ion-list>
-            <ion-item>
-                <ion-label position="floating">Name</ion-label>
-                <ion-input [(ngModel)]="name"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating"> Author </ion-label>
-                <ion-input [(ngModel)]="author"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating"> date </ion-label>
-                <ion-input [(ngModel)]="date"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating"> Description </ion-label>
-                <ion-input [(ngModel)]="description"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating"> Image </ion-label>
-                <ion-input [(ngModel)]="imgLink"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating"> type </ion-label>
-                <ion-input [(ngModel)]="type"></ion-input>
-            </ion-item>
-        </ion-list>
+    <ion-content>
+        <form (ngSubmit)="confirm()" [formGroup]="profileForm" (keydown.enter)="confirm()">
+            <ion-list>
+                <ion-item>
+                    <ion-label position="floating">Name</ion-label>
+                    <ion-input formControlName="name"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">Author</ion-label>
+                    <ion-input formControlName="author"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">Date</ion-label>
+                    <app-day-input formControlName="date"></app-day-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">Description</ion-label>
+                    <ion-input formControlName="description"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">Type</ion-label>
+                    <ion-input formControlName="type"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label >Image</ion-label>
+
+                    <ion-icon *ngIf="!imgLink; else image" name="image-outline" (click)="galleryPhotoUpload.click()"></ion-icon>
+                    <ng-template #image>
+                        <ion-img [src]="imgLink" (click)="galleryPhotoUpload.click()"></ion-img>
+                    </ng-template>
+                    <input type="file" (change)="addImage($event)" accept="image/*" required style="display: none;" #galleryPhotoUpload>
+
+                </ion-item>
+            </ion-list>
+        </form>
     </ion-content>
     <ion-footer>
         <ion-toolbar>
@@ -38,7 +46,7 @@
                 <ion-button (click)="cancel()">Cancel</ion-button>
             </ion-buttons>
             <ion-buttons slot="end">
-                <ion-button (click)="confirm()" [strong]="true" [disabled]="false">Confirm</ion-button>
+                <ion-button (click)="confirm()" type="submit" [strong]="true" [disabled]="!profileForm.valid">Confirm</ion-button>
             </ion-buttons>
         </ion-toolbar>
     </ion-footer>

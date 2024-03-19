@@ -490,7 +490,6 @@ export class AngularfireService{
 
   updateAssoEvent(newValue : {id:string,name?:string,galleryId?:string,leafletLink?:string,location?:string,participants?:string[],timeStart?:string,timeEnd?:string}){
     const docRef = doc(this._dbaccess,'assoEvent/'+newValue.id);
-    console.log("updating ",newValue);
     
     return updateDoc(docRef,{
       name:newValue.name?newValue.name:"",
@@ -635,8 +634,9 @@ export class AngularfireService{
     deleteDoc(docRef);
   }
 
-  updateAssoProject(newValue:{id:string,author:string,date:string,description:string,imgLink:string,name:string,type:string}){
+  updateAssoProject(newValue:{id:string,author?:string,date?:string,description?:string,imgLink?:string,name?:string,type?:string}){
     const docRef = doc(this._dbaccess,'assoProjects/'+newValue.id);
+    
     return updateDoc(docRef,{
       author:newValue.author?newValue.author:"",
       date:newValue.date?newValue.date:"",
@@ -645,7 +645,6 @@ export class AngularfireService{
       name:newValue.name?newValue.name:"",
       type:newValue.type?newValue.type:""});
   }
-
 }
 
 export interface UserInfos {

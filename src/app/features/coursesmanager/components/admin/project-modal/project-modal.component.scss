@@ -1,0 +1,15 @@
+ion-img{
+    height: 100px;
+    cursor: pointer;
+    border: 1px dashed var(--ion-color-primary);
+    border-radius: 5px;
+}
+ion-icon{
+    height: 100px;
+    width: 100px;
+    cursor: pointer;
+    border-width: 1px;
+    border-color: var(--ion-color-primary);
+    border-radius: 5px;
+    border-style: dashed;
+}

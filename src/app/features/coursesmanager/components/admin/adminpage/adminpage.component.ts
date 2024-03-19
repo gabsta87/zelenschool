@@ -375,12 +375,13 @@ export class AdminpageComponent {
     return downloadUrl;
   }
 
-  onFileSelected(event: any): void {
+  onFileSelected(event: any): string {
     this.photoChanged.next(true);
     const file: File = event.target.files[0];
     this.imageFile = file;
 
     this.tempImage = URL.createObjectURL(file);
+    return URL.createObjectURL(file);
   }
 
   // Partners management
@@ -653,6 +654,10 @@ export class AdminpageComponent {
     if (!response)
       return;
 
+    let assoEvt = await this._db.getAssoEvent(id);
+    if(assoEvt && assoEvt['leafletLink'])
+      this.storage.deleteImageFromURL(assoEvt['leafletLink']);
+
     this._db.deleteAssoEvent(id);
   }
 
@@ -707,6 +712,10 @@ export class AdminpageComponent {
     if (!response)
       return;
 
+    let assoProject = await this._db.getAssoProject(id);
+    if(assoProject && assoProject['imgLink'])
+      this.storage.deleteImageFromURL(assoProject['imgLink']);
+
     this._db.deleteAssoProject(id);
   }
 
@@ -727,35 +736,18 @@ export class AdminpageComponent {
     modal.present();
 
     const { data, role } = await modal.onWillDismiss();
-
+    
     if (role === 'confirm') {
-      const photoAddress = await this.saveProjectImage(data.photo);
-      data.imgLink = photoAddress;
+      
+      if(data.imgFile){
+        const photoAddress = await this.saveProjectImage(data.imgFile);
+        data.imgLink = photoAddress;
+
+        if(data.oldImageAddress)
+          this.storage.deleteImageFromURL(data.oldImageAddress);
+        
+      }
       this._db.updateAssoProject(data);
     }
   }
-
-  // Activities management
-
-  // setIconName(activity: any, name: string) {
-  //   activity.iconName = name;
-  // }
-
-  // createActivity() {
-  //   (this.activities as {}[]).unshift({ id: undefined, link: "", title: "", iconName: "add-circle-outline", description: "" })
-  // }
-
-  // deleteActivity(id: string, index: number) {
-  //   this._db.deleteActivity(id);
-  //   (this.activities as {}[]).splice(index, 1);
-  // }
-
-  // async updateActivity(activity: any) {
-  //   if (activity.id == undefined) {
-  //     const result = await this._db.createActivity(activity);
-  //     activity.id = result.id;
-  //   } else {
-  //     this._db.updateActivity(activity);
-  //   }
-  // }
 }

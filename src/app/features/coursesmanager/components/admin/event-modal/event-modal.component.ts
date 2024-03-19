@@ -5,6 +5,7 @@ import { DocumentData } from 'firebase/firestore';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { AngularfireService } from 'src/app/shared/service/angularfire.service';
 import { StorageService } from 'src/app/shared/service/storage.service';
+import { dayValidator } from 'src/app/shared/service/validators-lib.service';
 
 @Component({
   selector: 'app-event-modal',
@@ -41,7 +42,6 @@ export class EventModalComponent{
   constructor(
     private readonly modalCtrl: ModalController,
     private readonly _db : AngularfireService,
-    private readonly _storage : StorageService,
   ) {
     this.galleries = this._db.getGalleries();
     this.users = this._db.getUsers().pipe(map((users:DocumentData[]) => users.filter((user:DocumentData) => this.participants.includes(user['id']))))
@@ -52,8 +52,8 @@ export class EventModalComponent{
       name: new FormControl(this.name, Validators.required),
       location: new FormControl(this.location),
       leafletLink: new FormControl(this.leafletLink),
-      startDay: new FormControl(this.timeStart),
-      endDay: new FormControl(this.timeEnd),
+      startDay: new FormControl(this.timeStart,dayValidator()),
+      endDay: new FormControl(this.timeEnd,dayValidator()),
       galleryId: new FormControl(this.galleryId),
     });
     if(!this.participants)
@@ -61,12 +61,8 @@ export class EventModalComponent{
   }
 
   confirm() {
-    // this.profileForm.markAllAsTouched();
-
-    console.log("confirm method entered",this.profileForm);
-    
-    if(!this.profileForm.valid)
-      return;
+    // if(!this.profileForm.valid)
+    //   return;
 
     let entry = {
       id: this.id,
@@ -99,11 +95,5 @@ export class EventModalComponent{
       this.oldImageAddress = this.leafletLink;
 
     this.leafletLink = leafletImageUrl;
-  }
-
-  debug(){
-    console.log("profileForm : ",this.profileForm);
-    
-    console.log("profileForm value : ",this.profileForm.valid);
   }
 }
