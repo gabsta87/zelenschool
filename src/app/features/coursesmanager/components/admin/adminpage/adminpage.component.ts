@@ -9,12 +9,12 @@ import { getNowDate } from 'src/app/shared/service/hour-management.service';
 import { StorageService } from 'src/app/shared/service/storage.service';
 import { UsermanagementService } from 'src/app/shared/service/usermanagement.service';
 import { TeacherModalComponent } from '../../schedule/teacher-modal/teacher-modal.component';
-import { BanmodalComponent } from '../banmodal/banmodal.component';
+import { BanModalComponent } from '../ban-modal/ban-modal.component';
 import { CenterOpeningHourModalComponent } from '../center-opening-hour-modal/center-opening-hour-modal.component';
 import { EventModalComponent } from '../event-modal/event-modal.component';
 import { GalleryNameModalComponent } from '../gallery-name-modal/gallery-name-modal.component';
 import { ModalWorkingHoursComponent } from '../modal-working-hours/modal-working-hours.component';
-import { NewAssoCenterModalComponent } from '../new-asso-center-modal/new-asso-center-modal.component';
+import { AssoCenterModalComponent } from '../asso-center-modal/asso-center-modal.component';
 import { NewAssoMemberModalComponent } from '../new-asso-member-modal/new-asso-member-modal.component';
 import { NewRoomModalComponent } from '../new-room-modal/new-room-modal.component';
 import { PartnerModalComponent } from '../partner-modal/partner-modal.component';
@@ -159,7 +159,7 @@ export class AdminpageComponent {
   async banUser(id: string) {
 
     const modal = await this._modalCtrl.create({
-      component: BanmodalComponent
+      component: BanModalComponent
     })
     modal.present();
 
@@ -346,6 +346,14 @@ export class AdminpageComponent {
   async saveAssoEventImage(imageFile: File) {
     this.uploadingImage.next(true);
     const downloadUrl = await this.storage.addEventImage(imageFile);
+
+    this.uploadingImage.next(false);
+    return downloadUrl;
+  }
+  
+  async saveAssoCenterImage(imageFile: File) {
+    this.uploadingImage.next(true);
+    const downloadUrl = await this.storage.addCenterImage(imageFile);
 
     this.uploadingImage.next(false);
     return downloadUrl;
@@ -569,13 +577,15 @@ export class AdminpageComponent {
     if(inputData){
       const assoCentersObs = await this._db.getAssoCenters();
       modal = await this._modalCtrl.create({
-      component:NewAssoCenterModalComponent,
+      component:AssoCenterModalComponent,
       componentProps:{
           id:inputData['id'],
           name:inputData['name'], 
           location:inputData['location'],
+          centerPhotoLink : inputData['centerPhotoLink'],
           contactPerson:inputData['contactPerson'], 
           contactPhone:inputData['contactPhone'], 
+          contactMail:inputData['contactMail'], 
           contactPhotoLink:inputData['contactPhotoLink'], 
           openingHours:inputData['openingHours'],
           openingHoursObs : assoCentersObs.pipe(map ((assoCenters:any) => assoCenters.find((center:any) => center['id'] == inputData['id'])['openingHours'])),
@@ -588,7 +598,7 @@ export class AdminpageComponent {
 
     }else{
       modal = await this._modalCtrl.create({
-        component:NewAssoCenterModalComponent,
+        component:AssoCenterModalComponent,
       })
     }
 
@@ -596,8 +606,15 @@ export class AdminpageComponent {
 
     const { data, role } = await modal.onWillDismiss();
 
-    if(role == "confirm")
+    if(role == "confirm"){
+      if(data.imageFile){
+        const photoAddress = await this.saveAssoCenterImage(data.imageFile);
+        data.centerPhotoLink = photoAddress;
+        if(data.oldImageAddress)
+          this.storage.deleteImageFromURL(data.oldImageAddress);
+      }
       this._db.updateAssoCenter(data);
+    }
 
   }
 

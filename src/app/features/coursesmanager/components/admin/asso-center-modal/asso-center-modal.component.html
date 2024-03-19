@@ -20,13 +20,26 @@
                 <ion-input [(ngModel)]="contactPerson"></ion-input>
             </ion-item>
             <ion-item>
+                <ion-label>Center photo</ion-label>
+
+                <ion-icon *ngIf="!centerPhotoLink; else image" name="image-outline" (click)="galleryPhotoUpload.click()"></ion-icon>
+                <ng-template #image>
+                    <ion-img [src]="centerPhotoLink" (click)="galleryPhotoUpload.click()"></ion-img>
+                </ng-template>
+                <input type="file" (change)="addImage($event)" accept="image/*" required style="display: none;" #galleryPhotoUpload>
+            </ion-item>
+            <ion-item>
                 <ion-label position="floating">Contact Phone</ion-label>
                 <ion-input [(ngModel)]="contactPhone"></ion-input>
             </ion-item>
             <ion-item>
+                <ion-label position="floating">Contact mail</ion-label>
+                <ion-input [(ngModel)]="contactMail"></ion-input>
+            </ion-item>
+            <!-- <ion-item>
                 <ion-label position="floating">Contact photo link</ion-label>
                 <ion-input [(ngModel)]="contactPhotoLink"></ion-input>
-            </ion-item>
+            </ion-item> -->
             <ion-item>
                 <ion-label>Opening hours</ion-label>
                 <ion-list *ngIf="openingHoursObs | async as openingHoursAs">

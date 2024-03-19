@@ -23,7 +23,7 @@ import { CreateAccountTeacherComponent } from './components/account/create-accou
 import { CreateAccountComponent } from './components/account/create-account/create-account.component';
 import { LoginpageComponent } from './components/account/loginpage/loginpage.component';
 import { AdminpageComponent } from './components/admin/adminpage/adminpage.component';
-import { BanmodalComponent } from './components/admin/banmodal/banmodal.component';
+import { BanModalComponent } from './components/admin/ban-modal/ban-modal.component';
 import { GalleryNameModalComponent } from './components/admin/gallery-name-modal/gallery-name-modal.component';
 import { ModalWorkingHoursComponent } from './components/admin/modal-working-hours/modal-working-hours.component';
 import { NewAssoMemberModalComponent } from './components/admin/new-asso-member-modal/new-asso-member-modal.component';
@@ -41,7 +41,7 @@ import { AdminpageresolveResolver } from './resolvers/adminpageresolve.resolver'
 import { CalendareventsresolveResolver } from './resolvers/calendareventsresolve.resolver';
 import { UserpageResolver } from './resolvers/userpage.resolver';
 import { CentersResolver } from './resolvers/centers.resolver';
-import { NewAssoCenterModalComponent } from './components/admin/new-asso-center-modal/new-asso-center-modal.component';
+import { AssoCenterModalComponent } from './components/admin/asso-center-modal/asso-center-modal.component';
 import { NewRoomModalComponent } from './components/admin/new-room-modal/new-room-modal.component';
 import { CenterOpeningHourModalComponent } from './components/admin/center-opening-hour-modal/center-opening-hour-modal.component';
 import { PartnerModalComponent } from './components/admin/partner-modal/partner-modal.component';
@@ -80,14 +80,14 @@ import { ImageInputComponent } from './components/common/image-input/image-input
     TeacherModalComponent,
     TeacherCreateEventModalComponent,
     ChoiceModalComponent,
-    BanmodalComponent,
+    BanModalComponent,
     NewAssoMemberModalComponent,
     GalleryNameModalComponent,
     ModalWorkingHoursComponent,
     ChildCreationModalComponent,
     CompleteAccountModalComponent,
     BirthdayFieldComponent,
-    NewAssoCenterModalComponent,
+    AssoCenterModalComponent,
     NewRoomModalComponent,
     CenterOpeningHourModalComponent,
     PartnerModalComponent,

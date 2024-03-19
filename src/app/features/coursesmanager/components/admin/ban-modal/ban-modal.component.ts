@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-banmodal',
-  templateUrl: './banmodal.component.html',
-  styleUrls: ['./banmodal.component.scss']
+  selector: 'app-ban-modal',
+  templateUrl: './ban-modal.component.html',
+  styleUrls: ['./ban-modal.component.scss']
 })
-export class BanmodalComponent {
+export class BanModalComponent {
   explanation = "";
 
   constructor(

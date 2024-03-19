@@ -21,11 +21,15 @@
                                 <ion-label>Address</ion-label>
                                 {{center['location']}}
                             </ion-item>
-                            <ion-item>
+                            <ion-item *ngIf="center['contactPhone']">
                                 <ion-label>Phone</ion-label>
                                 {{center['contactPhone']}}
                             </ion-item>
-                            <ion-item>
+                            <ion-item *ngIf="center['contactMail']">
+                                <ion-label>Mail</ion-label>
+                                {{center['contactMail']}}
+                            </ion-item>
+                            <ion-item *ngIf="center['openingHours']">
                                 <ion-list inset="true" class="hoursList">
                                     <ion-label>Opening hours</ion-label>
                                     <ion-item *ngFor="let hoursSet of center['openingHours']">{{hoursSet}}</ion-item>

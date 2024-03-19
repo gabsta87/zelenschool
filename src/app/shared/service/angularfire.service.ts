@@ -523,15 +523,25 @@ export class AngularfireService{
     return center;
   }
 
-  updateAssoCenter(newValue:{id:string,name?:string,location?:string,contactPerson?:string,contactPhone?:string,contactPhotoLink?:string,rooms?:string[],openingHours?:string[]}){
+  updateAssoCenter(newValue:{id:string,name?:string,location?:string,centerPhotoLink?:string,contactPerson?:string,contactPhone?:string,contactPhotoLink?:string,rooms?:string[],openingHours?:string[]}){
     if(!newValue.id || newValue.id == ""){
       return addDoc(collection(this._dbaccess,"assoCenter"),{...newValue})
     }else{
       // Removing the ID property from the new value
-      const { id, ...strippedValue } = newValue;
+      // const { id,imageFile, ...strippedValue } = newValue;
 
       const docRef = doc(this._dbaccess,'assoCenter/'+newValue.id);
-      return updateDoc(docRef,strippedValue);
+      // return updateDoc(docRef,strippedValue);
+      return updateDoc(docRef,{
+        name : newValue.name ? newValue.name : "",
+        location : newValue.location ? newValue.location : "",
+        centerPhotoLink : newValue.centerPhotoLink ? newValue.centerPhotoLink : "",
+        contactPerson : newValue.contactPerson ? newValue.contactPerson : "",
+        contactPhone : newValue.contactPhone ? newValue.contactPhone : "",
+        contactPhotoLink : newValue.contactPhotoLink ? newValue.contactPhotoLink : "",
+        rooms: newValue.rooms ? newValue.rooms : "",
+        openingHours: newValue.openingHours ? newValue.openingHours : "",
+      });
     }
   }
   

@@ -27,7 +27,7 @@ URGENT :
     ✔ asso event creation : select gallery with dropdown list @done(24-03-18 13:50)
 
     ☐ Display of Center information for all users (on click from schedule or hover)
-    ☐ Modify activities admin panel accordingly
+    ✔ Modify activities admin panel accordingly @done(24-03-19 13:36)
     ☐ Before release : Change Zelenschool to Ukraine-Reborn
     ☐ Help section on the schedule page (button needs a better behavior than showing an image)
     ☐ When deleting activity, check how image gallery gets deleted 

@@ -42,6 +42,10 @@ export class StorageService {
     return this.addImage("assoEvents",newFile)
   }
 
+  async addCenterImage(newFile:File){
+    return this.addImage("assoCenters",newFile)
+  }
+
   async addProjectImage(newFile:File){
     return this.addImage("projects",newFile)
   }
