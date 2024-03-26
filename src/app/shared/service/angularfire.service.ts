@@ -645,8 +645,17 @@ export class AngularfireService{
     return this.getElements("assoProjects");
   }
 
-  createAssoProject(newProject : any){
-    return addDoc(collection(this._dbaccess,"assoProjects"),{ ...newProject })
+  createAssoProject(newValue : any){
+    console.log("new value : ",newValue);
+    
+    return addDoc(collection(this._dbaccess,"assoProjects"),{ 
+      author:newValue.author?newValue.author:"",
+      date:newValue.date?newValue.date:"",
+      description:newValue.description?newValue.description:"",
+      imgLink:newValue.imgLink?newValue.imgLink:"",
+      name:newValue.name?newValue.name:"",
+      type:newValue.type?newValue.type:""
+     })
   }
 
   deleteAssoProject(id:string){
@@ -655,6 +664,9 @@ export class AngularfireService{
   }
 
   updateAssoProject(newValue:{id:string,author?:string,date?:string,description?:string,imgLink?:string,name?:string,type?:string}){
+
+    console.log("new value : ",newValue);
+    
     const docRef = doc(this._dbaccess,'assoProjects/'+newValue.id);
     
     return updateDoc(docRef,{
@@ -663,7 +675,8 @@ export class AngularfireService{
       description:newValue.description?newValue.description:"",
       imgLink:newValue.imgLink?newValue.imgLink:"",
       name:newValue.name?newValue.name:"",
-      type:newValue.type?newValue.type:""});
+      type:newValue.type?newValue.type:""
+    });
   }
 }
 

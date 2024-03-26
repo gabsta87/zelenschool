@@ -613,7 +613,6 @@ export class AdminpageComponent {
         if(data.oldImageAddress)
           this.storage.deleteImageFromURL(data.oldImageAddress);
       }
-      console.log("data : ",data);
       this._db.updateAssoCenter(data);
     }
 
@@ -717,10 +716,14 @@ export class AdminpageComponent {
     modal.present();
 
     const { data, role } = await modal.onWillDismiss();
-
+    
     if (role === 'confirm') {
-      const photoAddress = await this.saveProjectImage(data.photo);
-      data.photo = photoAddress;
+      console.log("data : ",data);
+      if(data.imgFile){
+        const photoAddress = await this.saveProjectImage(data.imgFile);
+        data.imgLink = photoAddress;
+      }
+      
       this._db.createAssoProject(data);
     }
   }
