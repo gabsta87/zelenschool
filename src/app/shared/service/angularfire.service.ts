@@ -525,7 +525,17 @@ export class AngularfireService{
 
   updateAssoCenter(newValue:{id:string,name?:string,location?:string,centerPhotoLink?:string,contactPerson?:string,contactPhone?:string,contactPhotoLink?:string,rooms?:string[],openingHours?:string[]}){
     if(!newValue.id || newValue.id == ""){
-      return addDoc(collection(this._dbaccess,"assoCenter"),{...newValue})
+
+      return addDoc(collection(this._dbaccess,"assoCenter"),{
+        name : newValue.name ? newValue.name : "",
+        location : newValue.location ? newValue.location : "",
+        centerPhotoLink : newValue.centerPhotoLink ? newValue.centerPhotoLink : "",
+        contactPerson : newValue.contactPerson ? newValue.contactPerson : "",
+        contactPhone : newValue.contactPhone ? newValue.contactPhone : "",
+        contactPhotoLink : newValue.contactPhotoLink ? newValue.contactPhotoLink : "",
+        rooms: newValue.rooms ? newValue.rooms : "",
+        openingHours: newValue.openingHours ? newValue.openingHours : "",
+      })
     }else{
       // Removing the ID property from the new value
       // const { id,imageFile, ...strippedValue } = newValue;

@@ -613,6 +613,7 @@ export class AdminpageComponent {
         if(data.oldImageAddress)
           this.storage.deleteImageFromURL(data.oldImageAddress);
       }
+      console.log("data : ",data);
       this._db.updateAssoCenter(data);
     }
 
