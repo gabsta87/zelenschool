@@ -173,7 +173,10 @@ ion-content{
 }
 
 .activityTitle{
-    padding: 6px;
+    padding: 0px;
+    @media only screen and (min-width: 1100px) {
+        padding: 6px;
+    }
 }
 
 .activityItem{
