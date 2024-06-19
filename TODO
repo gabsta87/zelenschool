@@ -15,8 +15,9 @@ Questions:
 Ajouter surlignage en fonction de l'emplacement sur la page about (voir barManager)
 
 URGENT :
-    ☐ Integration Center : Correct image upload/input ☐ admin page : integration center upload images
     ☐ (Asso event : users registration ?? )
+    ☐ Add option to remove center/project/event image without replacing
+    ✔ Integration Center : Correct image upload/input ☐ admin page : integration center upload images @done(24-03-27 14:52)
     ✔ Enter button not blocked on account creation when account creation is blocked (information missing) @done(24-03-19 13:35)
     ✔ asso event creation : block enter/validation when data is not valid @done(24-03-19 13:33)
     ✔ asso event creation : check wrong data when validating invalid data with Enter button @done(24-03-19 13:32)
@@ -30,9 +31,9 @@ URGENT :
     ✔ Modify activities admin panel accordingly @done(24-03-19 13:36)
     ☐ Before release : Change Zelenschool to Ukraine-Reborn
     ☐ Help section on the schedule page (button needs a better behavior than showing an image)
-    ☐ When deleting activity, check how image gallery gets deleted 
     ☐ Delete old image when modifying asso Event/project/center image
     ☐ Delete activities from DB, angularFireService, admin resolver, galleries resolver
+    ✔ When deleting activity, check how image gallery gets deleted @done(24-03-27 14:53)
     ✔ Fix image galleries @done(24-03-17 15:17)
     ✔ Centers' page : make translation @done(24-03-12 23:56)
     ✔ Finish activities panel @done(24-03-12 23:57)

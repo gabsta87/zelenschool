@@ -64,3 +64,11 @@ ion-popover::part(backdrop) {
 .langButton:hover{
     background-color: var(--ion-color-primary);
 }
+
+ion-item{
+    --inner-padding-end: 0px;
+}
+
+ion-list{
+    padding : 5px;
+}
